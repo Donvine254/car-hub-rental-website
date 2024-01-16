@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Toaster />
+        <Toaster richColors closeButton />
         {children}
       </body>
     </html>

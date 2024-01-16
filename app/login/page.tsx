@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { GoogleIcon, GithubIcon } from "@/assets";
-import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 type Props = {};
 
 interface FormData {
@@ -14,6 +15,7 @@ export default function Login({}: Props) {
     email: "",
     password: "",
   });
+  const router = useRouter();
   //function for onChange event handler
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -25,14 +27,12 @@ export default function Login({}: Props) {
   //function to handle form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    toast.success("Logged in Successfully!", {
-      position: "bottom-center",
-    });
-    console.log(data);
+    toast.info("something went wrong");
     setData({
       email: "",
       password: "",
     });
+    router.replace("/");
   }
 
   return (
@@ -114,7 +114,15 @@ export default function Login({}: Props) {
             {/* beginning of social logins */}
             <button
               className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-              type="button">
+              type="button"
+              onClick={() => {
+                toast({
+                  variant: "success",
+                  title: "This action is not supported yet",
+                  description:
+                    "We do not currently support login with google. This is an upcoming feature!",
+                });
+              }}>
               <GoogleIcon />
               <span>Sign in with Google</span>
             </button>
