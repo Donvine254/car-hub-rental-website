@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-export const nextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -9,3 +9,5 @@ export const nextConfig = {
     ],
   },
 };
+
+module.exports = nextConfig;
