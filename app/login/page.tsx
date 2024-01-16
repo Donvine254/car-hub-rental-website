@@ -1,10 +1,42 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { GoogleIcon, GithubIcon } from "@/assets";
+import toast from "react-hot-toast";
 type Props = {};
 
-export default function page({}: Props) {
+interface FormData {
+  email: string;
+  password: string;
+}
+
+export default function Login({}: Props) {
+  const [data, setData] = useState<FormData>({
+    email: "",
+    password: "",
+  });
+  //function for onChange event handler
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  //function to handle form submission
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    toast.success("Logged in Successfully!", {
+      position: "bottom-center",
+    });
+    console.log(data);
+    setData({
+      email: "",
+      password: "",
+    });
+  }
+
   return (
-    <form className="w-full">
+    <form className="w-full" onSubmit={handleSubmit}>
       <div className="flex flex-col items-center justify-center w-full min-h-screen px-4 font-poppins">
         <div
           className="border text-card-foreground w-full max-w-sm mx-auto rounded-xl shadow-md overflow-hidden bg-white"
@@ -28,7 +60,9 @@ export default function page({}: Props) {
                 className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md"
                 id="email"
                 name="email"
+                value={data.email}
                 type="email"
+                onChange={handleChange}
                 placeholder="you@example.com"
                 required
               />
@@ -43,8 +77,10 @@ export default function page({}: Props) {
                 className="flex h-10 bg-background text-base disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md"
                 id="password"
                 name="password"
+                value={data.password}
                 placeholder="*******"
                 minLength={8}
+                onChange={handleChange}
                 required
                 type="password"
               />
