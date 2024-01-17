@@ -15,6 +15,7 @@ export default function Login({}: Props) {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
   //function for onChange event handler
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,10 +25,13 @@ export default function Login({}: Props) {
       [name]: value,
     }));
   };
+
   //function to handle form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    toast.info("something went wrong");
+    toast.info("something went wrong", {
+      position: "bottom-center",
+    });
     setData({
       email: "",
       password: "",
@@ -82,18 +86,18 @@ export default function Login({}: Props) {
                 minLength={8}
                 onChange={handleChange}
                 required
-                type="password"
+                type={showPassword ? "text" : "password"}
               />
             </div>
             <div className="xsm:text-sm flex items-center justify-between gap-1 md:gap-4">
-              {/* <div className="flex items-center justify-start gap-1 md:gap-4">
-            <input
-              type="checkbox"
-              value={showPassword}
-              onChange={() => setShowPassword(!showPassword)}
-            />
-            <span> {!showPassword ? "Show" : "Hide"} Password</span>
-          </div> */}
+              <div className="flex items-center justify-start gap-1 md:gap-4">
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+                <span> {!showPassword ? "Show" : "Hide"} Password</span>
+              </div>
               <div>
                 <a
                   className="hover:text-blue-500 underline underline-offset-2 cursor-pointer"
@@ -116,19 +120,17 @@ export default function Login({}: Props) {
               className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
               type="button"
               onClick={() => {
-                toast({
-                  variant: "success",
-                  title: "This action is not supported yet",
-                  description:
-                    "We do not currently support login with google. This is an upcoming feature!",
-                });
+                toast.error("Login with Google is not supported yet!");
               }}>
               <GoogleIcon />
               <span>Sign in with Google</span>
             </button>
             <button
               className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-              type="button">
+              type="button"
+              onClick={() => {
+                toast.error("Login with Google is not supported yet!");
+              }}>
               <GithubIcon />
               <span>Sign in with Github</span>
             </button>
