@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { GoogleIcon, GithubIcon } from "@/assets";
+import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 type Props = {};
@@ -29,7 +29,7 @@ export default function Login({}: Props) {
   //function to handle form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    toast.info("Logged in successfully", {
+    toast.success("Logged in successfully", {
       position: "bottom-center",
     });
     setData({
@@ -40,9 +40,7 @@ export default function Login({}: Props) {
   }
 
   return (
-    <form
-      className="w-full bg-gradient-to-r from-blue-100 to-cyan-200 py-5"
-      onSubmit={handleSubmit}>
+    <form className="w-full " onSubmit={handleSubmit}>
       <div className="flex flex-col items-center justify-center w-full min-h-screen px-4 font-poppins">
         <div
           className="border text-card-foreground w-full max-w-sm mx-auto rounded-xl shadow-md overflow-hidden bg-white"
@@ -136,10 +134,10 @@ export default function Login({}: Props) {
               className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
               type="button"
               onClick={() => {
-                toast.error("Login with Github is not supported yet!");
+                toast.error("Login with Facebook is not supported yet!");
               }}>
-              <GithubIcon />
-              <span>Login with Github</span>
+              <FacebookIcon />
+              <span>Login with Facebook</span>
             </button>
           </div>
         </div>

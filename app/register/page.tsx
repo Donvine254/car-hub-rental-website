@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { GoogleIcon, GithubIcon } from "@/assets";
+import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Script from "next/script";
@@ -51,7 +51,7 @@ export default function Register({}: Props) {
       return false;
     }
 
-    toast.info("Registration successful", {
+    toast.success("Registration successful", {
       position: "top-center",
     });
     confetti({
@@ -68,9 +68,7 @@ export default function Register({}: Props) {
   }
 
   return (
-    <form
-      className="w-full bg-gradient-to-r from-blue-100 to-cyan-200 py-5"
-      onSubmit={handleSubmit}>
+    <form className="w-full " onSubmit={handleSubmit}>
       <Script
         async
         defer
@@ -184,10 +182,10 @@ export default function Register({}: Props) {
               className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
               type="button"
               onClick={() => {
-                toast.error("Github Signup is not supported yet!");
+                toast.error("Facebook Signup is not supported yet!");
               }}>
-              <GithubIcon />
-              <span>Register with Github</span>
+              <FacebookIcon />
+              <span>Register with Facebook</span>
             </button>
           </div>
         </div>
