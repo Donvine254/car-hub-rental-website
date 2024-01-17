@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { GoogleIcon, GithubIcon } from "@/assets";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import Script from "next/script";
 type Props = {};
 
 interface FormData {
@@ -10,6 +11,7 @@ interface FormData {
   email: string;
   password: string;
 }
+declare const confetti: any;
 
 export default function Register({}: Props) {
   const [data, setData] = useState<FormData>({
@@ -31,8 +33,31 @@ export default function Register({}: Props) {
   //function to handle form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    //check for email validation
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)) {
+      toast.error("Invalid email address", {
+        position: "bottom-center",
+      });
+      return false;
+    }
+    if (
+      !/^(?=.*[0-9])(?=.*[a-zA-Z])(?!12345678|password|abcdefgh).{9,}$/.test(
+        data.password
+      )
+    ) {
+      toast.error("Kindly use a strong password", {
+        position: "bottom-center",
+      });
+      return false;
+    }
+
     toast.info("Registration successful", {
       position: "top-center",
+    });
+    confetti({
+      particleCount: 700,
+      spread: 100,
+      origin: { y: 0.3 },
     });
     setData({
       username: "",
@@ -43,7 +68,13 @@ export default function Register({}: Props) {
   }
 
   return (
-    <form className="w-full" onSubmit={handleSubmit}>
+    <form
+      className="w-full bg-gradient-to-r from-blue-100 to-cyan-200"
+      onSubmit={handleSubmit}>
+      <Script
+        async
+        defer
+        src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.2/tsparticles.confetti.bundle.min.js"></Script>
       <div className="flex flex-col items-center justify-center w-full min-h-screen px-4 font-poppins">
         <div
           className="border text-card-foreground w-full max-w-sm mx-auto rounded-xl shadow-md overflow-hidden bg-white"
@@ -64,12 +95,15 @@ export default function Register({}: Props) {
                 Username
               </label>
               <input
-                className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md "
                 id="username"
                 name="username"
                 value={data.username}
                 type="text"
                 onChange={handleChange}
+                minLength={5}
+                pattern="^(?!.*@).*"
+                title="Email addresses are not allowed as usernames."
                 placeholder="john doe"
                 required
               />
@@ -81,12 +115,13 @@ export default function Register({}: Props) {
                 Email
               </label>
               <input
-                className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md"
+                className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md "
                 id="email"
                 name="email"
                 value={data.email}
                 type="email"
                 onChange={handleChange}
+                title="Email address must be a valid email"
                 placeholder="you@example.com"
                 required
               />
@@ -105,6 +140,9 @@ export default function Register({}: Props) {
                 placeholder="*******"
                 minLength={8}
                 onChange={handleChange}
+                onFocus={() =>
+                  toast.info("Password must have letters and numbers")
+                }
                 required
                 type={showPassword ? "text" : "password"}
               />
@@ -156,7 +194,7 @@ export default function Register({}: Props) {
         <div className="mt-2 text-gray-600">
           Already have an account?{" "}
           <a
-            className="text-blue-500 hover:underline border px-2 py-0.5"
+            className="text-blue-500 hover:underline border px-2 py-0.5 bg-white rounded-md"
             href="/login">
             Login Here
           </a>

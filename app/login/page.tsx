@@ -40,7 +40,9 @@ export default function Login({}: Props) {
   }
 
   return (
-    <form className="w-full" onSubmit={handleSubmit}>
+    <form
+      className="w-full bg-gradient-to-r from-blue-100 to-cyan-200"
+      onSubmit={handleSubmit}>
       <div className="flex flex-col items-center justify-center w-full min-h-screen px-4 font-poppins">
         <div
           className="border text-card-foreground w-full max-w-sm mx-auto rounded-xl shadow-md overflow-hidden bg-white"
@@ -144,7 +146,7 @@ export default function Login({}: Props) {
         <div className="mt-2 text-gray-600">
           Don&apos;t have an account?{" "}
           <a
-            className="text-blue-500 hover:underline border px-2 py-0.5"
+            className="text-blue-500 hover:underline border px-2 py-0.5 bg-white rounded-md"
             href="register">
             Register Here
           </a>

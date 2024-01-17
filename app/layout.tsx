@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Toaster richColors closeButton />
+        <Toaster richColors closeButton theme="light" />
         {children}
       </body>
     </html>

@@ -77,3 +77,11 @@
     @apply bg-background text-foreground font-poppins box-border;
   }
 }
+input:not(:placeholder-shown):invalid {
+  @apply bg-red-100;
+}
+
+/* Style for valid input fields, only applied when the user has typed something */
+input:not(:placeholder-shown):valid {
+  @apply bg-green-100;
+}
