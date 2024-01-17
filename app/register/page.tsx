@@ -69,7 +69,7 @@ export default function Register({}: Props) {
 
   return (
     <form
-      className="w-full bg-gradient-to-r from-blue-100 to-cyan-200"
+      className="w-full bg-gradient-to-r from-blue-100 to-cyan-200 py-5"
       onSubmit={handleSubmit}>
       <Script
         async
