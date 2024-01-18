@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
 import Axios from "axios";
 import secureLocalStorage from "react-secure-storage";
@@ -27,31 +28,21 @@ export default function Login({}: Props) {
       [name]: value,
     }));
   };
-
-  //function to handle form submission
-  async function handleSubmit(e: React.FormEvent) {
+  const supabase = createClientComponentClient();
+  
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await Axios.post("/api/login", data);
-      console.log(response.data);
-      secureLocalStorage.setItem("auth_token", response.data);
-      toast.success("Logged in successfully", {
-        position: "bottom-center",
-      });
-    } catch (error) {
-      toast.error("something went wrong");
-      console.error(error);
-    } finally {
-      setData({
-        email: "",
-        password: "",
-      });
-      router.replace("/");
-    }
-  }
-
+    await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
+    });
+    toast.success("Logged in successfully", {
+      position: "bottom-center",
+    });
+    router.replace("/");
+  };
   return (
-    <form className="w-full " onSubmit={handleSubmit}>
+    <form className="w-full " onSubmit={handleSignIn}>
       <div className="flex flex-col items-center justify-center w-full min-h-screen px-4 font-poppins">
         <div
           className="border text-card-foreground w-full max-w-sm mx-auto rounded-xl shadow-md overflow-hidden bg-white"
