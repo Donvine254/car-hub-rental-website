@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Axios from "axios";
+import secureLocalStorage from "react-secure-storage";
 type Props = {};
 
 interface FormData {
@@ -29,14 +31,23 @@ export default function Login({}: Props) {
   //function to handle form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    toast.success("Logged in successfully", {
-      position: "bottom-center",
-    });
-    setData({
-      email: "",
-      password: "",
-    });
-    router.replace("/");
+    try {
+      const response = await Axios.post("/api/login", data);
+      console.log(response.data);
+      secureLocalStorage.setItem("auth_token", response.data);
+      toast.success("Logged in successfully", {
+        position: "bottom-center",
+      });
+    } catch (error) {
+      toast.error("something went wrong");
+      console.error(error);
+    } finally {
+      setData({
+        email: "",
+        password: "",
+      });
+      router.replace("/");
+    }
   }
 
   return (

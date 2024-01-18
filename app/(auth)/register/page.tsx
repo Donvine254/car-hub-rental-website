@@ -52,21 +52,25 @@ export default function Register({}: Props) {
       });
       return false;
     } else {
-      const response = await Axios.post("/api/register", data);
-      toast("Registration successful", {
-        position: "top-center",
-      });
-      confetti({
-        particleCount: 700,
-        spread: 100,
-        origin: { y: 0.3 },
-      });
-      setData({
-        username: "",
-        email: "",
-        password: "",
-        phone: "",
-      });
+      try {
+        const response = await Axios.post("/api/register", data);
+        console.log(response.data);
+        toast.success("Check your email to verify your account");
+        confetti({
+          particleCount: 700,
+          spread: 100,
+          origin: { y: 0.3 },
+        });
+      } catch (error) {
+        toast.error("Registration failed");
+      } finally {
+        setData({
+          username: "",
+          email: "",
+          password: "",
+          phone: "",
+        });
+      }
       // router.replace("/login");
     }
   }

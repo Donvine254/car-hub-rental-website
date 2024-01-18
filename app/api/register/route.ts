@@ -16,10 +16,9 @@ interface Data {
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const params = (await req.json()) as Data;
-  const hashedPassword = await hashPassword(params.password);
   const response = await supabase.auth.signUp({
     email: params.email,
-    password: hashedPassword, // Use encrypted password
+    password: params.password, // Use encrypted password
     phone: params.phone,
     options: {
       data: {
@@ -32,9 +31,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: response.error, status: 322 });
   } else {
     // registerUsers(params);
-    return NextResponse.json({
-      message: "Registration was successful",
-      status: 200,
-    });
+    return NextResponse.json(response);
   }
 }
