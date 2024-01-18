@@ -6,7 +6,6 @@ import { registerUsers } from "@/lib/register";
 import toast from "react-hot-toast";
 import Script from "next/script";
 type Props = {};
-
 interface FormData {
   username: string;
   email: string;
@@ -65,7 +64,7 @@ export default function Register({}: Props) {
           email: "",
           password: "",
         });
-        router.replace("/");
+        router.replace("/login");
       });
   }
 
