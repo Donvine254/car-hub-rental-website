@@ -4,8 +4,6 @@ import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
-import Axios from "axios";
-import secureLocalStorage from "react-secure-storage";
 type Props = {};
 
 interface FormData {
@@ -29,7 +27,7 @@ export default function Login({}: Props) {
     }));
   };
   const supabase = createClientComponentClient();
-  
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     await supabase.auth.signInWithPassword({
