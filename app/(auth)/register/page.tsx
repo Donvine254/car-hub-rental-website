@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Script from "next/script";
 import Axios from "axios";
+import Link from "next/link";
 type Props = {};
 interface FormData {
   username: string;
@@ -71,7 +72,7 @@ export default function Register({}: Props) {
           phone: "",
         });
       }
-      // router.replace("/login");
+      router.replace("/login");
     }
   }
 
@@ -224,11 +225,12 @@ export default function Register({}: Props) {
         </div>
         <div className="mt-2 text-gray-600">
           Already have an account?{" "}
-          <a
+          <Link
+            prefetch
             className="text-blue-500 hover:underline border px-2 py-0.5 bg-white rounded-md"
             href="/login">
             Login Here
-          </a>
+          </Link>
         </div>
       </div>
     </form>

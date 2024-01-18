@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
+import Link from "next/link";
 type Props = {};
 
 interface FormData {
@@ -125,7 +126,7 @@ export default function Login({}: Props) {
               className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
               type="button"
               onClick={() => {
-                toast.error("Login with Google is not supported yet!");
+                toast.info("Login with Google is not supported yet!");
               }}>
               <GoogleIcon />
               <span>Login with Google</span>
@@ -134,7 +135,7 @@ export default function Login({}: Props) {
               className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
               type="button"
               onClick={() => {
-                toast.error("Login with Facebook is not supported yet!");
+                toast.info("Login with Facebook is not supported yet!");
               }}>
               <FacebookIcon />
               <span>Login with Facebook</span>
@@ -143,11 +144,12 @@ export default function Login({}: Props) {
         </div>
         <div className="mt-2 text-gray-600">
           Don&apos;t have an account?{" "}
-          <a
+          <Link
+            prefetch
             className="text-blue-500 hover:underline border px-2 py-0.5 bg-white rounded-md"
             href="register">
             Register Here
-          </a>
+          </Link>
         </div>
       </div>
     </form>

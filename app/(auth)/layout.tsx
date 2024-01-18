@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Toaster } from "react-hot-toast";
-
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 import "../../app/globals.css";
 
 export const metadata: Metadata = {
@@ -18,6 +18,7 @@ export default function AuthLayout({
     <html lang="en">
       <body>
         <Toaster />
+        <Sonner richColors closeButton theme="light" />
         {children}
       </body>
     </html>
