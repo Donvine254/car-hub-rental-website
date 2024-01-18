@@ -1,25 +1,31 @@
 "use server";
-import { prisma } from "@/db/prisma";
 import { hashPassword } from "./hashpassword";
+import { supabase } from "@/db/supabase";
 //function to register users
 
 interface Data {
   username: string;
   email: string;
   password: string;
+  phone: number;
   role?: string;
   imageUrl?: string;
 }
-export async function registerUsers(data: Data) {
-  const hashedPassword = await hashPassword(data.password);
-  const user = await prisma.user.create({
-    data: {
-      username: data.username,
-      email: data.email,
-      passwordHash: hashedPassword, // Use encrypted password
-      role: "user",
-      imageUrl: `https://ui-avatars.com/api/?background=random&name=${data.username}`,
+
+export async function registerUsers(params: Data) {
+  const hashedPassword = await hashPassword(params.password);
+  const { data, error } = await supabase.auth.signUp({
+    email: params.email,
+    password: hashedPassword, // Use encrypted password
+    phone: params.phone,
+
+    options: {
+      data: {
+        username: params.username,
+        imageUrl: `https://ui-avatars.com/api/?background=random&name=${params.username}`,
+      },
     },
   });
-  console.log(user);
+  console.log(data);
+  console.log(error);
 }

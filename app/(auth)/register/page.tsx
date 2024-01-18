@@ -10,6 +10,7 @@ interface FormData {
   username: string;
   email: string;
   password: string;
+  phone: number;
 }
 declare const confetti: any;
 
@@ -18,6 +19,7 @@ export default function Register({}: Props) {
     username: "",
     email: "",
     password: "",
+    phone: 0,
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
@@ -63,8 +65,9 @@ export default function Register({}: Props) {
           username: "",
           email: "",
           password: "",
+          phone: 0,
         });
-        router.replace("/login");
+        // router.replace("/login");
       });
   }
 
@@ -104,6 +107,26 @@ export default function Register({}: Props) {
                 pattern="^(?!.*@).*"
                 title="Email addresses are not allowed as usernames."
                 placeholder="john doe"
+                required
+              />
+            </div>
+            <div className="space-y-2 group">
+              <label
+                className="text-base font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-700"
+                htmlFor="phone">
+                Phone Number
+              </label>
+              <input
+                className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md "
+                id="phone"
+                name="phone"
+                value={data.phone || ""}
+                type="number"
+                onChange={handleChange}
+                maxLength={10}
+                pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im"
+                title="valid phone number must have 10 digits."
+                placeholder="07********"
                 required
               />
             </div>
