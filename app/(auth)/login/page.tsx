@@ -131,10 +131,7 @@ export default function Login({}: Props) {
               {!loading ? (
                 "Login"
               ) : (
-                <Loader
-                  className="animate-spin delay-[6000ms]"
-                  fill="gray-600"
-                />
+                <Loader className="animate-spin delay-1000" fill="gray-600" />
               )}
             </button>
             {/* beginning of social logins */}
