@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Toaster } from "@/components/ui/sonner";
-import "../../../app/globals.css";
+import { Toaster } from "react-hot-toast";
+
+import "../../app/globals.css";
 
 export const metadata: Metadata = {
   title: "Car Hub",
@@ -16,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Toaster richColors closeButton theme="light" />
+        <Toaster />
         {children}
       </body>
     </html>

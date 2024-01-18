@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import toast from "react-hot-toast";
 import Script from "next/script";
 type Props = {};
 
@@ -138,9 +138,7 @@ export default function Register({}: Props) {
                 placeholder="*******"
                 minLength={8}
                 onChange={handleChange}
-                onFocus={() =>
-                  toast.info("Password must have letters and numbers")
-                }
+                onFocus={() => toast("Password must have letters and numbers")}
                 required
                 type={showPassword ? "text" : "password"}
               />
