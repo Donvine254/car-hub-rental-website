@@ -10,7 +10,7 @@ interface FormData {
   username: string;
   email: string;
   password: string;
-  phone: number;
+  phone: string;
 }
 declare const confetti: any;
 
@@ -19,7 +19,7 @@ export default function Register({}: Props) {
     username: "",
     email: "",
     password: "",
-    phone: 0,
+    phone: "",
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
@@ -65,14 +65,14 @@ export default function Register({}: Props) {
           username: "",
           email: "",
           password: "",
-          phone: 0,
+          phone: "",
         });
         // router.replace("/login");
       });
   }
 
   return (
-    <form className="w-full " onSubmit={handleSubmit}>
+    <form className="w-full py-3 " onSubmit={handleSubmit}>
       <Script
         async
         defer
@@ -120,11 +120,13 @@ export default function Register({}: Props) {
                 className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md "
                 id="phone"
                 name="phone"
-                value={data.phone || ""}
-                type="number"
+                value={data.phone}
+                type="tel"
+                pattern="0?[0-9]{9}"
+                inputMode="numeric"
                 onChange={handleChange}
+                minLength={10}
                 maxLength={10}
-                pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im"
                 title="valid phone number must have 10 digits."
                 placeholder="07********"
                 required
@@ -162,10 +164,12 @@ export default function Register({}: Props) {
                 placeholder="*******"
                 minLength={8}
                 onChange={handleChange}
-                onFocus={() => toast("Password must have letters and numbers")}
                 required
                 type={showPassword ? "text" : "password"}
               />
+              <small className="text-gray-500 label">
+                * Password must have letters and numbers
+              </small>
             </div>
             <div className="flex items-center justify-start gap-1 md:gap-4">
               <input
@@ -177,7 +181,7 @@ export default function Register({}: Props) {
             </div>
           </div>
 
-          <div className="items-center p-6 flex flex-col space-y-2">
+          <div className="items-center px-6 py-2 flex flex-col space-y-2">
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-gray-100 disabled:text-black  h-10 px-4 py-2 w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md"
               type="submit"
@@ -187,28 +191,31 @@ export default function Register({}: Props) {
             {/* beginning of social logins */}
             <div className="flex items-center gap-2 w-full ">
               <hr className="border border-gray-200 w-full" />
-              <div>OR</div>
+              <div className="text-sm flex-1 w-fit whitespace-nowrap">
+                OR Register With
+              </div>
               <hr className="border border-gray-200 w-full" />
             </div>
-
-            <button
-              className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-              type="button"
-              onClick={() => {
-                toast.error("Google signup is not supported yet!");
-              }}>
-              <GoogleIcon />
-              <span>Register with Google</span>
-            </button>
-            <button
-              className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-              type="button"
-              onClick={() => {
-                toast.error("Facebook Signup is not supported yet!");
-              }}>
-              <FacebookIcon />
-              <span>Register with Facebook</span>
-            </button>
+            <div className="flex items-center justify-between gap-2 xsm:gap-1 py-2 px-1 w-full ">
+              <button
+                className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white   h-10 px-4 py-2 w-1/2 flex justify-center items-center space-x-2"
+                type="button"
+                onClick={() => {
+                  toast.error("Google signup is not supported yet!");
+                }}>
+                <GoogleIcon />
+                <span>Google</span>
+              </button>
+              <button
+                className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white  h-10 px-4 py-2 w-1/2 flex justify-center items-center space-x-2"
+                type="button"
+                onClick={() => {
+                  toast.error("Facebook Signup is not supported yet!");
+                }}>
+                <FacebookIcon />
+                <span>Facebook</span>
+              </button>
+            </div>
           </div>
         </div>
         <div className="mt-2 text-gray-600">

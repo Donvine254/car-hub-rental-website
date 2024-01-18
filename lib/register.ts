@@ -7,7 +7,7 @@ interface Data {
   username: string;
   email: string;
   password: string;
-  phone: number;
+  phone: string;
   role?: string;
   imageUrl?: string;
 }
