@@ -26,6 +26,4 @@ export async function registerUsers(params: Data) {
       },
     },
   });
-  console.log(data);
-  console.log(error);
 }

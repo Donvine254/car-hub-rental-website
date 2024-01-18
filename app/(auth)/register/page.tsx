@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
-import { registerUsers } from "@/lib/register";
 import toast from "react-hot-toast";
 import Script from "next/script";
+import Axios from "axios";
 type Props = {};
 interface FormData {
   username: string;
@@ -51,24 +51,24 @@ export default function Register({}: Props) {
         position: "bottom-center",
       });
       return false;
-    } else
-      await registerUsers(data).then(() => {
-        toast.success("Registration successful", {
-          position: "top-center",
-        });
-        confetti({
-          particleCount: 700,
-          spread: 100,
-          origin: { y: 0.3 },
-        });
-        setData({
-          username: "",
-          email: "",
-          password: "",
-          phone: "",
-        });
-        // router.replace("/login");
+    } else {
+      const response = await Axios.post("/api/register", data);
+      toast("Registration successful", {
+        position: "top-center",
       });
+      confetti({
+        particleCount: 700,
+        spread: 100,
+        origin: { y: 0.3 },
+      });
+      setData({
+        username: "",
+        email: "",
+        password: "",
+        phone: "",
+      });
+      // router.replace("/login");
+    }
   }
 
   return (
@@ -128,7 +128,7 @@ export default function Register({}: Props) {
                 minLength={10}
                 maxLength={10}
                 title="valid phone number must have 10 digits."
-                placeholder="07********"
+                placeholder="**********"
                 required
               />
             </div>
