@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
+import { registerUsers } from "@/lib/register";
 import toast from "react-hot-toast";
 import Script from "next/script";
 type Props = {};
@@ -49,22 +50,23 @@ export default function Register({}: Props) {
         position: "bottom-center",
       });
       return false;
-    }
-
-    toast.success("Registration successful", {
-      position: "top-center",
-    });
-    confetti({
-      particleCount: 700,
-      spread: 100,
-      origin: { y: 0.3 },
-    });
-    setData({
-      username: "",
-      email: "",
-      password: "",
-    });
-    router.replace("/");
+    } else
+      await registerUsers(data).then(() => {
+        toast.success("Registration successful", {
+          position: "top-center",
+        });
+        confetti({
+          particleCount: 700,
+          spread: 100,
+          origin: { y: 0.3 },
+        });
+        setData({
+          username: "",
+          email: "",
+          password: "",
+        });
+        router.replace("/");
+      });
   }
 
   return (
