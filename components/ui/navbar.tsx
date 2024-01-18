@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -50,9 +51,13 @@ export default function Navbar(props: Props) {
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>
-            <NavigationMenuLink className={`text-2xl font-sans font-bold`}>
-              CarHub
-            </NavigationMenuLink>
+            <Image
+              alt="CarHub Logo"
+              width={118}
+              height={18}
+              src="/logo.svg"
+              className="object-contain"
+            />
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
