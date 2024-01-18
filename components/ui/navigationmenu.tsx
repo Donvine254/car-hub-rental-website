@@ -7,7 +7,7 @@ type Props = {};
 
 export default function NavigationMenu({}: Props) {
   return (
-    <nav className="bg-gray-200 w-full py-4 min-h-20 md:sticky md:top-0 md:z-20">
+    <nav className="bg-gray-200 w-full py-4 min-h-20 fixed md:sticky top-0 md:z-20">
       <Script
         async
         defer
@@ -72,7 +72,7 @@ export default function NavigationMenu({}: Props) {
               {/* Dropdown menu  */}
               <div
                 id="dropdownNavbar"
-                className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-44">
+                className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44">
                 <ul className="py-1" aria-labelledby="dropdownLargeButton">
                   <li>
                     <Link
@@ -132,7 +132,7 @@ export default function NavigationMenu({}: Props) {
               {/* Dropdown menu  */}
               <div
                 id="dropdownNavbar2"
-                className="hidden bg-white text-base z-10 list-none divide-y divide-gray-100 rounded shadow my-4 w-44">
+                className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44">
                 <ul className="py-1" aria-labelledby="dropdownLargeButton">
                   <li>
                     <Link
