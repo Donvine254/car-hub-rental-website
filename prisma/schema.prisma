@@ -12,12 +12,13 @@ datasource db {
 
 model User {
   id        Int       @id @default(autoincrement())
+  user_id   String   @unique
   username  String
   role      String?  @default("user")
   email     String    @unique
   password  String    
   imageUrl  String?
-  phone     BigInt?    @unique
+  phone     String?    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime @default(now())
 }

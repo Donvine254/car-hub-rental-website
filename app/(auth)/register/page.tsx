@@ -25,6 +25,7 @@ export default function Register({}: Props) {
     phone: "",
   });
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
   //function for onChange event handler
@@ -58,11 +59,16 @@ export default function Register({}: Props) {
     } else {
       setLoading(true);
       try {
-        await Axios.post("/api/register", data);
-        const userData: any = await registerUsers(data);
-        console.log(userData);
+        const response = await Axios.post("/api/register", data);
+        const responseData = await response.data;
+        console.log(responseData);
+        const userData = {
+          ...data,
+          user_id: responseData?.id,
+        };
+        await registerUsers(userData);
         setLoading(false);
-        toast.success("Check your email to verify your account");
+        setAlert(true);
         confetti({
           particleCount: 700,
           spread: 100,
@@ -79,12 +85,20 @@ export default function Register({}: Props) {
           phone: "",
         });
       }
-      router.replace("/login");
+      // router.replace("/login");
     }
   }
 
   return (
-    <form className="w-full py-3 " onSubmit={handleSubmit}>
+    <form className={`w-full ${!alert ? "py-3" : ""}`} onSubmit={handleSubmit}>
+      <div
+        className={`${
+          alert
+            ? "block bg-green-100  w-full text-center border-b-2 border-b-green-400 py-2 mb-2 font-bold"
+            : "hidden"
+        }`}>
+        Kindly check your email to verify your account
+      </div>
       <Script
         async
         defer

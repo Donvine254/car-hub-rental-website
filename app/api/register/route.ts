@@ -31,6 +31,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     throw new Error(response.error.message);
   } else {
     // registerUsers(params);
-    return NextResponse.json(response.data);
+    return NextResponse.json(response.data.user);
   }
 }
