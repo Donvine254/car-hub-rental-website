@@ -28,9 +28,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     },
   });
   if (response.error !== null) {
-    return NextResponse.json({ error: response.error, status: 322 });
+    throw new Error(response.error.message);
   } else {
     // registerUsers(params);
-    return NextResponse.json(response);
+    return NextResponse.json(response.data);
   }
 }

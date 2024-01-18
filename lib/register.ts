@@ -26,4 +26,9 @@ export async function registerUsers(params: Data) {
       },
     },
   });
+  if (error !== null) {
+    return error;
+  } else {
+    return data;
+  }
 }

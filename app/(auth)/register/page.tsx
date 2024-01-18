@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 import toast from "react-hot-toast";
 import Script from "next/script";
 import Axios from "axios";
 import Link from "next/link";
+import { registerUsers } from "@/lib/register";
 type Props = {};
 interface FormData {
   username: string;
@@ -22,6 +24,7 @@ export default function Register({}: Props) {
     password: "",
     phone: "",
   });
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
   //function for onChange event handler
@@ -53,9 +56,12 @@ export default function Register({}: Props) {
       });
       return false;
     } else {
+      setLoading(true);
       try {
-        const response = await Axios.post("/api/register", data);
-        console.log(response.data);
+        await Axios.post("/api/register", data);
+        const userData: any = await registerUsers(data);
+        console.log(userData);
+        setLoading(false);
         toast.success("Check your email to verify your account");
         confetti({
           particleCount: 700,
@@ -63,6 +69,7 @@ export default function Register({}: Props) {
           origin: { y: 0.3 },
         });
       } catch (error) {
+        setLoading(false);
         toast.error("Registration failed");
       } finally {
         setData({
@@ -190,8 +197,16 @@ export default function Register({}: Props) {
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-gray-100 disabled:text-black  h-10 px-4 py-2 w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md"
               type="submit"
-              title="login">
-              Register
+              disabled={loading}
+              title="register">
+              {!loading ? (
+                "Register"
+              ) : (
+                <Loader
+                  className="animate-spin delay-[6000ms]"
+                  fill="gray-600"
+                />
+              )}
             </button>
             {/* beginning of social logins */}
             <div className="flex items-center gap-2 w-full ">

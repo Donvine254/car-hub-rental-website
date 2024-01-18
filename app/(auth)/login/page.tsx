@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
+import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "sonner";
@@ -17,6 +18,7 @@ export default function Login({}: Props) {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
   //function for onChange event handler
@@ -31,14 +33,25 @@ export default function Login({}: Props) {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    await supabase.auth.signInWithPassword({
+    setLoading(true);
+    const response = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
     });
-    toast.success("Logged in successfully", {
-      position: "bottom-center",
-    });
-    router.replace("/");
+    if (response.error !== null) {
+      setLoading(false);
+      toast.error(response.error.message, {
+        position: "bottom-center",
+      });
+
+      return false;
+    } else {
+      setLoading(false);
+      toast.success("Logged in successfully", {
+        position: "bottom-center",
+      });
+      router.replace("/");
+    }
   };
   return (
     <form className="w-full " onSubmit={handleSignIn}>
@@ -113,8 +126,16 @@ export default function Login({}: Props) {
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-gray-100 disabled:text-black  h-10 px-4 py-2 w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md"
               type="submit"
+              disabled={loading}
               title="login">
-              Login
+              {!loading ? (
+                "Login"
+              ) : (
+                <Loader
+                  className="animate-spin delay-[6000ms]"
+                  fill="gray-600"
+                />
+              )}
             </button>
             {/* beginning of social logins */}
             <div className="flex items-center gap-2 w-full ">

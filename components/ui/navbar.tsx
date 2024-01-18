@@ -95,6 +95,7 @@ export default function Navbar(props: Props) {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
+            {/* hide this based on user authetication status */}
             <NavigationMenuTrigger className="text-xl">
               My Account
             </NavigationMenuTrigger>

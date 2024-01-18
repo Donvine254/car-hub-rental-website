@@ -7,9 +7,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     email: data.email,
     password: data.password,
   });
-  if (response.error === null) {
-    return NextResponse.json(response.data, { status: 200 });
-  } else {
+  console.log(response);
+  if (response.error !== null) {
     return NextResponse.json(response.error, { status: 401 });
+  } else {
+    return NextResponse.json(response.data, { status: 200 });
   }
 }
