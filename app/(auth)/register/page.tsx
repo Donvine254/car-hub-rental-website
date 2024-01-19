@@ -223,7 +223,7 @@ export default function Register({}: Props) {
             <div className="flex items-center gap-2 w-full ">
               <hr className="border border-gray-200 w-full" />
               <div className="text-sm flex-1 w-fit whitespace-nowrap">
-                OR Register With
+                Or Register With
               </div>
               <hr className="border border-gray-200 w-full" />
             </div>
