@@ -137,27 +137,31 @@ export default function Login({}: Props) {
             {/* beginning of social logins */}
             <div className="flex items-center gap-2 w-full ">
               <hr className="border border-gray-200 w-full" />
-              <div>OR</div>
+              <div className="text-sm flex-1 w-fit whitespace-nowrap">
+                OR Login With
+              </div>
               <hr className="border border-gray-200 w-full" />
             </div>
-            <button
-              className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-              type="button"
-              onClick={() => {
-                toast.info("Login with Google is not supported yet!");
-              }}>
-              <GoogleIcon />
-              <span>Login with Google</span>
-            </button>
-            <button
-              className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-              type="button"
-              onClick={() => {
-                toast.info("Login with Facebook is not supported yet!");
-              }}>
-              <FacebookIcon />
-              <span>Login with Facebook</span>
-            </button>
+            <div className="flex items-center justify-between gap-2 xsm:gap-1 py-2 px-1 w-full ">
+              <button
+                className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
+                type="button"
+                onClick={() => {
+                  toast.info("Login with Google is not supported yet!");
+                }}>
+                <GoogleIcon />
+                <span>Google</span>
+              </button>
+              <button
+                className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
+                type="button"
+                onClick={() => {
+                  toast.info("Login with Facebook is not supported yet!");
+                }}>
+                <FacebookIcon />
+                <span>Facebook</span>
+              </button>
+            </div>
           </div>
         </div>
         <div className="mt-2 text-gray-600">

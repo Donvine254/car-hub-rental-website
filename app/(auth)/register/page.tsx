@@ -229,7 +229,7 @@ export default function Register({}: Props) {
             </div>
             <div className="flex items-center justify-between gap-2 xsm:gap-1 py-2 px-1 w-full ">
               <button
-                className="rounded-md text-base font-medium  border  hover:bg-black hover:text-white   h-10 px-4 py-2 w-1/2 flex justify-center items-center space-x-2"
+                className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white   h-10 px-4 py-2 w-1/2 flex justify-center items-center space-x-2"
                 type="button"
                 onClick={() => {
                   toast.error("Google signup is not supported yet!");
