@@ -1,11 +1,36 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 type Props = {};
-
+type User = {};
 export default function NavigationMenu({}: Props) {
+  const [user, setUser] = useState<User | null>(null);
+  const supabase = createClientComponentClient();
+  const router = useRouter();
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data, error } = await supabase.auth.getUser();
+        if (!error && data !== null) {
+          setUser(data);
+        }
+      } catch (error) {
+        // Handle errors
+        console.error("Error fetching data:", error);
+      }
+    })();
+  }, [supabase.auth]);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+    router.refresh();
+  }
+
   return (
     <nav className="bg-gray-200 w-full py-4 min-h-20 fixed md:sticky top-0 md:z-20">
       <Script
@@ -113,7 +138,7 @@ export default function NavigationMenu({}: Props) {
               </div>
             </li>
             {/* dropdown for account */}
-            <li>
+            <li className={`${!user ? "hidden" : "block"}`}>
               <button
                 id="dropdownNavbarLink"
                 data-dropdown-toggle="dropdownNavbar"
@@ -164,12 +189,12 @@ export default function NavigationMenu({}: Props) {
                     </Link>
                   </li>
                 </ul>
-                <div className="py-1">
-                  <Link
-                    href="/api/logout"
-                    className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                <div className={`py-1 px-1 ${!user ? "hidden" : "block"}`}>
+                  <button
+                    onClick={handleLogout}
+                    className=" w-full bg-black bg-opacity-50 rounded-md text-white text-sm hover:bg-opacity-100 px-3 py-2 text-start">
                     Sign out
-                  </Link>
+                  </button>
                 </div>
               </div>
             </li>
@@ -236,7 +261,7 @@ export default function NavigationMenu({}: Props) {
             </li>
             {/* end of dropdown */}
 
-            <li>
+            <li className={`${user ? "hidden" : "block"}`}>
               <Link
                 href="/login"
                 className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-blue-700 md:border md:bg-blue-500 block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
