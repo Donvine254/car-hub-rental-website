@@ -53,6 +53,21 @@ export default function Login({}: Props) {
       router.replace("/");
     }
   };
+
+  //function to login with google
+  async function loginWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+    if (error !== null) {
+      toast.success("Logged in Successfully", {
+        position: "top-left",
+      });
+      router.replace("/");
+    } else {
+      console.error(error);
+    }
+  }
   return (
     <form className="w-full " onSubmit={handleSignIn}>
       <div className="flex flex-col items-center justify-center w-full min-h-screen px-4 font-poppins">
@@ -146,9 +161,7 @@ export default function Login({}: Props) {
               <button
                 className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
                 type="button"
-                onClick={() => {
-                  toast.info("Login with Google is not supported yet!");
-                }}>
+                onClick={loginWithGoogle}>
                 <GoogleIcon />
                 <span>Google</span>
               </button>
