@@ -4,7 +4,7 @@ type Props = {};
 
 export default function Cars({}: Props) {
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-screen py-10 bg-gradient from:blue-200 to:cyan-200">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen py-10 xsm:mx-5">
       <h1 className="text-2xl font-bold my-2 capitalize">
         Home page for displaying all cars
       </h1>
