@@ -22,7 +22,7 @@ export default function Login({}: Props) {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("post_login_redirect_url") ?? "";
+  const redirect = searchParams.get("post_login_redirect_url") ?? "/";
   //function for onChange event handler
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -52,7 +52,7 @@ export default function Login({}: Props) {
       toast.success("Logged in successfully", {
         position: "bottom-center",
       });
-      router.replace(redirect ?? "");
+      router.replace(redirect);
     }
   };
 

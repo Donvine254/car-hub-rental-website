@@ -189,13 +189,6 @@ export default function NavigationMenu({}: Props) {
                     </Link>
                   </li>
                 </ul>
-                <div className={`py-1 px-1 ${!user ? "hidden" : "block"}`}>
-                  <button
-                    onClick={handleLogout}
-                    className=" w-full bg-black bg-opacity-50 rounded-md text-white text-sm hover:bg-opacity-100 px-3 py-2 text-start">
-                    Sign out
-                  </button>
-                </div>
               </div>
             </li>
             {/* dropdown for resources */}
@@ -266,6 +259,14 @@ export default function NavigationMenu({}: Props) {
                 href="/login"
                 className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-blue-700 md:border md:bg-blue-500 block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
                 Login
+              </Link>
+            </li>
+            <li className={`${!user ? "hidden" : "block"}`}>
+              <Link
+                href="/api/logout"
+                onClick={handleLogout}
+                className=" text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-black md:hover:bg-opacity-100 md:bg-opacity-50 md:border md:bg-black block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
+                Logout
               </Link>
             </li>
           </ul>
