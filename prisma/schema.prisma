@@ -18,6 +18,8 @@ model User {
   phone     String?  @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  reviews     Review[]
+  bookings    Booking[]
 }
 
 
@@ -26,4 +28,51 @@ model Location {
   name String @unique
   address String
   phone String
+}
+
+model Car {
+  id              Int       @id @default(autoincrement())
+  modelName       String
+  year            Int
+  pricePerDay     Int
+  transmissionType String
+  bodyType        String
+  category        String
+  fuelConsumption String
+  noOfSeats       Int
+  fuelType        String
+  isRented        Boolean   @default(false)
+  rating          Int
+  location        Int
+  createdAt       DateTime  @default(now())
+  reviews         Review[]
+  bookings        Booking[]
+}
+
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  car       Car      @relation(fields: [carId], references: [id])
+  carId     Int
+  user      User     @relation(fields: [userId], references: [user_id])
+  userId    String
+  createdAt DateTime @default(now())
+  body      String
+  title     String
+  rating    Int
+}
+
+model Booking {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [user_id])
+  userId      String
+  car         Car      @relation(fields: [carId], references: [id])
+  carId       Int
+  startDate   DateTime
+  endDate     DateTime
+  pickupTime  DateTime
+  dropoffTime DateTime
+  phoneNumber Int
+  totalPrice  Int
+  createdAt   DateTime @default(now())
 }
