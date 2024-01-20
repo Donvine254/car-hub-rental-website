@@ -257,7 +257,7 @@ export default function NavigationMenu({}: Props) {
             <li className={`${user ? "hidden" : "block"}`}>
               <Link
                 href="/login"
-                className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-blue-700 md:border md:bg-blue-500 block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
+                className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-black md:hover:bg-opacity-100 md:bg-opacity-50 md:border md:bg-black block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
                 Login
               </Link>
             </li>
