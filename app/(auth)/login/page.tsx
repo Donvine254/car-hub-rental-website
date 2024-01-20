@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { Loader } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -18,9 +18,11 @@ export default function Login({}: Props) {
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("post_login_redirect_url") ?? "";
   //function for onChange event handler
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -50,7 +52,7 @@ export default function Login({}: Props) {
       toast.success("Logged in successfully", {
         position: "bottom-center",
       });
-      router.replace("/");
+      router.replace(redirect ?? "");
     }
   };
 

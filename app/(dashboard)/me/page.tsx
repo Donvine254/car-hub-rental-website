@@ -10,7 +10,7 @@ export default async function Profile({}: Props) {
   const { data, error } = await supabase.auth.getUser();
 
   if (error?.status === 401) {
-    redirect("/login");
+    redirect("/login?post_login_redirect_url=me");
   }
 
   return (
