@@ -1,16 +1,22 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { NextRequest, NextResponse } from 'next/server'
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
+import { NextRequest, NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 
-export async function middleware(req:NextRequest) {
-  const res = NextResponse.next()
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
 
   // Create a Supabase client configured to use cookies
-  const supabase = createMiddlewareClient({ req, res })
+  const supabase = createMiddlewareClient({ req, res });
 
   // Refresh session if expired - required for Server Components
-  await supabase.auth.getSession()
+  const session = await supabase.auth.getSession();
+  if (!session) {
+    // Redirect to the login page if the user is not logged in
+    console.log("Redirecting to /login");
+    return redirect("/login");
+  }
 
-  return res
+  return res;
 }
 
 // Ensure the middleware is only called for relevant paths.
@@ -23,6 +29,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    "/((?!_next/static|_next/image|favicon.ico|login).*)",
   ],
-}
+};

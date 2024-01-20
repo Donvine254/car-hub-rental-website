@@ -18,7 +18,7 @@ export default function Login({}: Props) {
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
   //function for onChange event handler
@@ -118,7 +118,7 @@ export default function Login({}: Props) {
                 type={showPassword ? "text" : "password"}
               />
             </div>
-            <div className="xsm:text-sm flex items-center justify-between gap-1 md:gap-4">
+            <div className="xsm:text-[10px] flex items-center justify-between gap-1 md:gap-4">
               <div className="flex items-center justify-start gap-1 md:gap-4">
                 <input
                   type="checkbox"
@@ -146,7 +146,10 @@ export default function Login({}: Props) {
               {!loading ? (
                 "Login"
               ) : (
-                <Loader className="animate-spin delay-1000" fill="gray-600" />
+                <Loader
+                  className="animate-spin text-blue-600"
+                  fill="blue-600"
+                />
               )}
             </button>
             {/* beginning of social logins */}
