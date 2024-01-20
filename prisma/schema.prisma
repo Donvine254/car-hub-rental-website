@@ -19,3 +19,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
+
+
+model Location {
+  id  Int  @id @default(autoincrement())
+  name String @unique
+  address String
+  phone String
+}
