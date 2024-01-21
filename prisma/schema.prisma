@@ -33,6 +33,7 @@ model Location {
 model Car {
   id              Int       @id @default(autoincrement())
   modelName       String
+  image           String
   year            Int
   pricePerDay     Int
   transmissionType String

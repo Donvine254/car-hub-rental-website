@@ -1,6 +1,5 @@
 "use server";
 import { NextRequest, NextResponse } from "next/server";
-import { hashPassword } from "@/lib/hashpassword";
 import { supabase } from "@/db/supabase";
 import { registerUsers } from "@/lib/register";
 //function to register users
@@ -24,13 +23,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
       data: {
         username: params.username,
         imageUrl: `https://ui-avatars.com/api/?background=random&name=${params.username}`,
+        phone: params.phone,
       },
     },
   });
   if (response.error !== null) {
     throw new Error(response.error.message);
-  } else {
-    // registerUsers(params);
+  } else if (response?.data?.user?.id !== null) {
+    await registerUsers({
+      ...params,
+      user_id: response?.data?.user?.id ?? "",
+    });
     return NextResponse.json(response.data.user);
   }
 }

@@ -62,11 +62,6 @@ export default function Register({}: Props) {
         const response = await Axios.post("/api/register", data);
         const responseData = await response.data;
         console.log(responseData);
-        const userData = {
-          ...data,
-          user_id: responseData?.id,
-        };
-        await registerUsers(userData);
         setLoading(false);
         setAlert(true);
         confetti({

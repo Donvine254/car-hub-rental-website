@@ -11,6 +11,7 @@ interface Data {
   password: string;
   role?: string;
   imageUrl?: string;
+  phone: string;
 }
 export async function registerUsers(data: Data) {
   const hashedPassword = await hashPassword(data.password);
@@ -19,6 +20,7 @@ export async function registerUsers(data: Data) {
       username: data.username,
       user_id: data.user_id,
       email: data.email,
+      phone: data.phone,
       password: hashedPassword, // Use encrypted password
       role: "user",
       imageUrl: `https://ui-avatars.com/api/?background=random&name=${data.username}`,
