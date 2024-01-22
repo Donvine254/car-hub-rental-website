@@ -61,7 +61,6 @@ export default function Register({}: Props) {
       try {
         const response = await Axios.post("/api/register", data);
         const responseData = await response.data;
-        console.log(responseData);
         setLoading(false);
         setAlert(true);
         confetti({
@@ -80,7 +79,7 @@ export default function Register({}: Props) {
           phone: "",
         });
       }
-      // router.replace("/login");
+      setTimeout(() => router.replace("/login"), 4000);
     }
   }
 

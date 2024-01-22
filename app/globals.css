@@ -74,7 +74,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-poppins box-border;
+    @apply bg-background text-foreground font-poppins box-border scroll-smooth;
   }
 }
 input:not(:placeholder-shown):invalid {
