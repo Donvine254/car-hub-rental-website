@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 type Props = {};
@@ -11,7 +10,6 @@ type User = {};
 export default function NavigationMenu({}: Props) {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClientComponentClient();
-  const router = useRouter();
   useEffect(() => {
     (async () => {
       try {
@@ -28,7 +26,6 @@ export default function NavigationMenu({}: Props) {
 
   async function handleLogout() {
     await supabase.auth.signOut();
-    router.refresh();
   }
 
   return (
@@ -38,7 +35,7 @@ export default function NavigationMenu({}: Props) {
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
       <div className="container mx-auto flex flex-wrap items-center justify-between">
-        <Link href="/" className="flex">
+        <Link href="/" className="flex items-center gap-0">
           <Image
             alt="CarHub Logo"
             width={118}
@@ -257,7 +254,7 @@ export default function NavigationMenu({}: Props) {
             <li className={`${user ? "hidden" : "block"}`}>
               <Link
                 href="/login"
-                className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-black md:hover:bg-opacity-100 md:bg-opacity-50 md:border md:bg-black block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
+                className="text-gray-700 hover:bg-gray-50 xsm:border-b  md:hover:bg-green-500 md:hover:shadow  md:bg-green-500 block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
                 Login
               </Link>
             </li>
@@ -265,7 +262,7 @@ export default function NavigationMenu({}: Props) {
               <Link
                 href="/api/logout"
                 onClick={handleLogout}
-                className=" text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-black md:hover:bg-opacity-100 md:bg-opacity-50 md:border md:bg-black block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
+                className=" text-gray-700 hover:bg-gray-50 xsm:border-b  md:hover:bg-green-500 md:hover:shadow  md:bg-green-500 block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:px-4 md:text-white md:text-center md:rounded-md">
                 Logout
               </Link>
             </li>
