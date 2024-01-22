@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
+import { EB_Garamond } from "next/font/google";
 import NavigationMenu from "@/components/ui/navigationmenu";
 import "../globals.css";
-
+const eb_garamond = EB_Garamond({
+  subsets: ["latin"],
+  display: "swap",
+});
 export const metadata: Metadata = {
   title: "Car Hub",
   description:
@@ -16,7 +20,7 @@ export default function DashboardLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={eb_garamond.className}>
         <Toaster richColors closeButton theme="light" />
         <NavigationMenu />
         {children}

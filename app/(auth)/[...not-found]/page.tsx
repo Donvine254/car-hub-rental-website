@@ -2,7 +2,7 @@ import React from "react";
 
 export default function NotFound() {
   return (
-    <section className="h-full w-full font-serif bg-[url('/not-found.jpg')] bg-cover bg-center bg-no-repeat">
+    <section className="h-full w-full  bg-[url('/not-found.jpg')] bg-cover bg-center bg-no-repeat">
       <div className="w-full flex h-screen flex-col items-center justify-center">
         <svg
           className="w-1/2 md:1/3 lg:w-1/4 text-blue-600"
@@ -127,7 +127,7 @@ export default function NotFound() {
             fill="#cacaca"></path>
         </svg>
         <div className="flex flex-col items-center justify-center text-center">
-          <p className="cutout-text text-5xl md:text-7xl lg:text-8xl text-white font-extrabold mt-12 font-serif">
+          <p className="cutout-text text-5xl md:text-7xl lg:text-8xl text-white font-extrabold mt-12">
             Something&apos;s Missing
           </p>
           <p className="md:text-lg lg:text-xl text-white mt-8">
