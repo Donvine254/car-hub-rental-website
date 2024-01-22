@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
 import { Loader } from "lucide-react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import Script from "next/script";
 import Axios from "axios";
 import Link from "next/link";
