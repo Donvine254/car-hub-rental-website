@@ -98,3 +98,9 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+/* styling for cutout text */
+.cutout-text {
+  /* outline */
+  -webkit-text-stroke: 1px #ffff;
+  -webkit-text-fill-color: transparent;
+}
