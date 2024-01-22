@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/sonner";
 import "../../app/globals.css";
+import { EB_Garamond } from "next/font/google";
+const eb_garamond = EB_Garamond({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Car Hub",
@@ -16,7 +21,7 @@ export default function AuthLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={eb_garamond.className}>
         <Toaster />
         <Sonner richColors closeButton theme="light" />
         {children}

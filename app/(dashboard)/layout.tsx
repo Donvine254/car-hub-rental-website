@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { EB_Garamond } from "next/font/google";
 import NavigationMenu from "@/components/ui/navigationmenu";
 import "../globals.css";
+
 const eb_garamond = EB_Garamond({
   subsets: ["latin"],
   display: "swap",
