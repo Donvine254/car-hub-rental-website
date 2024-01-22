@@ -2,6 +2,7 @@
 
 import { prisma } from "@/db/prisma";
 import { hashPassword } from "./hashpassword";
+import { PrismaClientInitializationError } from "@prisma/client/runtime/library";
 //function to register users
 
 interface Data {
@@ -15,18 +16,24 @@ interface Data {
 }
 export async function registerUsers(data: Data) {
   const hashedPassword = await hashPassword(data.password);
-  const user = await prisma.user.create({
-    data: {
-      username: data.username,
-      user_id: data.user_id,
-      email: data.email,
-      phone: data.phone,
-      password: hashedPassword, // Use encrypted password
-      role: "user",
-      imageUrl: `https://ui-avatars.com/api/?background=random&name=${data.username}`,
-    },
-  });
-  console.log(user);
+  try {
+    const user = await prisma.user.create({
+      data: {
+        username: data.username,
+        user_id: data.user_id,
+        email: data.email,
+        phone: data.phone,
+        password: hashedPassword, // Use encrypted password
+        role: "user",
+        imageUrl: `https://ui-avatars.com/api/?background=random&name=${data.username}`,
+      },
+    });
+    return user;
+  } catch (error) {
+    return new Error(
+      "Registration failed: Email or Phone number already exists"
+    );
+  }
 }
 
 // import { hashPassword } from "./hashpassword";

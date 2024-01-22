@@ -68,18 +68,28 @@ export default function Register({}: Props) {
           spread: 100,
           origin: { y: 0.3 },
         });
-      } catch (error) {
-        setLoading(false);
-        toast.error("Registration failed");
-      } finally {
         setData({
           username: "",
           email: "",
           password: "",
           phone: "",
         });
+        setTimeout(() => router.replace("/login"), 4000);
+      } catch (error) {
+        setLoading(false);
+        setData({
+          username: "",
+          email: "",
+          password: "",
+          phone: "",
+        });
+        toast.error(
+          "Registration failed: Email or Phone number already exists",
+          {
+            position: "top-left",
+          }
+        );
       }
-      setTimeout(() => router.replace("/login"), 4000);
     }
   }
 

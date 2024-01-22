@@ -17,7 +17,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const params = (await req.json()) as Data;
   const response = await supabase.auth.signUp({
     email: params.email,
-    password: params.password, // Use encrypted password
+    password: params.password, // supabase will automatically encrypt the password
     phone: params.phone,
     options: {
       data: {
@@ -28,12 +28,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
     },
   });
   if (response.error !== null) {
-    throw new Error(response.error.message);
+    return NextResponse.json(
+      { error: response.error.message },
+      { status: 322 }
+    );
   } else if (response?.data?.user?.id !== null) {
-    await registerUsers({
-      ...params,
-      user_id: response?.data?.user?.id ?? "",
-    });
-    return NextResponse.json(response.data.user);
+    try {
+      await registerUsers({
+        ...params,
+        user_id: response?.data?.user?.id ?? "",
+      });
+      return NextResponse.json(response.data.user, { status: 200 });
+    } catch (error) {
+      return NextResponse.json({ error: error }, { status: 322 }); // Unprocessable entity
+    }
   }
 }
