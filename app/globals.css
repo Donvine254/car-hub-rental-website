@@ -98,6 +98,6 @@ input[type="number"] {
 /* styling for cutout text */
 .cutout-text {
   /* outline */
-  -webkit-text-stroke: 1px #ffff;
+  -webkit-text-stroke: 1px #1ecb15;
   -webkit-text-fill-color: transparent;
 }

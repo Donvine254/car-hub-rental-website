@@ -108,7 +108,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="bg-[url('https://www.travelperk.com/wp-content/uploads/car-rental-companies-1-scaled.jpg')] bg-cover bg-center bg-no-repeat">
+      <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
         <div className="bg-black w-full h-full  bg-opacity-60">
           <div className="p-6 my-12 mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-4">

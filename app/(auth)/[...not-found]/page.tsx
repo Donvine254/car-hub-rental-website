@@ -128,11 +128,10 @@ export default function NotFound() {
         </svg>
         <div className="flex flex-col items-center justify-center text-center">
           <p className="cutout-text text-5xl md:text-7xl lg:text-8xl text-white font-extrabold mt-12">
-            Something&apos;s Missing
+            You Look Lost
           </p>
           <p className="md:text-lg lg:text-xl text-white mt-8">
-            We know we are out of this world but you seem too far away from
-            home!
+            You might have taken the wrong turn or used the wrong directions!
           </p>
           <a
             href="/"
