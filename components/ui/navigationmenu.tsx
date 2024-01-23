@@ -2,15 +2,28 @@
 import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Topnav from "./topnav";
+
 type Props = {};
+
 type User = {};
 export default function NavigationMenu({}: Props) {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClientComponentClient();
+
+  let variant = "transparent";
+  let color = "white";
+
+  const pathname = usePathname();
+
+  if (pathname !== "/") {
+    variant = "green-100";
+    color = "gray-700";
+  }
+
   useEffect(() => {
     (async () => {
       try {
@@ -30,13 +43,14 @@ export default function NavigationMenu({}: Props) {
   }
 
   return (
-    <nav className="">
+    <nav className="relative">
       <Script
         async
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
       <Topnav />
-      <section className="w-full py-4 min-h-20 fixed top-10 md:z-20">
+      <section
+        className={`bg-${variant}  w-full text-${color} py-4 min-h-20 absolute top-10 md:z-20`}>
         <div className="container mx-auto flex flex-wrap items-center justify-between ">
           <Link href="/" className="flex items-center gap-0">
             <Image
@@ -80,7 +94,7 @@ export default function NavigationMenu({}: Props) {
               <li>
                 <Link
                   href="/"
-                  className="text-white hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-700 hover:underline underline-offset-2 md:p-0">
+                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-green-700 hover:underline underline-offset-2 md:p-0">
                   Home
                 </Link>
               </li>
@@ -88,7 +102,7 @@ export default function NavigationMenu({}: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar2"
-                  className="text-white hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-green-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   Vehicle Models{" "}
                   <svg
                     className="w-4 h-4 ml-1"
@@ -142,7 +156,7 @@ export default function NavigationMenu({}: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar"
-                  className="text-white hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-green-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   My Account{" "}
                   <svg
                     className="w-4 h-4 ml-1"
@@ -196,7 +210,7 @@ export default function NavigationMenu({}: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar3"
-                  className="text-white hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-green-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-green-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   Resources{" "}
                   <svg
                     className="w-4 h-4 ml-1"
