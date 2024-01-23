@@ -9,6 +9,7 @@ import {
 } from "@/assets";
 import Homebooking from "@/components/ui/homebooking";
 import { Clock10Icon, MapPinIcon, TagIcon, Trophy } from "lucide-react";
+import Testimonials from "@/components/ui/testimonials";
 
 export const metadata: Metadata = {
   title: "Car Hub - Homepage",
@@ -158,43 +159,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="bg-[#f8f9fa] py-12">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center">Testimonials</h2>
-          <div className="mt-8 md:grid md:grid-cols-3 gap-4">
-            <blockquote className="p-4 bg-white">
-              <p className="text-sm text-gray-600">
-                &quot;Excellent Service! Car Rent Service! I have been using
-                your service for many years and always get the same excellent
-                service no matter who I deal with!&quot;
-              </p>
-              <footer className="mt-4">
-                <p className="text-sm font-medium">John Doe</p>
-              </footer>
-            </blockquote>
-            <blockquote className="p-4 bg-white">
-              <p className="text-sm text-gray-600">
-                &quot;Excellent Service! Car Rent Service! We have been using
-                your service for many years and always get the same excellent
-                service no matter who I deal with!&quot;
-              </p>
-              <footer className="mt-4">
-                <p className="text-sm font-medium">Jane Smith</p>
-              </footer>
-            </blockquote>
-            <blockquote className="p-4 bg-white">
-              <p className="text-sm text-gray-600">
-                &quot;Excellent Service! Car Rent Service! I have been using
-                your service for many years and always get the same excellent
-                service no matter who I deal with!&quot;
-              </p>
-              <footer className="mt-4">
-                <p className="text-sm font-medium">Michael Johnson</p>
-              </footer>
-            </blockquote>
-          </div>
-        </div>
-      </section>
+      {/* SECTION FOR TESTIMONIALS */}
+      <Testimonials />
       <footer className="bg-[#333] text-white">
         <div className="container mx-auto py-12 px-6">
           <div className="grid grid-cols-2 gap-8">
