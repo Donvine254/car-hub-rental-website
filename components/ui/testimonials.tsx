@@ -15,8 +15,13 @@ import Autoplay from "embla-carousel-autoplay";
 
 export default function Testimonials() {
   return (
-    <section className="bg-[#f8f9fa] py-12">
-      <h2 className="text-4xl font-bold text-center">Testimonials</h2>
+    <section className="bg-[#f8f9fa] py-4">
+      <div className="flex flex-col items-center justify-center mx-auto">
+        <p className="text-xl font-bold text-center text-green-500 py-1 px-4 border bg-gray-200 w-fit">
+          What Customers Say
+        </p>
+        <h2 className="text-4xl font-bold text-center">Testimonials</h2>
+      </div>
       <Carousel
         className="md:max-w-[75%] mx-auto my-4 h-fit"
         opts={{

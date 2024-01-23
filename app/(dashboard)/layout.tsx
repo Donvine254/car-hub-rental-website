@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import { EB_Garamond } from "next/font/google";
 import NavigationMenu from "@/components/ui/navigationmenu";
+
 import "../globals.css";
+import Footer from "@/components/ui/Footer";
 
 const eb_garamond = EB_Garamond({
   subsets: ["latin"],
@@ -25,6 +27,7 @@ export default function DashboardLayout({
         <Toaster richColors closeButton theme="light" />
         <NavigationMenu />
         {children}
+        <Footer />
       </body>
     </html>
   );

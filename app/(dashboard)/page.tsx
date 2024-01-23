@@ -1,12 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import Image from "next/image";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  TwitterIcon,
-  YoutubeIcon,
-} from "@/assets";
+
 import Homebooking from "@/components/ui/homebooking";
 import { Clock10Icon, MapPinIcon, TagIcon, Trophy } from "lucide-react";
 import Testimonials from "@/components/ui/testimonials";
@@ -163,50 +157,6 @@ export default function Home() {
       </section>
       {/* SECTION FOR TESTIMONIALS */}
       <Testimonials />
-      <footer className="bg-[#333] text-white">
-        <div className="container mx-auto py-12 px-6">
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-bold">Any Questions?</h3>
-              <p className="mt-4 text-sm">
-                Rental customer care is here to help you anytime.
-              </p>
-              <p className="mt-2 text-2xl font-bold">+254702018099</p>
-              <button className="mt-4 bg-green-600 px-4 py-2">
-                Contact Us
-              </button>
-            </div>
-            <div className="grid grid-cols-2 gap-8">
-              <div>
-                <h4 className="text-lg font-semibold">About Carhub</h4>
-                <nav className="mt-4 space-y-2 flex flex-col gap-2">
-                  <Link className="text-sm" href="#">
-                    About
-                  </Link>
-                  <Link className="text-sm" href="#">
-                    Blog
-                  </Link>
-                  <Link className="text-sm" href="#">
-                    Terms and Conditions
-                  </Link>
-                </nav>
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold">Social Network</h4>
-                <div className="mt-4 flex space-x-4">
-                  <FacebookIcon />
-                  <TwitterIcon />
-                  <InstagramIcon />
-                  <YoutubeIcon />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="pt-1 border-t border-gray-700">
-            <p className="text-sm">Copyright 2023 - Carhub design by Donvine</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

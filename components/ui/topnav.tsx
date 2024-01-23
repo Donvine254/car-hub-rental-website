@@ -23,7 +23,7 @@ export default function Topnav({}: Props) {
         <div className="flex items-center gap-1">
           <Mail fill="#22C55E" stroke="black" />
           <a href="mailto:admin@carhub.com" target="_blank">
-            admin@carhub.com
+            info@carhubke.com
           </a>
         </div>
         <div className="flex items-center gap-1">
