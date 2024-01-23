@@ -31,7 +31,7 @@ export default function Home() {
               comfortable cars.
             </h3>
           </div>
-          <div className="flex-1 w-1/2">
+          <div className="flex-1 w-full md:w-1/2">
             <Homebooking />
           </div>
           {/* delete upto here */}
@@ -79,7 +79,7 @@ export default function Home() {
             <h1 className="text-4xl font-bold text-center ">Our Features</h1>
           </div>
 
-          <div className="mt-8 grid grid-cols-2 gap-8">
+          <div className="mt-8 flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-8">
             <div>
               <h3 className="text-xl font-semibold">First class services</h3>
               <p className="mt-2 text-sm text-gray-600">
