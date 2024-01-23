@@ -32,9 +32,9 @@ import {
 
 export default function Component() {
   return (
-    <div className="">
-      <section className="relative bg-[url('https://watermark.lovepik.com/photo/20211208/large/lovepik-forest-road-highway-picture_501669994.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full">
-        <div className="h-screen w-full  px-4 pt-64 ">
+    <div className="pt-32 md:pt-0">
+      <section className="relative bg-[url('https://watermark.lovepik.com/photo/20211208/large/lovepik-forest-road-highway-picture_501669994.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full ">
+        <div className="h-screen w-full  px-4 md:pt-64 ">
           <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-loose my-2">
             Looking for a <span className="text-green-500">vehicle? </span>{" "}
             You&apos;re at the right place.
@@ -115,9 +115,10 @@ export default function Component() {
           </div>
         </div>
       </section>
-      <section className="container mx-auto my-12 px-6">
-        <div className="flex items-center justify-between gap-2">
+      <section className="container mx-auto my-12">
+        <div className="grid grid-cols-2 md:flex md:flex-row items-center justify-between gap-2">
           <div className="flex-1">
+            <h1 className="text-6xl font-extrabold text-gray-600">01</h1>
             <h2 className="text-2xl font-bold">Choose a vehicle</h2>
             <p className="mt-2 text-sm text-gray-600">
               Our vehicles come in various shapes, sizes, and brands, ensuring
@@ -125,18 +126,21 @@ export default function Component() {
             </p>
           </div>
           <div className="flex-1">
+            <h1 className="text-6xl font-extrabold text-gray-600">02</h1>
             <h2 className="text-2xl font-bold">Pick location & date</h2>
             <p className="mt-2 text-sm text-gray-600">
               Pick your location carefully and give us the date as well.
             </p>
           </div>
           <div className="flex-1">
+            <h1 className="text-6xl font-extrabold text-gray-600">03</h1>
             <h2 className="text-2xl font-bold">Make a booking</h2>
             <p className="mt-2 text-sm text-gray-600">
               We&apos;ll help you to complete the booking process.
             </p>
           </div>
           <div className="flex-1">
+            <h1 className="text-6xl font-extrabold text-gray-600">04</h1>
             <h2 className="text-2xl font-bold">Sit back & relax</h2>
             <p className="mt-2 text-sm text-gray-600">
               We&apos;ll take care of every detail.
