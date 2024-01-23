@@ -239,6 +239,13 @@ export default function NavigationMenu({}: Props) {
                       Contact
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      href="/blog"
+                      className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                      Blog
+                    </Link>
+                  </li>
                 </ul>
                 <div className="py-1">
                   <Link
