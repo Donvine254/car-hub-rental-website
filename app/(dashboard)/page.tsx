@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import type { Metadata } from "next";
 import Image from "next/image";
 import {
   FacebookIcon,
@@ -9,6 +9,12 @@ import {
 } from "@/assets";
 import Homebooking from "@/components/ui/homebooking";
 import { Clock10Icon, MapPinIcon, TagIcon, Trophy } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Car Hub - Homepage",
+  description:
+    "Car Hub is a car rental service that provides customers with ease access to high-end, high-performance and affordable rental vehicles",
+};
 
 export default function Home() {
   return (
