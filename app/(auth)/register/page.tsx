@@ -7,7 +7,8 @@ import { toast } from "sonner";
 import Script from "next/script";
 import Axios from "axios";
 import Link from "next/link";
-import { registerUsers } from "@/lib/register";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 type Props = {};
 interface FormData {
   username: string;
@@ -27,6 +28,7 @@ export default function Register({}: Props) {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const supabase = createClientComponentClient();
   const router = useRouter();
   //function for onChange event handler
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +92,20 @@ export default function Register({}: Props) {
           }
         );
       }
+    }
+  }
+
+  async function loginWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+    if (error !== null) {
+      toast.success("Logged in Successfully", {
+        position: "top-left",
+      });
+      router.replace("/");
+    } else {
+      console.error(error);
     }
   }
 
@@ -213,14 +229,17 @@ export default function Register({}: Props) {
 
           <div className="items-center px-6 py-2 flex flex-col space-y-2">
             <button
-              className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-gray-100 disabled:text-black  h-10 px-4 py-2 w-full bg-blue-500 hover:bg-blue-600 text-white rounded-md"
+              className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-green-50 disabled:text-black  h-10 px-4 py-2 w-full bg-green-500 hover:bg-green-600 text-white rounded-md"
               type="submit"
               disabled={loading}
               title="register">
               {!loading ? (
                 "Register"
               ) : (
-                <Loader className="animate-spin" fill="gray-600" />
+                <Loader
+                  className="animate-spin text-green-500"
+                  fill="#22C55E"
+                />
               )}
             </button>
             {/* beginning of social logins */}
@@ -235,9 +254,7 @@ export default function Register({}: Props) {
               <button
                 className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white   h-10 px-4 py-2 w-1/2 flex justify-center items-center space-x-2"
                 type="button"
-                onClick={() => {
-                  toast.error("Google signup is not supported yet!");
-                }}>
+                onClick={loginWithGoogle}>
                 <GoogleIcon />
                 <span>Google</span>
               </button>
@@ -245,7 +262,12 @@ export default function Register({}: Props) {
                 className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white  h-10 px-4 py-2 w-1/2 flex justify-center items-center space-x-2"
                 type="button"
                 onClick={() => {
-                  toast.error("Facebook Signup is not supported yet!");
+                  toast.info("Facebook Signup is not supported yet!", {
+                    style: {
+                      backgroundColor: "#22C55E",
+                      color: "#fff",
+                    },
+                  });
                 }}>
                 <FacebookIcon />
                 <span>Facebook</span>
@@ -257,7 +279,7 @@ export default function Register({}: Props) {
           Already have an account?{" "}
           <Link
             prefetch
-            className="text-blue-500 hover:underline border px-2 py-0.5 bg-white rounded-md"
+            className="text-green-600 hover:underline border px-2 py-0.5 bg-white rounded-md"
             href="/login">
             Login Here
           </Link>

@@ -36,8 +36,8 @@ export default function NavigationMenu({}: Props) {
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
       <Topnav />
-      <section className="bg-transparent w-full py-4 min-h-20 fixed top-10 md:z-20">
-        <div className="container mx-auto flex flex-wrap items-center justify-between">
+      <section className="w-full py-4 min-h-20 fixed top-10 md:z-20">
+        <div className="container mx-auto flex flex-wrap items-center justify-between ">
           <Link href="/" className="flex items-center gap-0">
             <Image
               alt="CarHub Logo"
@@ -80,7 +80,7 @@ export default function NavigationMenu({}: Props) {
               <li>
                 <Link
                   href="/"
-                  className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-700 hover:underline underline-offset-2 md:p-0">
+                  className="text-white hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-700 hover:underline underline-offset-2 md:p-0">
                   Home
                 </Link>
               </li>
@@ -88,7 +88,7 @@ export default function NavigationMenu({}: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar2"
-                  className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className="text-white hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   Vehicle Models{" "}
                   <svg
                     className="w-4 h-4 ml-1"
@@ -142,7 +142,7 @@ export default function NavigationMenu({}: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar"
-                  className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className="text-white hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   My Account{" "}
                   <svg
                     className="w-4 h-4 ml-1"
@@ -196,7 +196,7 @@ export default function NavigationMenu({}: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar3"
-                  className="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className="text-white hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-green-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   Resources{" "}
                   <svg
                     className="w-4 h-4 ml-1"
