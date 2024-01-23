@@ -115,8 +115,8 @@ export default function Home() {
               <h2 className="text-4xl font-bold flex-1 text-white">
                 We offer customers a wide range of{" "}
                 <span className="text-green-500">commercial cars</span> and{" "}
-                <span className="text-green-500">luxury cars</span>
-                for any occasion.
+                <span className="text-green-500">luxury cars</span> &nbsp; for
+                any occasion.
               </h2>
               <p className="mt-4 text-base  flex-1 text-white leading-loose">
                 At our car rental agency, we believe that everyone deserves the
@@ -155,7 +155,7 @@ export default function Home() {
       <section className="bg-[#f8f9fa] py-12">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center">Testimonials</h2>
-          <div className="mt-8 grid grid-cols-3 gap-4">
+          <div className="mt-8 md:grid md:grid-cols-3 gap-4">
             <blockquote className="p-4 bg-white">
               <p className="text-sm text-gray-600">
                 &quot;Excellent Service! Car Rent Service! I have been using
