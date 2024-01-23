@@ -6,7 +6,6 @@ import {
   MapPinIcon,
 } from "lucide-react";
 import React from "react";
-import { Card } from "./card";
 import Link from "next/link";
 
 type Props = {};
@@ -15,7 +14,7 @@ export default function Homebooking({}: Props) {
   const today = new Date();
   const formattedDate = today.toISOString().substring(0, 10);
   return (
-    <Card className="px-4 py-4">
+    <div className="px-4 py-4 border shadow bg-white">
       {/* div for two cards */}
       {/* first card */}
       <h1 className=" text-center md:text-start text-2xl font-extrabold">
@@ -93,6 +92,6 @@ export default function Homebooking({}: Props) {
           </Link>
         </div>
       </form>
-    </Card>
+    </div>
   );
 }
