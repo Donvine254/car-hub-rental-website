@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
-import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Topnav from "./topnav";
@@ -13,16 +12,6 @@ type User = {};
 export default function NavigationMenu({}: Props) {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClientComponentClient();
-
-  let variant = "transparent";
-  let color = "white";
-
-  const pathname = usePathname();
-
-  if (pathname !== "/") {
-    variant = "green-100";
-    color = "gray-700";
-  }
 
   useEffect(() => {
     (async () => {
@@ -43,14 +32,14 @@ export default function NavigationMenu({}: Props) {
   }
 
   return (
-    <nav className="relative">
+    <nav className="">
       <Script
         async
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
       <Topnav />
       <section
-        className={`bg-white text-gray-600 md:bg-${variant}  w-full md:text-${color} py-4 min-h-20 mt-10 md:mt-0 md:absolute md:top-10 md:z-20`}>
+        className={`bg-green-100 text-gray-600  w-full py-4 min-h-20 mt-10  z-20`}>
         <div className="container mx-auto flex flex-wrap items-center justify-between ">
           <Link href="/" className="flex items-center gap-0">
             <Image

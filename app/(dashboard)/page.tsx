@@ -1,18 +1,3 @@
-// export default function Home() {
-//   return (
-//     <main className="bg-[url('https://www.shutterstock.com/image-photo/road-trip-concept-portrait-excited-600nw-2149539859.jpg')] bg-cover bg-no-repeat bg-center w-full h-screen">
-//       <section className="pt-32 text-white" id="hero-page">
-//         <h1 className="text-2xl  font-bold text-center my-10 xsm:mx-5">
-//           Welcome to Car Hub
-//         </h1>
-//       </section>
-//     </main>
-//   );
-// }
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/BBBeabodtIS
- */
 import Link from "next/link";
 
 import {
@@ -29,90 +14,27 @@ import {
   TwitterIcon,
   YoutubeIcon,
 } from "@/assets";
+import Homebooking from "@/components/ui/homebooking";
 
-export default function Component() {
+export default function Home() {
   return (
     <div className="pt-32 md:pt-0">
       <section className="relative bg-[url('https://watermark.lovepik.com/photo/20211208/large/lovepik-forest-road-highway-picture_501669994.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full ">
-        <div className="h-screen w-full  px-4 md:pt-64 ">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-loose my-2">
-            Looking for a <span className="text-green-500">vehicle? </span>{" "}
-            You&apos;re at the right place.
-          </h1>
-          <div className="mt-6 flex flex-col md:flex-row items-center justify-evenly gap-2 bg-white rounded-md py-4">
-            <div className="flex flex-col justify-start  gap-4">
-              <h1 className="font-extrabold text-xl">
-                What&apos;s Your Vehicle Type?
-              </h1>
-              <div className="grid grid-cols-2 md:flex items-center gap-6">
-                <button className="bg-[#1ECB15] text-white px-4 py-2 rounded-md font-bold h-20 ">
-                  <Image src="/car.png" height={60} width={60} alt="car" />
-                  Saloon
-                </button>
-                <button className="bg-[#1ECB15] text-white px-4 py-2 rounded-md font-bold h-20 ">
-                  <Image src="/van.png" height={60} width={60} alt="car" />
-                  Van
-                </button>
-                <button className="bg-[#1ECB15] text-white px-4 py-2 rounded-md font-bold h-20 ">
-                  <Image src="/suv.png" height={60} width={60} alt="car" />
-                  SUV
-                </button>
-                <button className="bg-[#1ECB15] text-white px-4 py-2 rounded-md font-bold h-20">
-                  <Image src="/pickup.png" height={60} width={60} alt="car" />
-                  Pickup
-                </button>
-              </div>
-            </div>
-            {/* second div */}
-            <div className="md:self-end">
-              <div className="flex flex-col md:flex-row  items-center gap-6">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="space-y-2">
-                    <label className="block text-start">Pick Up Location</label>
-                    <input
-                      placeholder="Enter Pick Up Location"
-                      type="text"
-                      className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="block text-start">
-                      Drop Off Location
-                    </label>
-                    <input
-                      placeholder="Enter Drop Off Location"
-                      type="text"
-                      className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="space-y-2">
-                    <label className="block text-start">
-                      Pickup Date & Time
-                    </label>
-                    <input
-                      type="date"
-                      className="flex h-10 bg-background text-base w-full px-3 py-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="block text-start">
-                      Drop Off Date & Time
-                    </label>
-                    <input
-                      type="date"
-                      className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <button className=" bg-green-600 text-white px-2 py-1 rounded-md mt-2 w-full">
-                Find a vehicle
-              </button>
-            </div>
+        <div className="h-screen w-full  px-4 py-2 md:flex md:items-center md:justify-center md:gap-4 ">
+          <div className="flex-1 bg-black rounded-md bg-opacity-40 p-2">
+            <h1 className="text-white text-4xl md:text-6xl font-semibold leading-loose tracking-wide ">
+              Explore the world with comfortable car
+            </h1>
+            <h3 className="text-gray-100 text-xl  font-semibold  my-2 leading-loose">
+              Embark on unforgettable adventures and discover the world in
+              unparalleled comfort and style with our fleet of exceptionally
+              comfortable cars.
+            </h3>
           </div>
+          <div className="flex-1 w-1/2">
+            <Homebooking />
+          </div>
+          {/* delete upto here */}
         </div>
       </section>
       <section className="container mx-auto my-12">
@@ -150,7 +72,13 @@ export default function Component() {
       </section>
       <section className="bg-[#f8f9fa] py-12">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center">Why Choose Us</h2>
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-xl font-bold text-center text-green-500 py-1 px-4 border bg-gray-200 w-fit">
+              Why Choose Us
+            </p>
+            <h1 className="text-4xl font-bold text-center ">Our Features</h1>
+          </div>
+
           <div className="mt-8 grid grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-semibold">First class services</h3>
@@ -168,6 +96,20 @@ export default function Component() {
                 Uncompromising quality and efficiency with maximum comfort while
                 ensuring brilliant transportation solutions to make the most of
                 your car rental experience.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold">24/7 road assistance</h3>
+              <p className="mt-2 text-sm text-gray-600">
+                Reliable support when you need it most, keeping you on the move
+                with confidence and peace of mind.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold">Free Pick-Up & Drop-Off</h3>
+              <p className="mt-2 text-sm text-gray-600">
+                Enjoy free pickup and drop-off services, adding an extra layer
+                of ease to your car rental experience.
               </p>
             </div>
           </div>
