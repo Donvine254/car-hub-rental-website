@@ -12,7 +12,7 @@ type Props = {};
 
 export default function Topnav({}: Props) {
   return (
-    <div className="bg-black text-white  flex items-center justify-center md:justify-between w-full py-1 px-2">
+    <div className="h-10 fixed top-0 md:z-20 bg-black text-white  flex items-center justify-center md:justify-between w-full py-1 px-2">
       <div className="hidden md:flex items-center gap-2 ">
         <div className="flex items-center gap-1">
           <Phone fill="#22C55E" stroke="none" />

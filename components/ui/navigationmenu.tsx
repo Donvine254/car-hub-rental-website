@@ -30,13 +30,13 @@ export default function NavigationMenu({}: Props) {
   }
 
   return (
-    <nav className="relative ">
+    <nav className="">
       <Script
         async
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
       <Topnav />
-      <section className="bg-gray-200 w-full py-4 min-h-20  md:sticky top-0 md:z-20 ">
+      <section className="bg-transparent w-full py-4 min-h-20 fixed top-10 md:z-20">
         <div className="container mx-auto flex flex-wrap items-center justify-between">
           <Link href="/" className="flex items-center gap-0">
             <Image
