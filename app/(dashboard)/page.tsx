@@ -119,7 +119,7 @@ export default function Home() {
         <div className="bg-black w-full h-full  bg-opacity-60">
           <div className="p-6 my-12 mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
-              <h2 className="text-4xl font-bold flex-1 text-white">
+              <h2 className="text-4xl font-bold flex-1 text-white self-start mt-4">
                 We offer customers a wide range of{" "}
                 <span className="text-green-500">commercial cars</span> and{" "}
                 <span className="text-green-500">luxury cars</span> &nbsp; for
@@ -139,20 +139,22 @@ export default function Home() {
               </p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-10 text-white">
-              <div className="text-center py-4 px-4 bg-slate-800 bg-opacity-30 rounded-md border">
-                <h3 className="text-3xl font-bold ">1542</h3>
+              <div className="text-center py-4 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
+                <h3 className="text-3xl font-extrabold text-green-500 ">
+                  1542
+                </h3>
                 <p className="text-sm text-white">Completed Orders</p>
               </div>
-              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-30 rounded-md border">
-                <h3 className="text-3xl font-bold">800</h3>
+              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
+                <h3 className="text-3xl font-extrabold text-green-500">800</h3>
                 <p className="text-sm text-white">Happy Customers</p>
               </div>
-              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-30 rounded-md border">
-                <h3 className="text-3xl font-bold">123</h3>
+              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
+                <h3 className="text-3xl font-extrabold text-green-500">123</h3>
                 <p className="text-sm text-white">Vehicles Fleet</p>
               </div>
-              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-30 rounded-md border">
-                <h3 className="text-3xl font-bold">5</h3>
+              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
+                <h3 className="text-3xl font-extrabold text-green-500">5</h3>
                 <p className="text-sm text-white">Years Experience</p>
               </div>
             </div>
