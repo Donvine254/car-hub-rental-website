@@ -38,8 +38,7 @@ export default function NavigationMenu({}: Props) {
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
       <Topnav />
-      <section
-        className={`bg-green-100 text-gray-600  w-full py-4 min-h-20 mt-10  z-20`}>
+      <section className=" text-gray-600  w-full py-4 min-h-20 mt-10 z-20">
         <div className="container mx-auto flex flex-wrap items-center justify-between ">
           <Link href="/" className="flex items-center gap-0">
             <Image
