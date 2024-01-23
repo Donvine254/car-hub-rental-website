@@ -42,14 +42,14 @@ export default function Home() {
           <div className="mt-8 flex flex-col gap-2 md:grid md:grid-cols-3 md:gap-8">
             <div className="py-2 space-y-4 flex-col items-center">
               <div className="flex justify-between gap-2">
-                <div className="w-fit h-fit px-2 py-2 bg-green-500">
+                <div className="w-fit h-fit px-2 py-2 bg-green-500 rounded-md">
                   <Trophy fill="none" className="text-white" size={40} />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold">
                     First Class Services
                   </h3>
-                  <p className="mt-2 text-sm text-gray-600">
+                  <p className="mt-2 text-base text-gray-600">
                     Experience convenience, safety, and customization, paving
                     the way for unforgettable adventures and seamless mobility
                     solutions.
@@ -57,14 +57,14 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex justify-between gap-2">
-                <div className="w-fit h-fit px-2 py-2 bg-green-500">
+                <div className="w-fit h-fit px-2 py-2 bg-green-500 rounded-md">
                   <TagIcon fill="none" className="text-white" size={40} />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold">
                     Quality & Maximum Efficiency
                   </h3>
-                  <p className="mt-2 text-sm text-gray-600">
+                  <p className="mt-2 text-base text-gray-600">
                     Uncompromising quality and efficiency with maximum comfort
                     while ensuring brilliant transportation solutions to make
                     the most of your car rental experience.
@@ -72,36 +72,36 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="hidden md:block">
+            <div className="space-y-2">
               <Image src="/car.png" width={680} height={680} alt="car" />
             </div>
-            <div className="space-y-4 py-2 flex-col items-center">
-              <div className="flex justify-between gap-2">
-                <div className="w-fit h-fit px-2 py-2 bg-green-500">
-                  <Clock10Icon className="text-white" fill="none" size={40} />
-                </div>
+            <div className="space-y-4 py-2 flex-col items-center ">
+              <div className="flex justify-between gap-2 items-start">
                 <div>
-                  <h3 className="text-xl font-semibold">
+                  <h3 className="text-xl font-semibold text-right">
                     24/7 Road Assistance
                   </h3>
-                  <p className="mt-2 text-sm text-gray-600">
+                  <p className="mt-2 text-base text-gray-600 text-right">
                     Reliable support when you need it most, keeping you on the
                     move with confidence and peace of mind.
                   </p>
                 </div>
+                <div className="w-fit h-fit px-2 py-2 bg-green-500 rounded-md">
+                  <Clock10Icon className="text-white" fill="none" size={40} />
+                </div>
               </div>
               <div className="flex justify-between gap-2">
-                <div className="w-fit h-fit px-2 py-2 bg-green-500">
-                  <MapPinIcon fill="none" className="text-white" size={40} />
-                </div>
                 <div>
-                  <h3 className="text-xl font-semibold">
+                  <h3 className="text-xl font-semibold text-right">
                     Free Pick-Up & Drop-Off
                   </h3>
-                  <p className="mt-2 text-sm text-gray-600">
+                  <p className="mt-2 text-sm text-gray-600 text-right">
                     Enjoy free pickup and drop-off services, adding an extra
                     layer of ease to your car rental experience.
                   </p>
+                </div>
+                <div className="w-fit h-fit px-2 py-2 bg-green-500 rounded-md">
+                  <MapPinIcon fill="none" className="text-white" size={40} />
                 </div>
               </div>
             </div>
