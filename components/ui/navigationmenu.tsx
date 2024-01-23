@@ -50,7 +50,7 @@ export default function NavigationMenu({}: Props) {
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
       <Topnav />
       <section
-        className={`bg-${variant}  w-full text-${color} py-4 min-h-20 absolute top-10 md:z-20`}>
+        className={`bg-white text-gray-600 md:bg-${variant}  w-full md:text-${color} py-4 min-h-20 mt-10 md:mt-0 md:absolute md:top-10 md:z-20`}>
         <div className="container mx-auto flex flex-wrap items-center justify-between ">
           <Link href="/" className="flex items-center gap-0">
             <Image
