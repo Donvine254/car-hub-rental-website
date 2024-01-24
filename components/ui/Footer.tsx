@@ -8,8 +8,8 @@ import { FacebookIcon, InstagramIcon, TiktokIcon, YoutubeIcon } from "@/assets";
 export default function Footer() {
   return (
     <div>
-      <div className="bg-[#f8f9fa] border bg-opacity-80 text-center text-neutral-600  lg:text-left">
-        <div className="mx-6 py-4 text-center md:text-left">
+      <div className="bg-[#f8f9fa] border bg-opacity-80 text-neutral-600  ">
+        <div className="mx-6 py-4 ">
           <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="">
               <Link href="/" className="flex items-center gap-0">
@@ -42,7 +42,7 @@ export default function Footer() {
               </div>
             </div>
             <div className="">
-              <h6 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
+              <h6 className="mb-4 text-center font-extrabold text-green-500 uppercase md:text-start">
                 Services
               </h6>
               <p className="mb-4">
@@ -68,7 +68,7 @@ export default function Footer() {
               </p>
             </div>
             <div className="">
-              <h6 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
+              <h6 className="mb-4 flex  font-extrabold text-green-500 uppercase md:text-start">
                 Quick Links
               </h6>
               <p className="mb-4">
@@ -103,10 +103,10 @@ export default function Footer() {
             </div>
 
             <div>
-              <h6 className="mb-4 flex justify-center font-semibold uppercase md:justify-start">
+              <h6 className="mb-4  text-center font-extrabold uppercase md:text-start text-green-500">
                 Contact Us
               </h6>
-              <p className="mb-4 flex items-center justify-center md:justify-start gap-2 cursor-pointer">
+              <p className="mb-4 flex items-center md:justify-start gap-2 cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -117,19 +117,19 @@ export default function Footer() {
                 </svg>
                 123 Kimathi Street, NRB.
               </p>
-              <p className="mb-4 flex items-center justify-center md:justify-start gap-2 cursor-pointer">
+              <p className="mb-4 flex items-center  md:justify-start gap-2 cursor-pointer">
                 <MailIcon fill="none" className="text-green-500" />
                 <a href="mailto:admin@carhub.com" target="_blank">
                   info@carhubke.com
                 </a>
               </p>
-              <p className="mb-4 flex items-center justify-center md:justify-start gap-2 cursor-pointer">
+              <p className="mb-4 flex items-center md:justify-start gap-2 cursor-pointer">
                 <Phone fill="none" className="text-green-500" />
                 <a href="tel:+254 702018099" target="_blank">
                   +254702018099
                 </a>
               </p>
-              <p className="mb-4 flex items-center justify-center md:justify-start gap-2 cursor-pointer">
+              <p className="mb-4 flex items-center md:justify-start gap-2 cursor-pointer">
                 <svg
                   viewBox="0 0 1024 1024"
                   height="24"
