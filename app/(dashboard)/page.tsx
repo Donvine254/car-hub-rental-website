@@ -10,6 +10,7 @@ import {
   Trophy,
 } from "lucide-react";
 import Testimonials from "@/components/ui/testimonials";
+import Carshowcase from "@/components/ui/carshowcase";
 
 export const metadata: Metadata = {
   title: "Car Hub - Homepage",
@@ -137,6 +138,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* car showcase section */}
+      <Carshowcase/>
       <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
         <div className="bg-black w-full h-full  bg-opacity-60">
           <div className="p-6 my-12 mx-auto">
