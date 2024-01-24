@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { testimonials } from "@/public/constants";
+import { testimonials } from "@/constants";
 import { QuoteIcon } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 

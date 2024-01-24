@@ -2,7 +2,7 @@ export const testimonials = [
   {
     description:
       "Excellent service! The car was clean and in perfect condition. The rental process was quick and hassle-free.",
-    name: "John Doe",
+    name: "Donvine ",
   },
   {
     description:
@@ -48,5 +48,10 @@ export const testimonials = [
     description:
       "Outstanding service! The team was helpful and friendly. I will recommend this car rental company to friends and family.",
     name: "Jennifer Wilson",
+  },
+  {
+    description:
+      "Carhub has the cheapest prices for the most exclusive rides in town, and the cars are fully insured!",
+    name: "Jane Wanjiku",
   },
 ];
