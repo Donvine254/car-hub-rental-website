@@ -10,7 +10,7 @@ export default function Footer() {
     <div>
       <div className="bg-[#f8f9fa] border bg-opacity-80 text-neutral-600  ">
         <div className="mx-6 py-4 ">
-          <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-1 gap-2 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="">
               <Link href="/" className="flex items-center gap-0">
                 <Image
@@ -21,7 +21,7 @@ export default function Footer() {
                   className="object-contain"
                 />
               </Link>
-              <div className="py-4">
+              <div className="py-2 md:py-4">
                 <div className="inline-flex py-2">
                   <MapPinnedIcon fill="none" className="text-green-500" />
                   <p className="leading-loose font-semibold">
@@ -51,7 +51,7 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-            <div className="">
+            <div className=" ">
               <h6 className="mb-4 text-center font-extrabold text-green-500 uppercase md:text-start">
                 Services
               </h6>
@@ -78,7 +78,7 @@ export default function Footer() {
               </p>
             </div>
             <div className="">
-              <h6 className="mb-4 flex text-center font-extrabold text-green-500 uppercase md:text-start">
+              <h6 className="mb-4 text-center font-extrabold text-green-500 uppercase md:text-start">
                 Quick Links
               </h6>
               <p className="mb-4">

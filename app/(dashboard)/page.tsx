@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="pt-32 md:pt-0">
+    <div className=" bg-green-500 w-full">
       <section className="relative bg-[url('/hero-bg-2.jpeg')] bg-cover bg-no-repeat bg-right py-5 h-full ">
         <div className="md:h-screen w-full  px-4 py-2 md:flex md:items-center md:justify-center md:gap-4 ">
           <div className="flex-1 bg-black rounded-md bg-opacity-40 p-2">

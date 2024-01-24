@@ -4,6 +4,7 @@ import Image from "next/image";
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { usePathname } from "next/navigation";
 import Topnav from "./topnav";
 
 type Props = {};
@@ -12,6 +13,7 @@ type User = {};
 export default function NavigationMenu({}: Props) {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClientComponentClient();
+  const pathname = usePathname();
 
   useEffect(() => {
     (async () => {
@@ -32,14 +34,19 @@ export default function NavigationMenu({}: Props) {
   }
 
   return (
-    <nav className="">
+    <nav className="relative bg-transparent">
       <Script
         async
         defer
         src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></Script>
       <Topnav />
-      <section className=" text-gray-600  w-full py-4 min-h-20 mt-10 z-20">
-        <div className="container mx-auto flex flex-wrap items-center justify-between ">
+      <section
+        className={`${
+          pathname === "/"
+            ? "bg-white text-gray-600 md:bg-transparent md:text-white md:absolute "
+            : "bg-white text-gray-600  "
+        } w-full py-4 min-h-10 mt-10 z-20`}>
+        <div className="container bg-transparent mx-auto flex flex-wrap items-center justify-between ">
           <Link href="/" className="flex items-center gap-0">
             <Image
               alt="CarHub Logo"
