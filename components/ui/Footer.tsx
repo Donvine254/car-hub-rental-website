@@ -68,7 +68,7 @@ export default function Footer() {
               </p>
             </div>
             <div className="">
-              <h6 className="mb-4 flex  font-extrabold text-green-500 uppercase md:text-start">
+              <h6 className="mb-4 flex text-center font-extrabold text-green-500 uppercase md:text-start">
                 Quick Links
               </h6>
               <p className="mb-4">
