@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Testimonials from "@/components/ui/testimonials";
 import Carshowcase from "@/components/ui/carshowcase";
+import ScrollToTopButton from "@/components/ui/scrollButton";
 
 export const metadata: Metadata = {
   title: "Car Hub - Homepage",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className=" bg-green-500 w-full">
+    <div className=" bg-green-500 w-full relative">
       <section className="relative bg-[url('/hero-bg-2.jpeg')] bg-cover bg-no-repeat bg-right py-5 h-full ">
         <div className="md:h-screen w-full  px-4 py-2 md:flex md:items-center md:justify-center md:gap-4 ">
           <div className="flex-1 bg-black rounded-md bg-opacity-40 p-2">
@@ -139,7 +140,7 @@ export default function Home() {
         </div>
       </section>
       {/* car showcase section */}
-      <Carshowcase/>
+      <Carshowcase />
       <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
         <div className="bg-black w-full h-full  bg-opacity-60">
           <div className="p-6 my-12 mx-auto">
@@ -188,6 +189,7 @@ export default function Home() {
       </section>
       {/* SECTION FOR TESTIMONIALS */}
       <Testimonials />
+      <ScrollToTopButton />
     </div>
   );
 }

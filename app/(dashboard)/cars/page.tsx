@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import { CarDoorIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
 import { HeartIcon, Search } from "lucide-react";
+import ScrollToTopButton from "@/components/ui/scrollButton";
 type Props = {};
 
 export default function Carspage({}: Props) {
@@ -19,7 +20,7 @@ export default function Carspage({}: Props) {
   };
 
   return (
-    <section className="bg-[#f8f9fa]">
+    <section className="bg-[#f8f9fa] relative">
       <div className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
         <div className="bg-black flex items-center justify-center  bg-opacity-60 px-6 md:py-20">
           <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize  text-white md:py-4 ">
@@ -105,6 +106,7 @@ export default function Carspage({}: Props) {
           ))}
         </section>
       </div>
+      <ScrollToTopButton />
     </section>
   );
 }

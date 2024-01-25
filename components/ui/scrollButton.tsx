@@ -31,14 +31,19 @@ const ScrollToTopButton = () => {
   }, [handleScroll]); // Dependency array to ensure the correct cleanup
 
   return (
-    <div id="scroll" className="absolute bottom-5 left-5">
+    <div id="scroll" className="fixed bottom-5 right-5 ">
       {showButton && (
         <button
           onClick={handleButtonClick}
           id="scroll-to-top"
           title="Go to top"
-          className="show shadow px-2 py-1 bg-green-500 text-white rounded-md">
-          <ChevronUpSquareIcon />
+          className="show rounded-md">
+          <ChevronUpSquareIcon
+            size={60}
+            fill="currentColor"
+            className="text-green-500"
+            stroke="white"
+          />
         </button>
       )}
     </div>
