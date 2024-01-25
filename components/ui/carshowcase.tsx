@@ -65,7 +65,7 @@ export default function Carshowcase({}: Props) {
                         fill="currentColor"
                         size={16}
                       />
-                      23
+                      {Math.floor(Math.random() * 91) + 10}
                     </p>
                   </div>
                 </div>

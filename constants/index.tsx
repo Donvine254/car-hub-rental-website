@@ -118,12 +118,11 @@ export const Cars = [
     price_per_day: 25,
   },
   {
-    model_name: "Mercendes Benz",
+    model_name: "Mercendes Benz A Class",
     seats: 5,
     fuel_consumption: 14.2,
     transmission: "Automatic",
-    image:
-      "/cars/mercendez-benz.png",
+    image: "/cars/mercendez-benz.png",
     price_per_day: 40,
   },
   {
@@ -136,7 +135,7 @@ export const Cars = [
     price_per_day: 40,
   },
   {
-    model_name: "Lexus",
+    model_name: "Lexus 1S 350",
     seats: 5,
     fuel_consumption: 16.5,
     transmission: "Manual",
@@ -145,7 +144,7 @@ export const Cars = [
     price_per_day: 40,
   },
   {
-    model_name: "Range Rover",
+    model_name: "Range Rover Sport",
     seats: 5,
     fuel_consumption: 19.5,
     transmission: "Automatic",
@@ -170,5 +169,21 @@ export const Cars = [
     image:
       "https://www.shutterstock.com/image-photo/stony-stratford-bucks-november-25th-600nw-2230828763.jpg",
     price_per_day: 45,
+  },
+  {
+    model_name: "VW Polo Vivo",
+    seats: 5,
+    fuel_consumption: 16.5,
+    transmission: "Automatic",
+    image: "/cars/vw-polo.png",
+    price_per_day: 25,
+  },
+  {
+    model_name: "Kia Niro",
+    seats: 5,
+    fuel_consumption: 16.5,
+    transmission: "Automatic",
+    image: "/cars/kia-niro.png",
+    price_per_day: 25,
   },
 ];
