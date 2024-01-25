@@ -42,7 +42,7 @@ export default function NavigationMenu({}: Props) {
       <Topnav />
       <section
         className={`${
-          pathname === "/"
+          pathname === "/" || pathname === "/cars"
             ? "bg-white text-gray-600 md:bg-transparent md:text-white md:absolute "
             : "bg-white text-gray-600  "
         } w-full py-4 min-h-10 mt-10 z-20`}>

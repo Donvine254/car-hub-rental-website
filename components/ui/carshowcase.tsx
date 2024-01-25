@@ -50,6 +50,7 @@ export default function Carshowcase({}: Props) {
                     src={car.image}
                     width={300}
                     height={300}
+                    priority
                     className="rounded-md hover:scale-105"
                   />
 
@@ -84,6 +85,7 @@ export default function Carshowcase({}: Props) {
                   </div>
                 </div>
                 {/* div for actions */}
+                <hr className="border border-gay-200" />
                 <div className="px-4 pt-1 pb-2 flex items-center justify-between  gap-4">
                   <p className="text-sm">
                     Daily Rate From <br />

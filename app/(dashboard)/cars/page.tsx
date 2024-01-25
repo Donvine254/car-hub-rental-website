@@ -20,12 +20,16 @@ export default function Carspage({}: Props) {
 
   return (
     <section className="bg-[#f8f9fa]">
-      <div className="w-full min-h-screen mx-2  md:w-3/4 md:mx-auto p-2 ">
-        <h1 className="text-2xl md:text-3xl text-center font-semibold my-2 capitalize">
-          Explore Our Car Collection
-        </h1>
+      <div className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
+        <div className="bg-black flex items-center justify-center  bg-opacity-60 px-6 md:py-20">
+          <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize  text-white md:py-4 ">
+            Car Collection
+          </h1>
+        </div>
+      </div>
+      <div className="min-h-screen mx-2  md:w-3/4 md:mx-auto p-2 ">
         <form
-          className="p-1 flex items-center justify-center"
+          className="flex items-center justify-center gap-2"
           onSubmit={(e) => {
             e.preventDefault();
           }}>
@@ -35,11 +39,11 @@ export default function Carspage({}: Props) {
             onInput={handleSearch}
             className="rounded-md h-10 px-3 py-1  flex-1 outline-none border focus:border-green-500 border-gray-300 shadow"
           />
-          <button className="px-3  border border-green-500 hover:bg-green-600 hover:text-white h-10 rounded-md mx-2">
+          <button className="px-3  border border-green-500 hover:bg-green-600 hover:text-white h-10 rounded-md ">
             <Search width={20} height={20} />
           </button>
         </form>
-        <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 py-2 ">
+        <section className=" grid gap-4 md:grid-cols-2 lg:grid-cols-3 py-2 ">
           {CarsToRender.map((car, index) => (
             <div
               key={index}
@@ -50,6 +54,7 @@ export default function Carspage({}: Props) {
                   src={car.image}
                   width={300}
                   height={300}
+                  priority
                   className="rounded-md hover:scale-105"
                 />
 
@@ -61,7 +66,7 @@ export default function Carspage({}: Props) {
                       fill="currentColor"
                       size={16}
                     />
-                    23
+                    {Math.floor(Math.random() * 91) + 10}
                   </p>
                 </div>
               </div>
@@ -83,6 +88,7 @@ export default function Carspage({}: Props) {
                   <span>{car.fuel_consumption}L/km</span>
                 </div>
               </div>
+              <hr className="border border-gay-200" />
               {/* div for actions */}
               <div className="px-4 pt-1 pb-2 flex items-center justify-between  gap-4">
                 <p className="text-sm">
