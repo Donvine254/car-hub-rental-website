@@ -13,6 +13,7 @@ import Image from "next/image";
 
 import { CarDoorIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
 import { HeartIcon } from "lucide-react";
+import Link from "next/link";
 
 type Props = {};
 
@@ -104,6 +105,14 @@ export default function Carshowcase({}: Props) {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+      <div className="flex items-center justify-center mx-auto">
+        <Link
+          href="/cars"
+          prefetch
+          className="rounded-md px-4 bg-gray-200 text-green-500 font-bold py-1 border  hover:bg-green-500 hover:text-white hover:shadow-xl">
+          View All
+        </Link>
+      </div>
     </section>
   );
 }
