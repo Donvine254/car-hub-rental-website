@@ -55,3 +55,121 @@ export const testimonials = [
     name: "Jane Wanjiku",
   },
 ];
+
+export const Cars = [
+  {
+    model_name: "Toyota Sedan",
+    seats: 5,
+    fuel_consumption: 19.1,
+    transmission: "Automatic",
+    image: "https://images7.alphacoders.com/124/1243224.jpg",
+    price_per_day: 25,
+  },
+  {
+    model_name: "Toyota Cruiser Hyryder",
+    seats: 5,
+    fuel_consumption: 20,
+    transmission: "Automatic",
+    image:
+      "https://imgd.aeplcdn.com/370x208/n/cw/ec/124027/urban-cruiser-hyryder-exterior-right-front-three-quarter-72.jpeg",
+    price_per_day: 35,
+  },
+  {
+    model_name: "BMW M2",
+    seats: 5,
+    fuel_consumption: 16.2,
+    transmission: "Automatic",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/bmw-m5.jpg",
+    price_per_day: 40,
+  },
+  {
+    model_name: "Toyota Corolla",
+    seats: 5,
+    fuel_consumption: 17.2,
+    transmission: "Automatic",
+    image: "/car.png",
+    price_per_day: 25,
+  },
+  {
+    model_name: "Jeep Renegade",
+    seats: 5,
+    fuel_consumption: 22.2,
+    transmission: "Automatic",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/jeep-renegade.jpg",
+    price_per_day: 40,
+  },
+  {
+    model_name: "Ford Raptor",
+    seats: 5,
+    fuel_consumption: 14.2,
+    transmission: "Manual",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/ford-raptor.jpg",
+    price_per_day: 40,
+  },
+  {
+    model_name: "Mini Cooper",
+    seats: 5,
+    fuel_consumption: 22.2,
+    transmission: "Automatic",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/mini-cooper.jpg",
+    price_per_day: 25,
+  },
+  {
+    model_name: "Mercendes Benz A Class",
+    seats: 5,
+    fuel_consumption: 14.2,
+    transmission: "Automatic",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/misc/car-2.png",
+    price_per_day: 40,
+  },
+  {
+    model_name: "Chevrolet Camaro",
+    seats: 5,
+    fuel_consumption: 18.5,
+    transmission: "Manual",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/chevrolet-camaro.jpg",
+    price_per_day: 40,
+  },
+  {
+    model_name: "Lexus",
+    seats: 5,
+    fuel_consumption: 16.5,
+    transmission: "Manual",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/lexus.jpg",
+    price_per_day: 40,
+  },
+  {
+    model_name: "Range Rover Sport",
+    seats: 5,
+    fuel_consumption: 19.5,
+    transmission: "Automatic",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/range-rover.jpg",
+    price_per_day: 45,
+  },
+  {
+    model_name: "Bentley",
+    seats: 5,
+    fuel_consumption: 14.5,
+    transmission: "Automatic",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/bentley.jpg",
+    price_per_day: 45,
+  },
+  {
+    model_name: "Audi A1 S",
+    seats: 5,
+    fuel_consumption: 16.5,
+    transmission: "Manual",
+    image:
+      "https://www.shutterstock.com/image-photo/stony-stratford-bucks-november-25th-600nw-2230828763.jpg",
+    price_per_day: 45,
+  },
+];
