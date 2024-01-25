@@ -14,7 +14,7 @@ export default function Homebooking({}: Props) {
   const today = new Date();
   const formattedDate = today.toISOString().substring(0, 10);
   return (
-    <div className="px-4 py-4 border shadow bg-white">
+    <div className="px-4 py-4 border shadow bg-white bg-opacity-80">
       {/* div for two cards */}
       {/* first card */}
       <h1 className=" text-center md:text-start text-2xl font-extrabold">
