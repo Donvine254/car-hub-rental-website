@@ -7,10 +7,12 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { usePathname } from "next/navigation";
 import Topnav from "./topnav";
 
-type Props = {};
+type Props = {
+  variant?: string;
+};
 
 type User = {};
-export default function NavigationMenu({}: Props) {
+export default function NavigationMenu({ variant }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClientComponentClient();
   const pathname = usePathname();
@@ -42,7 +44,7 @@ export default function NavigationMenu({}: Props) {
       <Topnav />
       <section
         className={`${
-          pathname === "/" || pathname === "/cars"
+          pathname === "/" || pathname === "/cars" || variant === "transparent"
             ? "bg-white text-gray-600 md:bg-transparent md:text-white md:absolute "
             : "bg-white text-gray-600  "
         } w-full py-4 min-h-10 mt-10 z-20`}>
