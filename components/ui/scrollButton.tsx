@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { ArrowBigUpIcon, ChevronUpSquareIcon } from 'lucide-react';
-import React, { useState, useEffect, useCallback } from 'react';
+import { ArrowBigUpIcon, ChevronUpSquareIcon } from "lucide-react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const ScrollToTopButton = () => {
   const [showButton, setShowButton] = useState(false);
@@ -18,27 +18,26 @@ const ScrollToTopButton = () => {
     window.scroll({
       top: 0,
       left: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   }, []);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]); // Dependency array to ensure the correct cleanup
 
   return (
-    <div id="copyright">
+    <div id="scroll" className="absolute bottom-5 left-5">
       {showButton && (
         <button
           onClick={handleButtonClick}
           id="scroll-to-top"
           title="Go to top"
-          className="show"
-        >
+          className="show shadow px-2 py-1 bg-green-500 text-white rounded-md">
           <ChevronUpSquareIcon />
         </button>
       )}
