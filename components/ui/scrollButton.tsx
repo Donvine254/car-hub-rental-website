@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowBigUpIcon, ChevronUpSquareIcon } from "lucide-react";
 import React, { useState, useEffect, useCallback } from "react";
+
+import { ChevronUpIcon } from "lucide-react";
 
 const ScrollToTopButton = () => {
   const [showButton, setShowButton] = useState(false);
@@ -37,13 +38,8 @@ const ScrollToTopButton = () => {
           onClick={handleButtonClick}
           id="scroll-to-top"
           title="Go to top"
-          className="show rounded-md">
-          <ChevronUpSquareIcon
-            size={60}
-            fill="currentColor"
-            className="text-green-500"
-            stroke="white"
-          />
+          className="rounded-md shadow px-2 py-1 bg-green-500 text-white">
+          <ChevronUpIcon size={30} />
         </button>
       )}
     </div>
