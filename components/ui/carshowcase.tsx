@@ -1,4 +1,18 @@
+"use client";
 import React from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { Cars } from "@/constants";
+import Image from "next/image";
+
+import { CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
+import { HeartIcon } from "lucide-react";
 
 type Props = {};
 
@@ -15,6 +29,75 @@ export default function Carshowcase({}: Props) {
           vehicles for unforgettable journeys.
         </p>
       </div>
+      <Carousel
+        className="md:max-w-[75%] mx-auto my-4 h-fit "
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        plugins={[
+          Autoplay({
+            delay: 8000,
+          }),
+        ]}>
+        <CarouselContent>
+          {Cars.map((car, index) => (
+            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <div className="w-fit border shadow bg-white">
+                <div className="p-2">
+                  <Image
+                    alt={car.model_name}
+                    src={car.image}
+                    width={300}
+                    height={300}
+                    className="rounded-md"
+                  />
+
+                  <div className="flex items-center justify-between gap-4 pt-2 px-2">
+                    <h1 className="text-bold text-xl ">{car.model_name}</h1>
+                    <p className="flex items-center">
+                      <HeartIcon
+                        className="text-gray-300 cursor-pointer hover:text-red-600"
+                        fill="currentColor"
+                        size={16}
+                      />
+                      23
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between gap-2 px-4 py-1">
+                  <div className="flex items-center gap-1">
+                    <CarSeat />
+                    <span>{car.seats}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <SteeringWheel />
+                    <span>{car.transmission}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <FuelPumpIcon />
+                    <span>{car.fuel_consumption}L/km</span>
+                  </div>
+                </div>
+                {/* div for actions */}
+                <div className="px-4 pt-1 pb-2 flex items-center justify-between  gap-4">
+                  <p className="text-sm">
+                    Daily Rate From <br />
+                    <span className="text-2xl font-semibold">
+                      ${car.price_per_day}
+                    </span>
+                  </p>
+                  <button className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1">
+                    Book Now
+                  </button>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </section>
   );
 }

@@ -93,3 +93,46 @@ export function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function SteeringWheel(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      className="text-green-500"
+      {...props}>
+      <path fill="none" d="M0 0h24v24H0z" />
+      <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zM8 13l-3.938.001A8.004 8.004 0 0011 19.938V16a3 3 0 01-3-3zm11.938.001L16 13a3 3 0 01-3 3l.001 3.938a8.004 8.004 0 006.937-6.937zM12 4a8.001 8.001 0 00-7.938 7H8a1 1 0 011-1h6a1 1 0 011 1h3.938A8.001 8.001 0 0012 4z" />
+    </svg>
+  );
+}
+
+export function CarSeat(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      className="text-green-500"
+      {...props}>
+      <path d="M9 19h6v2H9c-2.76 0-5-2.24-5-5V7h2v9c0 1.66 1.34 3 3 3m1.42-13.59c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0-.78.78-.78 2.05 0 2.83.78.79 2.04.79 2.83 0M11.5 9c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v6c0 1.66 1.34 3 3 3h5.07l3.5 3.5L20 20.07 14.93 15H11.5V9z" />
+    </svg>
+  );
+}
+
+export function FuelPumpIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      fill="currentColor"
+      viewBox="0 0 16 16"
+      height="1em"
+      width="1em"
+      className="text-green-500"
+      {...props}>
+      <path d="M1 2a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 012 2v.5a.5.5 0 001 0V8h-.5a.5.5 0 01-.5-.5V4.375a.5.5 0 01.5-.5h1.495c-.011-.476-.053-.894-.201-1.222a.97.97 0 00-.394-.458c-.184-.11-.464-.195-.9-.195a.5.5 0 010-1c.564 0 1.034.11 1.412.336.383.228.634.551.794.907.295.655.294 1.465.294 2.081V7.5a.5.5 0 01-.5.5H15v4.5a1.5 1.5 0 01-3 0V12a1 1 0 00-1-1v4h.5a.5.5 0 010 1H.5a.5.5 0 010-1H1V2zm2.5 0a.5.5 0 00-.5.5v5a.5.5 0 00.5.5h5a.5.5 0 00.5-.5v-5a.5.5 0 00-.5-.5h-5z" />
+    </svg>
+  );
+}

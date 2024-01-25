@@ -62,7 +62,7 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 19.1,
     transmission: "Automatic",
-    image: "https://images7.alphacoders.com/124/1243224.jpg",
+    image: "/cars/toyota-sedan.png",
     price_per_day: 25,
   },
   {
@@ -70,8 +70,7 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 20,
     transmission: "Automatic",
-    image:
-      "https://imgd.aeplcdn.com/370x208/n/cw/ec/124027/urban-cruiser-hyryder-exterior-right-front-three-quarter-72.jpeg",
+    image: "/cars/toyota-hyryder.png",
     price_per_day: 35,
   },
   {
@@ -88,7 +87,7 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 17.2,
     transmission: "Automatic",
-    image: "/car.png",
+    image: "/cars/toyota-corolla.png",
     price_per_day: 25,
   },
   {
@@ -119,12 +118,12 @@ export const Cars = [
     price_per_day: 25,
   },
   {
-    model_name: "Mercendes Benz A Class",
+    model_name: "Mercendes Benz",
     seats: 5,
     fuel_consumption: 14.2,
     transmission: "Automatic",
     image:
-      "https://www.madebydesignesia.com/themes/rentaly/images/misc/car-2.png",
+      "/cars/mercendez-benz.png",
     price_per_day: 40,
   },
   {
@@ -146,7 +145,7 @@ export const Cars = [
     price_per_day: 40,
   },
   {
-    model_name: "Range Rover Sport",
+    model_name: "Range Rover",
     seats: 5,
     fuel_consumption: 19.5,
     transmission: "Automatic",
