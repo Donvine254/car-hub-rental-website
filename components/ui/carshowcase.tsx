@@ -11,7 +11,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { Cars } from "@/constants";
 import Image from "next/image";
 
-import { CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
+import { CarDoorIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
 import { HeartIcon } from "lucide-react";
 
 type Props = {};
@@ -43,14 +43,14 @@ export default function Carshowcase({}: Props) {
         <CarouselContent>
           {Cars.map((car, index) => (
             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-              <div className="w-fit border shadow bg-white">
+              <div className="w-fit border shadow bg-white rounded-md">
                 <div className="p-2">
                   <Image
                     alt={car.model_name}
                     src={car.image}
                     width={300}
                     height={300}
-                    className="rounded-md"
+                    className="rounded-md hover:scale-105"
                   />
 
                   <div className="flex items-center justify-between gap-4 pt-2 px-2">
@@ -66,15 +66,19 @@ export default function Carshowcase({}: Props) {
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-2 px-4 py-1">
-                  <div className="flex items-center gap-1">
+                  <div className="flex  items-center gap-0.5">
                     <CarSeat />
                     <span>{car.seats}</span>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-0.5">
+                    <CarDoorIcon />
+                    <span>4</span>
+                  </div>
+                  <div className="flex  items-center gap-0.5">
                     <SteeringWheel />
                     <span>{car.transmission}</span>
                   </div>
-                  <div className="flex items-center gap-1">
+                  <div className="flex  items-center gap-0.5">
                     <FuelPumpIcon />
                     <span>{car.fuel_consumption}L/km</span>
                   </div>
