@@ -76,6 +76,13 @@ export default function Footer() {
                   Tour Guide
                 </a>
               </p>
+              <p className="mb-4">
+                <a
+                  href="/marketplace"
+                  className="text-neutral-600 hover:text-green-500">
+                  Car Marketplace
+                </a>
+              </p>
             </div>
             <div className="">
               <h6 className="mb-4 text-center font-extrabold text-green-500 uppercase md:text-start">
