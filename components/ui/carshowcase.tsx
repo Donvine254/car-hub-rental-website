@@ -14,6 +14,7 @@ import Image from "next/image";
 import { CarDoorIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
 import { HeartIcon } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 type Props = {};
 
@@ -99,7 +100,9 @@ export default function Carshowcase({}: Props) {
                       ${car.price_per_day}
                     </span>
                   </p>
-                  <button className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1">
+                  <button
+                    className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1"
+                    onClick={() => toast.info("feature coming soon!")}>
                     Book Now
                   </button>
                 </div>
