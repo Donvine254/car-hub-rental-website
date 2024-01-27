@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Cars } from "@/constants";
 import Image from "next/image";
-
+import {toast} from "sonner"
 import { CarDoorIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
 import { HeartIcon, Search } from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
@@ -55,6 +55,7 @@ export default function Carspage({}: Props) {
                   src={car.image}
                   width={300}
                   height={300}
+                  style={{ width: "auto", height: "auto" }}
                   priority
                   className="rounded-md hover:scale-105"
                 />
@@ -98,7 +99,7 @@ export default function Carspage({}: Props) {
                     ${car.price_per_day}
                   </span>
                 </p>
-                <button className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1">
+                <button className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1" onClick={()=>toast.info("feature coming soon!")} >
                   Book Now
                 </button>
               </div>

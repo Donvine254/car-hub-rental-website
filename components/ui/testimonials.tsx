@@ -37,7 +37,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <CarouselItem
               key={index}
-              className="px-2 md:basis-1/2 lg:basis-1/3">
+              className="px-2 md:basis-1/2 lg:basis-1/3 ">
               <div className="p-4 bg-white h-[250px] rounded-md border">
                 <div className="flex aspect-auto  items-center justify-center">
                   <p className="text-sm text-gray-600 inline-block gap-2 leading-loose">
