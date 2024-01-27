@@ -19,7 +19,7 @@ type Props = {};
 
 export default function Carshowcase({}: Props) {
   return (
-    <section className="h-full w-full bg-[#f8f9fa] py-4">
+    <section className="h-full w-full bg-[#f8f9fa] py-4 p-2 overflow-x-hidden">
       <div className="flex flex-col items-center justify-center mx-auto">
         <p className="text-xl font-bold text-center text-green-500 py-1 px-4 border bg-gray-200 w-fit">
           Enjoy Your Ride
@@ -43,7 +43,9 @@ export default function Carshowcase({}: Props) {
         ]}>
         <CarouselContent>
           {Cars.map((car, index) => (
-            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+            <CarouselItem
+              key={index}
+              className="xsm:w-full md:basis-1/2 lg:basis-1/3 px-2">
               <div className="w-fit border shadow bg-white rounded-md">
                 <div className="p-2">
                   <Image
