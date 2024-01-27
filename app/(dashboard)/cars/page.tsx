@@ -4,12 +4,13 @@ import { Cars } from "@/constants";
 import Image from "next/image";
 import { toast } from "sonner";
 import { CarDoorIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
-import { HeartIcon, RefreshCwIcon, Search } from "lucide-react";
+import { FilterIcon, HeartIcon, RefreshCwIcon, Search } from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
 type Props = {};
 
 export default function Carspage({}: Props) {
   const [CarsToRender, setCarsToRender] = useState(Cars);
+  const [displayCount, setDisplayCount] = useState(10); // Initial number of items to display
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
@@ -17,6 +18,14 @@ export default function Carspage({}: Props) {
       car.model_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setCarsToRender(filteredCars);
+    setDisplayCount(10);
+  };
+
+  const handleLoadMore = () => {
+    setDisplayCount((prevCount) => {
+      const newCount = prevCount + 10;
+      return Math.min(newCount, Cars.length);
+    });
   };
 
   return (
@@ -30,7 +39,7 @@ export default function Carspage({}: Props) {
       </div>
       <div className="min-h-screen mx-2  md:w-3/4 md:mx-auto p-2 ">
         <form
-          className="flex items-center justify-center gap-2"
+          className="flex items-center justify-center gap-2 relative"
           onSubmit={(e) => {
             e.preventDefault();
           }}>
@@ -38,14 +47,25 @@ export default function Carspage({}: Props) {
             type="search"
             placeholder="Search by model name"
             onInput={handleSearch}
-            className="rounded-md h-10 px-3 py-1  flex-1 outline-none border focus:border-green-500 border-gray-300 shadow"
+            maxLength={20}
+            className="rounded-md h-10 px-3 py-1 pl-8  flex-1 outline-none border focus:border-green-500 border-gray-300 shadow"
           />
-          <button className="px-3  border border-green-500 hover:bg-green-600 hover:text-white h-10 rounded-md ">
-            <Search width={20} height={20} />
+          <Search width={20} height={20} className="absolute left-2" />
+          <button
+            className="px-3  border border-green-500 hover:bg-green-600 hover:text-white h-10 rounded-md"
+            title="filter"
+            onClick={() => {
+              toast.info("Coming soon feature!", {
+                position: "top-right",
+                style: { backgroundColor: "#22C55E", color: "white" },
+              });
+            }}>
+            {" "}
+            <FilterIcon width={20} height={20} />
           </button>
         </form>
         <section className=" grid gap-4 md:grid-cols-2 lg:grid-cols-3 py-2 ">
-          {CarsToRender.map((car, index) => (
+          {CarsToRender.slice(0, displayCount).map((car, index) => (
             <div
               key={index}
               className="w-fit border shadow bg-white rounded-md">
@@ -108,13 +128,19 @@ export default function Carspage({}: Props) {
             </div>
           ))}
         </section>
-        <button className="group px-2 py-1 bg-gray-200 text-green-500 font-bold border">
-          <span>Load More</span>
-          <RefreshCwIcon
-            className="text-green-500 peer-hover:animate-spin"
-            fill="currentColor"
-          />
-        </button>
+        <div className="flex items-center justify-center">
+          <button
+            className="group px-2 py-1 bg-gray-200 text-green-500 border inline-flex items-center gap-2 rounded-md disabled:text-gray-400 disabled:bg-opacity-50 disabled:pointer-events-none"
+            onClick={handleLoadMore}
+            disabled={displayCount >= Cars.length}>
+            <span>Load More</span>
+            <RefreshCwIcon
+              className="text-green-500 group-hover:animate-spin "
+              fill="none"
+              size={14}
+            />
+          </button>
+        </div>
       </div>
       <ScrollToTopButton />
     </section>
