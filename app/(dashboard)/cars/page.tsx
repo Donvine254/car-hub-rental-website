@@ -3,8 +3,15 @@ import React, { useState } from "react";
 import { Cars } from "@/constants";
 import Image from "next/image";
 import { toast } from "sonner";
-import { CarDoorIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
-import { FilterIcon, HeartIcon, RefreshCwIcon, Search } from "lucide-react";
+import { CarFrontIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
+import {
+  FilterIcon,
+  HeartIcon,
+  InfoIcon,
+  MoveRightIcon,
+  RefreshCwIcon,
+  Search,
+} from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
 type Props = {};
 
@@ -88,27 +95,33 @@ export default function Carspage({}: Props) {
                       fill="currentColor"
                       size={16}
                     />
-                    {Math.floor(Math.random() * 91) + 10}
+                    {car.rating}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center justify-between gap-2 px-4 py-1">
-                <div className="flex items-center gap-1">
-                  <CarSeat />
-                  <span>{car.seats}</span>
+              <div className="flex items-center justify-between gap-2 px-4 py-1 group">
+                <div className="flex flex-col items-center gap-0.5 group-hover:hidden">
+                  <CarFrontIcon />
+                  <span className="capitalize">{car.body_type}</span>
                 </div>
-                <div className="flex items-center gap-0.5">
-                  <CarDoorIcon />
-                  <span>4</span>
-                </div>
-                <div className="flex items-center gap-1">
+                <div className="flex flex-col items-center gap-1 group-hover:hidden">
                   <SteeringWheel />
                   <span>{car.transmission}</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex flex-col items-center gap-1 group-hover:hidden">
+                  <CarSeat />
+                  <span>{car.seats}</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 group-hover:hidden">
                   <FuelPumpIcon />
                   <span>{car.fuel_consumption}L/km</span>
                 </div>
+                <button className="hidden group-hover:flex items-center justify-between  w-full bg-green-500 text-white group  rounded-md p-2 ">
+                  <span className="font-medium flex item-center gap-0.5">
+                    <InfoIcon /> View More
+                  </span>
+                  <MoveRightIcon className="bg-green-300 self-end p-1 rounded-md  " />
+                </button>
               </div>
               <hr className="border border-gay-200" />
               {/* div for actions */}

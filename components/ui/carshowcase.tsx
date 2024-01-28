@@ -11,7 +11,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { Cars } from "@/constants";
 import Image from "next/image";
 
-import { CarDoorIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
+import { CarSeat, CarFrontIcon, FuelPumpIcon, SteeringWheel } from "@/assets";
 import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -69,24 +69,24 @@ export default function Carshowcase({}: Props) {
                         fill="currentColor"
                         size={16}
                       />
-                      {Math.floor(Math.random() * 91) + 10}
+                      {car.rating}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-2 px-4 py-1">
-                  <div className="flex  items-center gap-0.5">
-                    <CarSeat />
-                    <span>{car.seats}</span>
+                  <div className="flex flex-col items-center gap-0.5">
+                    <CarFrontIcon />
+                    <span className="capitalize">{car.body_type}</span>
                   </div>
-                  <div className="flex items-center gap-0.5">
-                    <CarDoorIcon />
-                    <span>4</span>
-                  </div>
-                  <div className="flex  items-center gap-0.5">
+                  <div className="flex flex-col items-center gap-0.5">
                     <SteeringWheel />
                     <span>{car.transmission}</span>
                   </div>
-                  <div className="flex  items-center gap-0.5">
+                  <div className="flex flex-col items-center gap-0.5">
+                    <CarSeat />
+                    <span>{car.seats}</span>
+                  </div>
+                  <div className="flex flex-col items-center gap-0.5">
                     <FuelPumpIcon />
                     <span>{car.fuel_consumption}L/km</span>
                   </div>

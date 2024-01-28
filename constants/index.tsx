@@ -64,6 +64,8 @@ export const Cars = [
     transmission: "Automatic",
     image: "/cars/toyota-sedan.png",
     price_per_day: 25,
+    rating: 26,
+    body_type: "saloon",
   },
   {
     model_name: "Toyota Cruiser Hyryder",
@@ -72,6 +74,8 @@ export const Cars = [
     transmission: "Automatic",
     image: "/cars/toyota-hyryder.png",
     price_per_day: 35,
+    rating: 69,
+    body_type: "suv",
   },
   {
     model_name: "BMW M2",
@@ -81,6 +85,8 @@ export const Cars = [
     image:
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/bmw-m5.jpg",
     price_per_day: 40,
+    rating: 102,
+    body_type: "saloon",
   },
   {
     model_name: "Toyota Corolla",
@@ -89,6 +95,8 @@ export const Cars = [
     transmission: "Automatic",
     image: "/cars/toyota-corolla.png",
     price_per_day: 25,
+    rating: 48,
+    body_type: "saloon",
   },
   {
     model_name: "Jeep Renegade",
@@ -98,6 +106,8 @@ export const Cars = [
     image:
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/jeep-renegade.jpg",
     price_per_day: 40,
+    rating: 82,
+    body_type: "suv",
   },
   {
     model_name: "Ford Raptor",
@@ -107,6 +117,8 @@ export const Cars = [
     image:
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/ford-raptor.jpg",
     price_per_day: 40,
+    rating: 46,
+    body_type: "pickup",
   },
   {
     model_name: "Mini Cooper",
@@ -116,6 +128,8 @@ export const Cars = [
     image:
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/mini-cooper.jpg",
     price_per_day: 25,
+    rating: 69,
+    body_type: "saloon",
   },
   {
     model_name: "Mercendes Benz A Class",
@@ -124,6 +138,8 @@ export const Cars = [
     transmission: "Automatic",
     image: "/cars/mercendez-benz.png",
     price_per_day: 40,
+    rating: 34,
+    body_type: "saloon",
   },
   {
     model_name: "Chevrolet Camaro",
@@ -133,6 +149,8 @@ export const Cars = [
     image:
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/chevrolet-camaro.jpg",
     price_per_day: 40,
+    rating: 45,
+    body_type: "saloon",
   },
   {
     model_name: "Lexus 1S 350",
@@ -142,6 +160,8 @@ export const Cars = [
     image:
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/lexus.jpg",
     price_per_day: 40,
+    rating: 96,
+    body_type: "saloon",
   },
   {
     model_name: "Range Rover Sport",
@@ -151,6 +171,8 @@ export const Cars = [
     image:
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/range-rover.jpg",
     price_per_day: 45,
+    rating: 125,
+    body_type: "saloon",
   },
   {
     model_name: "Bentley",
@@ -160,6 +182,8 @@ export const Cars = [
     image:
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/bentley.jpg",
     price_per_day: 45,
+    rating: 118,
+    body_type: "saloon",
   },
   {
     model_name: "Audi A1 S",
@@ -169,6 +193,8 @@ export const Cars = [
     image:
       "https://www.shutterstock.com/image-photo/stony-stratford-bucks-november-25th-600nw-2230828763.jpg",
     price_per_day: 45,
+    rating: 74,
+    body_type: "saloon",
   },
   {
     model_name: "VW Polo Vivo",
@@ -177,6 +203,8 @@ export const Cars = [
     transmission: "Automatic",
     image: "/cars/vw-polo.png",
     price_per_day: 25,
+    rating: 81,
+    body_type: "saloon",
   },
   {
     model_name: "Kia Niro",
@@ -185,5 +213,7 @@ export const Cars = [
     transmission: "Automatic",
     image: "/cars/kia-niro.png",
     price_per_day: 25,
+    rating: 53,
+    body_type: "suv",
   },
 ];
