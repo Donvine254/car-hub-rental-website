@@ -13,12 +13,13 @@ import {
   Search,
 } from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
+import CarModal from "@/components/ui/carModal";
 type Props = {};
 
 export default function Carspage({}: Props) {
   const [CarsToRender, setCarsToRender] = useState(Cars);
   const [displayCount, setDisplayCount] = useState(10); // Initial number of items to display
-
+  const [modalIndex, setModalIndex] = useState(0);
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
     const filteredCars = Cars.filter((car) =>
@@ -35,6 +36,17 @@ export default function Carspage({}: Props) {
     });
   };
 
+  const showModal = async (index: number) => {
+    await setModalIndex(index);
+    const modal = document.getElementById(
+      `my_modal_${index}`
+    ) as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    } else {
+      console.log("modal not found");
+    }
+  };
   return (
     <section className="bg-[#f8f9fa] relative">
       <div className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
@@ -116,7 +128,9 @@ export default function Carspage({}: Props) {
                   <FuelPumpIcon />
                   <span>{car.fuel_consumption}L/km</span>
                 </div>
-                <button className="hidden group-hover:flex items-center justify-between  w-full bg-green-500 text-white group  rounded-md p-2 ">
+                <button
+                  className="hidden group-hover:flex items-center justify-between  w-full bg-green-500 text-white group  rounded-md p-2 "
+                  onClick={() => showModal(index)}>
                   <span className="font-medium flex item-center gap-0.5">
                     <InfoIcon /> View More
                   </span>
@@ -156,6 +170,7 @@ export default function Carspage({}: Props) {
         </div>
       </div>
       <ScrollToTopButton />
+      <CarModal index={modalIndex} />
     </section>
   );
 }
