@@ -29,7 +29,9 @@ export default function Homebooking({}: Props) {
           <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
             required>
-            <option value="">Select Your Car Type</option>
+            <option value="" hidden>
+              Select Your Car Type
+            </option>
             <option value="Saloon">Saloon</option>
             <option value="SUV">SUV</option>
             <option value="Pickup">Pickup</option>
@@ -41,24 +43,38 @@ export default function Homebooking({}: Props) {
             <MapPinIcon fill="none" className="text-green-500" /> &nbsp; Pick Up
             Location
           </label>
-          <input
-            placeholder="Enter Pick Up Location"
-            type="text"
+          <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-            required
-          />
+            required>
+            <option value="" hidden>
+              Choose a Pickup Location
+            </option>
+            <option value="Nairobi">Nairobi</option>
+            <option value="Kisumu">Kisumu</option>
+            <option value="Mombasa">Mombasa</option>
+            <option value="Thika">Thika</option>
+            <option value="Nakuru">Nakuru</option>
+            <option value="Eldoret">Eldoret</option>
+          </select>
         </div>
         <div className="py-2">
           <label className="inline-flex font-bold">
             <MapPinIcon fill="none" className="text-green-500" /> &nbsp;
             Drop-Off Location
           </label>
-          <input
-            placeholder="Enter Drop Off Location"
-            type="text"
+          <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-            required
-          />
+            required>
+            <option value="" hidden>
+              Choose a Drop-Off Location
+            </option>
+            <option value="Nairobi">Nairobi</option>
+            <option value="Kisumu">Kisumu</option>
+            <option value="Mombasa">Mombasa</option>
+            <option value="Thika">Thika</option>
+            <option value="Nakuru">Nakuru</option>
+            <option value="Eldoret">Eldoret</option>
+          </select>
         </div>
         <div className="py-2">
           <label className="inline-flex font-bold">
