@@ -2,7 +2,6 @@ import {
   CalendarCheck2Icon,
   CalendarDaysIcon,
   Car,
-  Locate,
   MapPinIcon,
 } from "lucide-react";
 import React from "react";
@@ -13,6 +12,7 @@ type Props = {};
 export default function Homebooking({}: Props) {
   const today = new Date();
   const formattedDate = today.toISOString().substring(0, 10);
+
   return (
     <div className="px-4 py-4 border shadow bg-white ">
       {/* div for two cards */}
@@ -45,6 +45,7 @@ export default function Homebooking({}: Props) {
           </label>
           <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
+            defaultValue="Nairobi"
             required>
             <option value="" hidden>
               Choose a Pickup Location
@@ -64,7 +65,8 @@ export default function Homebooking({}: Props) {
           </label>
           <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-            required>
+            required
+            defaultValue="Nairobi">
             <option value="" hidden>
               Choose a Drop-Off Location
             </option>
@@ -79,26 +81,42 @@ export default function Homebooking({}: Props) {
         <div className="py-2">
           <label className="inline-flex font-bold">
             <CalendarDaysIcon fill="none" className="text-green-500" /> &nbsp;
-            Pickup Date
+            Pickup Date and Time
           </label>
-          <input
-            type="date"
-            required
-            defaultValue={formattedDate}
-            className="flex h-10 bg-white text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-          />
+          <div className="flex items-center gap-0">
+            <input
+              type="date"
+              required
+              defaultValue={formattedDate}
+              className="flex h-10 bg-white text-base  w-1/2 px-3 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
+            />
+            <input
+              type="time"
+              required
+              defaultValue="10:14"
+              className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
+            />
+          </div>
         </div>
         <div className="py-2">
           <label className="inline-flex font-bold">
             <CalendarCheck2Icon fill="none" className="text-green-500" /> &nbsp;
-            Drop-Off Date
+            Drop-Off Date and Time
           </label>
-          <input
-            type="date"
-            defaultValue={formattedDate}
-            required
-            className="flex h-10 bg-white text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-          />
+          <div className="flex items-center gap-0">
+            <input
+              type="date"
+              required
+              defaultValue={formattedDate}
+              className="flex h-10 bg-white text-base  w-1/2 px-3 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
+            />
+            <input
+              type="time"
+              required
+              defaultValue="10:14"
+              className="h-10 w-1/2  bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
+            />
+          </div>
         </div>
         <div className="py-2 md:py-0 md:flex md:items-end md:justify-end md:pb-2 ">
           <Link
