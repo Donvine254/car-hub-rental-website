@@ -93,7 +93,7 @@ export default function Homebooking({}: Props) {
             <input
               type="time"
               required
-              defaultValue="10:14"
+              defaultValue="08:00"
               className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
             />
           </div>
@@ -113,7 +113,7 @@ export default function Homebooking({}: Props) {
             <input
               type="time"
               required
-              defaultValue="10:14"
+              defaultValue="18:00"
               className="h-10 w-1/2  bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
             />
           </div>
