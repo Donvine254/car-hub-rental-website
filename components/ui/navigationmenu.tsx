@@ -91,7 +91,7 @@ export default function NavigationMenu({ variant }: Props) {
               <li>
                 <Link
                   href="/"
-                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-green-700 hover:underline underline-offset-2 md:p-0">
+                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2  hover:underline underline-offset-2 md:p-0">
                   Home
                 </Link>
               </li>
@@ -99,7 +99,7 @@ export default function NavigationMenu({ variant }: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar2"
-                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-green-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2  md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   Vehicle Models{" "}
                   <svg
                     className="w-4 h-4 ml-1"
@@ -153,7 +153,7 @@ export default function NavigationMenu({ variant }: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar"
-                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-green-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2  md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   My Account{" "}
                   <svg
                     className="w-4 h-4 ml-1"
@@ -207,7 +207,7 @@ export default function NavigationMenu({ variant }: Props) {
                 <button
                   id="dropdownNavbarLink"
                   data-dropdown-toggle="dropdownNavbar3"
-                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-green-700 md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
+                  className=" hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2  md:p-0 font-medium flex items-center justify-between w-full md:w-auto hover:underline underline-offset-2">
                   Resources{" "}
                   <svg
                     className="w-4 h-4 ml-1"
