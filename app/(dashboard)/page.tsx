@@ -84,7 +84,7 @@ export default function Home() {
               </div>
               <div className="space-y-2 py-2 flex-col items-center">
                 <Image
-                  src="/cars/mercendez-bg.png"
+                  src="https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/u103yff7rpt9li9cgvaj.png"
                   width={680}
                   placeholder="blur"
                   blurDataURL="/cars/vehicle-placeholder.png"

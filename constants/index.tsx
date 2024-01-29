@@ -75,7 +75,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 20,
     transmission: "Automatic",
-    image: "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566323/cars/gidpabv53bxbbxnos4sa.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566323/cars/gidpabv53bxbbxnos4sa.png",
     price_per_day: 35,
     rating: 69,
     body_type: "suv",
@@ -98,7 +99,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 17.2,
     transmission: "Automatic",
-    image: "/cars/toyota-corolla.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566322/cars/au5gd74ccky3aive3oli.png",
     price_per_day: 25,
     rating: 48,
     body_type: "saloon",
@@ -145,7 +147,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 14.2,
     transmission: "Automatic",
-    image: "/cars/mercendez-benz.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566324/cars/redosymel2yzfklhfdde.png",
     price_per_day: 40,
     rating: 34,
     body_type: "saloon",
@@ -216,7 +219,8 @@ export const Cars = [
     seats: 2,
     fuel_consumption: 16.5,
     transmission: "Automatic",
-    image: "/cars/vw-polo.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/dusl0mvwvodod8jcz4hz.png",
     price_per_day: 25,
     rating: 81,
     body_type: "saloon",
@@ -227,7 +231,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 16.5,
     transmission: "Automatic",
-    image: "/cars/kia-niro.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566323/cars/ocavzqiw0tolgl8dsohy.png",
     price_per_day: 25,
     rating: 53,
     body_type: "suv",
@@ -250,7 +255,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 16.5,
     transmission: "Automatic",
-    image: "/cars/toyota-rav4.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/hqkacxorrnqhnfvtp3ke.png",
     price_per_day: 35,
     rating: 18,
     body_type: "suv",
@@ -261,7 +267,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 26.5,
     transmission: "Automatic",
-    image: "/cars/toyota-harrier.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/w5yjqt5l26ztov1hz2px.png",
     price_per_day: 35,
     rating: 45,
     body_type: "suv",
@@ -272,7 +279,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 19.8,
     transmission: "Automatic",
-    image: "/cars/ford-transit.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566319/cars/qefxoi2tebnl7ae5wjs3.png",
     price_per_day: 45,
     rating: 88,
     body_type: "van",
@@ -283,7 +291,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 24.2,
     transmission: "Automatic",
-    image: "/cars/jayco-terrain.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566321/cars/lzbsjwpv7mza0olwdcum.png",
     price_per_day: 45,
     rating: 98,
     body_type: "van",
@@ -294,7 +303,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 19.2,
     transmission: "Automatic",
-    image: "/cars/storyteller-overland.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566320/cars/wqjknzstdnvlkqeba4dt.png",
     price_per_day: 45,
     rating: 18,
     body_type: "van",
@@ -305,7 +315,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 14.2,
     transmission: "Manual",
-    image: "/cars/ram-1500.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566320/cars/ar6zos1n15mfbyaxslsm.png",
     price_per_day: 45,
     rating: 12,
     body_type: "pickup",
@@ -316,7 +327,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 14.2,
     transmission: "Manual",
-    image: "/cars/gmc-sierra.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566320/cars/mhrub6y5ubtx7nkmdu3w.png",
     price_per_day: 45,
     rating: 19,
     body_type: "pickup",
@@ -327,7 +339,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 15.2,
     transmission: "Manual",
-    image: "/cars/toyota-tundra.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566320/cars/mhrub6y5ubtx7nkmdu3w.png",
     price_per_day: 40,
     rating: 26,
     body_type: "pickup",
@@ -338,7 +351,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 16.2,
     transmission: "Manual",
-    image: "/cars/chevrolet-silvarado.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566319/cars/vao8s02hombbyhbzhvlr.png",
     price_per_day: 45,
     rating: 37,
     body_type: "pickup",
@@ -349,7 +363,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 18.7,
     transmission: "Manual",
-    image: "/cars/nissan-titan.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566324/cars/wanvvlbgb65o0vwk3cdn.png",
     price_per_day: 40,
     rating: 39,
     body_type: "pickup",
@@ -360,7 +375,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 21.4,
     transmission: "Automatic",
-    image: "/cars/range-rover-autobiography.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566320/cars/sd4kqcjm7ebmexppxwwz.png",
     price_per_day: 45,
     rating: 129,
     body_type: "suv",
@@ -371,7 +387,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 22.4,
     transmission: "Automatic",
-    image: "/cars/land-rover-defender.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566321/cars/vbdebnluea84gqcwbcks.png",
     price_per_day: 40,
     rating: 119,
     body_type: "suv",
@@ -382,7 +399,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 18.1,
     transmission: "Automatic",
-    image: "/cars/genesis-v70.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566320/cars/vqcelgwv8cek7oyzbp4u.png",
     price_per_day: 40,
     rating: 103,
     body_type: "suv",
@@ -393,7 +411,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 19.6,
     transmission: "Automatic",
-    image: "/cars/kia-soul.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566323/cars/ofxj2alfuvarfqgk7rtf.png",
     price_per_day: 40,
     rating: 93,
     body_type: "suv",
@@ -404,7 +423,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 19.6,
     transmission: "Automatic",
-    image: "/cars/mazda-cx30.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566321/cars/lyapqulq8axgruxduo7i.png",
     price_per_day: 40,
     rating: 87,
     body_type: "suv",
@@ -415,7 +435,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 19.9,
     transmission: "Automatic",
-    image: "/cars/mazda-cx50.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566323/cars/n9jiomvlpr2l3afdfrco.png",
     price_per_day: 40,
     rating: 29,
     body_type: "suv",
