@@ -122,7 +122,7 @@ export const Cars = [
   },
   {
     model_name: "Mini Cooper",
-    seats: 5,
+    seats: 2,
     fuel_consumption: 22.2,
     transmission: "Automatic",
     image:
@@ -132,7 +132,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
-    model_name: "Mercendes Benz A Class",
+    model_name: "Mercedes-Benz A Class",
     seats: 5,
     fuel_consumption: 14.2,
     transmission: "Automatic",
@@ -176,7 +176,7 @@ export const Cars = [
   },
   {
     model_name: "Bentley",
-    seats: 5,
+    seats: 2,
     fuel_consumption: 14.5,
     transmission: "Automatic",
     image:
@@ -198,7 +198,7 @@ export const Cars = [
   },
   {
     model_name: "VW Polo Vivo",
-    seats: 5,
+    seats: 2,
     fuel_consumption: 16.5,
     transmission: "Automatic",
     image: "/cars/vw-polo.png",
@@ -214,6 +214,37 @@ export const Cars = [
     image: "/cars/kia-niro.png",
     price_per_day: 25,
     rating: 53,
+    body_type: "suv",
+  },
+  {
+    model_name: "Hyudai Staria",
+    seats: 5,
+    fuel_consumption: 20.5,
+    transmission: "Automatic",
+    image:
+      "https://www.madebydesignesia.com/themes/rentaly/images/cars/hyundai-staria.jpg",
+    price_per_day: 45,
+    rating: 103,
+    body_type: "van",
+  },
+  {
+    model_name: "Toyota RAV4",
+    seats: 5,
+    fuel_consumption: 16.5,
+    transmission: "Automatic",
+    image: "/cars/toyota-rav4.png",
+    price_per_day: 35,
+    rating: 18,
+    body_type: "suv",
+  },
+  {
+    model_name: "Toyota Harrier",
+    seats: 5,
+    fuel_consumption: 26.5,
+    transmission: "Automatic",
+    image: "/cars/toyota-harrier.png",
+    price_per_day: 35,
+    rating: 45,
     body_type: "suv",
   },
 ];
