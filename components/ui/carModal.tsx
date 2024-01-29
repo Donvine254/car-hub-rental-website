@@ -7,23 +7,22 @@ type Props = {
 import { Cars } from "@/constants";
 
 export default function CarModal({ index }: Props) {
+  const handleClose = () => {
+    const modal = document.getElementById(
+      `my_modal_${index}`
+    ) as HTMLDialogElement | null;
+    if (modal) {
+      modal.close();
+    }
+  };
   const car = Cars[index];
   return (
-    <dialog
-      id={`my_modal_${index}`}
-      className="modal bg-[#f8f9fa] border  backdrop-blur-2xl rounded-xl relative">
-      <form className="w-full max-w-lg " method="dialog">
+    <dialog id={`my_modal_${index}`} className="rounded-md  border px-4 ">
+      <div className="w-fit max-w-lg  relative ">
         <X
-          onClick={() => {
-            const modal = document.getElementById(
-              `my_modal_${index}`
-            ) as HTMLDialogElement | null;
-            if (modal) {
-              modal.close();
-            }
-          }}
+          onClick={handleClose}
           size={30}
-          className="absolute top-1 right-1 bg-gray-100 p-1 rounded-md hover:text-red-500"
+          className="absolute top-1 right-1 bg-gray-100 p-1 rounded-md hover:text-red-500 cursor-pointer z-50"
         />
         <div className="p-4 w-fit">
           <div className="w-full">
@@ -88,7 +87,7 @@ export default function CarModal({ index }: Props) {
             Book Now
           </button>
         </div>
-      </form>
+      </div>
     </dialog>
   );
 }
