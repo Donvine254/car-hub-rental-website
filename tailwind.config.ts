@@ -15,10 +15,13 @@ const config = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
-        xsm: { max: "480px" },
       },
     },
     extend: {
+      screens: {
+        xsm: { max: "480px" },
+        // @media (max-width:480px) {}
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

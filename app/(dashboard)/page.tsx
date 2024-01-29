@@ -24,17 +24,17 @@ export default function Home() {
     <div className=" bg-green-500 w-full relative">
       <section className="relative bg-[url('/hero-bg-2.jpeg')] bg-cover bg-no-repeat bg-right py-5 h-full ">
         <div className="md:h-screen w-full  px-4 py-2 md:flex md:items-center md:justify-center md:gap-4 ">
-          <div className="flex-1 bg-black rounded-md bg-opacity-40 p-2">
-            <h1 className="text-white text-4xl md:text-6xl font-semibold leading-loose tracking-wide ">
+          <div className="flex-1 p-2">
+            <h1 className="text-white text-center md:text-start xsm:text-3xl text-5xl md:text-6xl font-semibold md:leading-tight  md:tracking-wide ">
               Explore the world with comfortable car
             </h1>
-            <h3 className="text-gray-100 text-xl  font-semibold  my-2 leading-loose">
+            <h3 className="text-gray-100 xsm:text-base text-2xl md:text-2xl tracking-wide font-semibold  my-2 leading-loose">
               Embark on unforgettable adventures and discover the world in
               unparalleled comfort and style with our fleet of exceptionally
               comfortable cars.
             </h3>
           </div>
-          <div className="flex-1 w-full md:w-1/2">
+          <div className="flex-1 w-full md:w-1/2 ">
             <Homebooking />
           </div>
         </div>
