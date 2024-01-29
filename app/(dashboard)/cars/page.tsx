@@ -4,7 +4,13 @@ import { useSearchParams } from "next/navigation";
 import { Cars } from "@/constants";
 import Image from "next/image";
 import { toast } from "sonner";
-import { CarFrontIcon, CarSeat, FuelPumpIcon, SteeringWheel } from "@/assets";
+import {
+  CarFrontIcon,
+  CarSeat,
+  FuelPumpIcon,
+  GearboxIcon,
+  SteeringWheel,
+} from "@/assets";
 import {
   FilterIcon,
   HeartIcon,
@@ -151,7 +157,11 @@ export default function Carspage({}: Props) {
                     <span className="capitalize">{car.body_type}</span>
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">
-                    <SteeringWheel />
+                    {car.transmission === "Manual" ? (
+                      <GearboxIcon />
+                    ) : (
+                      <SteeringWheel />
+                    )}
                     <span>{car.transmission}</span>
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">

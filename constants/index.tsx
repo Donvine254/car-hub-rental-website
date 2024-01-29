@@ -408,4 +408,15 @@ export const Cars = [
     rating: 87,
     body_type: "suv",
   },
+  {
+    id: 32,
+    model_name: "Mazda CX50",
+    seats: 5,
+    fuel_consumption: 19.9,
+    transmission: "Automatic",
+    image: "/cars/mazda-cx50.png",
+    price_per_day: 40,
+    rating: 29,
+    body_type: "suv",
+  },
 ];

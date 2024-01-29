@@ -153,3 +153,28 @@ export function CarFrontIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function GearboxIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+      height="1.5em"
+      width="1.5em"
+      className="text-green-500"
+      {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <path d="M7 6 A2 2 0 0 1 5 8 A2 2 0 0 1 3 6 A2 2 0 0 1 7 6 z" />
+      <path d="M14 6 A2 2 0 0 1 12 8 A2 2 0 0 1 10 6 A2 2 0 0 1 14 6 z" />
+      <path d="M21 6 A2 2 0 0 1 19 8 A2 2 0 0 1 17 6 A2 2 0 0 1 21 6 z" />
+      <path d="M7 18 A2 2 0 0 1 5 20 A2 2 0 0 1 3 18 A2 2 0 0 1 7 18 z" />
+      <path d="M14 18 A2 2 0 0 1 12 20 A2 2 0 0 1 10 18 A2 2 0 0 1 14 18 z" />
+      <path d="M5 8v8M12 8v8M19 8v2a2 2 0 01-2 2H5" />
+    </svg>
+  );
+}
+
