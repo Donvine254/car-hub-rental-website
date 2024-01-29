@@ -37,7 +37,7 @@ export default function Carspage({}: Props) {
   };
 
   const showModal = async (index: number) => {
-    await setModalIndex(index);
+    setModalIndex(index);
     const modal = document.getElementById(
       `my_modal_${index}`
     ) as HTMLDialogElement | null;
@@ -76,7 +76,11 @@ export default function Carspage({}: Props) {
             onClick={() => {
               toast.info("Coming soon feature!", {
                 position: "top-right",
-                style: { backgroundColor: "#22C55E", color: "white" },
+                style: {
+                  backgroundColor: "#22C55E",
+                  color: "white",
+                  border: "none",
+                },
               });
             }}>
             {" "}
@@ -94,9 +98,10 @@ export default function Carspage({}: Props) {
                   src={car.image}
                   width={300}
                   height={300}
+                  className="rounded-md hover:scale-y-105 cursor-pointer"
                   style={{ width: "auto", height: "auto" }}
+                  onClick={() => showModal(index)}
                   priority
-                  className="rounded-md hover:scale-105"
                 />
 
                 <div className="flex items-center justify-between gap-4 pt-2 px-2">
