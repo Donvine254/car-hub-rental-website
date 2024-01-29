@@ -108,4 +108,27 @@ input[type="number"] {
   opacity: 0.75;
 }
 
-/* styling for tags */
+/* styling for scrollbar */
+/* Define the styles for all scrollbars */
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #1ecb15 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #1ecb15;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
