@@ -340,7 +340,7 @@ export const Cars = [
     fuel_consumption: 15.2,
     transmission: "Manual",
     image:
-      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566320/cars/mhrub6y5ubtx7nkmdu3w.png",
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/kbgty5myjzbeh5azpqfb.png",
     price_per_day: 40,
     rating: 26,
     body_type: "pickup",
