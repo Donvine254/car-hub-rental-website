@@ -83,7 +83,14 @@ export default function Home() {
                 </div>
               </div>
               <div className="space-y-2 py-2 flex-col items-center">
-                <Image src="/car.png" width={680} height={680} alt="car" />
+                <Image
+                  src="/cars/mercendez-bg.png"
+                  width={680}
+                  placeholder="blur"
+                  blurDataURL="/cars/vehicle-placeholder.png"
+                  height={680}
+                  alt="car"
+                />
                 <div className="flex justify-between gap-2">
                   <div className="w-fit h-fit px-2 py-2 bg-green-500 rounded-md">
                     <ShieldCheckIcon

@@ -124,6 +124,8 @@ export default function Carspage({}: Props) {
                     src={car.image}
                     width={300}
                     height={300}
+                    placeholder="blur"
+                    blurDataURL="/cars/vehicle-placeholder.png"
                     className="rounded-md hover:scale-y-105 cursor-pointer"
                     style={{ width: "auto", height: "auto" }}
                     onClick={() => showModal(index)}
