@@ -189,8 +189,7 @@ export default function Carspage({}: Props) {
                 </div>
               </div>
             ))}
-
-            <CarModal id={carId} />
+            {carId && <CarModal id={carId} />}
           </section>
         ) : (
           <div className="p-4">

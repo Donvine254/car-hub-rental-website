@@ -6,7 +6,7 @@ type Props = {
 };
 import { Cars } from "@/constants";
 
-export default function CarModal({ id }) {
+export default function CarModal({ id }: Props) {
   const handleClose = () => {
     const modal = document.getElementById(
       `my_modal_${id}`
@@ -16,6 +16,9 @@ export default function CarModal({ id }) {
     }
   };
   const car = Cars.find((car) => car.id === id);
+  if (!car) {
+    return null;
+  }
 
   return (
     <dialog id={`my_modal_${id}`} className="rounded-md  border px-4 ">
@@ -53,7 +56,9 @@ export default function CarModal({ id }) {
             </div>
             <div className="flex items-center justify-between ">
               <p className="">Body Type</p>
-              <p className="capitalize text-green-600">{car.body_type}</p>
+              <p className="capitalize text-green-600">
+                {car.body_type.toUpperCase()}
+              </p>
             </div>
 
             <div className="flex items-center justify-between ">
