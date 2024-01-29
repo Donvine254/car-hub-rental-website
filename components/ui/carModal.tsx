@@ -2,22 +2,23 @@ import React from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 type Props = {
-  index: number;
+  id: number;
 };
 import { Cars } from "@/constants";
 
-export default function CarModal({ index }: Props) {
+export default function CarModal({ id }) {
   const handleClose = () => {
     const modal = document.getElementById(
-      `my_modal_${index}`
+      `my_modal_${id}`
     ) as HTMLDialogElement | null;
     if (modal) {
       modal.close();
     }
   };
-  const car = Cars[index];
+  const car = Cars.find((car) => car.id === id);
+
   return (
-    <dialog id={`my_modal_${index}`} className="rounded-md  border px-4 ">
+    <dialog id={`my_modal_${id}`} className="rounded-md  border px-4 ">
       <div className="w-fit max-w-lg  relative ">
         <X
           onClick={handleClose}
@@ -47,7 +48,7 @@ export default function CarModal({ index }: Props) {
             <div className="flex items-center justify-between ">
               <p className="">Make</p>
               <p className="capitalize text-green-600">
-                {car.model_name.split(" ")[0]}
+                {car.model_name?.split(" ")[0]}
               </p>
             </div>
             <div className="flex items-center justify-between ">

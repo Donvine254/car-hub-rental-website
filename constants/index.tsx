@@ -58,6 +58,7 @@ export const testimonials = [
 
 export const Cars = [
   {
+    id: 1,
     model_name: "Toyota Sedan",
     seats: 5,
     fuel_consumption: 19.1,
@@ -68,6 +69,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 2,
     model_name: "Toyota Cruiser Hyryder",
     seats: 5,
     fuel_consumption: 20,
@@ -78,6 +80,7 @@ export const Cars = [
     body_type: "suv",
   },
   {
+    id: 3,
     model_name: "BMW M2",
     seats: 5,
     fuel_consumption: 16.2,
@@ -89,6 +92,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 4,
     model_name: "Toyota Corolla",
     seats: 5,
     fuel_consumption: 17.2,
@@ -99,6 +103,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 5,
     model_name: "Jeep Renegade",
     seats: 5,
     fuel_consumption: 22.2,
@@ -110,6 +115,7 @@ export const Cars = [
     body_type: "suv",
   },
   {
+    id: 6,
     model_name: "Ford Raptor",
     seats: 5,
     fuel_consumption: 14.2,
@@ -121,6 +127,7 @@ export const Cars = [
     body_type: "pickup",
   },
   {
+    id: 7,
     model_name: "Mini Cooper",
     seats: 2,
     fuel_consumption: 22.2,
@@ -132,6 +139,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 8,
     model_name: "Mercedes-Benz A Class",
     seats: 5,
     fuel_consumption: 14.2,
@@ -142,6 +150,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 9,
     model_name: "Chevrolet Camaro",
     seats: 5,
     fuel_consumption: 18.5,
@@ -153,6 +162,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 10,
     model_name: "Lexus 1S 350",
     seats: 5,
     fuel_consumption: 16.5,
@@ -164,6 +174,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 11,
     model_name: "Range Rover Sport",
     seats: 5,
     fuel_consumption: 19.5,
@@ -172,9 +183,10 @@ export const Cars = [
       "https://www.madebydesignesia.com/themes/rentaly/images/cars/range-rover.jpg",
     price_per_day: 45,
     rating: 125,
-    body_type: "saloon",
+    body_type: "suv",
   },
   {
+    id: 12,
     model_name: "Bentley",
     seats: 2,
     fuel_consumption: 14.5,
@@ -186,6 +198,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 13,
     model_name: "Audi A1 S",
     seats: 5,
     fuel_consumption: 16.5,
@@ -197,6 +210,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 14,
     model_name: "VW Polo Vivo",
     seats: 2,
     fuel_consumption: 16.5,
@@ -207,6 +221,7 @@ export const Cars = [
     body_type: "saloon",
   },
   {
+    id: 15,
     model_name: "Kia Niro",
     seats: 5,
     fuel_consumption: 16.5,
@@ -217,6 +232,7 @@ export const Cars = [
     body_type: "suv",
   },
   {
+    id: 16,
     model_name: "Hyudai Staria",
     seats: 5,
     fuel_consumption: 20.5,
@@ -228,6 +244,7 @@ export const Cars = [
     body_type: "van",
   },
   {
+    id: 17,
     model_name: "Toyota RAV4",
     seats: 5,
     fuel_consumption: 16.5,
@@ -238,6 +255,7 @@ export const Cars = [
     body_type: "suv",
   },
   {
+    id: 18,
     model_name: "Toyota Harrier",
     seats: 5,
     fuel_consumption: 26.5,
@@ -248,6 +266,7 @@ export const Cars = [
     body_type: "suv",
   },
   {
+    id: 19,
     model_name: "Ford Transit",
     seats: 5,
     fuel_consumption: 19.8,
@@ -258,6 +277,7 @@ export const Cars = [
     body_type: "van",
   },
   {
+    id: 20,
     model_name: "Mercedes Jayco-Terrain",
     seats: 5,
     fuel_consumption: 24.2,
@@ -268,6 +288,7 @@ export const Cars = [
     body_type: "van",
   },
   {
+    id: 21,
     model_name: "Mercedes Storyteller",
     seats: 5,
     fuel_consumption: 19.2,
@@ -278,6 +299,7 @@ export const Cars = [
     body_type: "van",
   },
   {
+    id: 22,
     model_name: "RAM 1500 REV",
     seats: 5,
     fuel_consumption: 14.2,
@@ -288,6 +310,7 @@ export const Cars = [
     body_type: "pickup",
   },
   {
+    id: 23,
     model_name: "GMC Sierra 1500",
     seats: 5,
     fuel_consumption: 14.2,
@@ -298,16 +321,18 @@ export const Cars = [
     body_type: "pickup",
   },
   {
+    id: 24,
     model_name: "Toyota Tundra",
     seats: 5,
     fuel_consumption: 15.2,
     transmission: "Manual",
     image: "/cars/toyota-tundra.png",
-    price_per_day: 45,
+    price_per_day: 40,
     rating: 26,
     body_type: "pickup",
   },
   {
+    id: 25,
     model_name: "Chevrolet Silverado",
     seats: 5,
     fuel_consumption: 16.2,
@@ -315,6 +340,17 @@ export const Cars = [
     image: "/cars/chevrolet-silvarado.png",
     price_per_day: 45,
     rating: 37,
+    body_type: "pickup",
+  },
+  {
+    id: 26,
+    model_name: "Nissan Titan",
+    seats: 5,
+    fuel_consumption: 18.7,
+    transmission: "Manual",
+    image: "/cars/nissan-titan.png",
+    price_per_day: 40,
+    rating: 39,
     body_type: "pickup",
   },
 ];

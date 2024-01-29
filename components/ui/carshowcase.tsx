@@ -43,9 +43,9 @@ export default function Carshowcase({}: Props) {
           }),
         ]}>
         <CarouselContent>
-          {Cars.map((car, index) => (
+          {Cars.map((car) => (
             <CarouselItem
-              key={index}
+              key={car.id}
               className="xsm:w-full md:basis-1/2 lg:basis-1/3 px-2">
               <div className="w-fit border shadow bg-white rounded-md">
                 <div className="p-2">

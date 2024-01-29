@@ -22,7 +22,8 @@ type Props = {};
 export default function Carspage({}: Props) {
   const [CarsToRender, setCarsToRender] = useState(Cars);
   const [displayCount, setDisplayCount] = useState(10);
-  const [modalIndex, setModalIndex] = useState(0);
+  const [carId, setCarId] = useState<number | null>(null);
+
   // state for the game car
   const [carImage, setCarImage] = useState("/cars/vehicle-placeholder.png");
   const [attempts, setAttempts] = useState(0);
@@ -55,10 +56,10 @@ export default function Carspage({}: Props) {
     });
   };
 
-  const showModal = async (index: number) => {
-    setModalIndex(() => index);
+  const showModal = async (id: number) => {
+    setCarId(id);
     const modal = document.getElementById(
-      `my_modal_${index}`
+      `my_modal_${id}`
     ) as HTMLDialogElement | null;
     if (modal) {
       modal.showModal();
@@ -114,9 +115,9 @@ export default function Carspage({}: Props) {
 
         {CarsToRender.length > 0 ? (
           <section className=" grid gap-4 md:grid-cols-2 lg:grid-cols-3 py-2 ">
-            {CarsToRender.slice(0, displayCount).map((car, index) => (
+            {CarsToRender.slice(0, displayCount).map((car) => (
               <div
-                key={index}
+                key={car.id}
                 className="w-fit border shadow bg-white rounded-md">
                 <div className="p-2">
                   <Image
@@ -128,7 +129,7 @@ export default function Carspage({}: Props) {
                     blurDataURL="/cars/vehicle-placeholder.png"
                     className="rounded-md hover:scale-y-105 cursor-pointer"
                     style={{ width: "auto", height: "auto" }}
-                    onClick={() => showModal(index)}
+                    onClick={() => showModal(car.id)}
                     priority
                   />
 
@@ -163,7 +164,7 @@ export default function Carspage({}: Props) {
                   </div>
                   <button
                     className="hidden group-hover:flex items-center justify-between  w-full bg-green-500 text-white group  rounded-md p-2 "
-                    onClick={() => showModal(index)}>
+                    onClick={() => showModal(car.id)}>
                     <InfoIcon />
                     <span className="font-medium flex item-center gap-0.5">
                       View More
@@ -189,7 +190,7 @@ export default function Carspage({}: Props) {
               </div>
             ))}
 
-            <CarModal index={modalIndex} />
+            <CarModal id={carId} />
           </section>
         ) : (
           <div className="p-4">
