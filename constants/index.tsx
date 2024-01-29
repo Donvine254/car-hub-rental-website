@@ -63,7 +63,8 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 19.1,
     transmission: "Automatic",
-    image: "/cars/toyota-sedan.png",
+    image:
+      "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/nycmvwu03dz1hcr3uwlh.png",
     price_per_day: 25,
     rating: 26,
     body_type: "saloon",
@@ -74,7 +75,7 @@ export const Cars = [
     seats: 5,
     fuel_consumption: 20,
     transmission: "Automatic",
-    image: "/cars/toyota-hyryder.png",
+    image: "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566323/cars/gidpabv53bxbbxnos4sa.png",
     price_per_day: 35,
     rating: 69,
     body_type: "suv",
