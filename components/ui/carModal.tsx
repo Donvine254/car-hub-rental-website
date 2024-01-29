@@ -37,7 +37,7 @@ export default function CarModal({ id }: Props) {
               height={600}
               style={{ width: "auto", height: "auto" }}
               placeholder="blur"
-              blurDataURL="/cars/vehicle-placeholder.png"
+              blurDataURL="/vehicle-placeholder.png"
               priority
               className="rounded-md w-full "
             />
