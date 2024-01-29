@@ -87,7 +87,7 @@ export default function Home() {
                   src="https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/u103yff7rpt9li9cgvaj.png"
                   width={680}
                   placeholder="blur"
-                  blurDataURL="/cars/vehicle-placeholder.png"
+                  blurDataURL="/vehicle-placeholder.png"
                   height={680}
                   alt="car"
                 />

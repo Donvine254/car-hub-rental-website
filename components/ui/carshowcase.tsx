@@ -56,7 +56,7 @@ export default function Carshowcase({}: Props) {
                     height={300}
                     style={{ width: "auto", height: "auto" }}
                     placeholder="blur"
-                    blurDataURL="/cars/vehicle-placeholder.png"
+                    blurDataURL="/vehicle-placeholder.png"
                     priority
                     className="rounded-md hover:scale-y-105"
                   />
