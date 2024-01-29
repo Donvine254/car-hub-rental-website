@@ -99,8 +99,8 @@ export function SteeringWheel(props: React.SVGProps<SVGSVGElement>) {
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
-      height="1em"
-      width="1em"
+      height="1.5em"
+      width="1.5em"
       className="text-green-500"
       {...props}>
       <path fill="none" d="M0 0h24v24H0z" />
@@ -114,11 +114,11 @@ export function CarSeat(props: React.SVGProps<SVGSVGElement>) {
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
-      height="1em"
-      width="1em"
+      height="1.5em"
+      width="1.5em"
       className="text-green-500"
       {...props}>
-      <path d="M9 19h6v2H9c-2.76 0-5-2.24-5-5V7h2v9c0 1.66 1.34 3 3 3m1.42-13.59c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0-.78.78-.78 2.05 0 2.83.78.79 2.04.79 2.83 0M11.5 9c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v6c0 1.66 1.34 3 3 3h5.07l3.5 3.5L20 20.07 14.93 15H11.5V9z" />
+      <path d="M12 2a2 2 0 012 2c0 1.11-.89 2-2 2a2 2 0 01-2-2 2 2 0 012-2m.39 12.79a34 34 0 014.25.25c.06-2.72-.18-5.12-.64-6.04-.13-.27-.31-.5-.5-.7l-8.07 6.92c1.36-.22 3.07-.43 4.96-.43M7.46 17c.13 1.74.39 3.5.81 5h2.07c-.29-.88-.5-1.91-.66-3 0 0 2.32-.44 4.64 0-.16 1.09-.37 2.12-.66 3h2.07c.44-1.55.7-3.39.83-5.21a34.58 34.58 0 00-4.17-.25c-1.93 0-3.61.21-4.93.46M12 7S9 7 8 9c-.34.68-.56 2.15-.63 3.96l6.55-5.62C12.93 7 12 7 12 7m6.57-1.33l-1.14-1.33-3.51 3.01c.55.19 1.13.49 1.58.95l3.07-2.63m2.1 10.16c-.09-.03-1.53-.5-4.03-.79-.01.57-.04 1.16-.08 1.75 2.25.28 3.54.71 3.56.71l.55-1.67m-13.3-2.87l-3.94 3.38.89 1.48c.02-.01 1.18-.46 3.14-.82-.11-1.41-.14-2.8-.09-4.04z" />
     </svg>
   );
 }
@@ -127,9 +127,9 @@ export function FuelPumpIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       fill="currentColor"
-      viewBox="0 0 16 16"
-      height="1em"
-      width="1em"
+      viewBox="0 0 24 16"
+      height="1.5em"
+      width="1.5em"
       className="text-green-500"
       {...props}>
       <path d="M1 2a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 012 2v.5a.5.5 0 001 0V8h-.5a.5.5 0 01-.5-.5V4.375a.5.5 0 01.5-.5h1.495c-.011-.476-.053-.894-.201-1.222a.97.97 0 00-.394-.458c-.184-.11-.464-.195-.9-.195a.5.5 0 010-1c.564 0 1.034.11 1.412.336.383.228.634.551.794.907.295.655.294 1.465.294 2.081V7.5a.5.5 0 01-.5.5H15v4.5a1.5 1.5 0 01-3 0V12a1 1 0 00-1-1v4h.5a.5.5 0 010 1H.5a.5.5 0 010-1H1V2zm2.5 0a.5.5 0 00-.5.5v5a.5.5 0 00.5.5h5a.5.5 0 00.5-.5v-5a.5.5 0 00-.5-.5h-5z" />
@@ -142,8 +142,8 @@ export function CarFrontIcon(props: React.SVGProps<SVGSVGElement>) {
     <svg
       fill="currentColor"
       viewBox="0 0 16 16"
-      height="1em"
-      width="1em"
+      height="1.5em"
+      width="1.5em"
       className="text-green-500"
       {...props}>
       <path
