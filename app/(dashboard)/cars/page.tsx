@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Cars } from "@/constants";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -23,9 +23,12 @@ export default function Carspage({}: Props) {
   const [CarsToRender, setCarsToRender] = useState(Cars);
   const [displayCount, setDisplayCount] = useState(10);
   const [modalIndex, setModalIndex] = useState(0);
+  // state for the game car
+  const [carImage, setCarImage] = useState("/cars/vehicle-placeholder.png");
+  const [attempts, setAttempts] = useState(0);
   const searchParams = useSearchParams();
   const model = searchParams.get("model");
-  const router = useRouter();
+
   //use effect to handle when there is a model in search params
   useEffect(() => {
     if (model) {
@@ -200,7 +203,7 @@ export default function Carspage({}: Props) {
               <div className="p-2">
                 <Image
                   alt="model car"
-                  src="/cars/vehicle-placeholder.png"
+                  src={carImage}
                   width={300}
                   height={300}
                   className="rounded-md  cursor-pointer"
@@ -208,7 +211,7 @@ export default function Carspage({}: Props) {
                   priority
                 />
                 <p>Which car type is this?</p>
-                <form onSubmit={handleGuessCar}>
+                <form onSubmit={(e) => handleGuessCar(e, setCarImage)}>
                   <div className="grid grid-cols-2 gap-2 my-2">
                     <label className="flex items-center">
                       <input
@@ -249,7 +252,12 @@ export default function Carspage({}: Props) {
                   </div>
                   <button
                     type="submit"
-                    className=" w-full bg-green-500 text-white group  rounded-md p-2 ">
+                    onClick={() => setAttempts((prev) => prev + 1)}
+                    disabled={attempts > 3}
+                    title={
+                      attempts > 3 ? "Maximum attempts reached" : "Guess Car"
+                    }
+                    className=" w-full bg-green-500 disabled:bg-gray-200 disabled:text-gray-400  text-white group  rounded-md p-2 ">
                     Guess the Car
                   </button>
                 </form>
