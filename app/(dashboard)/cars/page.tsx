@@ -4,13 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Cars } from "@/constants";
 import Image from "next/image";
 import { toast } from "sonner";
-import {
-  CarFrontIcon,
-  CarSeat,
-  FuelPumpIcon,
-  GearboxIcon,
-  SteeringWheel,
-} from "@/assets";
+import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
 import {
   FilterIcon,
   HeartIcon,
@@ -140,7 +134,9 @@ export default function Carspage({}: Props) {
                   />
 
                   <div className="flex items-center justify-between gap-4 pt-2 px-2">
-                    <h1 className="text-bold text-xl ">{car.model_name}</h1>
+                    <h1 className="font-semibold text-xl text-gray-600 ">
+                      {car.model_name}
+                    </h1>
                     <p className="flex items-center">
                       <HeartIcon
                         className="text-gray-300 cursor-pointer hover:text-red-600"
@@ -151,29 +147,26 @@ export default function Carspage({}: Props) {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between gap-2 px-4 py-1 group">
+                <div className="flex items-center justify-between gap-2 px-4 py-1 my-1 group h-12">
                   <div className="flex flex-col items-center gap-0.5 group-hover:hidden">
                     <CarFrontIcon />
                     <span className="capitalize">{car.body_type}</span>
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">
-                    {car.transmission === "Manual" ? (
-                      <GearboxIcon />
-                    ) : (
-                      <SteeringWheel />
-                    )}
+                    <GearboxIcon />
+
                     <span>{car.transmission}</span>
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">
                     <CarSeat />
-                    <span>{car.seats}</span>
+                    <span>{car.seats} Seats</span>
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">
                     <FuelPumpIcon />
                     <span>{car.fuel_consumption}L/km</span>
                   </div>
                   <button
-                    className="hidden group-hover:flex items-center justify-between  w-full bg-green-500 text-white group  rounded-md p-2 "
+                    className="hidden group-hover:flex items-center justify-between  w-full h-full bg-green-500 text-white group  rounded-md p-2 "
                     onClick={() => showModal(car.id)}>
                     <InfoIcon />
                     <span className="font-medium flex item-center gap-0.5">
