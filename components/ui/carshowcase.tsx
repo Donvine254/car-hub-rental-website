@@ -58,7 +58,7 @@ export default function Carshowcase({}: Props) {
                     placeholder="blur"
                     blurDataURL="/cars/vehicle-placeholder.png"
                     priority
-                    className="rounded-md hover:scale-105"
+                    className="rounded-md hover:scale-y-105"
                   />
 
                   <div className="flex items-center justify-between gap-4 pt-2 px-2">

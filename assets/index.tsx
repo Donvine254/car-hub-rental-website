@@ -137,8 +137,6 @@ export function FuelPumpIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-
-
 export function CarFrontIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg

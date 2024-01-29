@@ -43,17 +43,18 @@ export default function CarModal({ index }: Props) {
             {car.model_name}
           </h1>
           <h1 className="text-bold text-[18px]">Specifications</h1>
-          <div className="text-gray-500 font-semibold py-2 divide divide-y divide-gray-200">
-            <div className="flex items-center justify-between ">
-              <p className="">Body Type</p>
-              <p className="capitalize text-green-600">{car.body_type}</p>
-            </div>
+          <div className="text-gray-600 font-semibold py-2 divide divide-y divide-gray-200">
             <div className="flex items-center justify-between ">
               <p className="">Make</p>
               <p className="capitalize text-green-600">
                 {car.model_name.split(" ")[0]}
               </p>
             </div>
+            <div className="flex items-center justify-between ">
+              <p className="">Body Type</p>
+              <p className="capitalize text-green-600">{car.body_type}</p>
+            </div>
+
             <div className="flex items-center justify-between ">
               <p className="">No. of Seats</p>
               <p className="capitalize text-green-600">{car.seats}</p>
@@ -76,9 +77,9 @@ export default function CarModal({ index }: Props) {
               <p className="">Year of Manufacture</p>
               <p className="capitalize text-green-600">2020</p>
             </div>
-            <div className="flex items-center justify-between ">
+            <div className="flex items-center justify-between py-1">
               <p className="">Price Per Day</p>
-              <p className="capitalize font-bold text-green-600">
+              <p className="capitalize font-bold text-green-600 text-xl bg-gray-200 px-6 rounded-md">
                 $ {car.price_per_day}
               </p>
             </div>
