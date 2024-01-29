@@ -37,7 +37,7 @@ export default function Carspage({}: Props) {
   };
 
   const showModal = async (index: number) => {
-    setModalIndex(index);
+    setModalIndex(() => index);
     const modal = document.getElementById(
       `my_modal_${index}`
     ) as HTMLDialogElement | null;
