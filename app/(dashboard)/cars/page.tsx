@@ -26,7 +26,7 @@ export default function Carspage({}: Props) {
 
   // state for the game car
   const [carImage, setCarImage] = useState(
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKria3yYdb0DCaSKyYPOtQ-sX206GxyBCpBg&usqp=CAU"
+    "https://res.cloudinary.com/dipkbpinx/image/upload/v1706619929/cars/q6pgnwhxjkux22illdpm.png"
   );
   const [attempts, setAttempts] = useState(0);
   const searchParams = useSearchParams();
@@ -206,7 +206,7 @@ export default function Carspage({}: Props) {
               discount on your car booking!
             </p>
 
-            <div className="xsm:w-full md:w-fit  border shadow bg-green-50 rounded-md">
+            <div className="xsm:w-full md:w-fit  border shadow bg-[#f8f9fa] rounded-md">
               <div className="p-2">
                 <Image
                   alt="model car"

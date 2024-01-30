@@ -55,7 +55,7 @@ export const handleGuessCar = (
     if (typeof window !== undefined)
       setTimeout(() => {
         window.location.href = "/cars";
-      }, 3000);
+      }, 5000);
   } else {
     toast.error(
       `Sorry, the correct answer was ${randomModel.model}. Try again!`,
