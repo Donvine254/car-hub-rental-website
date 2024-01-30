@@ -25,7 +25,7 @@ export default function Carspage({}: Props) {
   const [carId, setCarId] = useState<number | null>(null);
 
   // state for the game car
-  const [carImage, setCarImage] = useState("/cars/vehicle-placeholder.png");
+  const [carImage, setCarImage] = useState("/vehicle-placeholder.png");
   const [attempts, setAttempts] = useState(0);
   const searchParams = useSearchParams();
   const model = searchParams.get("model");
