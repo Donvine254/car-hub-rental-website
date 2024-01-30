@@ -28,7 +28,11 @@ export const handleGuessCar = (
       image:
         "https://www.madebydesignesia.com/themes/rentaly/images/cars/range-rover.jpg",
     },
-    { model: "kira", image: "/cars/kia-niro.png" },
+    {
+      model: "kia",
+      image:
+        "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566323/cars/ocavzqiw0tolgl8dsohy.png",
+    },
   ];
   const formData = new FormData(form);
   const selectedCarType = formData.get("carType") as string;

@@ -25,7 +25,9 @@ export default function Carspage({}: Props) {
   const [carId, setCarId] = useState<number | null>(null);
 
   // state for the game car
-  const [carImage, setCarImage] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKria3yYdb0DCaSKyYPOtQ-sX206GxyBCpBg&usqp=CAU");
+  const [carImage, setCarImage] = useState(
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKria3yYdb0DCaSKyYPOtQ-sX206GxyBCpBg&usqp=CAU"
+  );
   const [attempts, setAttempts] = useState(0);
   const searchParams = useSearchParams();
   const model = searchParams.get("model");
@@ -222,7 +224,7 @@ export default function Carspage({}: Props) {
                       <input
                         type="radio"
                         name="carType"
-                        value="TOYOTA"
+                        value="toyota"
                         className="mr-2"
                       />
                       TOYOTA
@@ -231,7 +233,7 @@ export default function Carspage({}: Props) {
                       <input
                         type="radio"
                         name="carType"
-                        value="LEXUS"
+                        value="lexus"
                         className="mr-2"
                       />
                       LEXUS
@@ -240,7 +242,7 @@ export default function Carspage({}: Props) {
                       <input
                         type="radio"
                         name="carType"
-                        value="Range Rover"
+                        value="range rover"
                         className="mr-2"
                       />
                       Range Rover
@@ -249,10 +251,10 @@ export default function Carspage({}: Props) {
                       <input
                         type="radio"
                         name="carType"
-                        value="KIRA"
+                        value="kia"
                         className="mr-2"
                       />
-                      KIRA
+                      KIA
                     </label>
                   </div>
                   <button
