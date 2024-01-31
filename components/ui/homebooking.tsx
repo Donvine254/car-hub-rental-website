@@ -24,13 +24,14 @@ export default function Homebooking({}: Props) {
         className="flex flex-col gap-2 md:grid md:grid-cols-2  md:gap-4"
         action={`/cars?${FormData}`}>
         <div className="py-2">
-          <label className="inline-flex font-bold">
+          <label className="inline-flex font-bold" htmlFor="model">
             <Car fill="none" className="text-green-500" />
             <span> &nbsp; Select Your Car Type *</span>
           </label>
           <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-            name="carType"
+            name="model"
+            id="model"
             required>
             <option value="" hidden>
               Select Your Car Type
@@ -49,7 +50,7 @@ export default function Homebooking({}: Props) {
           <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
             defaultValue="Nairobi"
-            name="pickupLocation"
+            name="pickup_location"
             id="pickupLocation"
             required>
             <option value="" hidden>
@@ -71,7 +72,7 @@ export default function Homebooking({}: Props) {
           <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
             name="dropLocation"
-            id="dropLocation"
+            id="dropoff_location"
             required
             defaultValue="Nairobi">
             <option value="" hidden>
@@ -94,7 +95,7 @@ export default function Homebooking({}: Props) {
             <input
               type="date"
               id="pickupDate"
-              name="pickupDate"
+              name="pickup_date"
               required
               defaultValue={formattedDate}
               className="flex h-10 bg-white text-base  w-1/2 px-3 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
@@ -116,7 +117,7 @@ export default function Homebooking({}: Props) {
           <div className="flex items-center gap-0">
             <input
               type="date"
-              name="drop-offDate"
+              name="dropoff_date"
               id="drop-offDate"
               required
               defaultValue={formattedDate}
@@ -124,7 +125,7 @@ export default function Homebooking({}: Props) {
             />
             <input
               type="time"
-              name="drop-offTime"
+              name="dropoff_time"
               required
               defaultValue="18:00"
               className="h-10 w-1/2  bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
