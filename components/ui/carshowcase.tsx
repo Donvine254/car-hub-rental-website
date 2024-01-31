@@ -6,10 +6,6 @@ import CarCarousel from "./carCarousel";
 export default async function Carshowcase() {
   const Cars: car[] | null = await fetchCars();
 
-  if (Cars === null) {
-    console.error("Failed to fetch cars data");
-    return <div>Error loading cars data</div>;
-  }
   return (
     <section className="h-full w-full bg-[#f8f9fa] py-4 p-2 overflow-x-hidden">
       <div className="flex flex-col items-center justify-center mx-auto">
@@ -22,7 +18,7 @@ export default async function Carshowcase() {
           vehicles for unforgettable journeys.
         </p>
       </div>
-      <CarCarousel Cars={Cars} />
+      {Cars && <CarCarousel Cars={Cars} />}
       <div className="flex items-center justify-center mx-auto">
         <Link
           href="/cars"

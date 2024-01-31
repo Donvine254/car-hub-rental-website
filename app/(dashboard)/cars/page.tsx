@@ -14,13 +14,5 @@ type Props = {};
 export default async function Page({}: Props) {
   const Cars: car[] | null = await fetchCars();
 
-  if (Cars === null) {
-    console.error("Failed to fetch cars data");
-    return <div>Loading..</div>;
-  }
-  return (
-    <main>
-      <Carspage Cars={Cars} />
-    </main>
-  );
+  return <main>{Cars && <Carspage Cars={Cars} />}</main>;
 }
