@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Cars } from "@/constants";
 import Image from "next/image";
 import { toast } from "sonner";
+import fetchCars from "@/lib/fetchCars";
 import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
 import {
   FilterIcon,
@@ -18,9 +18,11 @@ import CarModal from "@/components/ui/carModal";
 import Script from "next/script";
 import { handleGuessCar } from "@/lib/utils";
 type Props = {};
+import type { car } from "@/lib/fetchCars";
 
 export default function Carspage({}: Props) {
-  const [CarsToRender, setCarsToRender] = useState(Cars);
+  const [cars, setCars] = useState<car[]>([]);
+  const [CarsToRender, setCarsToRender] = useState<car[]>([]);
   const [displayCount, setDisplayCount] = useState(10);
   const [carId, setCarId] = useState<number | null>(null);
 
@@ -32,19 +34,31 @@ export default function Carspage({}: Props) {
   const searchParams = useSearchParams();
   const model = searchParams.get("model");
 
+  //use Effect to fetch cars
+  useEffect(() => {
+    (async () => {
+      const data = await fetchCars();
+      if (data) {
+        setCars(data);
+        setCarsToRender(data);
+      } else {
+        return null;
+      }
+    })();
+  }, []);
   //use effect to handle when there is a model in search params
   useEffect(() => {
     if (model) {
-      const filteredCars = Cars.filter((car) =>
+      const filteredCars = cars.filter((car) =>
         car.body_type.toLowerCase().includes(model.toLowerCase())
       );
       setCarsToRender(filteredCars);
     }
-  }, [model]);
+  }, [model, cars]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
-    const filteredCars = Cars.filter((car) =>
+    const filteredCars = cars.filter((car) =>
       car.model_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setCarsToRender(filteredCars);
@@ -54,7 +68,7 @@ export default function Carspage({}: Props) {
   const handleLoadMore = () => {
     setDisplayCount((prevCount) => {
       const newCount = prevCount + 10;
-      return Math.min(newCount, Cars.length);
+      return Math.min(newCount, CarsToRender.length);
     });
   };
 
@@ -115,7 +129,7 @@ export default function Carspage({}: Props) {
           </button>
         </form>
 
-        {CarsToRender.length > 0 ? (
+        {CarsToRender && CarsToRender.length > 0 ? (
           <section className=" grid gap-4 md:grid-cols-2 lg:grid-cols-3 py-2 ">
             {CarsToRender.slice(0, displayCount).map((car) => (
               <div
@@ -277,7 +291,7 @@ export default function Carspage({}: Props) {
         <button
           className="group px-2 py-1 bg-gray-200 text-green-500 border inline-flex items-center gap-2 rounded-md disabled:text-gray-400 disabled:bg-opacity-50 disabled:pointer-events-none"
           onClick={handleLoadMore}
-          disabled={displayCount >= Cars.length}>
+          disabled={displayCount >= CarsToRender.length}>
           <span>Load More</span>
           <RefreshCwIcon
             className="text-green-500 group-hover:animate-spin "
