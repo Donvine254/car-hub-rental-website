@@ -24,8 +24,6 @@ type Props = {
 export default function Carspage({ Cars }: Props) {
   const [CarsToRender, setCarsToRender] = useState<car[]>(Cars);
   const [displayCount, setDisplayCount] = useState(10);
-  const [currentCar, setCurrentCar] = useState<car | null>(null);
-
   // state for the game car
   const [carImage, setCarImage] = useState(
     "https://res.cloudinary.com/dipkbpinx/image/upload/v1706619929/cars/q6pgnwhxjkux22illdpm.png"
@@ -60,10 +58,9 @@ export default function Carspage({ Cars }: Props) {
     });
   };
 
-  const showModal = async (car: car) => {
-    setCurrentCar(car);
+  const showModal = async (id: number) => {
     const modal = document.getElementById(
-      `my_modal_${car.id}`
+      `my_modal_${id}`
     ) as HTMLDialogElement | null;
     if (modal) {
       modal.showModal();
@@ -133,7 +130,7 @@ export default function Carspage({ Cars }: Props) {
                     blurDataURL="/vehicle-placeholder.png"
                     className="rounded-md hover:scale-y-105 cursor-pointer"
                     style={{ width: "auto", height: "auto" }}
-                    onClick={() => showModal(car)}
+                    onClick={() => showModal(car.id)}
                     priority
                   />
 
@@ -171,7 +168,7 @@ export default function Carspage({ Cars }: Props) {
                   </div>
                   <button
                     className="hidden group-hover:flex items-center justify-between  w-full h-full bg-green-500 text-white group  rounded-md p-2 "
-                    onClick={() => showModal(car)}>
+                    onClick={() => showModal(car.id)}>
                     <InfoIcon />
                     <span className="font-medium flex item-center gap-0.5">
                       View More
@@ -194,9 +191,9 @@ export default function Carspage({ Cars }: Props) {
                     Book Now
                   </button>
                 </div>
+                <CarModal Car={car} />
               </div>
             ))}
-            {currentCar && <CarModal Car={currentCar} />}
           </section>
         ) : (
           <div className="p-4">
