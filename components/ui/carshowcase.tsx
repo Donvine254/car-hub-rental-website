@@ -1,24 +1,15 @@
-"use client";
 import React from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { Cars } from "@/constants";
-import Image from "next/image";
-
-import { CarSeat, CarFrontIcon, FuelPumpIcon, GearboxIcon } from "@/assets";
-import { HeartIcon } from "lucide-react";
 import Link from "next/link";
-import { toast } from "sonner";
+import fetchCars, { car } from "@/lib/fetchCars";
+import CarCarousel from "./carCarousel";
 
-type Props = {};
+export default async function Carshowcase() {
+  const Cars: car[] | null = await fetchCars();
 
-export default function Carshowcase({}: Props) {
+  if (Cars === null) {
+    console.error("Failed to fetch cars data");
+    return <div>Error loading cars data</div>;
+  }
   return (
     <section className="h-full w-full bg-[#f8f9fa] py-4 p-2 overflow-x-hidden">
       <div className="flex flex-col items-center justify-center mx-auto">
@@ -31,88 +22,7 @@ export default function Carshowcase({}: Props) {
           vehicles for unforgettable journeys.
         </p>
       </div>
-      <Carousel
-        className="md:max-w-[75%] mx-auto my-4 h-fit "
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        plugins={[
-          Autoplay({
-            delay: 8000,
-          }),
-        ]}>
-        <CarouselContent>
-          {Cars.map((car) => (
-            <CarouselItem
-              key={car.id}
-              className="xsm:w-full md:basis-1/2 lg:basis-1/3 px-2">
-              <div className="w-fit border shadow bg-white rounded-md">
-                <div className="p-2">
-                  <Image
-                    alt={car.model_name}
-                    src={car.image}
-                    width={300}
-                    height={300}
-                    style={{ width: "auto", height: "auto" }}
-                    placeholder="blur"
-                    blurDataURL="/vehicle-placeholder.png"
-                    priority
-                    className="rounded-md hover:scale-y-105"
-                  />
-
-                  <div className="flex items-center justify-between gap-4 pt-2 px-2">
-                    <h1 className="text-bold text-xl ">{car.model_name}</h1>
-                    <p className="flex items-center">
-                      <HeartIcon
-                        className="text-gray-300 cursor-pointer hover:text-red-600"
-                        fill="currentColor"
-                        size={16}
-                      />
-                      {car.rating}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between gap-2 px-4 py-1">
-                  <div className="flex flex-col items-center gap-0.5">
-                    <CarFrontIcon />
-                    <span className="capitalize">{car.body_type}</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <GearboxIcon />
-                    <span>{car.transmission}</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <CarSeat />
-                    <span>{car.seats} Seats</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <FuelPumpIcon />
-                    <span>{car.fuel_consumption}L/Km</span>
-                  </div>
-                </div>
-                {/* div for actions */}
-                <hr className="border border-gay-200" />
-                <div className="px-4 pt-1 pb-2 flex items-center justify-between  gap-4">
-                  <p className="text-sm">
-                    Daily Rate From <br />
-                    <span className="text-2xl font-semibold">
-                      ${car.price_per_day}
-                    </span>
-                  </p>
-                  <button
-                    className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1"
-                    onClick={() => toast.info("feature coming soon!")}>
-                    Book Now
-                  </button>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+      <CarCarousel Cars={Cars} />
       <div className="flex items-center justify-center mx-auto">
         <Link
           href="/cars"
