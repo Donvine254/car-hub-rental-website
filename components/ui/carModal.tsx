@@ -1,27 +1,27 @@
 import React from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
-type Props = {
-  id: number;
-};
-import { Cars } from "@/constants";
+import type { car } from "@/lib/fetchCars";
+interface CarModalProps {
+  Car: car;
+}
 
-export default function CarModal({ id }: Props) {
+export default function CarModal({ Car }: CarModalProps) {
   const handleClose = () => {
     const modal = document.getElementById(
-      `my_modal_${id}`
+      `my_modal_${Car.id}`
     ) as HTMLDialogElement | null;
     if (modal) {
       modal.close();
     }
   };
-  const car = Cars.find((car) => car.id === id);
-  if (!car) {
+
+  if (!Car) {
     return null;
   }
 
   return (
-    <dialog id={`my_modal_${id}`} className="rounded-md  border px-4 ">
+    <dialog id={`my_modal_${Car.id}`} className="rounded-md  border px-4 ">
       <div className="w-fit max-w-lg  relative ">
         <X
           onClick={handleClose}
@@ -31,8 +31,8 @@ export default function CarModal({ id }: Props) {
         <div className="p-4 w-fit">
           <div className="w-full">
             <Image
-              alt={car.model_name}
-              src={car.image}
+              alt={Car.model_name}
+              src={Car.image}
               width={600}
               height={600}
               style={{ width: "auto", height: "auto" }}
@@ -44,31 +44,31 @@ export default function CarModal({ id }: Props) {
           </div>
 
           <h1 className="text-bold text-2xl my-2 font-semibold">
-            {car.model_name}
+            {Car.model_name}
           </h1>
           <h1 className="text-bold text-[18px]">Specifications</h1>
           <div className="text-gray-600 font-semibold py-2 divide divide-y divide-gray-200">
             <div className="flex items-center justify-between ">
               <p className="">Make</p>
               <p className="capitalize text-green-600">
-                {car.model_name?.split(" ")[0]}
+                {Car.model_name?.split(" ")[0]}
               </p>
             </div>
             <div className="flex items-center justify-between ">
               <p className="">Body Type</p>
               <p className="capitalize text-green-600">
-                {car.body_type.toUpperCase()}
+                {Car.body_type.toUpperCase()}
               </p>
             </div>
 
             <div className="flex items-center justify-between ">
               <p className="">No. of Seats</p>
-              <p className="capitalize text-green-600">{car.seats}</p>
+              <p className="capitalize text-green-600">{Car.seats}</p>
             </div>
             <div className="flex items-center justify-between ">
               <p className="">Fuel Consumption</p>
               <p className="capitalize text-green-600">
-                {car.fuel_consumption} L/Km
+                {Car.fuel_consumption} L/Km
               </p>
             </div>
             <div className="flex items-center justify-between ">
@@ -77,7 +77,7 @@ export default function CarModal({ id }: Props) {
             </div>
             <div className="flex items-center justify-between ">
               <p className="">Transmission</p>
-              <p className="capitalize text-green-600">{car.transmission}</p>
+              <p className="capitalize text-green-600">{Car.transmission}</p>
             </div>
             <div className="flex items-center justify-between">
               <p className="">Year of Manufacture</p>
@@ -86,7 +86,7 @@ export default function CarModal({ id }: Props) {
             <div className="flex items-center justify-between py-1">
               <p className="">Price Per Day</p>
               <p className="capitalize font-bold text-green-600 text-xl bg-gray-200 px-6 rounded-md">
-                $ {car.price_per_day}
+                $ {Car.price_per_day}
               </p>
             </div>
           </div>

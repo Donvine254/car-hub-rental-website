@@ -18,12 +18,11 @@ export default async function fetchCars() {
       "https://basalt-equatorial-paw.glitch.me/cars",
       {
         next: {
-          revalidate: 300,
+          revalidate: 3600,
         },
       }
     );
     const data = await response.json();
-    console.log(data);
     return data as car[];
   } catch (error) {
     console.error(error);

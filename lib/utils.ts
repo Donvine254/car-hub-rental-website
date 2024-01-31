@@ -17,7 +17,11 @@ export const handleGuessCar = (
   const form = e.target as HTMLFormElement;
 
   const cars = [
-    { model: "toyota", image: "/cars/toyota-sedan.png" },
+    {
+      model: "toyota",
+      image:
+        "https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/nycmvwu03dz1hcr3uwlh.png",
+    },
     {
       model: "lexus",
       image:

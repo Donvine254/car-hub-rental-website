@@ -24,7 +24,7 @@ type Props = {
 export default function Carspage({ Cars }: Props) {
   const [CarsToRender, setCarsToRender] = useState<car[]>(Cars);
   const [displayCount, setDisplayCount] = useState(10);
-  const [carId, setCarId] = useState<number | null>(null);
+  const [currentCar, setCurrentCar] = useState<car | null>(null);
 
   // state for the game car
   const [carImage, setCarImage] = useState(
@@ -60,10 +60,10 @@ export default function Carspage({ Cars }: Props) {
     });
   };
 
-  const showModal = async (id: number) => {
-    setCarId(id);
+  const showModal = async (car: car) => {
+    setCurrentCar(car);
     const modal = document.getElementById(
-      `my_modal_${id}`
+      `my_modal_${car.id}`
     ) as HTMLDialogElement | null;
     if (modal) {
       modal.showModal();
@@ -133,7 +133,7 @@ export default function Carspage({ Cars }: Props) {
                     blurDataURL="/vehicle-placeholder.png"
                     className="rounded-md hover:scale-y-105 cursor-pointer"
                     style={{ width: "auto", height: "auto" }}
-                    onClick={() => showModal(car.id)}
+                    onClick={() => showModal(car)}
                     priority
                   />
 
@@ -171,7 +171,7 @@ export default function Carspage({ Cars }: Props) {
                   </div>
                   <button
                     className="hidden group-hover:flex items-center justify-between  w-full h-full bg-green-500 text-white group  rounded-md p-2 "
-                    onClick={() => showModal(car.id)}>
+                    onClick={() => showModal(car)}>
                     <InfoIcon />
                     <span className="font-medium flex item-center gap-0.5">
                       View More
@@ -196,7 +196,7 @@ export default function Carspage({ Cars }: Props) {
                 </div>
               </div>
             ))}
-            {carId && <CarModal id={carId} />}
+            {currentCar && <CarModal Car={currentCar} />}
           </section>
         ) : (
           <div className="p-4">
