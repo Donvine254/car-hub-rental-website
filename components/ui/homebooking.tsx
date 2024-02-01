@@ -5,7 +5,6 @@ import {
   MapPinIcon,
 } from "lucide-react";
 import React from "react";
-import Link from "next/link";
 
 type Props = {};
 
@@ -49,19 +48,18 @@ export default function Homebooking({}: Props) {
           </label>
           <select
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
-            defaultValue="Nairobi"
             name="pickup_location"
             id="pickupLocation"
             required>
             <option value="" hidden>
               Choose a Pickup Location
             </option>
-            <option value="Nairobi">Nairobi</option>
-            <option value="Kisumu">Kisumu</option>
-            <option value="Mombasa">Mombasa</option>
-            <option value="Thika">Thika</option>
-            <option value="Nakuru">Nakuru</option>
-            <option value="Eldoret">Eldoret</option>
+            <option value="nairobi">Nairobi</option>
+            <option value="kisumu">Kisumu</option>
+            <option value="mombasa">Mombasa</option>
+            <option value="thika">Thika</option>
+            <option value="nakuru">Nakuru</option>
+            <option value="eldoret">Eldoret</option>
           </select>
         </div>
         <div className="py-2">
@@ -77,15 +75,12 @@ export default function Homebooking({}: Props) {
             <option value="" hidden>
               Choose a Drop-Off Location
             </option>
-            <option value="" hidden>
-              Nairobi
-            </option>
-            <option value="Nairobi">Nairobi</option>
-            <option value="Kisumu">Kisumu</option>
-            <option value="Mombasa">Mombasa</option>
-            <option value="Thika">Thika</option>
-            <option value="Nakuru">Nakuru</option>
-            <option value="Eldoret">Eldoret</option>
+            <option value="nairobi">Nairobi</option>
+            <option value="kisumu">Kisumu</option>
+            <option value="mombasa">Mombasa</option>
+            <option value="thika">Thika</option>
+            <option value="nakuru">Nakuru</option>
+            <option value="eldoret">Eldoret</option>
           </select>
         </div>
         <div className="py-2">

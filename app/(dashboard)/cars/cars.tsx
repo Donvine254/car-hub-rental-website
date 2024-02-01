@@ -17,6 +17,7 @@ import CarModal from "@/components/ui/carModal";
 import Script from "next/script";
 import { handleGuessCar } from "@/lib/utils";
 import type { car } from "@/lib/fetchCars";
+import { getSession } from "@/lib/loginstatus";
 type Props = {
   Cars: car[];
 };
