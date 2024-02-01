@@ -69,7 +69,10 @@ export default function Login({}: Props) {
   //handle Logout function
   async function handleLogout() {
     await supabase.auth.signOut();
-    router.push("/api/logout");
+    toast.success("Logged out successfully", {
+      position: "top-center",
+    });
+    setIsLoggedIn(false);
   }
   if (isLoggedIn) {
     return (
@@ -84,6 +87,7 @@ export default function Login({}: Props) {
           <div className="flex items-center justify-between gap-5 py-4">
             <button
               onClick={handleLogout}
+              title="logout"
               className="px-4 py-1 rounded-md border border-green-500 hover:bg-green-500 hover:text-white">
               Logout
             </button>
