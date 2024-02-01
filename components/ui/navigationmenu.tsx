@@ -4,7 +4,7 @@ import Image from "next/image";
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Topnav from "./topnav";
 
 type Props = {
@@ -16,7 +16,7 @@ export default function NavigationMenu({ variant }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClientComponentClient();
   const pathname = usePathname();
-
+  const router = useRouter();
   useEffect(() => {
     (async () => {
       try {
@@ -33,6 +33,7 @@ export default function NavigationMenu({ variant }: Props) {
 
   async function handleLogout() {
     await supabase.auth.signOut();
+    router.push("/api/logout");
   }
 
   return (
@@ -280,12 +281,11 @@ export default function NavigationMenu({ variant }: Props) {
                 </Link>
               </li>
               <li className={`${!user ? "hidden" : "block"} `}>
-                <Link
-                  href="/api/logout"
+                <button
                   onClick={handleLogout}
                   className=" text-gray-700 hover:bg-gray-50 xsm:border-b  md:hover:bg-green-500 md:hover:shadow  md:bg-green-500 block pl-3 pr-4 py-2 md:hover:text-white md:py-0 md:h-8 md:px-4 md:text-white md:text-center md:rounded-md ">
                   Logout
-                </Link>
+                </button>
               </li>
             </ul>
           </div>

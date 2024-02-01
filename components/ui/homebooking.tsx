@@ -73,10 +73,12 @@ export default function Homebooking({}: Props) {
             className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
             name="dropLocation"
             id="dropoff_location"
-            required
-            defaultValue="Nairobi">
+            required>
             <option value="" hidden>
               Choose a Drop-Off Location
+            </option>
+            <option value="" hidden>
+              Nairobi
             </option>
             <option value="Nairobi">Nairobi</option>
             <option value="Kisumu">Kisumu</option>

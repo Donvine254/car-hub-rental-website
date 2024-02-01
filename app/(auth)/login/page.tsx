@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
-import { Loader } from "lucide-react";
+import { InfoIcon, Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "sonner";
@@ -20,6 +20,7 @@ export default function Login({}: Props) {
   });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("post_login_redirect_url") ?? "/";
@@ -55,6 +56,43 @@ export default function Login({}: Props) {
       router.replace(redirect);
     }
   };
+  //check if users are already logged in
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase.auth.getUser();
+      console.log(data.user);
+      if (data.user) {
+        setIsLoggedIn(true);
+      }
+    })();
+  }, [supabase.auth]);
+
+  if (isLoggedIn) {
+    return (
+      <section className="w-full h-screen flex items-center justify-center bg-[#f8f9fa]">
+        <div
+          id="login_modal"
+          className="rounded-md flex flex-col gap-5 items-center justify-center py-10 border px-4 bg-white ">
+          <InfoIcon className="text-green-500" />
+          <h1 className="font-semibold text-gray-600 text-xl">
+            You are Already Logged In. Would you like to logout?
+          </h1>
+          <div className="flex items-center justify-between gap-5 py-4">
+            <Link
+              href="/api/logout"
+              className="px-4 py-1 rounded-md border border-green-500 hover:bg-green-500 hover:text-white">
+              Logout
+            </Link>
+            <Link
+              href="/"
+              className="px-4 py-1 rounded-md border bg-green-500 text-white">
+              Return Home
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   //function to login with google
   async function loginWithGoogle() {
