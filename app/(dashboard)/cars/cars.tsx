@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "sonner";
 import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
@@ -30,6 +30,7 @@ export default function Carspage({ Cars }: Props) {
     "https://res.cloudinary.com/dipkbpinx/image/upload/v1706619929/cars/q6pgnwhxjkux22illdpm.png"
   );
   const [attempts, setAttempts] = useState(0);
+  const router = useRouter();
   const searchParams = useSearchParams();
   const model = searchParams.get("model");
 
@@ -69,6 +70,20 @@ export default function Carspage({ Cars }: Props) {
       console.log("modal not found");
     }
   };
+
+  async function handleBooking(car: car) {
+    const session = await getSession();
+    if (!session) {
+      toast.error("Login required to perform this action! ", {
+        position: "top-center",
+      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
+    } else {
+      router.push(`/booking?car_model=${car.model_name}`);
+    }
+  }
 
   return (
     <section className="bg-[#f8f9fa] relative">
@@ -188,7 +203,7 @@ export default function Carspage({ Cars }: Props) {
                   </p>
                   <button
                     className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1"
-                    onClick={() => toast.info("feature coming soon!")}>
+                    onClick={() => handleBooking(car)}>
                     Book Now
                   </button>
                 </div>

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import {
   Carousel,
   CarouselContent,
@@ -15,11 +16,26 @@ import { HeartIcon } from "lucide-react";
 
 import { toast } from "sonner";
 import type { car } from "@/lib/fetchCars";
+import { getSession } from "@/lib/loginstatus";
 type Props = {
   Cars: car[];
 };
 
 export default function CarCarousel({ Cars }: Props) {
+  const router = useRouter();
+  async function handleBooking(car: car) {
+    const session = await getSession();
+    if (!session) {
+      toast.error("Login required to perform this action! ", {
+        position: "top-center",
+      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
+    } else {
+      router.push(`/booking?car_model=${car.model_name}`);
+    }
+  }
   return (
     <Carousel
       className="md:max-w-[75%] mx-auto my-4 h-fit "
@@ -92,7 +108,7 @@ export default function CarCarousel({ Cars }: Props) {
                 </p>
                 <button
                   className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1"
-                  onClick={() => toast.info("feature coming soon!")}>
+                  onClick={() => handleBooking(car)}>
                   Book Now
                 </button>
               </div>
