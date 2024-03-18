@@ -94,7 +94,7 @@ export default function CarCarousel({ Cars }: Props) {
                 </div>
                 <div className="flex flex-col items-center gap-0.5">
                   <FuelPumpIcon />
-                  <span>{car.fuel_consumption}L/Km</span>
+                  <span>{car.fuel_consumption}Km/L</span>
                 </div>
               </div>
               {/* div for actions */}

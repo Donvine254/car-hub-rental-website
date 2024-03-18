@@ -180,7 +180,7 @@ export default function Carspage({ Cars }: Props) {
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">
                     <FuelPumpIcon />
-                    <span>{car.fuel_consumption}L/km</span>
+                    <span>{car.fuel_consumption}Km/L</span>
                   </div>
                   <button
                     className="hidden group-hover:flex items-center justify-between  w-full h-full bg-green-500 text-white group  rounded-md p-2 "

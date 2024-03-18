@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { HeartIcon, X } from "lucide-react";
 import type { car } from "@/lib/fetchCars";
 interface CarModalProps {
   Car: car;
@@ -43,9 +43,17 @@ export default function CarModal({ Car }: CarModalProps) {
             />
           </div>
 
-          <h1 className="text-bold text-2xl my-2 font-semibold">
-            {Car.model_name}
-          </h1>
+          <div className="md:flex md:items-center md:justify-between gap 2">
+            <h1 className="text-bold text-2xl my-2 font-semibold">
+              {Car.model_name}
+            </h1>
+            <HeartIcon
+                      className="text-gray-300 cursor-pointer hover:text-red-600"
+                      fill="currentColor"
+                      size={16}
+                      
+                    />
+          </div>
           <h1 className="text-bold text-[18px]">Specifications</h1>
           <div className="text-gray-600 font-semibold py-2 divide divide-y divide-gray-200">
             <div className="flex items-center justify-between ">
@@ -68,7 +76,7 @@ export default function CarModal({ Car }: CarModalProps) {
             <div className="flex items-center justify-between ">
               <p className="">Fuel Consumption</p>
               <p className="capitalize text-green-600">
-                {Car.fuel_consumption} L/Km
+                {Car.fuel_consumption} Km/L
               </p>
             </div>
             <div className="flex items-center justify-between ">
