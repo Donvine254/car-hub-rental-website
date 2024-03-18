@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
 import {
   FilterIcon,
-  HeartIcon,
   InfoIcon,
   MoveRightIcon,
   RefreshCwIcon,
@@ -18,6 +17,7 @@ import Script from "next/script";
 import { handleGuessCar } from "@/lib/utils";
 import type { car } from "@/lib/fetchCars";
 import { getSession } from "@/lib/loginstatus";
+import CustomHeartIcon from "@/components/ui/HeartIcon";
 type Props = {
   Cars: car[];
 };
@@ -155,11 +155,7 @@ export default function Carspage({ Cars }: Props) {
                       {car.model_name}
                     </h1>
                     <p className="flex items-center">
-                      <HeartIcon
-                        className="text-gray-300 cursor-pointer hover:text-red-600"
-                        fill="currentColor"
-                        size={16}
-                      />
+                      <CustomHeartIcon />
                       {car.rating}
                     </p>
                   </div>

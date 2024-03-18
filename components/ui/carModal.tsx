@@ -1,7 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import { HeartIcon, X } from "lucide-react";
+import { X } from "lucide-react";
 import type { car } from "@/lib/fetchCars";
+import CustomHeartIcon from "./HeartIcon";
 interface CarModalProps {
   Car: car;
 }
@@ -47,12 +48,7 @@ export default function CarModal({ Car }: CarModalProps) {
             <h1 className="text-bold text-2xl my-2 font-semibold">
               {Car.model_name}
             </h1>
-            <HeartIcon
-                      className="text-gray-300 cursor-pointer hover:text-red-600"
-                      fill="currentColor"
-                      size={16}
-                      
-                    />
+            <CustomHeartIcon />
           </div>
           <h1 className="text-bold text-[18px]">Specifications</h1>
           <div className="text-gray-600 font-semibold py-2 divide divide-y divide-gray-200">

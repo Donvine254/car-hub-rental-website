@@ -12,11 +12,11 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 
 import { CarSeat, CarFrontIcon, FuelPumpIcon, GearboxIcon } from "@/assets";
-import { HeartIcon } from "lucide-react";
 
 import { toast } from "sonner";
 import type { car } from "@/lib/fetchCars";
 import { getSession } from "@/lib/loginstatus";
+import CustomHeartIcon from "./HeartIcon";
 type Props = {
   Cars: car[];
 };
@@ -70,11 +70,7 @@ export default function CarCarousel({ Cars }: Props) {
                 <div className="flex items-center justify-between gap-4 pt-2 px-2">
                   <h1 className="text-bold text-xl ">{car.model_name}</h1>
                   <p className="flex items-center">
-                    <HeartIcon
-                      className="text-gray-300 cursor-pointer hover:text-red-600"
-                      fill="currentColor"
-                      size={16}
-                    />
+                    <CustomHeartIcon />
                     {car.rating}
                   </p>
                 </div>
