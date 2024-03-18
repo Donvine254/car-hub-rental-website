@@ -95,7 +95,7 @@ export default function Homebooking({}: Props) {
               name="pickup_date"
               required
               defaultValue={formattedDate}
-              className="flex h-10 bg-white text-base  w-1/2 px-3 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
+              className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
             />
             <input
               type="time"
@@ -118,7 +118,7 @@ export default function Homebooking({}: Props) {
               id="drop-offDate"
               required
               defaultValue={formattedDate}
-              className="flex h-10 bg-white text-base  w-1/2 px-3 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
+              className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
             />
             <input
               type="time"
