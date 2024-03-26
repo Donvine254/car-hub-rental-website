@@ -1,6 +1,7 @@
 import React from "react";
 import { X } from "lucide-react";
 import type { car } from "@/lib/fetchCars";
+import PriceRangeFilter from "./Slider";
 type Props = {
   Cars: car[];
 };
@@ -79,37 +80,7 @@ export default function FilterModal(props: Props) {
               <span> 6+ Seats</span>
             </div>
           </div>
-          <div className="slidecontainer">
-            <h1 className="font-bold text-gray-600">Price Range</h1>
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span>Min</span>
-                <input
-                  type="number"
-                  name="min"
-                  className="border !bg-white outline-none px-2"
-                  value={0}
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <span>Max</span>
-                <input
-                  type="number"
-                  className="border !bg-white outline-none px-2"
-                  name="max"
-                  value={50}
-                />
-              </div>
-            </div>
-            <input
-              type="range"
-              min="1"
-              max="50"
-              value="50"
-              className="w-full py-2 bg-green-500"
-              id="myRange"
-            />
-          </div>
+          <PriceRangeFilter />
           <button
             type="submit"
             className="px-2  border border-green-500 hover:bg-green-600 hover:text-white  rounded-md"
