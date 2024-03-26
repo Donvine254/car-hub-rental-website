@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { ReactEventHandler, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { car } from "@/lib/fetchCars";
 import { toast } from "sonner";
@@ -38,6 +38,20 @@ export default function BookingPage({ Cars, User }: Props) {
     }
     redirectUser();
   }, [model_name, Cars]);
+  //   function to handle bookings
+  function handleBooking(e: React.FormEvent) {
+    e.preventDefault();
+    if (!selectedCar) {
+      toast.error("kindly select a car first");
+      return false;
+    } else
+      toast.success("Check your email address to confirm your booking", {
+        position: "top-center",
+      });
+    const form = e.target as HTMLFormElement;
+    form.reset();
+    router.push("/me/profile");
+  }
 
   return (
     <section className="bg-[url('/hero.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full w-full flex flex-col items-center justify-center p-4">
@@ -47,7 +61,9 @@ export default function BookingPage({ Cars, User }: Props) {
       <div className="px-4 py-4 border shadow bg-white xsm:w-full w-2/3 ">
         {/* div for two cards */}
 
-        <form className="flex flex-col gap-2 md:grid md:grid-cols-2  md:gap-4">
+        <form
+          className="flex flex-col gap-2 md:grid md:grid-cols-2  md:gap-4"
+          onSubmit={handleBooking}>
           {/* first card */}
           <div>
             <div className="py-2">
@@ -86,6 +102,7 @@ export default function BookingPage({ Cars, User }: Props) {
                 className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md "
                 name="pickup_location"
                 id="pickupLocation"
+                disabled={!selectedCar}
                 required>
                 <option value="" hidden>
                   Choose a Pickup Location
@@ -119,6 +136,7 @@ export default function BookingPage({ Cars, User }: Props) {
                 className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
                 name="dropLocation"
                 id="dropoff_location"
+                disabled={!selectedCar}
                 required>
                 <option value="" hidden>
                   Choose a Drop-Off Location
@@ -141,6 +159,7 @@ export default function BookingPage({ Cars, User }: Props) {
                   type="date"
                   id="pickupDate"
                   name="pickup_date"
+                  disabled={!selectedCar}
                   required
                   defaultValue={formattedDate}
                   className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
@@ -148,6 +167,7 @@ export default function BookingPage({ Cars, User }: Props) {
                 <input
                   type="time"
                   name="pickupTime"
+                  disabled={!selectedCar}
                   required
                   defaultValue="08:00"
                   className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
@@ -167,6 +187,7 @@ export default function BookingPage({ Cars, User }: Props) {
                   type="date"
                   name="dropoff_date"
                   id="drop-offDate"
+                  disabled={!selectedCar}
                   required
                   defaultValue={formattedDate}
                   className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
@@ -174,6 +195,7 @@ export default function BookingPage({ Cars, User }: Props) {
                 <input
                   type="time"
                   name="dropoff_time"
+                  disabled={!selectedCar}
                   required
                   defaultValue="18:00"
                   className="h-10 w-1/2  bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
