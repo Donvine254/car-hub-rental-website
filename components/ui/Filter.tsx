@@ -106,7 +106,7 @@ export default function FilterModal(props: Props) {
               min="1"
               max="50"
               value="50"
-              className="slider"
+              className="w-full py-2 bg-green-500"
               id="myRange"
             />
           </div>
