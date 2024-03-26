@@ -29,20 +29,54 @@ export default function FilterModal(props: Props) {
           <div className=" ">
             <h1 className="font-bold text-gray-600">Vehicle Type</h1>
             <div className="flex items-center justify-start gap-1 md:gap-4">
-              <input type="radio" name="vehicleType" value="Saloon" />
+              <input type="radio" name="model" value="Saloon" />
               <span> Saloon</span>
             </div>
             <div className="flex items-center justify-start gap-1 md:gap-4">
-              <input type="radio" name="vehicleType" value="SUV" />
+              <input type="radio" name="model" value="SUV" />
               <span> SUV</span>
             </div>
             <div className="flex items-center justify-start gap-1 md:gap-4">
-              <input type="radio" name="vehicleType" value="Van" />
+              <input type="radio" name="model" value="Van" />
               <span> Van</span>
             </div>
             <div className="flex items-center justify-start gap-1 md:gap-4">
-              <input type="radio" name="vehicleType" value="Pickup" />
+              <input type="radio" name="model" value="Pickup" />
               <span> Pickup</span>
+            </div>
+          </div>
+          <div>
+            <h1 className="font-bold text-gray-600">Vehicle Make</h1>
+            <select
+              name="make"
+              className="border rounded-md border-green-500 w-full my-2 ">
+              <option value="make">Select a model</option>
+              {Array.from(
+                new Set(props.Cars.map((car) => car.model_name.split(" ")[0]))
+              ).map((modelName) => (
+                <option key={modelName} value={modelName}>
+                  {modelName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className=" ">
+            <h1 className="font-bold text-gray-600">Car Seats</h1>
+            <div className="flex items-center justify-start gap-1 md:gap-4">
+              <input type="radio" name="seats" value={2} />
+              <span> 2 Seats</span>
+            </div>
+            <div className="flex items-center justify-start gap-1 md:gap-4">
+              <input type="radio" name="seats" value={4} />
+              <span> 4 Seats</span>
+            </div>
+            <div className="flex items-center justify-start gap-1 md:gap-4">
+              <input type="radio" name="seats" value={6} />
+              <span> 6 Seats</span>
+            </div>
+            <div className="flex items-center justify-start gap-1 md:gap-4">
+              <input type="radio" name="seats" value=">6" />
+              <span> 6+ Seats</span>
             </div>
           </div>
           <button
