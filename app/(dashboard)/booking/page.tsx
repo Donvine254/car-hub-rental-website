@@ -15,6 +15,7 @@ import {
   Car,
   MapPinIcon,
 } from "lucide-react";
+import Link from "next/link";
 export default function BookingPage({}: Props) {
   const [selectedCar, setSelectedCar] = useState<car | null>(null);
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function BookingPage({}: Props) {
           position: "top-center",
         });
         setTimeout(() => {
-          router.push("/login");
+          router.push("/login?post_login_redirect_url=/booking");
         }, 1000);
       }
     }
@@ -48,7 +49,7 @@ export default function BookingPage({}: Props) {
 
   return (
     <section className="bg-[url('/hero.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full w-full flex flex-col items-center justify-center p-4">
-      <h1 className=" text-center md:text-start my-2 text-2xl font-extrabold">
+      <h1 className=" text-center text-white md:text-start my-2 text-2xl md:text-4xl font-extrabold">
         Easy Booking
       </h1>
       <div className="px-4 py-4 border shadow bg-white xsm:w-full w-2/3 ">
@@ -63,17 +64,28 @@ export default function BookingPage({}: Props) {
               <Car fill="none" className="text-green-500" />
               <span> &nbsp; Car Details *</span>
             </label>
+
             <div
               className="flex h-fit bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold"
               id="model">
-              <Image
-                src={selectedCar?.image || ""}
-                width={80}
-                height={80}
-                alt="car_image"
-              />
-              <span>{selectedCar?.model_name} &#8212; </span>
-              <span>${selectedCar?.price_per_day}</span>
+              {selectedCar ? (
+                <div>
+                  <Image
+                    src={selectedCar?.image || ""}
+                    width={80}
+                    height={80}
+                    alt="car_image"
+                  />
+                  <span>{selectedCar?.model_name} &#8212; </span>
+                  <span>${selectedCar?.price_per_day}</span>
+                </div>
+              ) : (
+                <Link
+                  className=" bg-green-500 rounded-md border px-5 py-1 text-white"
+                  href="/cars">
+                  Select A Vehicle
+                </Link>
+              )}
             </div>
           </div>
           <div className="py-2">
