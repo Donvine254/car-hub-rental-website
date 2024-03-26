@@ -41,7 +41,7 @@ export default function BookingPage({ Cars, User }: Props) {
   //   function to handle bookings
   function handleBooking(e: React.FormEvent) {
     e.preventDefault();
-    // check whether pickupDate && dropoff_date are not in the past and whether dropoff_date is equal or greater than pickupDate since we cannot pick tommorow and return yesterday
+
     const form = e.target as HTMLFormElement;
     const pickupDateInput = form.pickupDate as HTMLInputElement;
     const dropoffDateInput = form.dropDate as HTMLInputElement;
@@ -55,12 +55,18 @@ export default function BookingPage({ Cars, User }: Props) {
 
     if (new Date(pickupDate) <= new Date(today)) {
       toast.error(
-        "Pickup date cannot be in the past. Please choose today or a future date."
+        "Pickup date cannot be in the past. Please choose today or a future date.",
+        {
+          position: "top-center",
+        }
       );
       return false;
     } else if (new Date(dropoffDate) < new Date(pickupDate)) {
       toast.error(
-        "Drop-off date cannot be before pickup date. Please choose a valid date range."
+        "Drop-off date cannot be before pickup date. Please choose a valid date range.",
+        {
+          position: "top-center",
+        }
       );
       return false;
     } else
@@ -69,7 +75,9 @@ export default function BookingPage({ Cars, User }: Props) {
       });
 
     form.reset();
-    router.push("/me/profile");
+    setTimeout(() => {
+      router.push("/me/profile");
+    }, 1000);
   }
 
   return (
