@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { car } from "@/lib/fetchCars";
 import { toast } from "sonner";
@@ -41,14 +41,33 @@ export default function BookingPage({ Cars, User }: Props) {
   //   function to handle bookings
   function handleBooking(e: React.FormEvent) {
     e.preventDefault();
+    // check whether pickupDate && dropoff_date are not in the past and whether dropoff_date is equal or greater than pickupDate since we cannot pick tommorow and return yesterday
+    const form = e.target as HTMLFormElement;
+    const pickupDateInput = form.pickupDate as HTMLInputElement;
+    const dropoffDateInput = form.dropDate as HTMLInputElement;
+    const today = new Date().toISOString().split("T")[0];
+    const pickupDate = pickupDateInput.value;
+    const dropoffDate = dropoffDateInput.value;
     if (!selectedCar) {
       toast.error("kindly select a car first");
+      return false;
+    }
+
+    if (new Date(pickupDate) <= new Date(today)) {
+      toast.error(
+        "Pickup date cannot be in the past. Please choose today or a future date."
+      );
+      return false;
+    } else if (new Date(dropoffDate) < new Date(pickupDate)) {
+      toast.error(
+        "Drop-off date cannot be before pickup date. Please choose a valid date range."
+      );
       return false;
     } else
       toast.success("Check your email address to confirm your booking", {
         position: "top-center",
       });
-    const form = e.target as HTMLFormElement;
+
     form.reset();
     router.push("/me/profile");
   }
@@ -160,6 +179,7 @@ export default function BookingPage({ Cars, User }: Props) {
                   id="pickupDate"
                   name="pickup_date"
                   disabled={!selectedCar}
+                  min={new Date().toISOString().split("T")[0]}
                   required
                   defaultValue={formattedDate}
                   className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
@@ -180,16 +200,17 @@ export default function BookingPage({ Cars, User }: Props) {
           {/* second card */}
           <div>
             <div className="py-2">
-              <label htmlFor="drop-offDate" className="inline-flex font-bold">
+              <label htmlFor="dropDate" className="inline-flex font-bold">
                 <CalendarCheck2Icon fill="none" className="text-green-500" />{" "}
                 &nbsp; Drop-Off Date and Time
               </label>
               <div className="flex items-center gap-0">
                 <input
                   type="date"
-                  name="dropoff_date"
-                  id="drop-offDate"
+                  name="dropDate"
+                  id="dropDate"
                   disabled={!selectedCar}
+                  min={new Date().toISOString().split("T")[0]}
                   required
                   defaultValue={formattedDate}
                   className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
