@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
 import CarModal from "@/components/ui/carModal";
+import FilterModal from "@/components/ui/Filter";
 import Script from "next/script";
 import { handleGuessCar } from "@/lib/utils";
 import type { car } from "@/lib/fetchCars";
@@ -71,6 +72,17 @@ export default function Carspage({ Cars }: Props) {
     }
   };
 
+  const showFilterModal = async () => {
+    const filterModal = document.getElementById(
+      `filter_modal`
+    ) as HTMLDialogElement | null;
+    if (filterModal) {
+      filterModal.showModal();
+    } else {
+      console.log("modal not found");
+    }
+  };
+
   async function handleBooking(car: car) {
     const session = await getSession();
     if (!session) {
@@ -115,16 +127,7 @@ export default function Carspage({ Cars }: Props) {
           <button
             className="px-3  border border-green-500 hover:bg-green-600 hover:text-white h-10 rounded-md"
             title="filter"
-            onClick={() => {
-              toast.info("Coming soon feature!", {
-                position: "top-right",
-                style: {
-                  backgroundColor: "#22C55E",
-                  color: "white",
-                  border: "none",
-                },
-              });
-            }}>
+            onClick={showFilterModal}>
             {" "}
             <FilterIcon width={20} height={20} />
           </button>
@@ -298,6 +301,7 @@ export default function Carspage({ Cars }: Props) {
         </button>
       </div>
       <ScrollToTopButton />
+      <FilterModal Cars={Cars} />
     </section>
   );
 }
