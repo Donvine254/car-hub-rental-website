@@ -69,11 +69,11 @@ export default function BookingPage({ Cars, User }: Props) {
             <div className="py-2">
               <label className="inline-flex font-bold" htmlFor="model">
                 <Car fill="none" className="text-green-500" />
-                <span> &nbsp; Car Details *</span>
+                <span className="text-xl"> &nbsp; Car Details *</span>
               </label>
 
               {selectedCar ? (
-                <div className="flex h-20 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
+                <div className="flex h-20 bg-green-100 text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
                   <Image
                     src={selectedCar?.image || ""}
                     width={80}
@@ -81,7 +81,7 @@ export default function BookingPage({ Cars, User }: Props) {
                     alt="car_image"
                   />
                   <span>{selectedCar?.model_name} &#8212; </span>
-                  <span>${selectedCar?.price_per_day} Per Day</span>
+                  <span>${selectedCar?.price_per_day}</span>
                 </div>
               ) : (
                 <div className="h-20 px-3 py-2 border border-gray-300 rounded-md bg-background">
@@ -168,6 +168,8 @@ export default function BookingPage({ Cars, User }: Props) {
                   type="time"
                   name="pickupTime"
                   disabled={!selectedCar}
+                  min="08:00"
+                  max="18:00"
                   required
                   defaultValue="08:00"
                   className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
@@ -195,6 +197,8 @@ export default function BookingPage({ Cars, User }: Props) {
                 <input
                   type="time"
                   name="dropoff_time"
+                  min="08:00"
+                  max="18:00"
                   disabled={!selectedCar}
                   required
                   defaultValue="18:00"
