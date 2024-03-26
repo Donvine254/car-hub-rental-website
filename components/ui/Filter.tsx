@@ -73,7 +73,10 @@ export default function FilterModal(props: Props) {
               {Array.from(
                 new Set(props.Cars.map((car) => car.model_name.split(" ")[0]))
               ).map((modelName) => (
-                <option key={modelName} value={modelName}>
+                <option
+                  key={modelName}
+                  value={modelName}
+                  className="checked:bg-green-500">
                   {modelName}
                 </option>
               ))}

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 const PriceRangeFilter: React.FC = () => {
-  const [value, setValue] = useState(50); // Initial value set to 50
+  const [value, setValue] = useState(50);
 
   const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(parseInt(event.target.value)); // Update the value state
+    setValue(parseInt(event.target.value));
   };
 
   return (
@@ -16,8 +16,8 @@ const PriceRangeFilter: React.FC = () => {
           <input
             type="number"
             name="min"
-            className="border !bg-white outline-none px-2 w-14"
-            value={10}
+            className="border !bg-white outline-none px-2 w-14 font-bold"
+            value={0}
           />
         </div>
         <div>&#8212;</div>
@@ -25,7 +25,7 @@ const PriceRangeFilter: React.FC = () => {
           <span>Max</span>
           <input
             type="number"
-            className="border !bg-white outline-none px-2 w-14"
+            className="border !bg-white outline-none px-2 w-14 font-bold"
             name="max"
             value={value}
             onChange={handleRangeChange}
@@ -40,7 +40,7 @@ const PriceRangeFilter: React.FC = () => {
           name="price"
           value={value}
           onChange={handleRangeChange}
-          className="w-full py-2 accent-green-500 slider outline-none"
+          className="w-full py-2 accent-green-500  slider outline-none"
           id="myRange"
         />
       </div>
