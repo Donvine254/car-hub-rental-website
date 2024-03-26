@@ -9,7 +9,7 @@ const PriceRangeFilter: React.FC = () => {
 
   return (
     <div className="slidecontainer">
-      <h1 className="font-bold text-gray-600">Price Range</h1>
+      <h1 className="font-bold text-gray-600">Price Range ($)</h1>
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span>Min</span>
@@ -20,6 +20,7 @@ const PriceRangeFilter: React.FC = () => {
             value={10}
           />
         </div>
+        <div>&#8212;</div>
         <div className="flex items-center gap-2">
           <span>Max</span>
           <input
@@ -34,12 +35,12 @@ const PriceRangeFilter: React.FC = () => {
       <div className="flex items-center justify-between">
         <input
           type="range"
-          min="0"
+          min="10"
           max="50"
           name="price"
           value={value}
           onChange={handleRangeChange}
-          className="w-full py-2 bg-green-500 text-green-500 slider"
+          className="w-full py-2 accent-green-500 slider outline-none"
           id="myRange"
         />
       </div>

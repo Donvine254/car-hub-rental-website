@@ -34,16 +34,47 @@ export default function Carspage({ Cars }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const model = searchParams.get("model");
-
+  const brand = searchParams.get("make");
+  const price = searchParams.get("price");
+  const seats = searchParams.get("seats");
   //use effect to handle when there is a model in search params
   useEffect(() => {
+    let filteredCars = Cars;
+
+    // Filter by model
     if (model) {
-      const filteredCars = Cars.filter((car) =>
+      filteredCars = filteredCars.filter((car) =>
         car.body_type.toLowerCase().includes(model.toLowerCase())
       );
-      setCarsToRender(filteredCars);
     }
-  }, [model, Cars]);
+
+    // Filter by brand (make)
+    if (brand) {
+      filteredCars = filteredCars.filter((car) =>
+        car.model_name.toLowerCase().includes(brand.toLowerCase())
+      );
+    }
+
+    // Filter by price
+    if (price) {
+      filteredCars = filteredCars.filter(
+        (car) => car.price_per_day <= parseInt(price)
+      );
+    }
+
+    // Filter by seats
+    if (seats) {
+      if (seats === ">6") {
+        filteredCars = filteredCars.filter((car) => car.seats >= 6);
+      } else {
+        filteredCars = filteredCars.filter(
+          (car) => car.seats === parseInt(seats)
+        );
+      }
+    }
+
+    setCarsToRender(filteredCars);
+  }, [model, brand, price, seats, Cars]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
