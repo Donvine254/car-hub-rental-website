@@ -17,16 +17,14 @@ export default function FilterModal(props: Props) {
   };
 
   return (
-    <dialog
-      id="filter_modal"
-      className="rounded-md px-3 md:min-w-[250px] overflow-x-hidden  border">
-      <div className="py-3 min-w-fit max-w-lg  relative ">
+    <dialog id="filter_modal" className="rounded-md px-3 w-fit  border">
+      <div className="py-3  relative ">
         <X
           onClick={handleClose}
           size={30}
           className="absolute top-1 right-1 bg-gray-100 p-1 rounded-md hover:text-red-500 cursor-pointer z-50"
         />
-        <form className="px-4 mt-4 w-fit">
+        <form className="px-4 mt-4">
           <h1 className="font-bold text-gray-600">Vehicle Type</h1>
           <div className="flex flex-wrap gap-2">
             <div className="flex items-center justify-start gap-1 md:gap-4">
@@ -66,7 +64,7 @@ export default function FilterModal(props: Props) {
               <span> Pickup</span>
             </div>
           </div>
-          <div>
+          <div className="w-full">
             <h1 className="font-bold text-gray-600">Vehicle Make</h1>
             <select
               name="make"
@@ -121,7 +119,7 @@ export default function FilterModal(props: Props) {
             </div>
           </div>
           <PriceRangeFilter />
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between gap-5 ">
             <button
               type="submit"
               className="px-2  border border-green-500 hover:bg-green-600 hover:text-white  rounded-md"

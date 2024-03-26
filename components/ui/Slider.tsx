@@ -8,15 +8,15 @@ const PriceRangeFilter: React.FC = () => {
   };
 
   return (
-    <div className="slidecontainer">
+    <div className="w-full">
       <h1 className="font-bold text-gray-600">Price Range ($)</h1>
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center w-full justify-between gap-2">
         <div className="flex items-center gap-2">
           <span>Min</span>
           <input
             type="number"
             name="min"
-            className="border !bg-white outline-none px-2"
+            className="border !bg-white outline-none px-2 w-14"
             value={10}
           />
         </div>
@@ -25,7 +25,7 @@ const PriceRangeFilter: React.FC = () => {
           <span>Max</span>
           <input
             type="number"
-            className="border !bg-white outline-none px-2"
+            className="border !bg-white outline-none px-2 w-14"
             name="max"
             value={value}
             onChange={handleRangeChange}
