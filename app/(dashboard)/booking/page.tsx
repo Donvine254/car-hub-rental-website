@@ -56,37 +56,33 @@ export default function BookingPage({}: Props) {
         {/* div for two cards */}
         {/* first card */}
 
-        <form
-          className="flex flex-col gap-2 md:grid md:grid-cols-2  md:gap-4"
-          action={`/booking?${FormData}`}>
+        <form className="flex flex-col gap-2 md:grid md:grid-cols-2  md:gap-4">
           <div className="py-2">
             <label className="inline-flex font-bold" htmlFor="model">
               <Car fill="none" className="text-green-500" />
               <span> &nbsp; Car Details *</span>
             </label>
 
-            <div
-              className="flex h-fit bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold"
-              id="model">
-              {selectedCar ? (
-                <div>
-                  <Image
-                    src={selectedCar?.image || ""}
-                    width={80}
-                    height={80}
-                    alt="car_image"
-                  />
-                  <span>{selectedCar?.model_name} &#8212; </span>
-                  <span>${selectedCar?.price_per_day}</span>
-                </div>
-              ) : (
+            {selectedCar ? (
+              <div className="flex h-fit bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
+                <Image
+                  src={selectedCar?.image || ""}
+                  width={80}
+                  height={80}
+                  alt="car_image"
+                />
+                <span>{selectedCar?.model_name} &#8212; </span>
+                <span>${selectedCar?.price_per_day}</span>
+              </div>
+            ) : (
+              <div className="px-3 py-2 border border-gray-300 rounded-md bg-background">
                 <Link
                   className=" bg-green-500 rounded-md border px-5 py-1 text-white"
                   href="/cars">
                   Select A Vehicle
                 </Link>
-              )}
-            </div>
+              </div>
+            )}
           </div>
           <div className="py-2">
             <label htmlFor="pickupLocation" className="inline-flex font-bold">
@@ -94,19 +90,31 @@ export default function BookingPage({}: Props) {
               Up Location
             </label>
             <select
-              className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md "
               name="pickup_location"
               id="pickupLocation"
               required>
               <option value="" hidden>
                 Choose a Pickup Location
               </option>
-              <option value="nairobi">Nairobi</option>
-              <option value="kisumu">Kisumu</option>
-              <option value="mombasa">Mombasa</option>
-              <option value="thika">Thika</option>
-              <option value="nakuru">Nakuru</option>
-              <option value="eldoret">Eldoret</option>
+              <option value="nairobi" className="checked:bg-green-500">
+                Nairobi
+              </option>
+              <option value="kisumu" className="checked:bg-green-500">
+                Kisumu
+              </option>
+              <option value="mombasa" className="checked:bg-green-500">
+                Mombasa
+              </option>
+              <option value="thika" className="checked:bg-green-500">
+                Thika
+              </option>
+              <option value="nakuru" className="checked:bg-green-500">
+                Nakuru
+              </option>
+              <option value="eldoret" className="checked:bg-green-500">
+                Eldoret
+              </option>
             </select>
           </div>
           <div className="py-2">
