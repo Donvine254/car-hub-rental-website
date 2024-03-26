@@ -18,7 +18,7 @@ export default function FilterModal(props: Props) {
   return (
     <dialog
       id="filter_modal"
-      className="rounded-md px-3 md:min-w-[500px]  border">
+      className="rounded-md px-3 md:min-w-[300px]  border">
       <div className="py-3 min-w-fit max-w-lg  relative ">
         <X
           onClick={handleClose}
@@ -78,6 +78,37 @@ export default function FilterModal(props: Props) {
               <input type="radio" name="seats" value=">6" />
               <span> 6+ Seats</span>
             </div>
+          </div>
+          <div className="slidecontainer">
+            <h1 className="font-bold text-gray-600">Price Range</h1>
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span>Min</span>
+                <input
+                  type="number"
+                  name="min"
+                  className="border !bg-white outline-none px-2"
+                  value={0}
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <span>Max</span>
+                <input
+                  type="number"
+                  className="border !bg-white outline-none px-2"
+                  name="max"
+                  value={50}
+                />
+              </div>
+            </div>
+            <input
+              type="range"
+              min="1"
+              max="50"
+              value="50"
+              className="slider"
+              id="myRange"
+            />
           </div>
           <button
             type="submit"
