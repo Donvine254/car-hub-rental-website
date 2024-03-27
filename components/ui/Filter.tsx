@@ -82,6 +82,23 @@ export default function FilterModal(props: Props) {
               ))}
             </select>
           </div>
+          <div>
+            <h1 className="font-bold text-gray-600">Location</h1>
+            <select
+              className="border rounded-md border-green-500 w-full my-2 py-1 outline-none"
+              name="location"
+              id="location">
+              <option value="" hidden>
+                Choose a Location
+              </option>
+              <option value="nairobi">Nairobi</option>
+              <option value="kisumu">Kisumu</option>
+              <option value="mombasa">Mombasa</option>
+              <option value="thika">Thika</option>
+              <option value="nakuru">Nakuru</option>
+              <option value="eldoret">Eldoret</option>
+            </select>
+          </div>
           <div className=" ">
             <h1 className="font-bold text-gray-600">Car Seats</h1>
             <div className="flex items-center justify-start gap-1 md:gap-4">

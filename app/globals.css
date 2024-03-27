@@ -140,7 +140,7 @@ input[type="number"] {
     background-color: white;
     width: 15px;
     height: 15px;
-    border: 1px solid #000;
+    border: 1px solid #d2d7de;
     border-radius: 2px;
     display: inline-grid;
     place-content: center;
