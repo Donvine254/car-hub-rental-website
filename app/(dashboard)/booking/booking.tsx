@@ -106,7 +106,10 @@ export default function BookingPage({ Cars, User }: Props) {
 
       if (dropoffDateObj <= pickupDateObj) {
         toast.error(
-          "Drop-off date cannot be before pickup date. Please choose a valid date range."
+          "Drop-off date cannot be before pickup date. Please choose a valid date range.",
+          {
+            position: "top-center",
+          }
         );
         return;
       }
