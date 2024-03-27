@@ -17,7 +17,7 @@ const PriceRangeFilter: React.FC = () => {
             type="number"
             name="min"
             className="border !bg-white outline-none px-2 w-14 font-bold"
-            value={0}
+            defaultValue={0}
           />
         </div>
         <div>&#8212;</div>
