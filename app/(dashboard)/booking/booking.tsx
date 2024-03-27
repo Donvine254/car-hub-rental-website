@@ -131,7 +131,7 @@ export default function BookingPage({ Cars, User }: Props) {
       <h1 className=" text-center text-white md:text-start my-2 text-2xl md:text-4xl font-extrabold">
         Easy Booking
       </h1>
-      <div className="px-4 py-4 border shadow bg-white xsm:w-full w-2/3 ">
+      <div className="px-4 py-4 border  bg-white  xsm:w-full  rounded-md shadow-md w-2/3 ">
         <div className="py-2">
           {selectedCar ? (
             <div className="md:flex xsm:h-fit h-20  text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
@@ -295,6 +295,7 @@ export default function BookingPage({ Cars, User }: Props) {
                   type="text"
                   name="name"
                   id="name"
+                  readOnly
                   required
                   defaultValue={User?.user_metadata?.username ?? "john doe"}
                   className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none "
@@ -309,6 +310,7 @@ export default function BookingPage({ Cars, User }: Props) {
                   type="email"
                   name="email"
                   id="email"
+                  readOnly
                   required
                   defaultValue={User?.email ?? "you@example.com"}
                   className="flex h-10 bg-white text-base  w-full px-1 py-2 mt-2 border border-gray-300 rounded-md outline-none "
