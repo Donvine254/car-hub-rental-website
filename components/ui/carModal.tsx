@@ -3,14 +3,15 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import type { car } from "@/lib/fetchCars";
 import CustomHeartIcon from "./HeartIcon";
+import Link from "next/link";
 interface CarModalProps {
-  Car: car;
+  Car: car | null;
 }
 
 export default function CarModal({ Car }: CarModalProps) {
   const handleClose = () => {
     const modal = document.getElementById(
-      `my_modal_${Car.id}`
+      `my_modal_${Car?.id}`
     ) as HTMLDialogElement | null;
     if (modal) {
       modal.close();
@@ -94,9 +95,11 @@ export default function CarModal({ Car }: CarModalProps) {
               </p>
             </div>
           </div>
-          <button className="p-2 rounded-md w-full bg-green-500 text-white  hover:bg-green-600">
+          <Link
+            href={`/booking?car_model=${Car.model_name}`}
+            className="p-2 rounded-md w-full bg-green-500 text-white  hover:bg-green-600">
             Book Now
-          </button>
+          </Link>
         </div>
       </div>
     </dialog>

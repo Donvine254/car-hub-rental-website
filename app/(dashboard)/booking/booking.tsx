@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
+import CarModal from "@/components/ui/carModal";
 
 type Props = {
   Cars: car[] | null;
@@ -129,6 +130,17 @@ export default function BookingPage({ Cars, User }: Props) {
 
     setCost(totalCost);
   }
+  //function to show car details
+  const showModal = async (id: number) => {
+    const modal = document.getElementById(
+      `my_modal_${id}`
+    ) as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    } else {
+      console.log("modal not found");
+    }
+  };
 
   return (
     <section className="bg-[url('/hero.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full w-full flex flex-col items-center justify-center p-4">
@@ -138,7 +150,7 @@ export default function BookingPage({ Cars, User }: Props) {
       <div className="px-4 py-4 border  bg-white  xsm:w-full  rounded-md shadow-md w-2/3 ">
         <div className="py-2">
           {selectedCar ? (
-            <div className="md:flex xsm:h-fit h-20  text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
+            <div className="md:flex h-fit md:h-20  text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
               <Image
                 src={selectedCar?.image || ""}
                 width={120}
@@ -147,6 +159,11 @@ export default function BookingPage({ Cars, User }: Props) {
               />
               <span>{selectedCar?.model_name} &#8212; </span>
               <span>${selectedCar?.price_per_day} Per Day</span>
+              <button
+                className="py-1 px-2 rounded-md bg-green-500 border text-white"
+                onClick={() => showModal(selectedCar?.id)}>
+                View More Details
+              </button>
             </div>
           ) : (
             <div className="h-20 px-3 py-2 border border-gray-300 rounded-md bg-background">
@@ -373,6 +390,7 @@ export default function BookingPage({ Cars, User }: Props) {
           </div>
         </form>
       </div>
+      <CarModal Car={selectedCar} />
     </section>
   );
 }
