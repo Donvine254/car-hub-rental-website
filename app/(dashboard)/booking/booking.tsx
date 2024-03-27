@@ -8,6 +8,7 @@ import {
   CalendarCheck2Icon,
   CalendarDaysIcon,
   Car,
+  CircleUser,
   MapPinIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -20,6 +21,7 @@ type Props = {
 
 export default function BookingPage({ Cars, User }: Props) {
   const [selectedCar, setSelectedCar] = useState<car | null>(null);
+  const [cost, setCost] = useState(0);
   const router = useRouter();
   const searchParams = useSearchParams();
   const model_name = searchParams.get("car_model");
@@ -34,10 +36,11 @@ export default function BookingPage({ Cars, User }: Props) {
             model_name?.toLocaleLowerCase()
         );
         setSelectedCar(filteredCars[0] || null);
+        setCost(selectedCar?.price_per_day || 0);
       }
     }
     redirectUser();
-  }, [model_name, Cars]);
+  }, [model_name, Cars, selectedCar?.price_per_day]);
   //   function to handle bookings
   function handleBooking(e: React.FormEvent) {
     e.preventDefault();
@@ -80,46 +83,84 @@ export default function BookingPage({ Cars, User }: Props) {
     }, 1000);
   }
 
+  function calculateTotalCost() {
+    if (!selectedCar) {
+      return null;
+    }
+    const pickupDateInput = document.getElementById(
+      "pickupDate"
+    ) as HTMLInputElement;
+    const dropoffDateInput = document.getElementById(
+      "dropDate"
+    ) as HTMLInputElement;
+
+    // Get selected dates
+    const pickupDate = pickupDateInput.value;
+    const dropoffDate = dropoffDateInput.value;
+    // Calculate difference in days (handle potential errors)
+
+    let days = 1;
+    try {
+      const pickupDateObj = new Date(pickupDate);
+      const dropoffDateObj = new Date(dropoffDate);
+
+      if (dropoffDateObj <= pickupDateObj) {
+        toast.error(
+          "Drop-off date cannot be before pickup date. Please choose a valid date range."
+        );
+        return;
+      }
+
+      const timeDiff = dropoffDateObj.getTime() - pickupDateObj.getTime();
+      days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    } catch (error) {
+      console.error("Error parsing dates:", error);
+      return;
+    }
+
+    const totalCost = days * selectedCar?.price_per_day;
+
+    setCost(totalCost);
+  }
+
   return (
     <section className="bg-[url('/hero.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full w-full flex flex-col items-center justify-center p-4">
       <h1 className=" text-center text-white md:text-start my-2 text-2xl md:text-4xl font-extrabold">
         Easy Booking
       </h1>
       <div className="px-4 py-4 border shadow bg-white xsm:w-full w-2/3 ">
-        {/* div for two cards */}
-
+        <div className="py-2">
+          {selectedCar ? (
+            <div className="md:flex xsm:h-fit h-20  text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
+              <Image
+                src={selectedCar?.image || ""}
+                width={120}
+                height={120}
+                alt="car_image"
+              />
+              <span>{selectedCar?.model_name} &#8212; </span>
+              <span>${selectedCar?.price_per_day} Per Day</span>
+            </div>
+          ) : (
+            <div className="h-20 px-3 py-2 border border-gray-300 rounded-md bg-background">
+              <Link
+                className=" bg-green-500 rounded-md border px-5 py-1 text-white"
+                href="/cars">
+                Select A Vehicle
+              </Link>
+            </div>
+          )}
+        </div>
         <form
           className="flex flex-col gap-2 md:grid md:grid-cols-2  md:gap-4"
           onSubmit={handleBooking}>
+          {/* div for two cards */}
           {/* first card */}
           <div>
-            <div className="py-2">
-              <label className="inline-flex font-bold" htmlFor="model">
-                <Car fill="none" className="text-green-500" />
-                <span className="text-xl"> &nbsp; Car Details *</span>
-              </label>
-
-              {selectedCar ? (
-                <div className="flex h-20 bg-green-100 text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
-                  <Image
-                    src={selectedCar?.image || ""}
-                    width={80}
-                    height={80}
-                    alt="car_image"
-                  />
-                  <span>{selectedCar?.model_name} &#8212; </span>
-                  <span>${selectedCar?.price_per_day}</span>
-                </div>
-              ) : (
-                <div className="h-20 px-3 py-2 border border-gray-300 rounded-md bg-background">
-                  <Link
-                    className=" bg-green-500 rounded-md border px-5 py-1 text-white"
-                    href="/cars">
-                    Select A Vehicle
-                  </Link>
-                </div>
-              )}
-            </div>
+            <label className="inline-flex font-bold" htmlFor="model">
+              <Car fill="none" className="text-green-500" />
+              <span className="text-xl"> &nbsp; Car Details *</span>
+            </label>
             <div className="py-2">
               <label htmlFor="pickupLocation" className="inline-flex font-bold">
                 <MapPinIcon fill="none" className="text-green-500" /> &nbsp;
@@ -190,6 +231,7 @@ export default function BookingPage({ Cars, User }: Props) {
                   min={new Date().toISOString().split("T")[0]}
                   required
                   defaultValue={formattedDate}
+                  onChange={calculateTotalCost}
                   className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
                 />
                 <input
@@ -204,9 +246,7 @@ export default function BookingPage({ Cars, User }: Props) {
                 />
               </div>
             </div>
-          </div>
-          {/* second card */}
-          <div>
+
             <div className="py-2">
               <label htmlFor="dropDate" className="inline-flex font-bold">
                 <CalendarCheck2Icon fill="none" className="text-green-500" />{" "}
@@ -219,6 +259,7 @@ export default function BookingPage({ Cars, User }: Props) {
                   id="dropDate"
                   disabled={!selectedCar}
                   min={new Date().toISOString().split("T")[0]}
+                  onChange={calculateTotalCost}
                   required
                   defaultValue={formattedDate}
                   className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
@@ -235,10 +276,15 @@ export default function BookingPage({ Cars, User }: Props) {
                 />
               </div>
             </div>
-
-            <div className="py-2">
-              <h1 className="text-xl font-bold">Confirm Contact Details *</h1>
-              <label htmlFor="name" className="inline-flex font-bold">
+          </div>
+          {/* second card */}
+          <div>
+            <label className="inline-flex font-bold" htmlFor="model">
+              <CircleUser fill="none" className="text-green-500" />
+              <span className="text-xl"> &nbsp; Contact Details *</span>
+            </label>
+            <div className="">
+              <label htmlFor="name" className="inline-flex font-bold py-2">
                 Your Name
               </label>
               <div className="flex items-center gap-0">
@@ -252,7 +298,7 @@ export default function BookingPage({ Cars, User }: Props) {
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="py-2 mt-1">
                 <label htmlFor="email" className="inline-flex font-bold">
                   Email Address
                 </label>
@@ -262,10 +308,10 @@ export default function BookingPage({ Cars, User }: Props) {
                   id="email"
                   required
                   defaultValue={User?.email ?? "you@example.com"}
-                  className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none "
+                  className="flex h-10 bg-white text-base  w-full px-1 py-2 mt-2 border border-gray-300 rounded-md outline-none "
                 />
               </div>
-              <div className="space-y-2">
+              <div className="py-2">
                 <label htmlFor="phone" className="inline-flex font-bold">
                   Phone Number
                 </label>
@@ -275,17 +321,30 @@ export default function BookingPage({ Cars, User }: Props) {
                   id="phone"
                   required
                   placeholder="+254********"
+                  className="flex h-10 bg-white text-base  w-full px-1 py-2 mt-2 border border-gray-300 rounded-md outline-none "
+                />
+              </div>
+              <div className="py-2">
+                <label htmlFor="cost" className="inline-flex font-bold py-1">
+                  Total Cost
+                </label>
+                <input
+                  type="text"
+                  name="cost"
+                  id="cost"
+                  readOnly
+                  defaultValue={"$" + cost ?? "$--"}
                   className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none "
                 />
               </div>
             </div>
-            <div className="py-2 md:py-0 md:flex md:items-end md:justify-end md:pb-2 ">
-              <button className="border shadow-xl px-3 h-10 py-2 w-full text-white bg-green-500 hover:bg-green-600 text-xl rounded-md flex items-center justify-center ">
-                Submit
-              </button>
-            </div>
           </div>
         </form>
+        <div className="py-2 md:py-0 md:flex md:items-end md:justify-end md:pb-2 ">
+          <button className="border shadow-xl px-3 h-10 py-2 w-full text-white bg-green-500 hover:bg-green-600 text-xl rounded-md flex items-center justify-center ">
+            Submit
+          </button>
+        </div>
       </div>
     </section>
   );
