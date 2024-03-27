@@ -37,7 +37,7 @@ export default function NavigationMenu({ variant }: Props) {
   }
 
   return (
-    <nav className="relative bg-transparent">
+    <menu className="relative bg-transparent">
       <Script
         async
         defer
@@ -233,13 +233,13 @@ export default function NavigationMenu({ variant }: Props) {
                   id="dropdownNavbar3"
                   className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44">
                   <ul className="py-1" aria-labelledby="dropdownLargeButton">
-                    <li>
+                    {/* <li>
                       <Link
                         href="/pricing"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Pricing
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         href="/locations"
@@ -249,9 +249,9 @@ export default function NavigationMenu({ variant }: Props) {
                     </li>
                     <li>
                       <Link
-                        href="/booking"
+                        href="/marketplace"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
-                        Booking
+                        Marketplace
                       </Link>
                     </li>
                     <li>
@@ -298,6 +298,6 @@ export default function NavigationMenu({ variant }: Props) {
           </div>
         </div>
       </section>
-    </nav>
+    </menu>
   );
 }

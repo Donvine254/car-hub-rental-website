@@ -35,7 +35,14 @@ export default function BookingPage({ Cars, User }: Props) {
   const formattedDate = today.toISOString().substring(0, 10);
   useEffect(() => {
     async function redirectUser() {
-      if (Cars) {
+      if (!model_name) {
+        toast.error("Kindly select a car first", {
+          position: "top-center",
+        });
+        setTimeout(() => {
+          router.push("/cars"), 1000;
+        });
+      } else if (Cars) {
         const filteredCars = Cars.filter(
           (car) =>
             car.model_name.toLocaleLowerCase() ===
@@ -46,7 +53,7 @@ export default function BookingPage({ Cars, User }: Props) {
       }
     }
     redirectUser();
-  }, [model_name, Cars, selectedCar?.price_per_day]);
+  }, [model_name, Cars, selectedCar?.price_per_day, router]);
   //   function to handle bookings
   function handleBooking(e: React.FormEvent) {
     e.preventDefault();
@@ -85,7 +92,7 @@ export default function BookingPage({ Cars, User }: Props) {
 
     form.reset();
     setTimeout(() => {
-      router.push("/me/profile");
+      router.push("/me/orders?new_order=true");
     }, 1000);
   }
 
