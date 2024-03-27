@@ -145,7 +145,7 @@ export default function BookingPage({ Cars, User }: Props) {
 
   return (
     <section className="bg-[url('/hero.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full w-full flex flex-col items-center justify-center p-4 relative ">
-      <div className="absolute top-0 xsm:mb-10 bg-amber-100 border border-amber-400 w-full ">
+      <div className="absolute top-0 xsm:hidden bg-amber-100 border border-amber-400 w-full ">
         <p className=" flex flex-wrap gap-1 items-center justify-center  text-amber-600 font-bold">
           <InfoIcon />
           <span>
@@ -156,7 +156,7 @@ export default function BookingPage({ Cars, User }: Props) {
           </span>
         </p>
       </div>
-      <h1 className=" text-center text-white md:text-start my-2 text-2xl md:text-4xl font-extrabold">
+      <h1 className=" text-center text-white md:text-start my-4 text-2xl md:text-4xl font-extrabold">
         Easy Booking
       </h1>
       <div className=" border bg-white  xsm:w-full  rounded-md shadow-md w-2/3">
