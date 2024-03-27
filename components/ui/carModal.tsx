@@ -96,7 +96,7 @@ export default function CarModal({ Car }: CarModalProps) {
             </div>
           </div>
           <Link
-            href={`/booking?car_model=${Car.model_name}`}
+            href={`/booking?car_model=${Car.model_name}&price=${Car.price_per_day}`}
             className="p-2 rounded-md w-full bg-green-500 text-white  hover:bg-green-600">
             Book Now
           </Link>

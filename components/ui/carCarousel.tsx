@@ -35,7 +35,9 @@ export default function CarCarousel({ Cars }: Props) {
         );
       }, 1000);
     } else {
-      router.push(`/booking?car_model=${car.model_name}`);
+      router.push(
+        `/booking?car_model=${car.model_name}&price=${car.price_per_day}`
+      );
     }
   }
   return (

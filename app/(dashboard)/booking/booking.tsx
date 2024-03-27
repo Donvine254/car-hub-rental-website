@@ -27,10 +27,13 @@ type Props = {
 
 export default function BookingPage({ Cars, User }: Props) {
   const [selectedCar, setSelectedCar] = useState<car | null>(null);
-  const [cost, setCost] = useState(0);
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const model_name = searchParams.get("car_model");
+  const price = searchParams.get("price") as string;
+  const [cost, setCost] = useState(price? parseInt(price) : 0);
+
   const today = new Date();
   const formattedDate = today.toISOString().substring(0, 10);
   useEffect(() => {
@@ -49,7 +52,6 @@ export default function BookingPage({ Cars, User }: Props) {
             model_name?.toLocaleLowerCase()
         );
         setSelectedCar(filteredCars[0] || null);
-        setCost(selectedCar?.price_per_day || 0);
       }
     }
     redirectUser();
@@ -134,9 +136,7 @@ export default function BookingPage({ Cars, User }: Props) {
       return;
     }
 
-    const totalCost = days * selectedCar?.price_per_day;
-
-    setCost(totalCost);
+    setCost(days * parseInt(price));
   }
   //function to show car details
   const showModal = async (id: number) => {

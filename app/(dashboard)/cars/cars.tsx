@@ -124,7 +124,7 @@ export default function Carspage({ Cars }: Props) {
         router.push(`/login?post_login_redirect_url=/booking?car_model=${car.model_name}`);
       }, 1000);
     } else {
-      router.push(`/booking?car_model=${car.model_name}`);
+      router.push(`/booking?car_model=${car.model_name}&price=${car.price_per_day}`);
     }
   }
 
