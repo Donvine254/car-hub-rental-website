@@ -93,6 +93,7 @@ export default function Homebooking({}: Props) {
               type="date"
               id="pickupDate"
               name="pickup_date"
+              min={new Date().toISOString().split("T")[0]}
               required
               defaultValue={formattedDate}
               className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
@@ -100,6 +101,9 @@ export default function Homebooking({}: Props) {
             <input
               type="time"
               name="pickupTime"
+              min="08:00"
+              max="18:00"
+              title="pickup and drop off can only be done between 8AM and 6PM"
               required
               defaultValue="08:00"
               className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
@@ -115,6 +119,7 @@ export default function Homebooking({}: Props) {
             <input
               type="date"
               name="dropoff_date"
+              min={new Date().toISOString().split("T")[0]}
               id="drop-offDate"
               required
               defaultValue={formattedDate}
@@ -123,6 +128,9 @@ export default function Homebooking({}: Props) {
             <input
               type="time"
               name="dropoff_time"
+              min="08:00"
+              max="18:00"
+              title="pickup and drop off can only be done between 8AM and 6PM"
               required
               defaultValue="18:00"
               className="h-10 w-1/2  bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
