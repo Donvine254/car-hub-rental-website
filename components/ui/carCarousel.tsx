@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import type { car } from "@/lib/fetchCars";
 import { getSession } from "@/lib/loginstatus";
 import CustomHeartIcon from "./HeartIcon";
+import CarModal from "./carModal";
 type Props = {
   Cars: car[];
 };
@@ -40,6 +41,16 @@ export default function CarCarousel({ Cars }: Props) {
       );
     }
   }
+  const showModal = async (id: number) => {
+    const modal = document.getElementById(
+      `my_modal_${id}`
+    ) as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    } else {
+      console.log("modal not found");
+    }
+  };
   return (
     <Carousel
       className="md:max-w-[75%] mx-auto my-4 h-fit "
@@ -68,7 +79,8 @@ export default function CarCarousel({ Cars }: Props) {
                   placeholder="blur"
                   blurDataURL="/vehicle-placeholder.png"
                   priority
-                  className="rounded-md hover:scale-y-105"
+                  className="rounded-md hover:scale-105 cursor-pointer"
+                  onClick={() => showModal(car?.id)}
                 />
 
                 <div className="flex items-center justify-between gap-4 pt-2 px-2">
@@ -113,6 +125,7 @@ export default function CarCarousel({ Cars }: Props) {
                 </button>
               </div>
             </div>
+            <CarModal Car={car} />
           </CarouselItem>
         ))}
       </CarouselContent>
