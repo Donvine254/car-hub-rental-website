@@ -32,12 +32,18 @@ export default function BookingPage({ Cars, User }: Props) {
   const searchParams = useSearchParams();
   const model_name = searchParams.get("car_model");
   const price = searchParams.get("price") as string;
-  const [cost, setCost] = useState(price? parseInt(price) : 0);
+  const [cost, setCost] = useState(price ? parseInt(price) : 0);
 
   const today = new Date();
   const formattedDate = today.toISOString().substring(0, 10);
   useEffect(() => {
     async function redirectUser() {
+      if (!User) {
+        toast.error("Login required to perform this action");
+        router.push(
+          `/login?post_login_redirect_url=/booking?car_model=${selectedCar?.model_name}&price=${selectedCar?.price_per_day}`
+        );
+      }
       if (!model_name) {
         toast.error("Kindly select a car first", {
           position: "top-center",
