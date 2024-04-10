@@ -70,3 +70,14 @@ export const handleGuessCar = (
   }
   randomModel = cars[Math.floor(Math.random() * cars.length)];
 };
+
+export const showModal = async (id: number) => {
+  const modal = document.getElementById(
+    `my_modal_${id}`
+  ) as HTMLDialogElement | null;
+  if (modal) {
+    modal.showModal();
+  } else {
+    console.log("modal not found");
+  }
+};

@@ -15,7 +15,7 @@ import ScrollToTopButton from "@/components/ui/scrollButton";
 import CarModal from "@/components/ui/carModal";
 import FilterModal from "@/components/ui/Filter";
 import Script from "next/script";
-import { handleGuessCar } from "@/lib/utils";
+import { handleGuessCar, showModal } from "@/lib/utils";
 import type { car } from "@/lib/fetchCars";
 import { getSession } from "@/lib/loginstatus";
 import CustomHeartIcon from "@/components/ui/HeartIcon";
@@ -92,16 +92,7 @@ export default function Carspage({ Cars }: Props) {
     });
   };
 
-  const showModal = async (id: number) => {
-    const modal = document.getElementById(
-      `my_modal_${id}`
-    ) as HTMLDialogElement | null;
-    if (modal) {
-      modal.showModal();
-    } else {
-      console.log("modal not found");
-    }
-  };
+  
 
   const showFilterModal = async () => {
     const filterModal = document.getElementById(
