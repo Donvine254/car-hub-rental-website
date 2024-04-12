@@ -39,12 +39,6 @@ export default function BookingPage({ Cars, User }: Props) {
   const formattedDate = today.toISOString().substring(0, 10);
   useEffect(() => {
     async function redirectUser() {
-      if (!User) {
-        toast.error("Login required to perform this action");
-        router.push(
-          `/login?post_login_redirect_url=/booking?car_model=${selectedCar?.model_name}&price=${selectedCar?.price_per_day}`
-        );
-      }
       if (!model_name) {
         toast.error("Kindly select a car first", {
           position: "top-center",
@@ -66,43 +60,49 @@ export default function BookingPage({ Cars, User }: Props) {
   //   function to handle bookings
   function handleBooking(e: React.FormEvent) {
     e.preventDefault();
+    if (!User) {
+      toast.error("Login required to perform this action");
+      router.push(
+        `/login?post_login_redirect_url=/booking?car_model=${selectedCar?.model_name}&price=${selectedCar?.price_per_day}`
+      );
+    } else {
+      const form = e.target as HTMLFormElement;
+      const pickupDateInput = form.pickupDate as HTMLInputElement;
+      const dropoffDateInput = form.dropDate as HTMLInputElement;
+      const today = new Date().toISOString().split("T")[0];
+      const pickupDate = pickupDateInput.value;
+      const dropoffDate = dropoffDateInput.value;
+      if (!selectedCar) {
+        toast.error("kindly select a car first");
+        return false;
+      }
 
-    const form = e.target as HTMLFormElement;
-    const pickupDateInput = form.pickupDate as HTMLInputElement;
-    const dropoffDateInput = form.dropDate as HTMLInputElement;
-    const today = new Date().toISOString().split("T")[0];
-    const pickupDate = pickupDateInput.value;
-    const dropoffDate = dropoffDateInput.value;
-    if (!selectedCar) {
-      toast.error("kindly select a car first");
-      return false;
+      if (new Date(pickupDate) < new Date(today)) {
+        toast.error(
+          "Pickup date cannot be in the past. Please choose today or a future date.",
+          {
+            position: "top-center",
+          }
+        );
+        return false;
+      } else if (new Date(dropoffDate) < new Date(pickupDate)) {
+        toast.error(
+          "Drop-off date cannot be before pickup date. Please choose a valid date range.",
+          {
+            position: "top-center",
+          }
+        );
+        return false;
+      } else
+        toast.success("Check your email address to confirm your booking", {
+          position: "top-center",
+        });
+
+      form.reset();
+      setTimeout(() => {
+        router.push("/me/orders?new_order=true");
+      }, 1000);
     }
-
-    if (new Date(pickupDate) < new Date(today)) {
-      toast.error(
-        "Pickup date cannot be in the past. Please choose today or a future date.",
-        {
-          position: "top-center",
-        }
-      );
-      return false;
-    } else if (new Date(dropoffDate) < new Date(pickupDate)) {
-      toast.error(
-        "Drop-off date cannot be before pickup date. Please choose a valid date range.",
-        {
-          position: "top-center",
-        }
-      );
-      return false;
-    } else
-      toast.success("Check your email address to confirm your booking", {
-        position: "top-center",
-      });
-
-    form.reset();
-    setTimeout(() => {
-      router.push("/me/orders?new_order=true");
-    }, 1000);
   }
 
   function calculateTotalCost() {
