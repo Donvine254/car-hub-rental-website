@@ -31,7 +31,8 @@ export default function BookingPage({ Cars, User }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const model_name = searchParams.get("car_model");
-  const price = searchParams.get("price") as string;
+  const price =
+    (searchParams.get("price") as string) ?? selectedCar?.price_per_day;
   const [cost, setCost] = useState(price ? parseInt(price) : 0);
 
   const today = new Date();
@@ -61,7 +62,7 @@ export default function BookingPage({ Cars, User }: Props) {
       }
     }
     redirectUser();
-  }, [model_name, Cars, selectedCar?.price_per_day, router]);
+  }, [model_name, Cars, User, selectedCar, router]);
   //   function to handle bookings
   function handleBooking(e: React.FormEvent) {
     e.preventDefault();
