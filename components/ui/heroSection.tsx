@@ -1,10 +1,31 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 type Props = {};
 
 export default function HeroSection({}: Props) {
+  useEffect(() => {
+    const valueDisplays = document.querySelectorAll<HTMLElement>(".num");
+    const interval = 10000;
+
+    valueDisplays.forEach((valueDisplay) => {
+      let startValue = 0;
+      const endValueAttr = valueDisplay.getAttribute("data-val");
+      if (endValueAttr) {
+        const endValue = parseInt(endValueAttr, 10);
+        const duration = Math.floor(interval / endValue);
+        const counter = setInterval(() => {
+          startValue += 1;
+          valueDisplay.textContent = startValue.toString();
+          if (startValue === endValue) {
+            clearInterval(counter);
+          }
+        }, duration);
+      }
+    });
+  }, []);
+
   return (
     <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
       <div className="bg-black w-full h-full  bg-opacity-60">
@@ -31,19 +52,35 @@ export default function HeroSection({}: Props) {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-10 text-white">
             <div className="text-center py-4 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
-              <h3 className="text-3xl font-extrabold text-green-500 ">1542</h3>
+              <h3 className="text-3xl font-extrabold text-green-500 ">
+                <span className="num" data-val="1542">
+                  000
+                </span>
+              </h3>
               <p className="text-sm text-white">Completed Orders</p>
             </div>
             <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
-              <h3 className="text-3xl font-extrabold text-green-500">800</h3>
+              <h3 className="text-3xl font-extrabold text-green-500">
+                <span className="num" data-val="800">
+                  000
+                </span>
+              </h3>
               <p className="text-sm text-white">Happy Customers</p>
             </div>
             <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
-              <h3 className="text-3xl font-extrabold text-green-500">123</h3>
+              <h3 className="text-3xl font-extrabold text-green-500">
+                <span className="num" data-val="120">
+                  000
+                </span>
+              </h3>
               <p className="text-sm text-white">Vehicles Fleet</p>
             </div>
             <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
-              <h3 className="text-3xl font-extrabold text-green-500">5</h3>
+              <h3 className="text-3xl font-extrabold text-green-500">
+                <span className="num" data-val="5">
+                  0
+                </span>
+              </h3>
               <p className="text-sm text-white">Years Experience</p>
             </div>
           </div>
