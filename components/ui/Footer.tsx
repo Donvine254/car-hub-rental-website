@@ -92,7 +92,7 @@ export default function Footer() {
                 <a
                   href="/pricing"
                   className="text-neutral-600 hover:text-green-500">
-                  Pricing
+                  Blog
                 </a>
               </p>
               <p className="mb-4">
@@ -114,7 +114,7 @@ export default function Footer() {
                 <a
                   href="/help"
                   className="text-neutral-600 hover:text-green-500">
-                  Help
+                  Help Center
                 </a>
               </p>
             </div>
