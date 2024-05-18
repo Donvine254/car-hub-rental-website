@@ -19,12 +19,14 @@ import {
 import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import CarModal from "@/components/ui/carModal";
+import Script from "next/script";
 
 type Props = {
   Cars: car[] | null;
   User: User | null;
 };
 
+declare const confetti: any;
 export default function BookingPage({ Cars, User }: Props) {
   const [selectedCar, setSelectedCar] = useState<car | null>(null);
 
@@ -93,15 +95,21 @@ export default function BookingPage({ Cars, User }: Props) {
           }
         );
         return false;
-      } else
+      } else {
+        confetti({
+          particleCount: 10000,
+          spread: 100,
+          origin: { y: 0.3 },
+        });
         toast.success("Check your email address to confirm your booking", {
           position: "top-center",
         });
+      }
 
       form.reset();
       setTimeout(() => {
         router.push("/me/orders?new_order=true");
-      }, 1000);
+      }, 2000);
     }
   }
 
@@ -159,6 +167,10 @@ export default function BookingPage({ Cars, User }: Props) {
 
   return (
     <section className="bg-[url('/hero.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full w-full flex flex-col items-center justify-center p-4 relative ">
+      <Script
+        async
+        defer
+        src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.2/tsparticles.confetti.bundle.min.js"></Script>
       <div className="absolute top-0 xsm:hidden bg-amber-100 border border-amber-400 w-full ">
         <p className=" flex flex-wrap gap-1 items-center justify-center  text-amber-600 font-bold">
           <InfoIcon />
