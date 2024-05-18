@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-
 import Homebooking from "@/components/ui/homebooking";
 import fetchCars from "@/lib/fetchCars";
 import {
@@ -13,6 +12,7 @@ import {
 import Testimonials from "@/components/ui/testimonials";
 import Carshowcase from "@/components/ui/carshowcase";
 import ScrollToTopButton from "@/components/ui/scrollButton";
+import HeroSection from "@/components/ui/heroSection";
 
 export const metadata: Metadata = {
   title: "Car Hub - Homepage",
@@ -149,52 +149,7 @@ export default function Home() {
       </section>
       {/* car showcase section */}
       <Carshowcase />
-      <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
-        <div className="bg-black w-full h-full  bg-opacity-60">
-          <div className="p-6 my-12 mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
-              <h2 className="text-4xl font-bold flex-1 text-white self-start mt-4">
-                We offer customers a wide range of{" "}
-                <span className="text-green-500">commercial cars</span> and{" "}
-                <span className="text-green-500">luxury cars</span> &nbsp; for
-                any occasion.
-              </h2>
-              <p className="mt-4 text-base  flex-1 text-white leading-loose">
-                At our car rental agency, we believe that everyone deserves the
-                pleasure of driving a reliable and comfortable vehicle,
-                regardless of the budget. We have created a diverse fleet with
-                maintained cars, ranging from standard to prestigious, SUV to
-                compact performance cars.
-                <br />
-                Our tailored services allow you an easy and convenient way to
-                drive luxury vehicles. Whether you need transportation for a
-                business event, vacation, emergency, or to enjoy a planned
-                getaway, we have flexible rental options to suit.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-10 text-white">
-              <div className="text-center py-4 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
-                <h3 className="text-3xl font-extrabold text-green-500 ">
-                  1542
-                </h3>
-                <p className="text-sm text-white">Completed Orders</p>
-              </div>
-              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
-                <h3 className="text-3xl font-extrabold text-green-500">800</h3>
-                <p className="text-sm text-white">Happy Customers</p>
-              </div>
-              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
-                <h3 className="text-3xl font-extrabold text-green-500">123</h3>
-                <p className="text-sm text-white">Vehicles Fleet</p>
-              </div>
-              <div className="text-center py-2 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
-                <h3 className="text-3xl font-extrabold text-green-500">5</h3>
-                <p className="text-sm text-white">Years Experience</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
       {/* SECTION FOR TESTIMONIALS */}
       <Testimonials />
       <ScrollToTopButton />
