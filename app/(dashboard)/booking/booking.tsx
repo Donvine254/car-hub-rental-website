@@ -72,6 +72,7 @@ export default function BookingPage({ Cars, User }: Props) {
     }
     redirectUser();
   }, [model_name, Cars, User, selectedCar, router]);
+
   //   function to handle bookings
   function handleBooking(e: React.FormEvent) {
     e.preventDefault();
@@ -117,6 +118,7 @@ export default function BookingPage({ Cars, User }: Props) {
         toast.success("Check your email address to confirm your booking", {
           position: "top-center",
         });
+        secureLocalStorage.removeItem("react_booking_form_data");
       }
 
       form.reset();
