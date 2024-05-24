@@ -1,16 +1,34 @@
+"use client";
 import {
   CalendarCheck2Icon,
   CalendarDaysIcon,
   Car,
   MapPinIcon,
 } from "lucide-react";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { FormEvent, useRef } from "react";
+import secureLocalStorage from "react-secure-storage";
 
 type Props = {};
 
 export default function Homebooking({}: Props) {
+  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
   const today = new Date();
   const formattedDate = today.toISOString().substring(0, 10);
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+      const formValues: { [key: string]: FormDataEntryValue } = {};
+
+      formData.forEach((value, key) => {
+        formValues[key] = value;
+      });
+      secureLocalStorage.setItem("react_booking_form_data", formValues);
+      router.push(`/cars?${FormData}`);
+    }
+  };
 
   return (
     <div className="px-4 py-4 border shadow bg-white ">
@@ -21,7 +39,8 @@ export default function Homebooking({}: Props) {
       </h1>
       <form
         className="flex flex-col gap-2 md:grid md:grid-cols-2  md:gap-4"
-        action={`/cars?${FormData}`}>
+        ref={formRef}
+        onSubmit={(e: FormEvent) => handleSubmit(e)}>
         <div className="py-2">
           <label className="inline-flex font-bold" htmlFor="model">
             <Car fill="none" className="text-green-500" />

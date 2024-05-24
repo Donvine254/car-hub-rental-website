@@ -20,14 +20,27 @@ import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 import CarModal from "@/components/ui/carModal";
 import Script from "next/script";
+import secureLocalStorage from "react-secure-storage";
 
 type Props = {
   Cars: car[] | null;
   User: User | null;
 };
-
+type FormData = {
+  model: string;
+  pickup_location: string;
+  dropLocation: string;
+  pickup_date: string;
+  pickupTime: string;
+  dropoff_date: string;
+  dropoff_time: string;
+};
 declare const confetti: any;
 export default function BookingPage({ Cars, User }: Props) {
+  const defaultData = secureLocalStorage.getItem(
+    "react_booking_form_data"
+  ) as FormData | null;
+
   const [selectedCar, setSelectedCar] = useState<car | null>(null);
 
   const router = useRouter();
@@ -250,6 +263,7 @@ export default function BookingPage({ Cars, User }: Props) {
                     className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md "
                     name="pickup_location"
                     id="pickupLocation"
+                    defaultValue={defaultData?.pickup_location}
                     disabled={!selectedCar}
                     required>
                     <option value="" hidden>
@@ -286,6 +300,7 @@ export default function BookingPage({ Cars, User }: Props) {
                     className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
                     name="dropLocation"
                     id="dropoff_location"
+                    defaultValue={defaultData?.dropLocation}
                     disabled={!selectedCar}
                     required>
                     <option value="" hidden>
@@ -312,7 +327,7 @@ export default function BookingPage({ Cars, User }: Props) {
                       disabled={!selectedCar}
                       min={new Date().toISOString().split("T")[0]}
                       required
-                      defaultValue={formattedDate}
+                      defaultValue={defaultData?.pickup_date ?? formattedDate}
                       onChange={calculateTotalCost}
                       className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
                     />
@@ -346,7 +361,7 @@ export default function BookingPage({ Cars, User }: Props) {
                       min={new Date().toISOString().split("T")[0]}
                       onChange={calculateTotalCost}
                       required
-                      defaultValue={formattedDate}
+                      defaultValue={defaultData?.dropoff_date ?? formattedDate}
                       className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
                     />
                     <input
