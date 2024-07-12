@@ -6,33 +6,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 enum TransmissionType {
-  automatic
-  manual
+  automatic
+  manual
 }
+
 enum role {
   user
   admin
 }
+
 enum BodyType {
   suv
   saloon
   van
   pickup
 }
+
+enum fuelType {
+  petrol
+  diesel
+  electric
+  hybrid
+}
+
 model User {
-  id        Int        @id @default(autoincrement())
-  username  String     @unique
-  role      String     @default("user")
-  email     String     @unique
-  password  String
-  imageUrl  String?
-  phone     String?    @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now())
-  reviews   Review[]
-  bookings  Booking[]
-  favorites Favorite[]
+  id              Int        @id @default(autoincrement())
+  username        String     @unique
+  role            String     @default("user")
+  email           String     @unique
+  password_digest String
+  imageUrl        String?
+  phone           String?    @unique
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
+  reviews         Review[]
+  bookings        Booking[]
+  favorites       Favorite[]
 }
 
 model Location {
@@ -48,7 +59,7 @@ model Car {
   image            String
   year             Int
   pricePerDay      Int
-  transmissionType String 
+  transmissionType String
   bodyType         String
   category         String
   fuelConsumption  String
@@ -56,7 +67,7 @@ model Car {
   fuelType         String
   isRented         Boolean    @default(false)
   rating           Int        @default(5)
-  location         String     @unique
+  location         String?    @unique
   createdAt        DateTime   @default(now())
   reviews          Review[]
   bookings         Booking[]
