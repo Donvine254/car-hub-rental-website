@@ -6,57 +6,69 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
+enum TransmissionType {
+  automatic
+  manual
+}
+enum role {
+  user
+  admin
+}
+enum BodyType {
+  suv
+  saloon
+  van
+  pickup
+}
 model User {
-  id        Int      @id @default(autoincrement())
-  user_id   String   @unique
-  username  String
-  role      String?  @default("user")
-  email     String   @unique
+  id        Int        @id @default(autoincrement())
+  username  String     @unique
+  role      String     @default("user")
+  email     String     @unique
   password  String
   imageUrl  String?
-  phone     String?  @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  reviews     Review[]
-  bookings    Booking[]
+  phone     String?    @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  reviews   Review[]
+  bookings  Booking[]
+  favorites Favorite[]
 }
 
-
 model Location {
-  id  Int  @id @default(autoincrement())
-  name String @unique
+  id      Int    @id @default(autoincrement())
+  name    String @unique
   address String
-  phone String
+  phone   String
 }
 
 model Car {
-  id              Int       @id @default(autoincrement())
-  modelName       String
-  image           String
-  year            Int
-  pricePerDay     Int
-  transmissionType String
-  bodyType        String
-  category        String
-  fuelConsumption String
-  noOfSeats       Int
-  fuelType        String
-  isRented        Boolean   @default(false)
-  rating          Int
-  location        Int
-  createdAt       DateTime  @default(now())
-  reviews         Review[]
-  bookings        Booking[]
+  id               Int        @id @default(autoincrement())
+  modelName        String
+  image            String
+  year             Int
+  pricePerDay      Int
+  transmissionType String 
+  bodyType         String
+  category         String
+  fuelConsumption  String
+  noOfSeats        Int
+  fuelType         String
+  isRented         Boolean    @default(false)
+  rating           Int        @default(5)
+  location         String     @unique
+  createdAt        DateTime   @default(now())
+  reviews          Review[]
+  bookings         Booking[]
+  favorites        Favorite[]
 }
-
 
 model Review {
   id        Int      @id @default(autoincrement())
   car       Car      @relation(fields: [carId], references: [id])
   carId     Int
-  user      User     @relation(fields: [userId], references: [user_id])
-  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
   createdAt DateTime @default(now())
   body      String
   title     String
@@ -65,8 +77,8 @@ model Review {
 
 model Booking {
   id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [user_id])
-  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
   car         Car      @relation(fields: [carId], references: [id])
   carId       Int
   startDate   DateTime
@@ -76,4 +88,12 @@ model Booking {
   phoneNumber Int
   totalPrice  Int
   createdAt   DateTime @default(now())
+}
+
+model Favorite {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+  car    Car  @relation(fields: [carId], references: [id])
+  carId  Int
 }
