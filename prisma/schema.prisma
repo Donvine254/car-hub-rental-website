@@ -61,7 +61,6 @@ model Car {
   pricePerDay      Int
   transmissionType String
   bodyType         String
-  category         String
   fuelConsumption  String
   noOfSeats        Int
   fuelType         String
