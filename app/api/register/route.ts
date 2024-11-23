@@ -36,7 +36,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     try {
       await registerUsers({
         ...params,
-        user_id: response?.data?.user?.id ?? "",
+        
       });
       return NextResponse.json(response.data.user, { status: 200 });
     } catch (error) {
