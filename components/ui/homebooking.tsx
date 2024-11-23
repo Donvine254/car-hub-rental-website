@@ -21,15 +21,21 @@ export default function Homebooking({}: Props) {
     if (formRef.current) {
       const formData = new FormData(formRef.current);
       const formValues: { [key: string]: FormDataEntryValue } = {};
-
+  
       formData.forEach((value, key) => {
         formValues[key] = value;
       });
+  
+      // Store form values in local storage
       secureLocalStorage.setItem("react_booking_form_data", formValues);
-      router.push(`/cars?${FormData}`);
+  
+      // Convert formValues to query string
+      const queryString = new URLSearchParams(formValues as Record<string, string>).toString();
+  
+      // Navigate to the /cars page with the query string
+      router.push(`/cars?${queryString}`);
     }
   };
-
   return (
     <div className="px-4 py-4 border shadow bg-white ">
       {/* div for two cards */}
