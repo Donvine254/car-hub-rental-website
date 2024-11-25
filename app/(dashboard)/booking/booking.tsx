@@ -149,7 +149,7 @@ export default function BookingPage({ Cars, User }: Props) {
       const pickupDateObj = new Date(pickupDate);
       const dropoffDateObj = new Date(dropoffDate);
 
-      if (dropoffDateObj <= pickupDateObj) {
+      if (dropoffDateObj < pickupDateObj) {
         toast.error(
           "Drop-off date cannot be before pickup date. Please choose a valid date range.",
           {
@@ -330,7 +330,21 @@ export default function BookingPage({ Cars, User }: Props) {
                       min={new Date().toISOString().split("T")[0]}
                       required
                       defaultValue={defaultData?.pickup_date ?? formattedDate}
-                      onChange={calculateTotalCost}
+                      onChange={(e) => {
+                        const dropOffDateInput = document.getElementById(
+                          "dropDate"
+                        ) as HTMLInputElement | null;
+                        if (dropOffDateInput) {
+                          dropOffDateInput.min = e.target.value;
+                          if (
+                            new Date(dropOffDateInput.value) <
+                            new Date(e.target.value)
+                          ) {
+                            dropOffDateInput.value = e.target.value; // Reset if invalid
+                          }
+                          calculateTotalCost();
+                        }
+                      }}
                       className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
                     />
                     <input
@@ -448,7 +462,7 @@ export default function BookingPage({ Cars, User }: Props) {
                       name="cost"
                       id="cost"
                       readOnly
-                      defaultValue={"$" + cost ?? "$--"}
+                      defaultValue={cost ? `$${cost}` : "$--"}
                       className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none "
                     />
                   </div>
