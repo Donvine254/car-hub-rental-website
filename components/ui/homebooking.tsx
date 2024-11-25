@@ -21,17 +21,19 @@ export default function Homebooking({}: Props) {
     if (formRef.current) {
       const formData = new FormData(formRef.current);
       const formValues: { [key: string]: FormDataEntryValue } = {};
-  
+
       formData.forEach((value, key) => {
         formValues[key] = value;
       });
-  
+
       // Store form values in local storage
       secureLocalStorage.setItem("react_booking_form_data", formValues);
-  
+
       // Convert formValues to query string
-      const queryString = new URLSearchParams(formValues as Record<string, string>).toString();
-  
+      const queryString = new URLSearchParams(
+        formValues as Record<string, string>
+      ).toString();
+
       // Navigate to the /cars page with the query string
       router.push(`/cars?${queryString}`);
     }
@@ -121,6 +123,19 @@ export default function Homebooking({}: Props) {
               min={new Date().toISOString().split("T")[0]}
               required
               defaultValue={formattedDate}
+              onChange={(e) => {
+                const dropOffDateInput = document.getElementById(
+                  "drop-offDate"
+                ) as HTMLInputElement | null;
+                if (dropOffDateInput) {
+                  dropOffDateInput.min = e.target.value;
+                  if (
+                    new Date(dropOffDateInput.value) < new Date(e.target.value)
+                  ) {
+                    dropOffDateInput.value = e.target.value; // Reset if invalid
+                  }
+                }
+              }}
               className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
             />
             <input
