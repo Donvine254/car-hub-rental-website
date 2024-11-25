@@ -118,6 +118,7 @@ export default function BookingPage({ Cars, User }: Props) {
         toast.success("Check your email address to confirm your booking", {
           position: "top-center",
         });
+        //send email to the user
         secureLocalStorage.removeItem("react_booking_form_data");
       }
 
