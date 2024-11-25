@@ -4,16 +4,20 @@ import { redirect } from "next/navigation";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
-
+  const path = req.nextUrl.pathname;
   // Create a Supabase client configured to use cookies
   const supabase = createMiddlewareClient({ req, res });
-
+  const isProtectedPath =
+    path.startsWith("/me") ||
+    path.startsWith("/booking") ||
+    path.startsWith("/admin") ||
+    path.startsWith("/api");
   // Refresh session if expired - required for Server Components
   const session = await supabase.auth.getSession();
-  if (!session) {
+  if (!session && isProtectedPath) {
     // Redirect to the login page if the user is not logged in
-    console.log("Redirecting to /login");
-    return redirect("/login");
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
+    
   }
 
   return res;
@@ -30,5 +34,11 @@ export const config = {
      * Feel free to modify this pattern to include more paths.
      */
     "/((?!_next/static|_next/image|favicon.ico|login).*)",
+    "/booking",
+    "/me",
+    "/me/:path*",
+    "/api",
+    "/admin",
+    "/admin/:path*",
   ],
 };

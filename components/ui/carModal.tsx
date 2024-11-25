@@ -3,12 +3,15 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import type { car } from "@/lib/fetchCars";
 import CustomHeartIcon from "./HeartIcon";
-import Link from "next/link";
+import { getSession } from "@/lib/loginstatus";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 interface CarModalProps {
   Car: car | null;
 }
 
 export default function CarModal({ Car }: CarModalProps) {
+  const router = useRouter();
   const handleClose = () => {
     const modal = document.getElementById(
       `my_modal_${Car?.id}`
@@ -17,6 +20,23 @@ export default function CarModal({ Car }: CarModalProps) {
       modal.close();
     }
   };
+  async function handleBooking(Car: car) {
+    const session = await getSession();
+    if (!session) {
+      toast.error("Login required to perform this action! ", {
+        position: "top-center",
+      });
+      setTimeout(() => {
+        router.push(
+          `/login?post_login_redirect_url=/booking?car_model=${Car.model_name}`
+        );
+      }, 1000);
+    } else {
+      router.push(
+        `/booking?car_model=${Car.model_name}&price=${Car.price_per_day}`
+      );
+    }
+  }
 
   if (!Car) {
     return null;
@@ -95,11 +115,11 @@ export default function CarModal({ Car }: CarModalProps) {
               </p>
             </div>
           </div>
-          <Link
-            href={`/booking?car_model=${Car.model_name}&price=${Car.price_per_day}`}
-            className="p-2 rounded-md w-full bg-green-500 text-white  hover:bg-green-600">
+          <button
+            onClick={() => handleBooking(Car)}
+            className="p-2 rounded-md w-full bg-green-500 text-white  hover:bg-green-600 outline-none">
             Book Now
-          </Link>
+          </button>
         </div>
       </div>
     </dialog>
