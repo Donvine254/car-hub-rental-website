@@ -1,4 +1,4 @@
-# Terms and Conditions - Car Rental Service
+# Carhub Terms and Conditions - Car Rental Service
 
 ## 1. Eligibility and Requirements
 
@@ -105,11 +105,6 @@
 - The rental company's liability is limited to the value of the rental contract.
 - We are not liable for indirect or consequential damages.
 
-### 8.2 Governing Law
-
-- These terms and conditions are governed by the laws of [Your Jurisdiction].
-- Any disputes shall be resolved in the courts of [Your Jurisdiction].
-
 By renting a vehicle from us, you agree to abide by these terms and conditions. We reserve the right to modify these terms at any time. It is your responsibility to review these terms periodically for changes.
 
-Last updated: [Current Date]
+Last updated: [26/11/2024]
