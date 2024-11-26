@@ -90,16 +90,16 @@ export default function Footer() {
               </h6>
               <p className="mb-4">
                 <a
-                  href="/pricing"
+                  href="/faqs"
                   className="text-neutral-600 hover:text-green-500">
-                  Blog
+                  FAQs
                 </a>
               </p>
               <p className="mb-4">
                 <a
-                  href="/faqs"
+                  href="/terms"
                   className="text-neutral-600 hover:text-green-500">
-                  FAQs
+                  Terms & Conditions
                 </a>
               </p>
 
