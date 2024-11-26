@@ -60,12 +60,14 @@ export default function FAQAccordion() {
           key={index}
           className="bg-white rounded-lg shadow overflow-hidden">
           <AccordionTrigger className="flex justify-between px-6 py-4 hover:bg-green-50 transition-colors duration-200">
-            <span className="text-green-800 font-medium text-xl">
+            <span className="text-green-800 font-medium md:text-xl">
               {faq.question}
             </span>
           </AccordionTrigger>
           <AccordionContent className="px-6 py-4 bg-green-50">
-            <p className="text-green-800 text-base">{faq.answer}</p>
+            <p className="text-green-800 xsm:text-xs md:text-base">
+              {faq.answer}
+            </p>
           </AccordionContent>
         </AccordionItem>
       ))}
