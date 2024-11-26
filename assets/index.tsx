@@ -178,7 +178,7 @@ export function GearboxIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export default function Plus(props: React.SVGProps<SVGSVGElement>) {
+export function Plus(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 1024 1024"
@@ -195,7 +195,7 @@ export default function Plus(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-export default function Minus(props: React.SVGProps<SVGSVGElement>) {
+export function Minus(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 1024 1024"
