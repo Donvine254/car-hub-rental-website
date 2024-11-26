@@ -53,14 +53,19 @@ const faqs = [
 
 export default function FAQAccordion() {
   return (
-    <Accordion type="single" collapsible className="w-full">
+    <Accordion type="single" collapsible className="w-full space-y-4">
       {faqs.map((faq, index) => (
-        <AccordionItem value={`item-${index}`} key={index}>
-          <AccordionTrigger className="flex justify-between">
-            <span className="text-xl font-bold">{faq.question}</span>
+        <AccordionItem
+          value={`item-${index}`}
+          key={index}
+          className="bg-white rounded-lg shadow overflow-hidden">
+          <AccordionTrigger className="flex justify-between px-6 py-4 hover:bg-green-50 transition-colors duration-200">
+            <span className="text-green-800 font-medium text-xl">
+              {faq.question}
+            </span>
           </AccordionTrigger>
-          <AccordionContent className="text-base">
-            {faq.answer}
+          <AccordionContent className="px-6 py-4 bg-green-50">
+            <p className="text-green-800 text-base">{faq.answer}</p>
           </AccordionContent>
         </AccordionItem>
       ))}
