@@ -8,7 +8,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-
 const faqs = [
   {
     question: "What are the age requirements for renting a car?",
@@ -58,12 +57,13 @@ export default function FAQAccordion() {
       {faqs.map((faq, index) => (
         <AccordionItem value={`item-${index}`} key={index}>
           <AccordionTrigger className="flex justify-between">
-            <span>{faq.question}</span>
+            <span className="text-xl font-bold">{faq.question}</span>
           </AccordionTrigger>
-          <AccordionContent>{faq.answer}</AccordionContent>
+          <AccordionContent className="text-base">
+            {faq.answer}
+          </AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>
   );
 }
-
