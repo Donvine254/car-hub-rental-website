@@ -3,6 +3,7 @@ import React from "react";
 type Props = {};
 import type { Metadata } from "next";
 import FAQAccordion from "./Accordion";
+import { MailIcon } from "lucide-react";
 export const metadata: Metadata = {
   title: "Car Hub - Frequently Asked Questions",
   description:
@@ -22,14 +23,18 @@ export default function FAQs(props: Props) {
         <div className="max-w-3xl mx-auto py-8 ">
           <FAQAccordion />
           <div className="mt-10 text-base text-gray-700 bg-green-100 p-3">
-            <p>
-              Need more help or did not find the FAQs helpful? Contact us and we
-              will respond as soon as possible.
+            <h2 className="text-2xl font-semibold mb-4">
+              Can&apos;t find what you&apos;re looking for?
+            </h2>
+            <p className="mb-4">
+              If you couldn&apos;t find the answer to your question, please don
+              not hesitate to contact our customer support team. We&apos;re here
+              to help!
             </p>
             <a
               href="mailto:support@carbubke.vercel.app"
-              className="cursor-pointer hover:text-blue-500 hover:underline">
-              support@carhubke.vercel.app
+              className="flex items-center gap-2 w-fit bg-white text-green-600 px-6 py-2 rounded-md border hover:bg-green-500 hover:text-white border-green-600 transition-colors">
+              <MailIcon /> Contact Support
             </a>
           </div>
         </div>
