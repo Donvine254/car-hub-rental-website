@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Plus, Minus } from "@/assets";
+
 
 const faqs = [
   {
@@ -59,7 +59,6 @@ export default function FAQAccordion() {
         <AccordionItem value={`item-${index}`} key={index}>
           <AccordionTrigger className="flex justify-between">
             <span>{faq.question}</span>
-            <PlusMinusIcon />
           </AccordionTrigger>
           <AccordionContent>{faq.answer}</AccordionContent>
         </AccordionItem>
@@ -68,11 +67,3 @@ export default function FAQAccordion() {
   );
 }
 
-function PlusMinusIcon() {
-  return (
-    <div className="relative w-6 h-6">
-      <Plus className="absolute transition-opacity duration-200 ease-in-out opacity-100 group-data-[state=open]:opacity-0" />
-      <Minus className="absolute transition-opacity duration-200 ease-in-out opacity-0 group-data-[state=open]:opacity-100" />
-    </div>
-  );
-}

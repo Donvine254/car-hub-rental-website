@@ -2,6 +2,7 @@ import React from "react";
 
 type Props = {};
 import type { Metadata } from "next";
+import FAQAccordion from "./Accordion";
 export const metadata: Metadata = {
   title: "Car Hub - Frequently Asked Questions",
   description:
@@ -16,6 +17,9 @@ export default function FAQs(props: Props) {
             Frequently Asked Questions
           </h1>
         </div>
+      </div>
+      <div className="max-w-4xl mx-auto py-8">
+        <FAQAccordion />
       </div>
     </section>
   );
