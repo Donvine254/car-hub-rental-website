@@ -35,7 +35,7 @@ export default function Help({}: Props) {
           {/* parent section */}
           <div className="grid md:grid-cols-2 gap-8 mb-12 ">
             <section className="bg-white p-6 rounded-lg shadow">
-              <h2 className="md:*:text-2xl font-semibold mb-4">Quick Links</h2>
+              <h2 className="md:text-2xl font-semibold mb-4">Quick Links</h2>
               <ul className="space-y-2">
                 <li>
                   <Link href="/faqs" className="text-blue-600 hover:underline">
