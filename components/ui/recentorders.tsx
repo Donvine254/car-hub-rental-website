@@ -12,8 +12,8 @@ const orders = [
   {
     id: "#01236",
     car: "Jeep Renegade",
-    pickupLocation: "New York",
-    dropoffLocation: "Los Angeles",
+    pickupLocation: "Nairobi",
+    dropoffLocation: "Eldoret",
     pickupDate: "March 2, 2023",
     returnDate: "March 10, 2023",
     status: "completed",
@@ -21,8 +21,8 @@ const orders = [
   {
     id: "#01263",
     car: "Mini Cooper",
-    pickupLocation: "San Francisco",
-    dropoffLocation: "Chicago",
+    pickupLocation: "Kisumu",
+    dropoffLocation: "Nairobi",
     pickupDate: "March 8, 2023",
     returnDate: "March 10, 2023",
     status: "cancelled",
@@ -30,8 +30,8 @@ const orders = [
   {
     id: "#01245",
     car: "Ferrari Enzo",
-    pickupLocation: "Philadelphia",
-    dropoffLocation: "Washington",
+    pickupLocation: "Mombasa",
+    dropoffLocation: "Nairobi",
     pickupDate: "March 6, 2023",
     returnDate: "March 10, 2023",
     status: "scheduled",
@@ -39,8 +39,8 @@ const orders = [
   {
     id: "#01287",
     car: "Hyundai Staria",
-    pickupLocation: "Kansas City",
-    dropoffLocation: "Houston",
+    pickupLocation: "Eldoret",
+    dropoffLocation: "Thika",
     pickupDate: "March 13, 2023",
     returnDate: "March 10, 2023",
     status: "completed",
@@ -48,8 +48,8 @@ const orders = [
   {
     id: "#01216",
     car: "Toyota Rav 4",
-    pickupLocation: "Baltimore",
-    dropoffLocation: "Sacramento",
+    pickupLocation: "Thika",
+    dropoffLocation: "Kisumu",
     pickupDate: "March 7, 2023",
     returnDate: "March 10, 2023",
     status: "scheduled",
@@ -77,7 +77,7 @@ export function RecentOrders() {
             {orders.map((order) => (
               <TableRow key={order.id}>
                 <TableCell className="font-medium">
-                  <Badge variant="outline">{order.id}</Badge>
+                  <Badge variant="default">{order.id}</Badge>
                 </TableCell>
                 <TableCell>{order.car}</TableCell>
                 <TableCell>{order.pickupLocation}</TableCell>
