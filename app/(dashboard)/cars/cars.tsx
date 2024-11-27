@@ -92,8 +92,6 @@ export default function Carspage({ Cars }: Props) {
     });
   };
 
-  
-
   const showFilterModal = async () => {
     const filterModal = document.getElementById(
       `filter_modal`
@@ -112,10 +110,14 @@ export default function Carspage({ Cars }: Props) {
         position: "top-center",
       });
       setTimeout(() => {
-        router.push(`/login?post_login_redirect_url=/booking?car_model=${car.model_name}`);
+        router.push(
+          `/login?post_login_redirect_url=/booking?car_model=${car.model_name}`
+        );
       }, 1000);
     } else {
-      router.push(`/booking?car_model=${car.model_name}&price=${car.price_per_day}`);
+      router.push(
+        `/booking?car_model=${car.model_name}&price=${car.price_per_day}`
+      );
     }
   }
 
@@ -126,7 +128,7 @@ export default function Carspage({ Cars }: Props) {
         defer
         src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.2/tsparticles.confetti.bundle.min.js"></Script>
       <div className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
-        <div className="bg-black flex items-center justify-center  bg-opacity-60 px-6 md:py-20">
+        <div className="bg-black flex items-center justify-center  bg-opacity-60 px-6 py-10 md:py-20">
           <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize  text-white md:py-4 ">
             Car Collection
           </h1>
