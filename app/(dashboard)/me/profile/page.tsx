@@ -58,7 +58,7 @@ export default async function Profile({}: Props) {
             <div className="flex flex-col space-y-2 ">
               <Link
                 href="/me/dashboard"
-                className="text-green-500  font-bold flex items-center gap-4 hover:bg-green-500 hover:text-white p-1.5 rounded-md ">
+                className="bg-green-500 text-white  font-bold flex items-center gap-4 hover:bg-green-500  p-1.5 rounded-md ">
                 <LayoutGrid size={20} /> <span>Dashboard</span>
               </Link>
               <Link
