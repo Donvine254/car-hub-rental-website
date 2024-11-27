@@ -14,9 +14,9 @@ type Props = {};
 export default function Help({}: Props) {
   return (
     <section>
-      <div className="bg-[url('https://res.cloudinary.com/dipkbpinx/image/upload/v1732663821/illustrations/rbjvkffgkhbvn6mmjoxs.png')] bg-cover  bg-bottom bg-no-repeat">
-        <div className="bg-black flex flex-col items-center justify-center  bg-opacity-60 px-6 md:py-20">
-          <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize  text-white md:py-4 ">
+      <div className="bg-[url('https://res.cloudinary.com/dipkbpinx/image/upload/v1732663821/illustrations/rbjvkffgkhbvn6mmjoxs.png')] bg-cover  bg-bottom bg-no-repeat ">
+        <div className="bg-black flex flex-col items-center justify-center  bg-opacity-60 px-6 py-10 md:py-20 ">
+          <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize xsm:text-xl  text-white md:py-4 ">
             How can we help you?
           </h1>
           <div className="relative w-full max-w-96">
@@ -90,10 +90,10 @@ export default function Help({}: Props) {
           <ContactForm />
 
           <section className="bg-green-100 p-6">
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-2xl font-semibold mb-4 xsm:text-base">
               Looking for something else?
             </h2>
-            <p className="mb-4">
+            <p className="mb-4 xsm:text-xs">
               If you couldn&apos;t find the answer to your question, please
               don&apos;t hesitate to use the contact form above or reach out to
               our customer support team directly. We&apos;re here to help!
