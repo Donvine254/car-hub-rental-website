@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Mail, Phone, MessageCircle, SearchIcon } from "lucide-react";
 import Link from "next/link";
 import ContactForm from "./contact";
+import { WhatsappIcon } from "@/assets";
 export const metadata: Metadata = {
   title: "Car Hub - Help Page",
   description:
@@ -34,10 +35,10 @@ export default function Help({}: Props) {
           {/* parent section */}
           <div className="grid md:grid-cols-2 gap-8 mb-12 ">
             <section className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-2xl font-semibold mb-4">Quick Links</h2>
+              <h2 className="md:*:text-2xl font-semibold mb-4">Quick Links</h2>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/faq" className="text-blue-600 hover:underline">
+                  <Link href="/faqs" className="text-blue-600 hover:underline">
                     Frequently Asked Questions
                   </Link>
                 </li>
@@ -64,14 +65,14 @@ export default function Help({}: Props) {
             </section>
 
             <section className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
+              <h2 className="md:text-2xl font-semibold mb-4">Contact Us</h2>
               <ul className="space-y-4">
                 <li className="flex items-center">
-                  <Phone className="w-6 h-6 mr-2 text-gray-600" />
+                  <Phone className=" mr-2 fill-green-500 stroke-none" />
                   <span>+254702018099</span>
                 </li>
                 <li className="flex items-center">
-                  <Mail className="w-6 h-6 mr-2 text-gray-600" />
+                  <Mail className=" mr-2 " fill="#22C55E" stroke="white" />
                   <a
                     href="mailto:info@carhubke.vercel.app"
                     className="text-blue-600 hover:underline">
@@ -79,9 +80,11 @@ export default function Help({}: Props) {
                   </a>
                 </li>
                 <li className="flex items-center">
-                  <MessageCircle className="w-6 h-6 mr-2 text-gray-600" />
-                  <Link href="/chat" className="text-blue-600 hover:underline">
-                    Live Chat
+                  <WhatsappIcon className="mr-2 " fill="#22C55E" />
+                  <Link
+                    href="https://api.whatsapp.com/send?phone=254702018079"
+                    className="text-blue-600 hover:underline">
+                    Chat on Whatsapp
                   </Link>
                 </li>
               </ul>
