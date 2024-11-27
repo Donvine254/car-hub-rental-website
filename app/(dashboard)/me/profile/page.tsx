@@ -76,9 +76,11 @@ export default async function Profile({}: Props) {
                 className="text-green-500  font-bold flex items-center gap-4 hover:bg-green-500 hover:text-white p-1.5 rounded-md ">
                 <Settings size={20} /> <span>Settings</span>
               </Link>
-              <button className="text-green-500 bg-gray-100 shadow font-bold flex items-center gap-4 hover:bg-red-100 hover:text-red-500 p-1.5 rounded-md ">
+              <Link
+                className="text-green-500 bg-gray-100 shadow font-bold flex items-center gap-4 hover:bg-red-100 hover:text-red-500 p-1.5 rounded-md "
+                href="/api/logout">
                 <LogOut size={20} /> <span>Sign Out</span>
-              </button>
+              </Link>
             </div>
           </div>
           {/* second div */}

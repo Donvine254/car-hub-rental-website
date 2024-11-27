@@ -233,26 +233,21 @@ export default function NavigationMenu({ variant }: Props) {
                   id="dropdownNavbar3"
                   className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44">
                   <ul className="py-1" aria-labelledby="dropdownLargeButton">
-                    {/* <li>
-                      <Link
-                        href="/pricing"
-                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
-                        Pricing
-                      </Link>
-                    </li> */}
                     <li>
-                      <Link
-                        href="/locations"
+                      <a
+                        role="link"
+                        aria-disabled="true"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Locations
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
-                        href="/marketplace"
+                      <a
+                        role="link"
+                        aria-disabled="true"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Marketplace
-                      </Link>
+                      </a>
                     </li>
                     <li>
                       <Link
@@ -262,11 +257,12 @@ export default function NavigationMenu({ variant }: Props) {
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        href="/blog"
+                      <a
+                        role="link"
+                        aria-disabled="true"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Blog
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                   <div className="py-1">
