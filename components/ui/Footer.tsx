@@ -57,28 +57,38 @@ export default function Footer() {
               </h6>
               <p className="mb-4">
                 <a
-                  href="/booking"
+                  href="/cars"
+                  title="book a car of your choice"
                   className="text-neutral-600 hover:text-green-500">
                   Car Rental
                 </a>
               </p>
               <p className="mb-4">
                 <a
-                  href="/cars"
+                  role="link"
+                  aria-disabled="true"
+                  title="book a car for a special event such as weddings etc"
                   className="text-neutral-600 hover:text-green-500">
                   Special Events
                 </a>
               </p>
               <p className="mb-4">
                 <a
-                  href="/services"
+                  role="link"
+                  aria-disabled="true"
+                  title="book a car together with a driver!"
                   className="text-neutral-600 hover:text-green-500">
                   Tour Guide
-                </a>
+                </a>{" "}
+                <span className="px-0.5  bg-green-500 text-white rounded-sm">
+                  New
+                </span>
               </p>
               <p className="mb-4">
                 <a
-                  href="/marketplace"
+                  role="link"
+                  aria-disabled="true"
+                  title="buy or sell a car"
                   className="text-neutral-600 hover:text-green-500">
                   Car Marketplace
                 </a>
