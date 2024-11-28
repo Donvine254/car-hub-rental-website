@@ -23,6 +23,7 @@
     "clsx": "^2.1.0",
     "embla-carousel-autoplay": "^8.0.0-rc20",
     "embla-carousel-react": "^8.0.0-rc20",
+    "jose": "^5.9.6",
     "lucide-react": "^0.311.0",
     "next": "^14.2.3",
     "next-themes": "^0.2.1",
