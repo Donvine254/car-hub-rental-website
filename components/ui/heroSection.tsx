@@ -28,10 +28,10 @@ export default function HeroSection({}: Props) {
 
   return (
     <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
-      <div className="bg-black w-full h-full  bg-opacity-60">
+      <div className="bg-black w-full h-screen  bg-opacity-60 4">
         <div className="p-6 my-12 mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
-            <h2 className="text-4xl font-bold flex-1 text-white self-start mt-4">
+            <h2 className="text-4xl lg:text-5xl font-bold flex-1 text-white self-start mt-4">
               We offer customers a wide range of{" "}
               <span className="text-green-500">commercial cars</span> and{" "}
               <span className="text-green-500">luxury cars</span> &nbsp; for any
@@ -50,7 +50,7 @@ export default function HeroSection({}: Props) {
               getaway, we have flexible rental options to suit.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-10 text-white">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-10 text-white lg:mt-8">
             <div className="text-center py-4 px-4 bg-slate-800 bg-opacity-20 rounded-md border">
               <h3 className="text-3xl font-extrabold text-green-500 ">
                 <span className="num" data-val="1542">
