@@ -22,7 +22,7 @@ export default async function SideNav({}: Props) {
     redirect("/login?post_login_redirect_url=me/profile");
   }
   return (
-    <div className="p-6 bg-white border shadow rounded-md md:sticky md:top-12 ">
+    <div className="p-6 bg-white border shadow rounded-md md:sticky md:top-12 min-w-80 ">
       <Image
         src={
           data?.user?.user_metadata.avatar_url ??
