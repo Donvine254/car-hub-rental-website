@@ -68,7 +68,7 @@ export default function Login({}: Props) {
   }, []);
   //handle Logout function
   async function handleLogout() {
-    await fetch("/api/logout")
+    await fetch("/api/logout");
     toast.success("Logged out successfully", {
       position: "top-center",
     });
@@ -104,18 +104,7 @@ export default function Login({}: Props) {
 
   //function to login with google
   async function loginWithGoogle() {
-    // fetch to api/auth/oauth/google
-    // const { data, error } = await supabase.auth.signInWithOAuth({
-    //   provider: "google",
-    // });
-    // if (error !== null) {
-    //   toast.success("Logged in Successfully", {
-    //     position: "top-left",
-    //   });
-    //   router.replace("/");
-    // } else {
-    //   console.error(error);
-    // }
+    return null;
   }
   return (
     <form className="w-full " onSubmit={handleSignIn}>

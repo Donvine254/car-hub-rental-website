@@ -17,14 +17,13 @@ import {
   Phone,
 } from "lucide-react";
 import Link from "next/link";
-import type { User } from "@supabase/supabase-js";
 import CarModal from "@/components/ui/carModal";
 import Script from "next/script";
 import secureLocalStorage from "react-secure-storage";
 
 type Props = {
   Cars: car[] | null;
-  User: User | null;
+  User: any | null;
 };
 type FormData = {
   model: string;
@@ -412,7 +411,7 @@ export default function BookingPage({ Cars, User }: Props) {
                       id="name"
                       readOnly
                       required
-                      defaultValue={User?.user_metadata?.username ?? "john doe"}
+                      defaultValue={User?.username ?? "john doe"}
                       className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none "
                     />
                   </div>
