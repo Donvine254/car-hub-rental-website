@@ -16,7 +16,7 @@
 //   if (!session && isProtectedPath) {
 //     // Redirect to the login page if the user is not logged in
 //     return NextResponse.redirect(new URL("/login", req.nextUrl));
-    
+
 //   }
 
 //   return res;
@@ -62,7 +62,9 @@ export async function middleware(req: NextRequest) {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
+  if (path === "/me") {
+    return NextResponse.redirect(new URL("/me/profile", req.url));
+  }
   if (!session && isProtectedPath) {
     // Redirect to login if user is not authenticated
     const loginUrl = new URL("/login", req.url);
@@ -73,7 +75,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|login).*)",
-  ],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|login).*)"],
 };
