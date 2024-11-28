@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import "../../globals.css";
 import Footer from "@/components/ui/Footer";
 import SideNav from "@/components/ui/sidenav";
+import ProfileHeroComponent from "@/components/ui/profile-hero";
 
 const eb_garamond = EB_Garamond({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default async function ProfileLayout({
         <NavigationMenu />
         {/* how to pass the User object to children? */}
         <section>
+          <ProfileHeroComponent />
           <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70 p-2">
             <div className="w-full min-h-[400px] mx-auto px-8 mt:24 md:mt-6 ">
               <div className="flex flex-col gap-2 md:flex-row  md:items-start md:gap-4 relative">
@@ -55,7 +57,6 @@ export default async function ProfileLayout({
             </div>
           </section>
         </section>
-        <Footer />
       </body>
     </html>
   );
