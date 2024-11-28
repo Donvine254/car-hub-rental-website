@@ -45,7 +45,6 @@ export default async function SideNav({ pathname }: Props) {
       <div className="flex flex-col space-y-2 ">
         <Link
           href="/me/profile"
-          prefetch
           className={`${
             pathname === "dashboard"
               ? "bg-green-500 text-white"
@@ -55,7 +54,6 @@ export default async function SideNav({ pathname }: Props) {
         </Link>
         <Link
           href="/me/orders"
-          prefetch
           className={`${
             pathname === "orders"
               ? "bg-green-500 text-white"
@@ -65,7 +63,6 @@ export default async function SideNav({ pathname }: Props) {
         </Link>
         <Link
           href="/me/favorites"
-          prefetch
           className={`${
             pathname === "favorites"
               ? "bg-green-500 text-white"
@@ -75,7 +72,6 @@ export default async function SideNav({ pathname }: Props) {
         </Link>
         <Link
           href="/me/settings"
-          prefetch
           className={`${
             pathname === "settings"
               ? "bg-green-500 text-white"
