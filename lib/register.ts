@@ -2,7 +2,6 @@
 
 import { prisma } from "@/db/prisma";
 import { hashPassword } from "./hashpassword";
-
 interface Data {
   username: string;
   email: string;
@@ -20,20 +19,18 @@ export async function registerUsers(data: Data) {
         username: data.username,
         email: data.email,
         phone: data.phone,
-        password_digest: hashedPassword, // Use encrypted password
+        password_digest: hashedPassword,
         role: "user",
         image: `https://ui-avatars.com/api/?background=random&name=${data.username}`,
       },
     });
     return user;
-  } catch (error) {
-    if ( error.code === "P2002" // Unique constraint violation
+  } catch (error: any) {
+    if (
+      error.code === "P2002" // Unique constraint violation
     ) {
       throw new Error("Email or Phone number already exists.");
     }
     throw new Error("An unexpected error occurred during registration.");
   }
 }
-
-
-
