@@ -2,6 +2,7 @@
 
 import { prisma } from "@/db/prisma";
 import { hashPassword } from "./hashpassword";
+
 interface Data {
   username: string;
   email: string;
@@ -26,10 +27,13 @@ export async function registerUsers(data: Data) {
     });
     return user;
   } catch (error) {
-    return new Error(
-      "Registration failed: Email or Phone number already exists"
-    );
+    if ( error.code === "P2002" // Unique constraint violation
+    ) {
+      throw new Error("Email or Phone number already exists.");
+    }
+    throw new Error("An unexpected error occurred during registration.");
   }
 }
+
 
 
