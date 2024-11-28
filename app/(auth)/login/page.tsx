@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { InfoIcon, Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getSession } from "@/lib/loginstatus";
 import { toast } from "sonner";
 import Link from "next/link";
+import axios from "axios";
 type Props = {};
 
 interface FormData {
@@ -33,18 +33,18 @@ export default function Login({}: Props) {
       [name]: value,
     }));
   };
-  const supabase = createClientComponentClient();
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const response = await supabase.auth.signInWithPassword({
+    // post to /auth/login
+    const response = await axios.post("/api/auth/login", {
       email: data.email,
       password: data.password,
     });
-    if (response.error !== null) {
+    if (!response.data) {
       setLoading(false);
-      toast.error(response.error.message, {
+      toast.error("something went wrong", {
         position: "bottom-center",
       });
 
@@ -68,7 +68,7 @@ export default function Login({}: Props) {
   }, []);
   //handle Logout function
   async function handleLogout() {
-    await supabase.auth.signOut();
+    await fetch("/api/logout")
     toast.success("Logged out successfully", {
       position: "top-center",
     });
@@ -104,17 +104,18 @@ export default function Login({}: Props) {
 
   //function to login with google
   async function loginWithGoogle() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-    if (error !== null) {
-      toast.success("Logged in Successfully", {
-        position: "top-left",
-      });
-      router.replace("/");
-    } else {
-      console.error(error);
-    }
+    // fetch to api/auth/oauth/google
+    // const { data, error } = await supabase.auth.signInWithOAuth({
+    //   provider: "google",
+    // });
+    // if (error !== null) {
+    //   toast.success("Logged in Successfully", {
+    //     position: "top-left",
+    //   });
+    //   router.replace("/");
+    // } else {
+    //   console.error(error);
+    // }
   }
   return (
     <form className="w-full " onSubmit={handleSignIn}>

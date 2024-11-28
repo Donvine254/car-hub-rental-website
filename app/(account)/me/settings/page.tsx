@@ -1,7 +1,5 @@
 import React from "react";
 import type { Metadata } from "next";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NotificationsTab from "./notifications";
 import ProfileTab from "./profile-tab";
@@ -13,19 +11,13 @@ export const metadata: Metadata = {
 type Props = {};
 
 export default async function Settings({}: Props) {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
-  const { data, error } = await supabase.auth.getUser();
-  const User = {
-    username:
-      data?.user?.user_metadata.username || data?.user?.user_metadata.name,
-    email: data?.user?.email || "you@example.com",
-    image_url:
-      data?.user?.user_metadata.avatar_url ||
-      data?.user?.user_metadata.imageUrl,
-    phone: data?.user?.phone ?? "+1234567890",
-    language: "en",
-  };
+  const User ={
+    email: "you@example.com",
+    username: "johndoe",
+    image_url: "http://placeholder.com/image/johndoe",
+    phone: "123-456-789"
+
+  }
   return (
     <section>
       <Tabs defaultValue="profile" className="w-full">

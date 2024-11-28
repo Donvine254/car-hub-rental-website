@@ -3,8 +3,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { EB_Garamond } from "next/font/google";
 import NavigationMenu from "@/components/ui/navigationmenu";
 import { redirect } from "next/navigation";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import "../../globals.css";
 import Footer from "@/components/ui/Footer";
 import SideNav from "@/components/ui/sidenav";
@@ -27,21 +25,12 @@ export default async function ProfileLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createServerComponentClient({ cookies });
-  const { data, error } = await supabase.auth.getUser();
-  console.log(data, error);
-  const User = {
-    username:
-      data?.user?.user_metadata.username || data?.user?.user_metadata.name,
-    email: data?.user?.email || "you@example.com",
-    image_url:
-      data?.user?.user_metadata.avatar_url ||
-      data?.user?.user_metadata.imageUrl,
-    phone: data?.user?.phone ?? "+1234567890",
-    language: "en",
-  };
-  if (error?.status === 401 || !data) {
-    redirect("/login?post_login_redirect_url=me");
+  const User ={
+    email: "you@example.com",
+    username: "johndoe",
+    image_url: "http://placeholder.com/image/johndoe",
+    phone: "123-456-789"
+
   }
   return (
     <html lang="en">
