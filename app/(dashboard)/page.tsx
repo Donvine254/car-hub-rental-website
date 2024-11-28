@@ -5,6 +5,7 @@ import fetchCars from "@/lib/fetchCars";
 import {
   Clock10Icon,
   MapPinIcon,
+  PhoneCallIcon,
   ShieldCheckIcon,
   TagIcon,
   Trophy,
@@ -13,6 +14,7 @@ import Testimonials from "@/components/ui/testimonials";
 import Carshowcase from "@/components/ui/carshowcase";
 import ScrollToTopButton from "@/components/ui/scrollButton";
 import HeroSection from "@/components/ui/heroSection";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Car Hub - Homepage",
@@ -147,11 +149,34 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* car showcase section */}
       <Carshowcase />
       <HeroSection />
-      {/* SECTION FOR TESTIMONIALS */}
       <Testimonials />
+      <section className="bg-green-500 text-white py-12 grid grid-cols-1 sm:grid-cols-2 gap-8 px-4 items-center my-2 shadow">
+        <div className="flex flex-col gap-4 sm:w-1/2 sm:mx-auto">
+          <p className="text-base font-bold w-fit text-gray-100 py-1 px-4 rounded-md bg-[#098e07] xsm:w-full xsm:text-center">
+            Call us for more information
+          </p>
+          <h2 className="text-4xl lg:text-4xl font-bold text-white xsm:text-center">
+            Our customer care is here to help you anytime.
+          </h2>
+        </div>
+        <div className="flex flex-col items-start sm:items-center gap-4 sm:w-1/2 sm:mx-auto xsm:items-center">
+          <PhoneCallIcon className="fill-white " size={48} />
+          <p className="text-base md:text-xl font-extralight">CALL US NOW</p>
+          <a
+            href="tel:+254702018079"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold">
+            +254702018099
+          </a>
+          <Link
+            href="/help"
+            className="bg-[#18a710] rounded-md xsm:w-1/2 text-center px-2 py-1 hover:shadow-2xl hover:shadow-white font-bold">
+            Contact Us
+          </Link>
+        </div>
+      </section>
+
       <ScrollToTopButton />
     </div>
   );

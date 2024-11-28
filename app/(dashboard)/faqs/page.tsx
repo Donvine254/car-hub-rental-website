@@ -19,7 +19,7 @@ export default function FAQs(props: Props) {
           </h1>
         </div>
       </div>
-      <div className="container xsm:p-2 bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70">
+      <div className="container xsm:p-2 bg-[#f8f9fa]">
         <div className="max-w-3xl mx-auto py-8 ">
           <FAQAccordion />
           <div className="mt-10 text-base text-gray-700 bg-green-100 p-3">

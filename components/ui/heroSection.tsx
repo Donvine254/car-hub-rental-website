@@ -28,7 +28,7 @@ export default function HeroSection({}: Props) {
 
   return (
     <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-center bg-no-repeat">
-      <div className="bg-black w-full h-screen  bg-opacity-60 4">
+      <div className="bg-black w-full min-h-screen  bg-opacity-60 4">
         <div className="p-6 my-12 mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
             <h2 className="text-4xl lg:text-5xl font-bold flex-1 text-white self-start mt-4">
