@@ -42,43 +42,43 @@
 //   ],
 // };
 
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
-import { NextRequest, NextResponse } from "next/server";
+// import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
+// import { NextRequest, NextResponse } from "next/server";
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-  const path = req.nextUrl.pathname;
+// export async function middleware(req: NextRequest) {
+//   const res = NextResponse.next();
+//   const path = req.nextUrl.pathname;
 
-  // Create a Supabase client configured to use cookies
-  const supabase = createMiddlewareClient({ req, res });
+//   // Create a Supabase client configured to use cookies
+//   const supabase = createMiddlewareClient({ req, res });
 
-  const isProtectedPath =
-    path.startsWith("/me") ||
-    path.startsWith("/booking") ||
-    path.startsWith("/admin") ||
-    path.startsWith("/api");
+//   const isProtectedPath =
+//     path.startsWith("/me") ||
+//     path.startsWith("/booking") ||
+//     path.startsWith("/admin") ||
+//     path.startsWith("/api");
 
-  // Retrieve session and ensure proper validation
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (!session && isProtectedPath) {
-    // Redirect to login if user is not authenticated
-    const loginUrl = new URL("/login", req.url);
-    return NextResponse.redirect(loginUrl, { headers: res.headers });
-  }
+//   // Retrieve session and ensure proper validation
+//   const {
+//     data: { session },
+//   } = await supabase.auth.getSession();
+//   if (!session && isProtectedPath) {
+//     // Redirect to login if user is not authenticated
+//     const loginUrl = new URL("/login", req.url);
+//     return NextResponse.redirect(loginUrl, { headers: res.headers });
+//   }
 
-  return res; // Return response with updated cookies
-}
+//   return res; // Return response with updated cookies
+// }
 
-export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|login).*)",
-    "/booking",
-    "/me",
-    "/me/:path*",
-    "/api",
-    "/admin",
-    "/admin/:path*",
-  ],
-};
+// export const config = {
+//   matcher: [
+//     "/((?!_next/static|_next/image|favicon.ico|login).*)",
+//     "/booking",
+//     "/me",
+//     "/me/:path*",
+//     "/api",
+//     "/admin",
+//     "/admin/:path*",
+//   ],
+// };
