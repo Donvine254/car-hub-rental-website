@@ -7,7 +7,7 @@ interface Data {
   email: string;
   password: string;
   role?: string;
-  imageUrl?: string;
+  image?: string;
   phone: string;
 }
 
@@ -21,7 +21,7 @@ export async function registerUsers(data: Data) {
         phone: data.phone,
         password_digest: hashedPassword, // Use encrypted password
         role: "user",
-        imageUrl: `https://ui-avatars.com/api/?background=random&name=${data.username}`,
+        image: `https://ui-avatars.com/api/?background=random&name=${data.username}`,
       },
     });
     return user;

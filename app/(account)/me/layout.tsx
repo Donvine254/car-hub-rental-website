@@ -29,6 +29,7 @@ export default async function ProfileLayout({
 }) {
   const supabase = createServerComponentClient({ cookies });
   const { data, error } = await supabase.auth.getUser();
+  console.log(data, error);
   const User = {
     username:
       data?.user?.user_metadata.username || data?.user?.user_metadata.name,
@@ -39,9 +40,9 @@ export default async function ProfileLayout({
     phone: data?.user?.phone ?? "+1234567890",
     language: "en",
   };
-  // if (error?.status === 401 || !data) {
-  //   redirect("/login?post_login_redirect_url=me");
-  // }
+  if (error?.status === 401 || !data) {
+    redirect("/login?post_login_redirect_url=me");
+  }
   return (
     <html lang="en">
       <body className={eb_garamond.className}>
