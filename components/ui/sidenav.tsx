@@ -1,9 +1,8 @@
+"use client";
 import React from "react";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
   LayoutGrid,
   CarFront,
@@ -12,24 +11,21 @@ import {
   LogOut,
 } from "lucide-react";
 type Props = {
-  pathname: string;
+  user: {
+    username: string;
+    email: string;
+    phone: string;
+    image_url: string;
+  };
 };
 
-export default async function SideNav({ pathname }: Props) {
-  // const cookieStore = cookies();
-  // const supabase = createServerComponentClient({ cookies: () => cookieStore });
-  // const { data, error } = await supabase.auth.getUser();
-  // if (error?.status === 401 || !data) {
-  //   redirect("/login?post_login_redirect_url=me");
-  // }
-
+export default function SideNav({ user }: Props) {
+  const pathname = usePathname();
+  console.log(pathname);
   return (
     <div className="p-6 bg-white border shadow rounded-md md:sticky md:top-12 md:min-w-80 ">
-      {/* <Image
-        src={
-          data?.user?.user_metadata.avatar_url ??
-          data?.user?.user_metadata.imageUrl
-        }
+      <Image
+        src={user?.image_url ?? ""}
         height={100}
         width={100}
         alt="User Profile"
@@ -37,16 +33,16 @@ export default async function SideNav({ pathname }: Props) {
       />
 
       <p className="text-gray-700 font-semibold my-2 text-center">
-        {data?.user?.user_metadata.username || data?.user?.user_metadata.name}
+        {user?.username}
       </p>
       <p className="text-gray-500 mb-2 break-words text-center">
-        {data?.user?.email}
+        {user?.email}
       </p>
       <div className="flex flex-col space-y-2 ">
         <Link
           href="/me/profile"
           className={`${
-            pathname === "dashboard"
+            pathname.startsWith("/me/profile")
               ? "bg-green-500 text-white"
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
@@ -55,7 +51,7 @@ export default async function SideNav({ pathname }: Props) {
         <Link
           href="/me/orders"
           className={`${
-            pathname === "orders"
+            pathname.startsWith("/me/orders")
               ? "bg-green-500 text-white"
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
@@ -64,7 +60,7 @@ export default async function SideNav({ pathname }: Props) {
         <Link
           href="/me/favorites"
           className={`${
-            pathname === "favorites"
+            pathname.startsWith("/me/favorites")
               ? "bg-green-500 text-white"
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
@@ -73,7 +69,7 @@ export default async function SideNav({ pathname }: Props) {
         <Link
           href="/me/settings"
           className={`${
-            pathname === "settings"
+            pathname.startsWith("/me/settings")
               ? "bg-green-500 text-white"
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
@@ -85,7 +81,7 @@ export default async function SideNav({ pathname }: Props) {
           href="/api/logout">
           <LogOut size={20} /> <span>Sign Out</span>
         </Link>
-      </div> */}
+      </div>
     </div>
   );
 }
