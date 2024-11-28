@@ -10,6 +10,8 @@ import Footer from "@/components/ui/Footer";
 import SideNav from "@/components/ui/sidenav";
 import ProfileHeroComponent from "@/components/ui/profile-hero";
 
+export const dynamic = "force-dynamic";
+
 const eb_garamond = EB_Garamond({
   subsets: ["latin"],
   display: "swap",
@@ -45,7 +47,6 @@ export default async function ProfileLayout({
       <body className={eb_garamond.className}>
         <Toaster richColors closeButton theme="light" />
         <NavigationMenu />
-        {/* how to pass the User object to children? */}
         <section>
           <ProfileHeroComponent />
           <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70 p-2">
