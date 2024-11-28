@@ -53,8 +53,14 @@ export default async function Settings({}: Props) {
             <section>
               <Tabs defaultValue="profile" className="w-full">
                 <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="profile">Profile</TabsTrigger>
-                  <TabsTrigger value="notifications">Notifications</TabsTrigger>
+                  <TabsTrigger value="profile" className="text-lg font-bold">
+                    Profile
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="notifications"
+                    className="text-lg font-bold">
+                    Notifications
+                  </TabsTrigger>
                 </TabsList>
                 <TabsContent value="profile">
                   <ProfileTab user={User} />

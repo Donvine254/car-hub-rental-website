@@ -36,10 +36,12 @@ export default function NotificationsTab() {
         <div className="flex flex-wrap gap-6 ">
           {/* Group 1 */}
           <div className="flex flex-col md:flex-row md:gap-6 w-full">
-            <div className="flex items-center justify-between space-x-2 md:w-1/2">
-              <div className="space-y-0.5">
-                <Label htmlFor="discounts">New Discount Notification</Label>
-                <p className="text-sm text-muted-foreground">
+            <div className="flex items-center justify-between space-x-2 md:w-1/2 bg-white shadow p-4 rounded-md border">
+              <div className="space-y-4">
+                <Label htmlFor="discounts" className="font-bold text-lg">
+                  New Discount Notification
+                </Label>
+                <p className="text-sm md:text-base text-muted-foreground">
                   You&apos;ll get notification while new discount available.
                 </p>
               </div>
@@ -49,10 +51,12 @@ export default function NotificationsTab() {
                 onCheckedChange={() => handleSwitchChange("discounts")}
               />
             </div>
-            <div className="flex items-center justify-between space-x-2 md:w-1/2">
-              <div className="space-y-0.5">
-                <Label htmlFor="newProducts">New Product Notification</Label>
-                <p className="text-sm text-muted-foreground">
+            <div className="flex items-center justify-between space-x-2 md:w-1/2 bg-white shadow p-4 rounded-md border">
+              <div className="space-y-4">
+                <Label htmlFor="newProducts" className="font-bold text-lg">
+                  New Product Notification
+                </Label>
+                <p className="text-sm md:text-base text-muted-foreground">
                   You&apos;ll get notification while new product available.
                 </p>
               </div>
@@ -66,10 +70,12 @@ export default function NotificationsTab() {
 
           {/* Group 2 */}
           <div className="flex flex-col md:flex-row md:gap-6 w-full">
-            <div className="flex items-center justify-between space-x-2 md:w-1/2">
-              <div className="space-y-0.5">
-                <Label htmlFor="dailyReports">Daily Reports</Label>
-                <p className="text-sm text-muted-foreground">
+            <div className="flex items-center justify-between space-x-2 md:w-1/2 bg-white shadow p-4 rounded-md border">
+              <div className="space-y-4">
+                <Label htmlFor="dailyReports" className="font-bold text-lg">
+                  Daily Reports
+                </Label>
+                <p className="text-sm md:text-base text-muted-foreground">
                   We will send you a report everyday.
                 </p>
               </div>
@@ -79,10 +85,12 @@ export default function NotificationsTab() {
                 onCheckedChange={() => handleSwitchChange("dailyReports")}
               />
             </div>
-            <div className="flex items-center justify-between space-x-2 md:w-1/2">
-              <div className="space-y-0.5">
-                <Label htmlFor="monthlyReports">Monthly Reports</Label>
-                <p className="text-sm text-muted-foreground">
+            <div className="flex items-center justify-between space-x-2 md:w-1/2 bg-white shadow p-6 rounded-md border">
+              <div className="space-y-4">
+                <Label htmlFor="monthlyReports" className="font-bold text-lg">
+                  Monthly Reports
+                </Label>
+                <p className="text-sm md:text-base text-muted-foreground">
                   We will send you a report each month.
                 </p>
               </div>
