@@ -12,7 +12,7 @@ enum TransmissionType {
   manual
 }
 
-enum role {
+enum Role {
   user
   admin
 }
@@ -31,13 +31,20 @@ enum fuelType {
   hybrid
 }
 
+enum Status {
+  scheduled
+  ongoing
+  completed
+  cancelled
+}
+
 model User {
   id              Int        @id @default(autoincrement())
   username        String     @unique
-  role            String     @default("user")
+  role            Role       @default(user)
   email           String     @unique
   password_digest String
-  imageUrl        String?
+  image           String?
   phone           String?    @unique
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @default(now())
@@ -54,20 +61,20 @@ model Location {
 }
 
 model Car {
-  id               Int        @id @default(autoincrement())
+  id               Int              @id @default(autoincrement())
   modelName        String
   image            String
   year             Int
   pricePerDay      Int
-  transmissionType String
-  bodyType         String
+  transmissionType TransmissionType
+  bodyType         BodyType
   fuelConsumption  String
   noOfSeats        Int
-  fuelType         String
-  isRented         Boolean    @default(false)
-  rating           Int        @default(5)
-  location         String?    @unique
-  createdAt        DateTime   @default(now())
+  fuelType         fuelType
+  isRented         Boolean          @default(false)
+  rating           Int              @default(5)
+  location         String?          @unique
+  createdAt        DateTime         @default(now())
   reviews          Review[]
   bookings         Booking[]
   favorites        Favorite[]
@@ -97,6 +104,7 @@ model Booking {
   dropoffTime DateTime
   phoneNumber Int
   totalPrice  Int
+  status      Status
   createdAt   DateTime @default(now())
 }
 
