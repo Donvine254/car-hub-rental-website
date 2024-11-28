@@ -57,6 +57,7 @@ export default async function ProfileLayout({
             </div>
           </section>
         </section>
+        <Footer />
       </body>
     </html>
   );
