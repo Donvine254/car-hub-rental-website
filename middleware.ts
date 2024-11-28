@@ -62,9 +62,6 @@ export async function middleware(req: NextRequest) {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  if (path === "/me") {
-    return NextResponse.redirect(new URL("/me/profile", req.url));
-  }
   if (!session && isProtectedPath) {
     // Redirect to login if user is not authenticated
     const loginUrl = new URL("/login", req.url);
