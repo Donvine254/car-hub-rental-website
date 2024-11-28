@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
+import { UploadImage } from "./upload-image";
 
 interface User {
   username: string;
@@ -89,36 +90,10 @@ export default function ProfileTab({ user }: { user: User }) {
               />
             </div>
           </div>
-
-          {/* Group 3 */}
-          <div className="flex flex-col md:flex-row md:gap-6 w-full items-center">
-            <div className="space-y-2 md:w-1/2">
-              <Label htmlFor="picture">Profile Picture</Label>
-              <div className="flex items-center gap-4">
-                {/* Avatar Preview */}
-                {user.image_url && (
-                  <Image
-                    src={user.image_url}
-                    alt="Profile Preview"
-                    width={40}
-                    height={40}
-                    className="object-contain h-10 w-10 rounded-full"
-                  />
-                )}
-                {/* File Input */}
-                <Input
-                  id="picture"
-                  name="picture"
-                  type="file"
-                  onChange={handleFileChange}
-                  className="cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Submit button */}
+        <UploadImage image_url={user.image_url} />
         <button
           type="submit"
           className="bg-green-500 text-white p-2 rounded-lg">

@@ -34,15 +34,22 @@ export function UploadImage({ image_url }: Props) {
 
   async function handleImageUpload() {
     setIsLoading(true);
-    // I WILL ADD OTHER LOGIC FOR uploading the picture here
   }
   return (
     <div className="flex flex-col md:flex-row md:gap-6 w-full items-center">
-      <div className="space-y-2 md:w-1/2">
+      <div className="space-y-2">
         <label htmlFor="picture">Profile Picture</label>
         <div className="flex items-center gap-4">
           {/* Avatar Preview */}
-          {image_url && (
+          {image ? (
+            <Image
+              src={URL.createObjectURL(image)}
+              alt="Profile Preview"
+              width={40}
+              height={40}
+              className="object-contain h-10 w-10 rounded-full"
+            />
+          ) : (
             <Image
               src={image_url}
               alt="Profile Preview"
@@ -53,12 +60,12 @@ export function UploadImage({ image_url }: Props) {
           )}
           {/* File Input */}
           <div className="flex flex-col sm:flex-row gap-2 p-2 sm:items-center sm:gap-5">
-            <div className="relative min-w-0 flex-auto">
+            <div className="relative flex-1">
               <input
                 className={`p-2 rounded border w-full border-solid border-blue-600 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-black transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-white bg-gray-100 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem]  focus:border-primary focus:outline-none ${
                   image === null
                     ? "file:bg-gray-600 "
-                    : "file:bg-blue-500 bg-blue-300 bg-opacity-50"
+                    : "file:bg-green-500 bg-blue-300 bg-opacity-50"
                 }`}
                 type="file"
                 name="image"
