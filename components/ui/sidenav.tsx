@@ -24,7 +24,7 @@ export default async function SideNav({ pathname }: Props) {
     redirect("/login?post_login_redirect_url=me/profile");
   }
   return (
-    <div className="p-6 bg-white border shadow rounded-md md:sticky md:top-12 min-w-80 ">
+    <div className="p-6 bg-white border shadow rounded-md md:sticky md:top-12 md:min-w-80 ">
       <Image
         src={
           data?.user?.user_metadata.avatar_url ??
@@ -44,7 +44,7 @@ export default async function SideNav({ pathname }: Props) {
       </p>
       <div className="flex flex-col space-y-2 ">
         <Link
-          href="/me/dashboard"
+          href="/me/profile"
           className={`${
             pathname === "dashboard"
               ? "bg-green-500 text-white"
