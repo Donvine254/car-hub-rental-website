@@ -11,9 +11,11 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-type Props = {};
+type Props = {
+  pathname: string;
+};
 
-export default async function SideNav({}: Props) {
+export default async function SideNav({ pathname }: Props) {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
   const { data, error } = await supabase.auth.getUser();
@@ -40,31 +42,41 @@ export default async function SideNav({}: Props) {
       <p className="text-gray-500 mb-2 break-words text-center">
         {data?.user?.email}
       </p>
-      {/* <p className="text-gray-700 font-semibold mb-2">Phone</p>
-<p className="text-gray-700 mb-2">
-  {data?.user?.phone === ""
-    ? "Update your Phone Number"
-    : data?.user?.phone}
-</p> */}
       <div className="flex flex-col space-y-2 ">
         <Link
           href="/me/dashboard"
-          className="bg-green-500 text-white  font-bold flex items-center gap-4 hover:bg-green-500  p-1.5 rounded-md ">
+          className={`${
+            pathname === "dashboard"
+              ? "bg-green-500 text-white"
+              : "text-green-500 hover:bg-green-500 hover:text-white"
+          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
           <LayoutGrid size={20} /> <span>Dashboard</span>
         </Link>
         <Link
           href="/me/orders"
-          className="text-green-500  font-bold flex items-center gap-4 hover:bg-green-500 hover:text-white p-1.5 rounded-md ">
+          className={`${
+            pathname === "orders"
+              ? "bg-green-500 text-white"
+              : "text-green-500 hover:bg-green-500 hover:text-white"
+          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
           <CalendarDays size={20} /> <span>My Orders</span>
         </Link>
         <Link
           href="/me/favorites"
-          className="text-green-500  font-bold flex items-center gap-4 hover:bg-green-500 hover:text-white p-1 rounded-md">
+          className={`${
+            pathname === "favorites"
+              ? "bg-green-500 text-white"
+              : "text-green-500 hover:bg-green-500 hover:text-white"
+          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
           <CarFront size={20} /> <span>My Favorites</span>
         </Link>
         <Link
           href="/me/settings"
-          className="text-green-500  font-bold flex items-center gap-4 hover:bg-green-500 hover:text-white p-1.5 rounded-md ">
+          className={`${
+            pathname === "settings"
+              ? "bg-green-500 text-white"
+              : "text-green-500 hover:bg-green-500 hover:text-white"
+          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
           <Settings size={20} /> <span>Settings</span>
         </Link>
         <hr />

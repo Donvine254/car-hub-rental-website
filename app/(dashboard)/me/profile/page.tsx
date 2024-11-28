@@ -12,7 +12,7 @@ export default async function Profile({}: Props) {
       <div className="w-full min-h-[400px] mx-auto px-8 mt:24 md:mt-6 ">
         <div className="flex flex-col gap-2 md:flex-row  md:items-start md:gap-4 relative">
           {/* first card */}
-          <SideNav />
+          <SideNav pathname="dashboard" />
           {/* second div */}
           <section>
             <Stats />
