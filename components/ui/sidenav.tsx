@@ -18,7 +18,10 @@ type Props = {
 export default async function SideNav({ pathname }: Props) {
   const cookieStore = cookies();
   const supabase = createServerComponentClient({ cookies: () => cookieStore });
-  const { data } = await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getUser();
+  if (error?.status === 401 || !data) {
+    redirect("/login?post_login_redirect_url=me");
+  }
 
   return (
     <div className="p-6 bg-white border shadow rounded-md md:sticky md:top-12 md:min-w-80 ">
