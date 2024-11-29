@@ -20,6 +20,7 @@ export const getUserData = async () => {
         email: true,
         image: true,
         role: true,
+        phone: true,
       },
     });
     if (!user) {

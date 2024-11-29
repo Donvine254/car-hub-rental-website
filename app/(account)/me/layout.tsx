@@ -7,6 +7,7 @@ import "../../globals.css";
 import Footer from "@/components/ui/Footer";
 import SideNav from "@/components/ui/sidenav";
 import ProfileHeroComponent from "@/components/ui/profile-hero";
+import { getUserData } from "@/lib/decodetoken";
 
 export const dynamic = "force-dynamic";
 
@@ -19,18 +20,23 @@ export const metadata: Metadata = {
   description:
     "Car Hub is a car rental service that provides customers with ease access to high-end, high-performance and affordable rental vehicles",
 };
-
+interface user {
+  id: number;
+  username: string;
+  email: string;
+  phone: number | null;
+  role: string;
+  image: string | null;
+}
 export default async function ProfileLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const User ={
-    email: "you@example.com",
-    username: "johndoe",
-    image_url: "http://placeholder.com/image/johndoe",
-    phone: "123-456-789"
-
+  const User = (await getUserData()) as user;
+  console.log(User);
+  if (!User) {
+    return redirect(`/login?post_login_redirect_url=me`);
   }
   return (
     <html lang="en">

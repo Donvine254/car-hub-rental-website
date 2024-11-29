@@ -12,10 +12,12 @@ import {
 } from "lucide-react";
 type Props = {
   user: {
+    id: number;
     username: string;
     email: string;
-    phone: string;
-    image_url: string;
+    phone: number | null;
+    role: string;
+    image: string | null;
   };
 };
 
@@ -25,7 +27,7 @@ export default function SideNav({ user }: Props) {
   return (
     <div className="p-6 bg-white border shadow rounded-md md:sticky md:top-12 md:min-w-80 ">
       <Image
-        src={user?.image_url ?? ""}
+        src={user?.image ?? "./placeholder.png"}
         height={100}
         width={100}
         alt="User Profile"
