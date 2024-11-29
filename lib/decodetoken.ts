@@ -1,13 +1,35 @@
 "use server";
-import { NextRequest, NextResponse } from "next/server";
-import * as jose from "jose";
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
-export const getUserData = (request: NextRequest) => {
+
+import { prisma } from "@/db/prisma";
+import { getSession } from "./session";
+
+export const getUserData = async () => {
   try {
-    const token = request.cookies.get("token")?.value || "";
-    const decodedToken: any = jose.jwtVerify(token, JWT_SECRET);
-    return decodedToken;
+    const session = await getSession();
+    if (!session || !session.userId) {
+      console.error("No active session or userId found");
+      return null;
+    }
+    const user = await prisma.user.findUnique({
+      where: {
+        id: Number(session.userId),
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        image: true,
+        role: true,
+      },
+    });
+    if (!user) {
+      console.error("User not found in the database");
+      return null;
+    }
+
+    return user;
   } catch (error: any) {
-    throw new Error(error.message);
+    console.error("Error fetching user data:", error.message);
+    throw new Error("Unable to retrieve user data");
   }
 };
