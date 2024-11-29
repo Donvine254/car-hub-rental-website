@@ -1,5 +1,4 @@
 "use server";
-
 export type car = {
   id: number;
   model_name: string;
@@ -10,6 +9,25 @@ export type car = {
   price_per_day: number;
   rating: number;
   body_type: string;
+};
+export type Car = {
+  id: number;
+  modelName: string;
+  image: string;
+  year: number;
+  pricePerDay: number;
+  transmissionType: string;
+  bodyType: string;
+  fuelConsumption: string;
+  seats: number;
+  fuelType: string;
+  isRented: boolean;
+  rating?: number;
+  location?: string;
+  createdAt?: string;
+  reviews?: [];
+  bookings?: [];
+  favorites?: [];
 };
 
 export default async function fetchCars() {

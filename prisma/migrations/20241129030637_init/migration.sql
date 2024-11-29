@@ -13,6 +13,9 @@ CREATE TYPE "fuelType" AS ENUM ('petrol', 'diesel', 'electric', 'hybrid');
 -- CreateEnum
 CREATE TYPE "Status" AS ENUM ('scheduled', 'ongoing', 'completed', 'cancelled');
 
+-- CreateEnum
+CREATE TYPE "Location" AS ENUM ('nairobi', 'thika', 'mombasa', 'eldoret', 'kisumu');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
@@ -29,16 +32,6 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Location" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "address" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
-
-    CONSTRAINT "Location_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Car" (
     "id" SERIAL NOT NULL,
     "modelName" TEXT NOT NULL,
@@ -47,12 +40,12 @@ CREATE TABLE "Car" (
     "pricePerDay" INTEGER NOT NULL,
     "transmissionType" "TransmissionType" NOT NULL,
     "bodyType" "BodyType" NOT NULL,
-    "fuelConsumption" TEXT NOT NULL,
-    "noOfSeats" INTEGER NOT NULL,
+    "fuelConsumption" DECIMAL(65,30) NOT NULL,
+    "seats" INTEGER NOT NULL,
     "fuelType" "fuelType" NOT NULL,
     "isRented" BOOLEAN NOT NULL DEFAULT false,
     "rating" INTEGER NOT NULL DEFAULT 5,
-    "location" TEXT,
+    "location" "Location" NOT NULL DEFAULT 'nairobi',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Car_pkey" PRIMARY KEY ("id")
@@ -84,7 +77,7 @@ CREATE TABLE "Booking" (
     "dropoffTime" TIMESTAMP(3) NOT NULL,
     "phoneNumber" INTEGER NOT NULL,
     "totalPrice" INTEGER NOT NULL,
-    "status" "Status" NOT NULL,
+    "status" "Status" NOT NULL DEFAULT 'ongoing',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Booking_pkey" PRIMARY KEY ("id")
@@ -99,6 +92,17 @@ CREATE TABLE "Favorite" (
     CONSTRAINT "Favorite_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "OTP" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "OTP_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
@@ -107,12 +111,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_phone_key" ON "User"("phone");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Location_name_key" ON "Location"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Car_location_key" ON "Car"("location");
 
 -- AddForeignKey
 ALTER TABLE "Review" ADD CONSTRAINT "Review_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
