@@ -20,25 +20,12 @@ import Link from "next/link";
 import CarModal from "@/components/ui/carModal";
 import Script from "next/script";
 import secureLocalStorage from "react-secure-storage";
+import { createBooking, Booking } from "@/lib/booking";
 
 type Props = {
   Cars: Car[] | null;
   User: any | null;
 };
-type FormData = {
-  userId: number;
-  carId: number;
-  startDate: string;
-  endDate: string;
-  pickupLocation: string;
-  pickupTime: string;
-  dropoffTime: string;
-  dropLocation: string;
-  phoneNumber: string;
-  totalPrice: number;
-  status?: string;
-};
-
 declare const confetti: any;
 const today = new Date();
 const formattedDate = today.toISOString().substring(0, 10);
@@ -48,20 +35,20 @@ export default function BookingPage({ Cars, User }: Props) {
   const model_name = searchParams.get("car_model");
   const defaultData = secureLocalStorage.getItem(
     "react_booking_form_data"
-  ) as FormData | null;
+  ) as Booking | null;
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const price =
     (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<Booking>({
     userId: User?.id || 0,
     carId: selectedCar?.id || 0,
     startDate: defaultData?.startDate || formattedDate,
     endDate: defaultData?.endDate || formattedDate,
-    pickupLocation: defaultData?.pickupLocation || "",
+    pickupLocation: defaultData?.pickupLocation || selectedCar?.location || "",
     dropLocation: defaultData?.dropLocation || "",
     pickupTime: defaultData?.pickupTime || "08:00",
     dropoffTime: defaultData?.dropoffTime || "08:00",
-    phoneNumber: defaultData?.phoneNumber || "",
+    phoneNumber: User?.phone,
     totalPrice: parseInt(price) || 0,
     status: "scheduled",
   });
@@ -94,7 +81,6 @@ export default function BookingPage({ Cars, User }: Props) {
       ...prevData,
       [name]: value,
     }));
-
     if (name === "startDate" || name === "endDate") {
       const updatedStartDate =
         name === "startDate" ? value : formData.startDate;
@@ -104,32 +90,43 @@ export default function BookingPage({ Cars, User }: Props) {
   }
 
   //   function to handle bookings
-  function handleBooking(e: React.FormEvent) {
+  async function handleBooking(e: React.FormEvent) {
     e.preventDefault();
 
     if (!selectedCar) {
       toast.error("Kindly select a car first");
       return;
     }
-    // Booking is valid: Proceed with success actions
-    confetti({
-      particleCount: 10000,
-      spread: 100,
-      origin: { y: 0.3 },
-    });
 
-    toast.success("Check your email address to confirm your booking", {
-      position: "top-center",
-    });
+    // Prepare booking data
+    const bookingData = {
+      ...formData,
+      pickupLocation: selectedCar.location,
+      phoneNumber: parseInt(User.phone, 10),
+      carId: selectedCar.id,
+    };
 
-    // Clear stored form data and log the submission
-    secureLocalStorage.removeItem("react_booking_form_data");
-    console.log(formData);
+    console.log("Booking data:", bookingData);
 
-    // Redirect after success
-    setTimeout(() => {
-      router.push("/me/orders?new_order=true");
-    }, 2000);
+    try {
+      const result = await createBooking(bookingData);
+      console.log("Booking created successfully:", result);
+      confetti({
+        particleCount: 100,
+        spread: 100,
+        origin: { y: 0.3 },
+      });
+      toast.success("Check your email address to confirm your booking", {
+        position: "top-center",
+      });
+      secureLocalStorage.removeItem("react_booking_form_data");
+      setTimeout(() => {
+        router.push("/me/orders?new_order=true");
+      }, 2000);
+    } catch (error) {
+      console.error("Failed to create booking:", error);
+      toast.error("Failed to create booking. Please try again.");
+    }
   }
 
   function calculateTotalCost(startDate: string, endDate: string) {
@@ -253,7 +250,7 @@ export default function BookingPage({ Cars, User }: Props) {
                   </label>
                   {/* a car can only be picked in its location */}
                   <select
-                    className="flex h-10 bg-white text-base w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="flex h-10 bg-white text-base w-full px-3 py-2 border border-gray-300 rounded-md capitalize"
                     name="pickupLocation"
                     id="pickupLocation"
                     value={formData.pickupLocation} // Bind to formData
@@ -403,11 +400,12 @@ export default function BookingPage({ Cars, User }: Props) {
                     </label>
                     <input
                       type="tel"
-                      name="phone"
+                      name="phoneNumber"
                       id="phone"
                       minLength={10}
                       maxLength={12}
-                      value={User.phone}
+                      value={formData.phoneNumber}
+                      onChange={handleInputChange}
                       title="valid phone number must have 10 digits."
                       pattern="0?[0-9]{9}"
                       inputMode="numeric"

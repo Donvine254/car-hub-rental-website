@@ -1,7 +1,7 @@
 import React from "react";
 import BookingPage from "./booking";
 import type { Metadata } from "next";
-import fetchCars, { car } from "@/lib/fetchCars";
+import fetchCars, { Car } from "@/lib/fetchCars";
 import { redirect } from "next/navigation";
 import { getUserData } from "@/lib/decodetoken";
 
@@ -20,7 +20,7 @@ interface user {
 }
 
 export default async function page() {
-  const Cars: car[] | null = await fetchCars();
+  const Cars = (await fetchCars()) as Car[];
   const User = (await getUserData()) as user | null;
   if (!User) {
     return redirect(`/login?post_login_redirect_url=me`);
