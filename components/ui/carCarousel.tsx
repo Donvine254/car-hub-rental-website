@@ -14,18 +14,18 @@ import Image from "next/image";
 import { CarSeat, CarFrontIcon, FuelPumpIcon, GearboxIcon } from "@/assets";
 
 import { toast } from "sonner";
-import type { car } from "@/lib/fetchCars";
+import type { Car } from "@/lib/fetchCars";
 import { getSession } from "@/lib/session";
 import CustomHeartIcon from "./HeartIcon";
 import CarModal from "./carModal";
 import { showModal } from "@/lib/utils";
 type Props = {
-  Cars: car[];
+  Cars: Car[];
 };
 
 export default function CarCarousel({ Cars }: Props) {
   const router = useRouter();
-  async function handleBooking(car: car) {
+  async function handleBooking(car: Car) {
     const session = await getSession();
     if (!session) {
       toast.error("Login required to perform this action! ", {
@@ -33,12 +33,12 @@ export default function CarCarousel({ Cars }: Props) {
       });
       setTimeout(() => {
         router.push(
-          `/login?post_login_redirect_url=/booking?car_model=${car.model_name}`
+          `/login?post_login_redirect_url=/booking?car_model=${car.modelName}`
         );
       }, 1000);
     } else {
       router.push(
-        `/booking?car_model=${car.model_name}&price=${car.price_per_day}`
+        `/booking?car_model=${car.modelName}&price=${car.pricePerDay}`
       );
     }
   }
@@ -63,7 +63,7 @@ export default function CarCarousel({ Cars }: Props) {
             <div className="w-fit border shadow bg-white rounded-md">
               <div className="p-2">
                 <Image
-                  alt={car.model_name}
+                  alt={car.modelName}
                   src={car.image}
                   width={300}
                   height={300}
@@ -76,21 +76,20 @@ export default function CarCarousel({ Cars }: Props) {
                 />
 
                 <div className="flex items-center justify-between gap-4 pt-2 px-2">
-                  <h1 className="text-bold text-xl ">{car.model_name}</h1>
+                  <h1 className="text-bold text-xl ">{car.modelName}</h1>
                   <p className="flex items-center">
                     <CustomHeartIcon />
-                    {car.rating}
                   </p>
                 </div>
               </div>
               <div className="flex items-center justify-between gap-2 px-4 py-1">
                 <div className="flex flex-col items-center gap-0.5">
                   <CarFrontIcon />
-                  <span className="capitalize">{car.body_type}</span>
+                  <span className="capitalize">{car.bodyType}</span>
                 </div>
                 <div className="flex flex-col items-center gap-0.5">
                   <GearboxIcon />
-                  <span>{car.transmission}</span>
+                  <span>{car.transmissionType}</span>
                 </div>
                 <div className="flex flex-col items-center gap-0.5">
                   <CarSeat />
@@ -98,7 +97,7 @@ export default function CarCarousel({ Cars }: Props) {
                 </div>
                 <div className="flex flex-col items-center gap-0.5">
                   <FuelPumpIcon />
-                  <span>{car.fuel_consumption}Km/L</span>
+                  <span>{car.fuelConsumption}Km/L</span>
                 </div>
               </div>
               {/* div for actions */}
@@ -107,13 +106,14 @@ export default function CarCarousel({ Cars }: Props) {
                 <p className="text-sm">
                   Daily Rate From <br />
                   <span className="text-2xl font-semibold">
-                    ${car.price_per_day}
+                    ${car.pricePerDay}
                   </span>
                 </p>
                 <button
-                  className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1"
-                  onClick={() => handleBooking(car)}>
-                  Book Now
+                  className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+                  onClick={() => handleBooking(car)}
+                  disabled={car.isRented}>
+                  {car.isRented ? "Unavailable" : "Book Now"}
                 </button>
               </div>
             </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import fetchCars, { car } from "@/lib/fetchCars";
+import fetchCars, { Car } from "@/lib/fetchCars";
 import CarCarousel from "./carCarousel";
 
 export default async function Carshowcase() {
-  const Cars: car[] | null = await fetchCars();
+  const Cars = (await fetchCars()) as Car[];
 
   return (
     <section className="h-full w-full bg-[#f8f9fa] py-4 p-2 overflow-x-hidden">
