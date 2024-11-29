@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
+import { getSession } from "@/lib/session";
 import { usePathname, useRouter } from "next/navigation";
 import Topnav from "./topnav";
 
@@ -16,6 +17,15 @@ export default function NavigationMenu({ variant }: Props) {
   const pathname = usePathname();
   const router = useRouter();
   // get user data from session, here is just need the auth status
+  useEffect(() => {
+    (async () => {
+      const session = await getSession();
+      console.log(session);
+      if (session) {
+        setUser(session);
+      }
+    })();
+  }, []);
   async function handleLogout() {
     router.push("/api/logout");
   }

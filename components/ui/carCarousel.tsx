@@ -15,7 +15,7 @@ import { CarSeat, CarFrontIcon, FuelPumpIcon, GearboxIcon } from "@/assets";
 
 import { toast } from "sonner";
 import type { car } from "@/lib/fetchCars";
-import { getSession } from "@/lib/loginstatus";
+import { getSession } from "@/lib/session";
 import CustomHeartIcon from "./HeartIcon";
 import CarModal from "./carModal";
 import { showModal } from "@/lib/utils";

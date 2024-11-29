@@ -3,7 +3,7 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import type { car } from "@/lib/fetchCars";
 import CustomHeartIcon from "./HeartIcon";
-import { getSession } from "@/lib/loginstatus";
+import { getSession } from "@/lib/session";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 interface CarModalProps {

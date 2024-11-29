@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { InfoIcon, Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getSession } from "@/lib/loginstatus";
+import { getSession } from "@/lib/session";
 import { toast } from "sonner";
 import Link from "next/link";
 import axios from "axios";
@@ -37,30 +37,31 @@ export default function Login({}: Props) {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // post to /auth/login
-    const response = await axios.post("/api/auth/login", {
-      email: data.email,
-      password: data.password,
-    });
-    if (!response.data) {
-      setLoading(false);
-      toast.error("something went wrong", {
-        position: "bottom-center",
+    // post to /api/login
+    try {
+      const response = await axios.post("/api/login", {
+        email: data.email,
+        password: data.password,
       });
-
-      return false;
-    } else {
+      const user = await response.data;
       setLoading(false);
       toast.success("Logged in successfully", {
         position: "bottom-center",
       });
       router.replace(redirect);
+    } catch (error: any) {
+      setLoading(false);
+      console.error(error);
+      toast.error(error?.response?.data?.error, {
+        position: "bottom-center",
+      });
     }
   };
   //check if users are already logged in to prevent unnecessary db calls
   useEffect(() => {
     (async () => {
       const session = await getSession();
+      console.log(session);
       if (session) {
         setIsLoggedIn(true);
       }
@@ -104,6 +105,7 @@ export default function Login({}: Props) {
 
   //function to login with google
   async function loginWithGoogle() {
+    toast.error("Login with google is not supported");
     return null;
   }
   return (
