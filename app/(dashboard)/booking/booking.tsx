@@ -46,8 +46,6 @@ export default function BookingPage({ Cars, User }: Props) {
     endDate: defaultData?.endDate || formattedDate,
     pickupLocation: defaultData?.pickupLocation || selectedCar?.location || "",
     dropLocation: defaultData?.dropLocation || "",
-    pickupTime: defaultData?.pickupTime || "08:00",
-    dropoffTime: defaultData?.dropoffTime || "08:00",
     phoneNumber: User?.phone,
     totalPrice: parseInt(price) || 0,
     status: "scheduled",
@@ -293,28 +291,17 @@ export default function BookingPage({ Cars, User }: Props) {
                     <CalendarDaysIcon fill="none" className="text-green-500" />{" "}
                     &nbsp; Pickup Date and Time
                   </label>
-                  <div className="flex items-center gap-0">
+                  <div className="">
                     <input
-                      type="date"
+                      type="datetime-local"
                       id="pickupDate"
                       name="startDate"
                       value={formData.startDate}
-                      min={new Date().toISOString().split("T")[0]}
+                      min={new Date().toISOString()}
                       required
                       disabled={!selectedCar}
                       onChange={handleInputChange}
                       className="flex h-10 bg-white text-base w-1/2 px-1 py-2 border"
-                    />
-                    <input
-                      type="time"
-                      name="pickupTime"
-                      disabled={!selectedCar}
-                      min="08:00"
-                      max="18:00"
-                      required
-                      value={formData.pickupTime}
-                      onChange={handleInputChange}
-                      className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
                     />
                   </div>
                 </div>
@@ -327,9 +314,9 @@ export default function BookingPage({ Cars, User }: Props) {
                     />{" "}
                     &nbsp; Drop-Off Date and Time
                   </label>
-                  <div className="flex items-center gap-0">
+                  <div className="">
                     <input
-                      type="date"
+                      type="datetime-local"
                       id="dropDate"
                       name="endDate"
                       value={formData.endDate}
@@ -338,17 +325,6 @@ export default function BookingPage({ Cars, User }: Props) {
                       disabled={!selectedCar}
                       onChange={handleInputChange}
                       className="flex h-10 bg-white text-base w-1/2 px-1 py-2 border"
-                    />
-                    <input
-                      type="time"
-                      name="dropoffTime"
-                      disabled={!selectedCar}
-                      min="08:00"
-                      max="18:00"
-                      required
-                      value={formData.dropoffTime} // Bind to formData
-                      onChange={handleInputChange}
-                      className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
                     />
                   </div>
                 </div>

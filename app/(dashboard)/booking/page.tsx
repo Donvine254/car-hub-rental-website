@@ -18,7 +18,7 @@ interface user {
   role: string;
   image: string;
 }
-
+// only fetch the current car, we can redirect with the car id in the params
 export default async function page() {
   const Cars = (await fetchCars()) as Car[];
   const User = (await getUserData()) as user | null;
