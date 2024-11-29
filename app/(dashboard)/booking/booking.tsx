@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { car } from "@/lib/fetchCars";
+import { Car } from "@/lib/fetchCars";
 import { toast } from "sonner";
 import Image from "next/image";
 import {
@@ -9,7 +9,7 @@ import {
   BookUserIcon,
   CalendarCheck2Icon,
   CalendarDaysIcon,
-  Car,
+  CarFront,
   CircleUser,
   InfoIcon,
   MailOpenIcon,
@@ -22,7 +22,7 @@ import Script from "next/script";
 import secureLocalStorage from "react-secure-storage";
 
 type Props = {
-  Cars: car[] | null;
+  Cars: Car[] | null;
   User: any | null;
 };
 type FormData = {
@@ -49,9 +49,9 @@ export default function BookingPage({ Cars, User }: Props) {
   const defaultData = secureLocalStorage.getItem(
     "react_booking_form_data"
   ) as FormData | null;
-  const [selectedCar, setSelectedCar] = useState<car | null>(null);
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const price =
-    (searchParams.get("price") as string) ?? selectedCar?.price_per_day;
+    (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
   const [formData, setFormData] = useState<FormData>({
     userId: User?.id || 0,
     carId: selectedCar?.id || 0,
@@ -78,7 +78,7 @@ export default function BookingPage({ Cars, User }: Props) {
       } else if (Cars) {
         const filteredCars = Cars.filter(
           (car) =>
-            car.model_name.toLocaleLowerCase() ===
+            car.modelName.toLocaleLowerCase() ===
             model_name?.toLocaleLowerCase()
         );
         setSelectedCar(filteredCars[0] || null);
@@ -90,14 +90,11 @@ export default function BookingPage({ Cars, User }: Props) {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
-
-    // Update form data
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
 
-    // Use e.target.value directly for real-time price calculation
     if (name === "startDate" || name === "endDate") {
       const updatedStartDate =
         name === "startDate" ? value : formData.startDate;
@@ -140,6 +137,14 @@ export default function BookingPage({ Cars, User }: Props) {
     try {
       const pickupDateObj = new Date(startDate);
       const dropoffDateObj = new Date(endDate);
+      // Check if endDate is before startDate
+      if (dropoffDateObj < pickupDateObj) {
+        setFormData((prev) => ({
+          ...prev,
+          totalPrice: parseInt(price),
+        }));
+        return;
+      }
       const timeDiff = dropoffDateObj.getTime() - pickupDateObj.getTime();
       const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) || 1;
 
@@ -211,8 +216,8 @@ export default function BookingPage({ Cars, User }: Props) {
                   height={120}
                   alt="car_image"
                 />
-                <span>{selectedCar?.model_name} &#8212; </span>
-                <span>${selectedCar?.price_per_day} Per Day</span>
+                <span>{selectedCar?.modelName} &#8212; </span>
+                <span>${selectedCar?.pricePerDay} Per Day</span>
                 <button
                   className="py-1 px-2 rounded-md bg-green-500 border text-white"
                   onClick={() => showModal(selectedCar?.id)}>
@@ -236,7 +241,7 @@ export default function BookingPage({ Cars, User }: Props) {
               {/* first card */}
               <div>
                 <label className="inline-flex font-bold" htmlFor="model">
-                  <Car fill="none" className="text-green-500" />
+                  <CarFront fill="none" className="text-green-500" />
                   <span className="text-xl"> &nbsp; Car Details *</span>
                 </label>
                 <div className="py-2">
@@ -252,29 +257,10 @@ export default function BookingPage({ Cars, User }: Props) {
                     name="pickupLocation"
                     id="pickupLocation"
                     value={formData.pickupLocation} // Bind to formData
-                    onChange={handleInputChange}
-                    disabled={!selectedCar}
-                    required>
+                    aria-readonly
+                    disabled>
                     <option value="" hidden>
-                      Choose a Pickup Location
-                    </option>
-                    <option value="nairobi" className="checked:bg-green-500">
-                      Nairobi
-                    </option>
-                    <option value="kisumu" className="checked:bg-green-500">
-                      Kisumu
-                    </option>
-                    <option value="mombasa" className="checked:bg-green-500">
-                      Mombasa
-                    </option>
-                    <option value="thika" className="checked:bg-green-500">
-                      Thika
-                    </option>
-                    <option value="nakuru" className="checked:bg-green-500">
-                      Nakuru
-                    </option>
-                    <option value="eldoret" className="checked:bg-green-500">
-                      Eldoret
+                      {selectedCar?.location}
                     </option>
                   </select>
                 </div>
