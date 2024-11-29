@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
@@ -70,7 +70,7 @@ model Car {
   transmissionType TransmissionType
   bodyType         BodyType
   fuelConsumption  String
-  noOfSeats        Int
+  seats        Int
   fuelType         fuelType
   isRented         Boolean          @default(false)
   rating           Int              @default(5)
@@ -94,19 +94,21 @@ model Review {
 }
 
 model Booking {
-  id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int
-  car         Car      @relation(fields: [carId], references: [id])
-  carId       Int
-  startDate   DateTime
-  endDate     DateTime
-  pickupTime  DateTime
-  dropoffTime DateTime
-  phoneNumber Int
-  totalPrice  Int
-  status      Status
-  createdAt   DateTime @default(now())
+  id             Int      @id @default(autoincrement())
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int
+  car            Car      @relation(fields: [carId], references: [id])
+  carId          Int
+  startDate      DateTime
+  endDate        DateTime
+  pickupLocation String
+  dropLocation   String
+  pickupTime     DateTime
+  dropoffTime    DateTime
+  phoneNumber    Int
+  totalPrice     Int
+  status         Status @default(ongoing)
+  createdAt      DateTime @default(now())
 }
 
 model Favorite {

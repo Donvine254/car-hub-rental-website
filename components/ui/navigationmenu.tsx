@@ -16,11 +16,9 @@ export default function NavigationMenu({ variant }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const pathname = usePathname();
   const router = useRouter();
-  // get user data from session, here is just need the auth status
   useEffect(() => {
     (async () => {
       const session = await getSession();
-      console.log(session);
       if (session) {
         setUser(session);
       }

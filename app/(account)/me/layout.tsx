@@ -34,7 +34,6 @@ export default async function ProfileLayout({
   children: React.ReactNode;
 }) {
   const User = (await getUserData()) as user;
-  console.log(User);
   if (!User) {
     return redirect(`/login?post_login_redirect_url=me`);
   }

@@ -26,31 +26,46 @@ type Props = {
   User: any | null;
 };
 type FormData = {
-  model: string;
-  pickup_location: string;
-  dropLocation: string;
-  pickup_date: string;
+  userId: number;
+  carId: number;
+  startDate: string;
+  endDate: string;
+  pickupLocation: string;
   pickupTime: string;
-  dropoff_date: string;
-  dropoff_time: string;
+  dropoffTime: string;
+  dropLocation: string;
+  phoneNumber: string;
+  totalPrice: number;
+  status?: string;
 };
+
 declare const confetti: any;
+const today = new Date();
+const formattedDate = today.toISOString().substring(0, 10);
 export default function BookingPage({ Cars, User }: Props) {
-  const defaultData = secureLocalStorage.getItem(
-    "react_booking_form_data"
-  ) as FormData | null;
-
-  const [selectedCar, setSelectedCar] = useState<car | null>(null);
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const model_name = searchParams.get("car_model");
+  const defaultData = secureLocalStorage.getItem(
+    "react_booking_form_data"
+  ) as FormData | null;
+  const [selectedCar, setSelectedCar] = useState<car | null>(null);
   const price =
     (searchParams.get("price") as string) ?? selectedCar?.price_per_day;
-  const [cost, setCost] = useState(price ? parseInt(price) : 0);
+  const [formData, setFormData] = useState<FormData>({
+    userId: User?.id || 0,
+    carId: selectedCar?.id || 0,
+    startDate: defaultData?.startDate || formattedDate,
+    endDate: defaultData?.endDate || "",
+    pickupLocation: defaultData?.pickupLocation || "",
+    dropLocation: defaultData?.dropLocation || "",
+    pickupTime: defaultData?.pickupTime || "08:00",
+    dropoffTime: defaultData?.dropoffTime || "08:00",
+    phoneNumber: defaultData?.phoneNumber || "",
+    totalPrice: parseInt(price) || 0,
+    status: "pending",
+  });
 
-  const today = new Date();
-  const formattedDate = today.toISOString().substring(0, 10);
   useEffect(() => {
     async function redirectUser() {
       if (!model_name) {
@@ -71,103 +86,67 @@ export default function BookingPage({ Cars, User }: Props) {
     }
     redirectUser();
   }, [model_name, Cars, User, selectedCar, router]);
+  function handleInputChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    if (name === "startDate" || name === "endDate") {
+      calculateTotalCost(formData.startDate, formData.endDate);
+    }
+  }
 
   //   function to handle bookings
   function handleBooking(e: React.FormEvent) {
     e.preventDefault();
-    if (!User) {
-      toast.error("Login required to perform this action");
-      router.push(
-        `/login?post_login_redirect_url=/booking?car_model=${selectedCar?.model_name}&price=${selectedCar?.price_per_day}`
-      );
-    } else {
-      const form = e.target as HTMLFormElement;
-      const pickupDateInput = form.pickupDate as HTMLInputElement;
-      const dropoffDateInput = form.dropDate as HTMLInputElement;
-      const today = new Date().toISOString().split("T")[0];
-      const pickupDate = pickupDateInput.value;
-      const dropoffDate = dropoffDateInput.value;
-      if (!selectedCar) {
-        toast.error("kindly select a car first");
-        return false;
-      }
 
-      if (new Date(pickupDate) < new Date(today)) {
-        toast.error(
-          "Pickup date cannot be in the past. Please choose today or a future date.",
-          {
-            position: "top-center",
-          }
-        );
-        return false;
-      } else if (new Date(dropoffDate) < new Date(pickupDate)) {
-        toast.error(
-          "Drop-off date cannot be before pickup date. Please choose a valid date range.",
-          {
-            position: "top-center",
-          }
-        );
-        return false;
-      } else {
-        confetti({
-          particleCount: 10000,
-          spread: 100,
-          origin: { y: 0.3 },
-        });
-        toast.success("Check your email address to confirm your booking", {
-          position: "top-center",
-        });
-        //send email to the user
-        secureLocalStorage.removeItem("react_booking_form_data");
-      }
-
-      form.reset();
-      setTimeout(() => {
-        router.push("/me/orders?new_order=true");
-      }, 2000);
-    }
-  }
-
-  function calculateTotalCost() {
     if (!selectedCar) {
-      return null;
-    }
-    const pickupDateInput = document.getElementById(
-      "pickupDate"
-    ) as HTMLInputElement;
-    const dropoffDateInput = document.getElementById(
-      "dropDate"
-    ) as HTMLInputElement;
-
-    // Get selected dates
-    const pickupDate = pickupDateInput.value;
-    const dropoffDate = dropoffDateInput.value;
-    // Calculate difference in days (handle potential errors)
-
-    let days = 1;
-    try {
-      const pickupDateObj = new Date(pickupDate);
-      const dropoffDateObj = new Date(dropoffDate);
-
-      if (dropoffDateObj < pickupDateObj) {
-        toast.error(
-          "Drop-off date cannot be before pickup date. Please choose a valid date range.",
-          {
-            position: "top-center",
-          }
-        );
-        return;
-      }
-
-      const timeDiff = dropoffDateObj.getTime() - pickupDateObj.getTime();
-      days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-    } catch (error) {
-      console.error("Error parsing dates:", error);
+      toast.error("Kindly select a car first");
       return;
     }
+    // Booking is valid: Proceed with success actions
+    confetti({
+      particleCount: 10000,
+      spread: 100,
+      origin: { y: 0.3 },
+    });
 
-    setCost(days * parseInt(price));
+    toast.success("Check your email address to confirm your booking", {
+      position: "top-center",
+    });
+
+    // Clear stored form data and log the submission
+    secureLocalStorage.removeItem("react_booking_form_data");
+    console.log(formData);
+
+    // Redirect after success
+    // setTimeout(() => {
+    //   router.push("/me/orders?new_order=true");
+    // }, 2000);
   }
+
+  function calculateTotalCost(startDate: string, endDate: string) {
+    if (!selectedCar) return;
+    try {
+      const pickupDateObj = new Date(startDate);
+      const dropoffDateObj = new Date(endDate);
+      const timeDiff = dropoffDateObj.getTime() - pickupDateObj.getTime();
+      const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) || 1;
+
+      const totalCost = days * parseInt(price);
+      setFormData((prev) => ({
+        ...prev,
+        totalPrice: totalCost,
+      }));
+    } catch (error) {
+      console.error("Error parsing dates:", error);
+    }
+  }
+
   //function to show car details
   const showModal = async (id: number) => {
     const modal = document.getElementById(
@@ -259,13 +238,14 @@ export default function BookingPage({ Cars, User }: Props) {
                     htmlFor="pickupLocation"
                     className="inline-flex font-bold">
                     <MapPinIcon fill="none" className="text-green-500" /> &nbsp;
-                    Pick Up Location
+                    Pick-Up Location
                   </label>
                   <select
-                    className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md "
-                    name="pickup_location"
+                    className="flex h-10 bg-white text-base w-full px-3 py-2 border border-gray-300 rounded-md"
+                    name="pickupLocation"
                     id="pickupLocation"
-                    defaultValue={defaultData?.pickup_location}
+                    value={formData.pickupLocation} // Bind to formData
+                    onChange={handleInputChange}
                     disabled={!selectedCar}
                     required>
                     <option value="" hidden>
@@ -291,6 +271,7 @@ export default function BookingPage({ Cars, User }: Props) {
                     </option>
                   </select>
                 </div>
+
                 <div className="py-2">
                   <label
                     htmlFor="dropLocation"
@@ -299,10 +280,11 @@ export default function BookingPage({ Cars, User }: Props) {
                     Drop-Off Location
                   </label>
                   <select
-                    className="flex h-10 bg-background text-base  w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="flex h-10 bg-white text-base w-full px-3 py-2 border border-gray-300 rounded-md"
                     name="dropLocation"
-                    id="dropoff_location"
-                    defaultValue={defaultData?.dropLocation}
+                    id="dropoffLocation"
+                    value={formData.dropLocation} // Bind to formData
+                    onChange={handleInputChange}
                     disabled={!selectedCar}
                     required>
                     <option value="" hidden>
@@ -325,27 +307,13 @@ export default function BookingPage({ Cars, User }: Props) {
                     <input
                       type="date"
                       id="pickupDate"
-                      name="pickup_date"
-                      disabled={!selectedCar}
+                      name="startDate"
+                      value={formData.startDate}
                       min={new Date().toISOString().split("T")[0]}
                       required
-                      defaultValue={defaultData?.pickup_date ?? formattedDate}
-                      onChange={(e) => {
-                        const dropOffDateInput = document.getElementById(
-                          "dropDate"
-                        ) as HTMLInputElement | null;
-                        if (dropOffDateInput) {
-                          dropOffDateInput.min = e.target.value;
-                          if (
-                            new Date(dropOffDateInput.value) <
-                            new Date(e.target.value)
-                          ) {
-                            dropOffDateInput.value = e.target.value; // Reset if invalid
-                          }
-                          calculateTotalCost();
-                        }
-                      }}
-                      className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none"
+                      disabled={!selectedCar}
+                      onChange={handleInputChange}
+                      className="flex h-10 bg-white text-base w-1/2 px-1 py-2 border"
                     />
                     <input
                       type="time"
@@ -354,7 +322,8 @@ export default function BookingPage({ Cars, User }: Props) {
                       min="08:00"
                       max="18:00"
                       required
-                      defaultValue="08:00"
+                      value={formData.pickupTime}
+                      onChange={handleInputChange}
                       className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
                     />
                   </div>
@@ -371,24 +340,25 @@ export default function BookingPage({ Cars, User }: Props) {
                   <div className="flex items-center gap-0">
                     <input
                       type="date"
-                      name="dropDate"
                       id="dropDate"
-                      disabled={!selectedCar}
-                      min={new Date().toISOString().split("T")[0]}
-                      onChange={calculateTotalCost}
+                      name="endDate"
+                      value={formData.endDate}
+                      min={formData.startDate}
                       required
-                      defaultValue={defaultData?.dropoff_date ?? formattedDate}
-                      className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
+                      disabled={!selectedCar}
+                      onChange={handleInputChange}
+                      className="flex h-10 bg-white text-base w-1/2 px-1 py-2 border"
                     />
                     <input
                       type="time"
-                      name="dropoff_time"
+                      name="dropoffTime"
+                      disabled={!selectedCar}
                       min="08:00"
                       max="18:00"
-                      disabled={!selectedCar}
                       required
-                      defaultValue="18:00"
-                      className="h-10 w-1/2  bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
+                      value={formData.dropoffTime} // Bind to formData
+                      onChange={handleInputChange}
+                      className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
                     />
                   </div>
                 </div>
@@ -444,6 +414,7 @@ export default function BookingPage({ Cars, User }: Props) {
                       id="phone"
                       minLength={10}
                       maxLength={12}
+                      value={User.phone}
                       title="valid phone number must have 10 digits."
                       pattern="0?[0-9]{9}"
                       inputMode="numeric"
@@ -462,7 +433,7 @@ export default function BookingPage({ Cars, User }: Props) {
                       name="cost"
                       id="cost"
                       readOnly
-                      defaultValue={cost ? `$${cost}` : "$--"}
+                      defaultValue={price ? `$${formData.totalPrice}` : "$--"}
                       className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none "
                     />
                   </div>
