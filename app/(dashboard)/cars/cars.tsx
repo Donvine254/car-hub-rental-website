@@ -10,6 +10,7 @@ import {
   MoveRightIcon,
   RefreshCwIcon,
   Search,
+  Star,
 } from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
 import CarModal from "@/components/ui/carModal";
@@ -36,11 +37,12 @@ export default function Carspage({ Cars }: Props) {
   const model = searchParams.get("model");
   const brand = searchParams.get("make");
   const price = searchParams.get("price");
+  const location =
+    searchParams.get("location") || searchParams.get("pickupLocation");
   const seats = searchParams.get("seats");
   //use effect to handle when there is a model in search params
   useEffect(() => {
     let filteredCars = Cars;
-
     // Filter by model
     if (model) {
       filteredCars = filteredCars.filter((car) =>
@@ -52,6 +54,12 @@ export default function Carspage({ Cars }: Props) {
     if (brand) {
       filteredCars = filteredCars.filter((car) =>
         car.modelName.toLowerCase().includes(brand.toLowerCase())
+      );
+    }
+    //filter by location
+    if (location) {
+      filteredCars = filteredCars.filter((car) =>
+        car.location.toLowerCase().includes(location.toLowerCase())
       );
     }
 
@@ -182,7 +190,8 @@ export default function Carspage({ Cars }: Props) {
                       {car.modelName}
                     </h1>
                     <p className="flex items-center">
-                      <CustomHeartIcon />
+                      <Star className="fill-amber-500 stroke-none" size={16} />
+                      {car.rating}
                     </p>
                   </div>
                 </div>

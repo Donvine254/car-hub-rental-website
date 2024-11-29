@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { Star, X } from "lucide-react";
 import type { Car } from "@/lib/fetchCars";
 import CustomHeartIcon from "./HeartIcon";
 import { getSession } from "@/lib/session";
@@ -69,7 +69,10 @@ export default function CarModal({ Car }: CarModalProps) {
             <h1 className="text-bold text-2xl my-2 font-semibold">
               {Car.modelName}
             </h1>
-            <CustomHeartIcon />
+            <p className="flex items-center">
+              <Star className="fill-amber-500 stroke-none" size={16} />
+              {Car.rating}
+            </p>
           </div>
           <h1 className="text-bold text-[18px]">Specifications</h1>
           <div className="text-gray-600 font-semibold py-2 divide divide-y divide-gray-200">
@@ -110,11 +113,9 @@ export default function CarModal({ Car }: CarModalProps) {
               <p className="">Year of Manufacture</p>
               <p className="capitalize text-green-600">2020</p>
             </div>
-            <div className="flex items-center justify-between py-1">
+            <div className="flex items-center justify-between">
               <p className="">Location</p>
-              <p className="capitalize font-bold text-green-600 text-xl bg-gray-200 px-6 rounded-md">
-                $ {Car.location}
-              </p>
+              <p className="capitalize  text-green-600 ">{Car.location}</p>
             </div>
             <div className="flex items-center justify-between py-1">
               <p className="">Price Per Day</p>

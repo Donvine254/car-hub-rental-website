@@ -19,6 +19,7 @@ import { getSession } from "@/lib/session";
 import CustomHeartIcon from "./HeartIcon";
 import CarModal from "./carModal";
 import { showModal } from "@/lib/utils";
+import { Star } from "lucide-react";
 type Props = {
   Cars: Car[];
 };
@@ -78,7 +79,8 @@ export default function CarCarousel({ Cars }: Props) {
                 <div className="flex items-center justify-between gap-4 pt-2 px-2">
                   <h1 className="text-bold text-xl ">{car.modelName}</h1>
                   <p className="flex items-center">
-                    <CustomHeartIcon />
+                    <Star className="fill-amber-500 stroke-none" size={16} />
+                    {car.rating}
                   </p>
                 </div>
               </div>
