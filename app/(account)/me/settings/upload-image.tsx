@@ -36,10 +36,10 @@ export function UploadImage({ image_url }: Props) {
     setIsLoading(true);
   }
   return (
-    <div className="flex flex-col md:flex-row md:gap-6 w-full items-center">
+    <div className="flex-1">
       <div className="space-y-2">
         <label htmlFor="picture">Profile Picture</label>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center  w-full gap-4 border-2 border-gray-400 p-2 border-dotted bg-gray-50  rounded-sm">
           {/* Avatar Preview */}
           {image ? (
             <Image
@@ -59,7 +59,7 @@ export function UploadImage({ image_url }: Props) {
             />
           )}
           {/* File Input */}
-          <div className="flex flex-col sm:flex-row gap-2 p-2 sm:items-center sm:gap-5">
+          <div className="flex flex-col w-full sm:flex-row gap-2 p-2 sm:items-center sm:gap-5">
             <div className="relative flex-1">
               <input
                 className={`p-2 rounded border w-full border-solid border-blue-600 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-black transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:px-3 file:py-[0.32rem] file:text-white bg-gray-100 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem]  focus:border-primary focus:outline-none ${

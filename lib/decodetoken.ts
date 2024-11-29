@@ -31,6 +31,6 @@ export const getUserData = async () => {
     return user;
   } catch (error: any) {
     console.error("Error fetching user data:", error.message);
-    throw new Error("Unable to retrieve user data");
+    return null;
   }
 };

@@ -46,7 +46,7 @@ export default async function ProfileLayout({
         <section>
           <ProfileHeroComponent />
           <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70 p-2">
-            <div className="w-full min-h-[400px] mx-auto px-8 mt:24 md:mt-6 ">
+            <div className="w-full min-h-[400px] mx-auto px-2 md:px-8 mt:24 md:mt-6 ">
               <div className="flex flex-col gap-2 md:flex-row  md:items-start md:gap-4 relative">
                 <SideNav user={User} />
                 {children}
