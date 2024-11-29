@@ -24,7 +24,7 @@ type Props = {
 };
 
 export default function Carspage({ Cars }: Props) {
-  const [CarsToRender, setCarsToRender] = useState<car[]>(Cars);
+  const [CarsToRender, setCarsToRender] = useState<Car[]>(Cars);
   const [displayCount, setDisplayCount] = useState(10);
   // state for the game car
   const [carImage, setCarImage] = useState(
@@ -44,21 +44,21 @@ export default function Carspage({ Cars }: Props) {
     // Filter by model
     if (model) {
       filteredCars = filteredCars.filter((car) =>
-        car.body_type.toLowerCase().includes(model.toLowerCase())
+        car.bodyType.toLowerCase().includes(model.toLowerCase())
       );
     }
 
     // Filter by brand (make)
     if (brand) {
       filteredCars = filteredCars.filter((car) =>
-        car.model_name.toLowerCase().includes(brand.toLowerCase())
+        car.modelName.toLowerCase().includes(brand.toLowerCase())
       );
     }
 
     // Filter by price
     if (price) {
       filteredCars = filteredCars.filter(
-        (car) => car.price_per_day <= parseInt(price)
+        (car) => car.pricePerDay <= parseInt(price)
       );
     }
 
@@ -79,7 +79,7 @@ export default function Carspage({ Cars }: Props) {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
     const filteredCars = Cars.filter((car) =>
-      car.model_name.toLowerCase().includes(searchTerm.toLowerCase())
+      car.modelName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setCarsToRender(filteredCars);
     setDisplayCount(10);
@@ -103,7 +103,7 @@ export default function Carspage({ Cars }: Props) {
     }
   };
 
-  async function handleBooking(car: car) {
+  async function handleBooking(car: Car) {
     const session = await getSession();
     if (!session) {
       toast.error("Login required to perform this action! ", {
@@ -111,12 +111,12 @@ export default function Carspage({ Cars }: Props) {
       });
       setTimeout(() => {
         router.push(
-          `/login?post_login_redirect_url=/booking?car_model=${car.model_name}`
+          `/login?post_login_redirect_url=/booking?car_model=${car.modelName}`
         );
       }, 1000);
     } else {
       router.push(
-        `/booking?car_model=${car.model_name}&price=${car.price_per_day}`
+        `/booking?car_model=${car.modelName}&price=${car.pricePerDay}`
       );
     }
   }
@@ -165,7 +165,7 @@ export default function Carspage({ Cars }: Props) {
                 className="w-fit border shadow bg-white rounded-md">
                 <div className="p-2">
                   <Image
-                    alt={car.model_name}
+                    alt={car.modelName}
                     src={car.image}
                     width={300}
                     height={300}
@@ -179,23 +179,22 @@ export default function Carspage({ Cars }: Props) {
 
                   <div className="flex items-center justify-between gap-4 pt-2 px-2">
                     <h1 className="font-semibold text-xl text-gray-600 ">
-                      {car.model_name}
+                      {car.modelName}
                     </h1>
                     <p className="flex items-center">
                       <CustomHeartIcon />
-                      {car.rating}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-2 px-4 py-1 my-1 group h-12">
                   <div className="flex flex-col items-center gap-0.5 group-hover:hidden">
                     <CarFrontIcon />
-                    <span className="capitalize">{car.body_type}</span>
+                    <span className="capitalize">{car.bodyType}</span>
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">
                     <GearboxIcon />
 
-                    <span>{car.transmission}</span>
+                    <span>{car.transmissionType}</span>
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">
                     <CarSeat />
@@ -203,7 +202,7 @@ export default function Carspage({ Cars }: Props) {
                   </div>
                   <div className="flex flex-col items-center gap-1 group-hover:hidden">
                     <FuelPumpIcon />
-                    <span>{car.fuel_consumption}Km/L</span>
+                    <span>{car.fuelConsumption}Km/L</span>
                   </div>
                   <button
                     className="hidden group-hover:flex items-center justify-between  w-full h-full bg-green-500 text-white group  rounded-md p-2 "
@@ -221,13 +220,14 @@ export default function Carspage({ Cars }: Props) {
                   <p className="text-sm">
                     Daily Rate From <br />
                     <span className="text-2xl font-semibold">
-                      ${car.price_per_day}
+                      ${car.pricePerDay}
                     </span>
                   </p>
                   <button
-                    className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1"
-                    onClick={() => handleBooking(car)}>
-                    Book Now
+                    className="px-2 py-1 border rounded-md flex-1 bg-green-500 text-white hover:shadow-2xl hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+                    onClick={() => !car.isRented && handleBooking(car)}
+                    disabled={car.isRented}>
+                    {car.isRented ? "Unavailable" : "Book Now"}
                   </button>
                 </div>
                 <CarModal Car={car} />
