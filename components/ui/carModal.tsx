@@ -1,13 +1,13 @@
 import React from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
-import type { car } from "@/lib/fetchCars";
+import type { Car } from "@/lib/fetchCars";
 import CustomHeartIcon from "./HeartIcon";
 import { getSession } from "@/lib/session";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 interface CarModalProps {
-  Car: car | null;
+  Car: Car | null;
 }
 
 export default function CarModal({ Car }: CarModalProps) {
@@ -20,7 +20,7 @@ export default function CarModal({ Car }: CarModalProps) {
       modal.close();
     }
   };
-  async function handleBooking(Car: car) {
+  async function handleBooking(Car: Car) {
     const session = await getSession();
     if (!session) {
       toast.error("Login required to perform this action! ", {
@@ -28,12 +28,12 @@ export default function CarModal({ Car }: CarModalProps) {
       });
       setTimeout(() => {
         router.push(
-          `/login?post_login_redirect_url=/booking?car_model=${Car.model_name}`
+          `/login?post_login_redirect_url=/booking?car_model=${Car.modelName}`
         );
       }, 1000);
     } else {
       router.push(
-        `/booking?car_model=${Car.model_name}&price=${Car.price_per_day}`
+        `/booking?car_model=${Car.modelName}&price=${Car.pricePerDay}`
       );
     }
   }
@@ -53,7 +53,7 @@ export default function CarModal({ Car }: CarModalProps) {
         <div className="p-4 w-fit">
           <div className="w-full">
             <Image
-              alt={Car.model_name}
+              alt={Car.modelName}
               src={Car.image}
               width={600}
               height={600}
@@ -67,7 +67,7 @@ export default function CarModal({ Car }: CarModalProps) {
 
           <div className="md:flex md:items-center md:justify-between gap 2">
             <h1 className="text-bold text-2xl my-2 font-semibold">
-              {Car.model_name}
+              {Car.modelName}
             </h1>
             <CustomHeartIcon />
           </div>
@@ -76,13 +76,13 @@ export default function CarModal({ Car }: CarModalProps) {
             <div className="flex items-center justify-between ">
               <p className="">Make</p>
               <p className="capitalize text-green-600">
-                {Car.model_name?.split(" ")[0]}
+                {Car.modelName?.split(" ")[0]}
               </p>
             </div>
             <div className="flex items-center justify-between ">
               <p className="">Body Type</p>
               <p className="capitalize text-green-600">
-                {Car.body_type.toUpperCase()}
+                {Car.bodyType.toUpperCase()}
               </p>
             </div>
 
@@ -93,32 +93,41 @@ export default function CarModal({ Car }: CarModalProps) {
             <div className="flex items-center justify-between ">
               <p className="">Fuel Consumption</p>
               <p className="capitalize text-green-600">
-                {Car.fuel_consumption} Km/L
+                {Car.fuelConsumption} Km/L
               </p>
             </div>
             <div className="flex items-center justify-between ">
               <p className="">Fuel Type</p>
-              <p className="capitalize text-green-600"> Petrol</p>
+              <p className="capitalize text-green-600"> {Car.fuelType}</p>
             </div>
             <div className="flex items-center justify-between ">
               <p className="">Transmission</p>
-              <p className="capitalize text-green-600">{Car.transmission}</p>
+              <p className="capitalize text-green-600">
+                {Car.transmissionType}
+              </p>
             </div>
             <div className="flex items-center justify-between">
               <p className="">Year of Manufacture</p>
               <p className="capitalize text-green-600">2020</p>
             </div>
             <div className="flex items-center justify-between py-1">
+              <p className="">Location</p>
+              <p className="capitalize font-bold text-green-600 text-xl bg-gray-200 px-6 rounded-md">
+                $ {Car.location}
+              </p>
+            </div>
+            <div className="flex items-center justify-between py-1">
               <p className="">Price Per Day</p>
               <p className="capitalize font-bold text-green-600 text-xl bg-gray-200 px-6 rounded-md">
-                $ {Car.price_per_day}
+                $ {Car.pricePerDay}
               </p>
             </div>
           </div>
           <button
             onClick={() => handleBooking(Car)}
-            className="p-2 rounded-md w-full bg-green-500 text-white  hover:bg-green-600 outline-none">
-            Book Now
+            className="px-2 py-1 border rounded-md flex-1 bg-green-500 text-white hover:shadow-2xl hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+            disabled={Car.isRented}>
+            {Car.isRented ? "Unavailable" : "Book Now"}
           </button>
         </div>
       </div>

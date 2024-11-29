@@ -225,7 +225,7 @@ export default function Carspage({ Cars }: Props) {
                   </p>
                   <button
                     className="px-2 py-1 border rounded-md flex-1 bg-green-500 text-white hover:shadow-2xl hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
-                    onClick={() => !car.isRented && handleBooking(car)}
+                    onClick={() => handleBooking(car)}
                     disabled={car.isRented}>
                     {car.isRented ? "Unavailable" : "Book Now"}
                   </button>
