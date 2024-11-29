@@ -32,5 +32,7 @@ export async function registerUsers(data: Data) {
       throw new Error("Email or Phone number already exists.");
     }
     throw new Error("An unexpected error occurred during registration.");
+  } finally {
+    await prisma.$disconnect();
   }
 }

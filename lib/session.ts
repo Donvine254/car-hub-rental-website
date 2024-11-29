@@ -9,7 +9,7 @@ export const getSession = async () => {
   const token = cookieStore.get("token")?.value;
 
   if (!token) {
-    console.error("No token found");
+    console.warn("No token found");
     return null;
   }
 
@@ -18,6 +18,8 @@ export const getSession = async () => {
     return payload;
   } catch (error: any) {
     console.error("Invalid or expired token:", error.message);
+    cookieStore.delete("token");
+    // delete the token if it is invalid or has expired
     return null;
   }
 };

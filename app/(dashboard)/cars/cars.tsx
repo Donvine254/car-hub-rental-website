@@ -16,11 +16,11 @@ import CarModal from "@/components/ui/carModal";
 import FilterModal from "@/components/ui/Filter";
 import Script from "next/script";
 import { handleGuessCar, showModal } from "@/lib/utils";
-import type { car } from "@/lib/fetchCars";
+import type { Car } from "@/lib/fetchCars";
 import { getSession } from "@/lib/session";
 import CustomHeartIcon from "@/components/ui/HeartIcon";
 type Props = {
-  Cars: car[];
+  Cars: Car[];
 };
 
 export default function Carspage({ Cars }: Props) {

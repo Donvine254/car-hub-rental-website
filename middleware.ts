@@ -20,6 +20,7 @@ export async function middleware(request: NextRequest) {
       userData = payload;
     } catch (error: any) {
       console.error("Invalid token:", error.message);
+      request.cookies.delete("token");
     }
   }
   const isAdmin = userData?.role == "admin";
@@ -28,14 +29,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.nextUrl));
   }
   if (path === "/admin" && isAdmin) {
-    return NextResponse.redirect(
-      new URL("/admin/dashboard", request.nextUrl)
-    );
+    return NextResponse.redirect(new URL("/admin/dashboard", request.nextUrl));
   }
   if (path === "/me" && isAdmin) {
-    return NextResponse.redirect(
-      new URL("/me/profile", request.nextUrl)
-    );
+    return NextResponse.redirect(new URL("/me/profile", request.nextUrl));
   }
   if (isProtectedPath && !userData) {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
