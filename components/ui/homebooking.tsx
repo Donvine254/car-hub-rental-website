@@ -21,7 +21,6 @@ export default function Homebooking({}: Props) {
     if (formRef.current) {
       const formData = new FormData(formRef.current);
       const formValues: { [key: string]: FormDataEntryValue } = {};
-
       formData.forEach((value, key) => {
         formValues[key] = value;
       });
@@ -170,7 +169,7 @@ export default function Homebooking({}: Props) {
               name="dropoffTime"
               min="08:00"
               max="18:00"
-              title="pickup and drop off can only be done between 8AM and 6PM"
+              title="Booking runs for 24hrs and cars must be returned at the same time as they were picked up"
               required
               defaultValue="18:00"
               className="h-10 w-1/2  bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"

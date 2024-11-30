@@ -105,10 +105,11 @@ export default function BookingPage({ Cars, User }: Props) {
       `${formData.endDate}T${formData.pickupTime}:00`
     ).toISOString();
     const bookingData = {
+      carId: selectedCar.id,
+      userId: User.id,
+      phoneNumber: parseInt(User.phone, 10),
       pickupLocation: selectedCar.location,
       dropLocation: formData.dropLocation,
-      phoneNumber: parseInt(User.phone, 10),
-      carId: selectedCar.id,
       startDate: startDateTime,
       endDate: endDateTime,
       status: "scheduled",
@@ -116,9 +117,8 @@ export default function BookingPage({ Cars, User }: Props) {
     };
     try {
       const result = await createBooking(bookingData);
-      console.log("Booking created successfully:", result);
       confetti({
-        particleCount: 100,
+        particleCount: 1000,
         spread: 100,
         origin: { y: 0.3 },
       });
