@@ -3,9 +3,9 @@ const baseUrl = "https://carhubke.vercel.app/verify";
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 const user = {
   email: "donvinemugendi@gmail.com",
-  id: "2",
+  id: 2,
 };
-export async function generateToken(email: string, id: string) {
+export async function generateToken(email: string, id: number) {
   // Generate JWT token with a 1-day expiration time
   const token = await new jose.SignJWT({ userId: id, email: email })
     .setProtectedHeader({ alg: "HS256" })

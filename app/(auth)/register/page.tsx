@@ -75,7 +75,7 @@ export default function Register({}: Props) {
           phone: "",
         });
         // redirect users to verify their email address
-        setTimeout(() => router.replace("/login"), 4000);
+        setTimeout(() => router.replace("/login"), 10000);
       } catch (error: any) {
         setLoading(false);
         console.log(error);

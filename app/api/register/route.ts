@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { registerUsers } from "@/lib/register";
+import { sendVerificationEmail } from "@/emails";
 
 interface Data {
   username: string;
@@ -13,18 +14,22 @@ interface Data {
 }
 
 export async function POST(req: NextRequest) {
+  let user;
   try {
     const params = (await req.json()) as Data;
-
-    // Validate input fields (optional but recommended)
-    if (!params.username || !params.email || !params.password || !params.phone) {
+    if (
+      !params.username ||
+      !params.email ||
+      !params.password ||
+      !params.phone
+    ) {
       return NextResponse.json(
         { error: "All fields are required." },
         { status: 400 }
       );
     }
 
-    const user = await registerUsers(params);
+    user = await registerUsers(params);
     return NextResponse.json({ user }, { status: 201 });
   } catch (error: any) {
     // Log the error for debugging
@@ -34,6 +39,9 @@ export async function POST(req: NextRequest) {
       { error: error.message || "Internal Server Error" },
       { status: statusCode }
     );
+  } finally {
+    if (user && user.email) {
+      await sendVerificationEmail(user.email, user.id, user.username);
+    }
   }
 }
-
