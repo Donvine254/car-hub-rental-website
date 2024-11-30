@@ -20,6 +20,7 @@ import CustomHeartIcon from "./HeartIcon";
 import CarModal from "./carModal";
 import { showModal } from "@/lib/utils";
 import { Star } from "lucide-react";
+import { Badge } from "./badge";
 type Props = {
   Cars: Car[];
 };
@@ -62,7 +63,7 @@ export default function CarCarousel({ Cars }: Props) {
             key={car.id}
             className="xsm:w-full md:basis-1/2 lg:basis-1/3 px-2">
             <div className="w-fit border shadow bg-white rounded-md">
-              <div className="p-2">
+              <div className="p-2 relative">
                 <Image
                   alt={car.modelName}
                   src={car.image}
@@ -75,7 +76,15 @@ export default function CarCarousel({ Cars }: Props) {
                   className="rounded-md hover:scale-105 cursor-pointer"
                   onClick={() => showModal(car?.id)}
                 />
-
+                {car.isRented ? (
+                  <Badge variant="secondary" className="absolute top-3 left-3">
+                    &#x1F552; Booked
+                  </Badge>
+                ) : (
+                  <Badge variant="success" className="absolute top-3 left-3">
+                    &#x2713; Available
+                  </Badge>
+                )}
                 <div className="flex items-center justify-between gap-4 pt-2 px-2">
                   <h1 className="text-bold text-xl ">{car.modelName}</h1>
                   <p className="flex items-center">
