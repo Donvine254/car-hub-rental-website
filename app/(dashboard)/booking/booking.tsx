@@ -37,8 +37,8 @@ export default function BookingPage({ Cars, User }: Props) {
     | (Booking & { pickupTime?: string })
     | null;
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
-  const price =
-    (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
+  let price = (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
+
   const [formData, setFormData] = useState<Booking & { pickupTime?: string }>({
     userId: User?.id || 0,
     carId: selectedCar?.id || 0,
@@ -72,6 +72,15 @@ export default function BookingPage({ Cars, User }: Props) {
     }
     redirectUser();
   }, [model_name, Cars, User, selectedCar, router]);
+
+  // effect to update the price dynamically
+  useEffect(() => {
+    if (defaultData?.startDate && defaultData?.endDate && selectedCar) {
+      calculateTotalCost(defaultData.startDate, defaultData.endDate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultData, selectedCar]);
+  // function to handle input changes
   function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
