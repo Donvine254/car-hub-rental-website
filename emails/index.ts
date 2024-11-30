@@ -27,7 +27,8 @@ export async function sendVerificationEmail(
   userId: number,
   name: string
 ) {
-  const url = generateToken(email, userId);
+  console.log(email, userId, name);
+  const url = await generateToken(email, userId);
   try {
     const response = await sendEmail({
       subject: `Verify your email address`,

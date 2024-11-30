@@ -2,16 +2,16 @@ export const verificationTemplate = (
   name,
   url
 ) => `<div style="margin:5px auto; max-width: 768px; padding:5px;" >
-    <div style="display: flex;justify-content: center; padding:5px; "> 
-      <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1732997580/logos/sfrttgj1lm0ssqg72zb8.svg" alt="carhub logo" height="30" width="200"/>
+    <div style="text-align: center; padding: 5px; width: 100%;">
+  <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1732997580/logos/sfrttgj1lm0ssqg72zb8.png" alt="carhub logo" height="30" width="200" style="margin: 5px auto"/>
 </div>
 <h3>Email Verification</h3>
 <p>Hi ${name},</p>
 <p>You're almost set to start enjoying CarHub services. Simply click the link below to verify your email address and get started. 
 </p>
 <p>The link expires in 24 hours.</p>
-  <a href="${url}" style="display:block; background-color:#22C55E; color:#fff; padding:10px 5px; border-radius:5px; text-align:center; width:100%; margin:10px 0; text-decoration:none;">Verify Email Address</a>
- <p>If you are having any issues with your account, please don't hesitate to <a title="contact" href="https://carhubke.vercel.app/help">contact us.</a></p>
+  <a href="${url}" style="display:block; background-color:#22C55E; color:#fff; padding:10px 5px; border-radius:5px; text-align:center; width:50%; margin:10px auto; text-decoration:none;">Verify Email Address</a>
+ <p>Once your email is verified, you can start setting up your account.  If you are having any issues with your account, please don't hesitate to <a title="contact" href="https://carhubke.vercel.app/help">contact us.</a></p>
     <hr style="border-color: #22C55E"/>
     <footer style="font-size: 12px; padding: 5px; margin: 10px 0px; text-align:center; color: #22C55E">  
     <table align="center" style="margin: 10px auto;">

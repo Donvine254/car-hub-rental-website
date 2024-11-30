@@ -2,7 +2,6 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { registerUsers } from "@/lib/register";
-import { sendVerificationEmail } from "@/emails";
 
 interface Data {
   username: string;
@@ -39,9 +38,5 @@ export async function POST(req: NextRequest) {
       { error: error.message || "Internal Server Error" },
       { status: statusCode }
     );
-  } finally {
-    if (user && user.email) {
-      await sendVerificationEmail(user.email, user.id, user.username);
-    }
   }
 }
