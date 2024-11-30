@@ -285,6 +285,7 @@ export default function BookingPage({ User }: Props) {
                     id="pickupLocation"
                     value={formData.pickupLocation} // Bind to formData
                     aria-readonly
+                    title="Vehicles can only be picked in their location. You can request for a delivery at an additional fee."
                     disabled>
                     <option value="" hidden>
                       {selectedCar?.location}
@@ -399,8 +400,8 @@ export default function BookingPage({ User }: Props) {
                       id="name"
                       readOnly
                       required
-                      defaultValue={User?.username ?? "john doe"}
-                      className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none "
+                      defaultValue={User.username}
+                      className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none capitalize"
                     />
                   </div>
 

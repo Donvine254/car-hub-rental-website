@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
   if (path === "/admin" && isAdmin) {
     return NextResponse.redirect(new URL("/admin/dashboard", request.nextUrl));
   }
-  if (path === "/me" && isAdmin) {
+  if (path === "/me" && userData) {
     return NextResponse.redirect(new URL("/me/profile", request.nextUrl));
   }
   if (isProtectedPath && !userData) {
