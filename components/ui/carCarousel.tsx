@@ -33,10 +33,14 @@ export default function CarCarousel({ Cars }: Props) {
         position: "top-center",
       });
       setTimeout(() => {
-        router.push(`/login?post_login_redirect_url=/booking?id=${car.id}`);
+        router.push(
+          `/login?post_login_redirect_url=/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`
+        );
       }, 1000);
     } else {
-      router.push(`/booking?id=${car.id}`);
+      router.push(
+        `/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`
+      );
     }
   }
 

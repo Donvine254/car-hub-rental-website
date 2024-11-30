@@ -86,7 +86,7 @@ export default function FavoriteCars({ Cars }: Props) {
                     </p>
                   </div>
                   <Link
-                    href={`/booking?car_model=${car.modelName}&price=${car.pricePerDay}`}
+                    href={`/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`}
                     className="mt-4 bg-green-500 text-center text-white px-4 py-1 rounded-md hover:bg-green-600">
                     Rent Now
                   </Link>

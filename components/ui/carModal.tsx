@@ -27,10 +27,14 @@ export default function CarModal({ Car }: CarModalProps) {
         position: "top-center",
       });
       setTimeout(() => {
-        router.push(`/login?post_login_redirect_url=/booking?id=${Car.id}`);
+        router.push(
+          `/login?post_login_redirect_url=/booking?id=${Car.id}&car_model=${Car.modelName}&price=${Car.pricePerDay}`
+        );
       }, 1000);
     } else {
-      router.push(`/booking?id=${Car.id}`);
+      router.push(
+        `/booking?id=${Car.id}&car_model=${Car.modelName}&price=${Car.pricePerDay}`
+      );
     }
   }
 
