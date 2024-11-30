@@ -4,11 +4,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { InfoIcon, MailIcon, MailCheck, MailX } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { verifyEmail } from "@/lib/verifyemail";
 
 type Props = {};
 type VerificationStatus = "loading" | "success" | "error";
 export default function VerificationPage({}: Props) {
-  const [status, setStatus] = useState<VerificationStatus>("error");
+  const [status, setStatus] = useState<VerificationStatus>("loading");
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -16,6 +17,26 @@ export default function VerificationPage({}: Props) {
     if (!token) {
       toast.error("No verification token provided");
       setTimeout(() => router.push("/login"), 3000);
+    } else {
+      const verify = async () => {
+        try {
+          const result = await verifyEmail(token);
+
+          if (result.success) {
+            setStatus("success");
+            toast.success("Email verified successfully! Redirecting...");
+            setTimeout(() => router.push("/login"), 3000); 
+          } else {
+            setStatus("error");
+            toast.error(result.error || "Verification failed");
+          }
+        } catch (error: any) {
+          setStatus("error");
+          toast.error(error.message || "Verification failed");
+        }
+      };
+
+      verify();
     }
   }, [token, router]);
 
