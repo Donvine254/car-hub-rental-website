@@ -3,9 +3,9 @@ import { prisma } from "@/db/prisma";
 import * as jose from "jose";
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 export async function verifyEmail(token: string) {
+  const decodedToken = decodeURIComponent(token);
   try {
-    const { payload } = await jose.jwtVerify(token, JWT_SECRET);
-
+    const { payload } = await jose.jwtVerify(decodedToken, JWT_SECRET);
     if (
       !payload.email ||
       !payload.userId ||
@@ -37,6 +37,7 @@ export async function verifyEmail(token: string) {
     });
     return { success: true };
   } catch (error) {
+    console.error(error);
     if (error instanceof jose.errors.JWTExpired) {
       return { success: false, error: "Token has expired" };
     }

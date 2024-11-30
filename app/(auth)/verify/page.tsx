@@ -112,7 +112,7 @@ export default function VerificationPage({}: Props) {
         ) : (
           <div className="flex flex-col items-center space-y-3 gap-2 p-6">
             <MailX size="60" className=" text-red-500" />
-            <p>Verification Failed!</p>
+            <p className="text-red-500">Verification Failed!</p>
           </div>
         )}
         <div className="py-4 bg-green-500 flex items-center justify-center gap-2">
