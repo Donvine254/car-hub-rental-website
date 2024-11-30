@@ -1,31 +1,30 @@
 import React from "react";
 import type { Metadata } from "next";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NotificationsTab from "./notifications";
 import ProfileTab from "./profile-tab";
+import { getUserData } from "@/lib/decodetoken";
+import { redirect } from "next/navigation";
 export const metadata: Metadata = {
   title: "Car Hub - Update Your Profile ",
   description:
     "Car Hub is a car rental service that provides customers with ease access to high-end, high-performance and affordable rental vehicles",
 };
 type Props = {};
+interface user {
+  id: number;
+  username: string;
+  email: string;
+  phone: number;
+  role: string;
+  image: string;
+}
 
 export default async function Settings({}: Props) {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
-  const { data, error } = await supabase.auth.getUser();
-  const User = {
-    username:
-      data?.user?.user_metadata.username || data?.user?.user_metadata.name,
-    email: data?.user?.email || "you@example.com",
-    image_url:
-      data?.user?.user_metadata.avatar_url ||
-      data?.user?.user_metadata.imageUrl,
-    phone: data?.user?.phone ?? "+1234567890",
-    language: "en",
-  };
+  const User = (await getUserData()) as user | null;
+  if (!User) {
+    return redirect(`/login?post_login_redirect_url=me`);
+  }
   return (
     <section>
       <Tabs defaultValue="profile" className="w-full">

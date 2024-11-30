@@ -1,8 +1,7 @@
 "use server";
+
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/db/supabase";
 import { registerUsers } from "@/lib/register";
-//function to register users
 
 interface Data {
   username: string;
@@ -13,34 +12,28 @@ interface Data {
   imageUrl?: string;
 }
 
-export async function POST(req: NextRequest, res: NextResponse) {
-  const params = (await req.json()) as Data;
-  const response = await supabase.auth.signUp({
-    email: params.email,
-    password: params.password, // supabase will automatically encrypt the password
-    phone: params.phone,
-    options: {
-      data: {
-        username: params.username,
-        imageUrl: `https://ui-avatars.com/api/?background=random&name=${params.username}`,
-        phone: params.phone,
-      },
-    },
-  });
-  if (response.error !== null) {
-    return NextResponse.json(
-      { error: response.error.message },
-      { status: 322 }
-    );
-  } else if (response?.data?.user?.id !== null) {
-    try {
-      await registerUsers({
-        ...params,
-        
-      });
-      return NextResponse.json(response.data.user, { status: 200 });
-    } catch (error) {
-      return NextResponse.json({ error: error }, { status: 322 }); // Unprocessable entity
+export async function POST(req: NextRequest) {
+  try {
+    const params = (await req.json()) as Data;
+
+    // Validate input fields (optional but recommended)
+    if (!params.username || !params.email || !params.password || !params.phone) {
+      return NextResponse.json(
+        { error: "All fields are required." },
+        { status: 400 }
+      );
     }
+
+    const user = await registerUsers(params);
+    return NextResponse.json({ user }, { status: 201 });
+  } catch (error: any) {
+    // Log the error for debugging
+    console.error("Registration error:", error.message || error);
+    const statusCode = error.message.includes("exists") ? 409 : 500; // Conflict or Internal Server Error
+    return NextResponse.json(
+      { error: error.message || "Internal Server Error" },
+      { status: statusCode }
+    );
   }
 }
+

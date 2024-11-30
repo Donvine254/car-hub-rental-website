@@ -1,7 +1,7 @@
 import React from "react";
 import Carspage from "./cars";
 import type { Metadata } from "next";
-import fetchCars, { car } from "@/lib/fetchCars";
+import fetchCars, { Car } from "@/lib/fetchCars";
 
 export const metadata: Metadata = {
   title: "Car Hub - Explore Cars",
@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 type Props = {};
 
 export default async function Page({}: Props) {
-  const Cars: car[] | null = await fetchCars();
-
+  const Cars = (await fetchCars()) as Car[];
   return <main>{Cars && <Carspage Cars={Cars} />}</main>;
 }

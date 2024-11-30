@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "custom.d.ts"
-  ],
+, "db/seed.js"  ],
   "exclude": ["node_modules"]
 }

@@ -6,10 +6,12 @@ import Image from "next/image";
 import { UploadImage } from "./upload-image";
 
 interface User {
+  id: number;
   username: string;
   email: string;
-  phone: string;
-  image_url: string;
+  phone: number;
+  role: string;
+  image: string;
 }
 
 export default function ProfileTab({ user }: { user: User }) {
@@ -22,10 +24,6 @@ export default function ProfileTab({ user }: { user: User }) {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Handle file upload logic here
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -93,7 +91,7 @@ export default function ProfileTab({ user }: { user: User }) {
         </div>
 
         {/* Submit button */}
-        <UploadImage image_url={user.image_url} />
+        <UploadImage image_url={user.image} />
         <button
           type="submit"
           className="bg-green-500 text-white p-2 rounded-lg">

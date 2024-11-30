@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import Script from "next/script";
 import Axios from "axios";
 import Link from "next/link";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 type Props = {};
 interface FormData {
@@ -28,7 +27,6 @@ export default function Register({}: Props) {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const supabase = createClientComponentClient();
   const router = useRouter();
   //function for onChange event handler
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,37 +74,26 @@ export default function Register({}: Props) {
           password: "",
           phone: "",
         });
+        // redirect users to verify their email address
         setTimeout(() => router.replace("/login"), 4000);
-      } catch (error) {
+      } catch (error: any) {
         setLoading(false);
+        console.log(error);
         setData({
           username: "",
           email: "",
           password: "",
           phone: "",
         });
-        toast.error(
-          "Registration failed: Email or Phone number already exists",
-          {
-            position: "top-left",
-          }
-        );
+        toast.error(error?.response?.data?.error, {
+          position: "bottom-center",
+        });
       }
     }
   }
 
   async function loginWithGoogle() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-    if (error !== null) {
-      toast.success("Logged in Successfully", {
-        position: "top-left",
-      });
-      router.replace("/");
-    } else {
-      console.error(error);
-    }
+    return null;
   }
 
   return (

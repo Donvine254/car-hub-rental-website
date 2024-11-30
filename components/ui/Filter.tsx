@@ -1,9 +1,9 @@
 import React from "react";
 import { X } from "lucide-react";
-import type { car } from "@/lib/fetchCars";
+import type { Car } from "@/lib/fetchCars";
 import PriceRangeFilter from "./Slider";
 type Props = {
-  Cars: car[];
+  Cars: Car[];
 };
 
 export default function FilterModal(props: Props) {
@@ -71,7 +71,7 @@ export default function FilterModal(props: Props) {
               className="border rounded-md border-green-500 w-full my-2 py-1 outline-none">
               <option value="">Select a brand</option>
               {Array.from(
-                new Set(props.Cars.map((car) => car.model_name.split(" ")[0]))
+                new Set(props.Cars.map((car) => car.modelName.split(" ")[0]))
               ).map((modelName) => (
                 <option
                   key={modelName}

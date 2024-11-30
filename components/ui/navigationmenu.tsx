@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getSession } from "@/lib/session";
 import { usePathname, useRouter } from "next/navigation";
 import Topnav from "./topnav";
 
@@ -14,25 +14,17 @@ type Props = {
 type User = {};
 export default function NavigationMenu({ variant }: Props) {
   const [user, setUser] = useState<User | null>(null);
-  const supabase = createClientComponentClient();
   const pathname = usePathname();
   const router = useRouter();
   useEffect(() => {
     (async () => {
-      try {
-        const { data, error } = await supabase.auth.getUser();
-        if (!error && data !== null) {
-          setUser(data);
-        }
-      } catch (error) {
-        // Handle errors
-        console.error("Error fetching data:", error);
+      const session = await getSession();
+      if (session) {
+        setUser(session);
       }
     })();
-  }, [supabase.auth]);
-
+  }, []);
   async function handleLogout() {
-    await supabase.auth.signOut();
     router.push("/api/logout");
   }
 

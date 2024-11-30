@@ -3,8 +3,90 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+model User {
+  id              Int        @id @default(autoincrement())
+  username        String     @unique
+  role            Role       @default(user)
+  email           String     @unique
+  password_digest String
+  image           String?
+  phone           String?    @unique
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
+  metadata        Json?      @default("{\"emailVerified\": false, \"phoneVerified\": false, \"provider\": \"email\"}")
+  preferences     Json?      @default("{\"notifications\": {\"discounts\": true, \"newProducts\": true, \"monthlyReports\": true, \"dailyReports\": false}}")
+  reviews         Review[]
+  bookings        Booking[]
+  favorites       Favorite[]
+}
+
+model Car {
+  id               Int              @id @default(autoincrement())
+  modelName        String
+  image            String
+  year             Int
+  pricePerDay      Int
+  transmissionType TransmissionType
+  bodyType         BodyType
+  fuelConsumption  Int
+  seats            Int
+  fuelType         fuelType
+  isRented         Boolean          @default(false)
+  rating           Int              @default(5)
+  location         Location         @default(nairobi)
+  createdAt        DateTime         @default(now())
+  reviews          Review[]
+  bookings         Booking[]
+  favorites        Favorite[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  car       Car      @relation(fields: [carId], references: [id])
+  carId     Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  body      String
+  title     String
+  rating    Int
+}
+
+model Booking {
+  id             Int      @id @default(autoincrement())
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int
+  car            Car      @relation(fields: [carId], references: [id])
+  carId          Int
+  startDate      DateTime
+  endDate        DateTime
+  pickupLocation String
+  dropLocation   String
+  phoneNumber    Int
+  totalPrice     Int
+  status         Status   @default(ongoing)
+  createdAt      DateTime @default(now())
+}
+
+model Favorite {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+  car    Car  @relation(fields: [carId], references: [id])
+  carId  Int
+}
+
+model OTP {
+  id        Int      @id @default(autoincrement())
+  email     String
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }
 
 enum TransmissionType {
@@ -38,80 +120,10 @@ enum Status {
   cancelled
 }
 
-model User {
-  id              Int        @id @default(autoincrement())
-  username        String     @unique
-  role            Role       @default(user)
-  email           String     @unique
-  password_digest String
-  image           String?
-  phone           String?    @unique
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @default(now())
-  reviews         Review[]
-  bookings        Booking[]
-  favorites       Favorite[]
-}
-
-model Location {
-  id      Int    @id @default(autoincrement())
-  name    String @unique
-  address String
-  phone   String
-}
-
-model Car {
-  id               Int              @id @default(autoincrement())
-  modelName        String
-  image            String
-  year             Int
-  pricePerDay      Int
-  transmissionType TransmissionType
-  bodyType         BodyType
-  fuelConsumption  String
-  noOfSeats        Int
-  fuelType         fuelType
-  isRented         Boolean          @default(false)
-  rating           Int              @default(5)
-  location         String?          @unique
-  createdAt        DateTime         @default(now())
-  reviews          Review[]
-  bookings         Booking[]
-  favorites        Favorite[]
-}
-
-model Review {
-  id        Int      @id @default(autoincrement())
-  car       Car      @relation(fields: [carId], references: [id])
-  carId     Int
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  createdAt DateTime @default(now())
-  body      String
-  title     String
-  rating    Int
-}
-
-model Booking {
-  id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int
-  car         Car      @relation(fields: [carId], references: [id])
-  carId       Int
-  startDate   DateTime
-  endDate     DateTime
-  pickupTime  DateTime
-  dropoffTime DateTime
-  phoneNumber Int
-  totalPrice  Int
-  status      Status
-  createdAt   DateTime @default(now())
-}
-
-model Favorite {
-  id     Int  @id @default(autoincrement())
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
-  car    Car  @relation(fields: [carId], references: [id])
-  carId  Int
+enum Location {
+  nairobi
+  thika
+  mombasa
+  eldoret
+  kisumu
 }

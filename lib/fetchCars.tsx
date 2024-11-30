@@ -1,31 +1,60 @@
 "use server";
+import { prisma } from "@/db/prisma";
 
-export type car = {
+export type Car = {
   id: number;
-  model_name: string;
-  seats: number;
-  fuel_consumption: number;
-  transmission: string;
+  modelName: string;
   image: string;
-  price_per_day: number;
-  rating: number;
-  body_type: string;
+  year: number;
+  pricePerDay: number;
+  transmissionType: string;
+  bodyType: string;
+  fuelConsumption: number;
+  seats: number;
+  fuelType: string;
+  isRented: boolean;
+  rating?: number;
+  location: string;
+  createdAt?: string;
+  reviews?: [];
+  bookings?: [];
+  favorites?: [];
 };
 
 export default async function fetchCars() {
   try {
-    const response = await fetch(
-      "https://basalt-equatorial-paw.glitch.me/cars",
-      {
-        next: {
-          revalidate: 3600,
-        },
-      }
-    );
-    const data = await response.json();
-    return data as car[];
+    const cars = await prisma.car.findMany();
+    return cars;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching cars from database:", error);
+    // Fallback to external API
+    try {
+      const response = await fetch(
+        "https://basalt-equatorial-paw.glitch.me/cars"
+      );
+      const carsData = await response.json();
+      return carsData as Car[];
+    } catch (fallbackError) {
+      console.error("Error fetching cars from fallback API:", fallbackError);
+      return null;
+    }
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function fetchCar(id: string) {
+  try {
+    const car = await prisma.car.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    return car;
+  } catch (error) {
+    console.error("Error fetching car:", error);
     return null;
+  } finally {
+    await prisma.$disconnect();
   }
 }
