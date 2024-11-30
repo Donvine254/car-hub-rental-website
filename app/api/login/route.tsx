@@ -58,8 +58,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (!user.metadata || !(user.metadata as any).emailVerified) {
+      return NextResponse.json(
+        { error: "Email not verified" },
+        { status: 404 }
+      );
+    }
     // Compare the password
-    const isPasswordValid = await bcrypt.compare(password, user.password_digest);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.password_digest
+    );
     if (!isPasswordValid) {
       return NextResponse.json(
         { error: "Invalid password, please try again!" },
