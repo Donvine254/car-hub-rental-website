@@ -34,14 +34,12 @@ export default function BookingPage({ Cars, User }: Props) {
   const searchParams = useSearchParams();
   const model_name = searchParams.get("car_model");
   const defaultData = secureLocalStorage.getItem("react_booking_form_data") as
-    | (Booking & { pickupTime?: string; dropoffTime?: string })
+    | (Booking & { pickupTime?: string })
     | null;
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const price =
     (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
-  const [formData, setFormData] = useState<
-    Booking & { pickupTime?: string; dropoffTime?: string }
-  >({
+  const [formData, setFormData] = useState<Booking & { pickupTime?: string }>({
     userId: User?.id || 0,
     carId: selectedCar?.id || 0,
     startDate: defaultData?.startDate || formattedDate,
@@ -52,7 +50,6 @@ export default function BookingPage({ Cars, User }: Props) {
     totalPrice: parseInt(price) || 0,
     status: "scheduled",
     pickupTime: defaultData?.pickupTime || "08:00",
-    dropoffTime: defaultData?.dropoffTime || "08:00",
   });
 
   useEffect(() => {
@@ -105,7 +102,7 @@ export default function BookingPage({ Cars, User }: Props) {
       `${formData.startDate}T${formData.pickupTime}:00`
     ).toISOString();
     const endDateTime = new Date(
-      `${formData.endDate}T${formData.dropoffTime}:00`
+      `${formData.endDate}T${formData.pickupTime}:00`
     ).toISOString();
     const bookingData = {
       pickupLocation: selectedCar.location,
@@ -351,12 +348,10 @@ export default function BookingPage({ Cars, User }: Props) {
                     <input
                       type="time"
                       name="dropoffTime"
-                      disabled={!selectedCar}
-                      min="08:00"
-                      max="18:00"
-                      required
-                      value={formData.dropoffTime}
-                      onChange={handleInputChange}
+                      disabled
+                      aria-readonly
+                      value={formData.pickupTime}
+                      title="Booking runs for 24hrs and cars must be returned at the same time as they were picked up"
                       className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
                     />
                   </div>
