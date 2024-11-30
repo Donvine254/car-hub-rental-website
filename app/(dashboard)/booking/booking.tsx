@@ -73,6 +73,14 @@ export default function BookingPage({ User }: Props) {
             router.push("/cars");
           }, 1000);
           return; // Exit early
+        } else if (data.isRented) {
+          toast.info("This car is not available for booking", {
+            position: "top-center",
+          });
+          setTimeout(() => {
+            router.push("/cars");
+          }, 2000);
+          return;
         }
 
         setSelectedCar(data);

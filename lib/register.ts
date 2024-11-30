@@ -2,6 +2,7 @@
 
 import { prisma } from "@/db/prisma";
 import { hashPassword } from "./hashpassword";
+import { sendVerificationEmail } from "@/emails";
 interface Data {
   username: string;
   email: string;
@@ -13,8 +14,10 @@ interface Data {
 
 export async function registerUsers(data: Data) {
   const hashedPassword = await hashPassword(data.password);
+  let user;
+  let error = false;
   try {
-    const user = await prisma.user.create({
+    user = await prisma.user.create({
       data: {
         username: data.username,
         email: data.email,
@@ -26,6 +29,7 @@ export async function registerUsers(data: Data) {
     });
     return user;
   } catch (error: any) {
+    error = true;
     if (
       error.code === "P2002" // Unique constraint violation
     ) {
@@ -33,6 +37,9 @@ export async function registerUsers(data: Data) {
     }
     throw new Error("An unexpected error occurred during registration.");
   } finally {
+    if (user && !error) {
+      await sendVerificationEmail(user.email, user.id, user.username);
+    }
     await prisma.$disconnect();
   }
 }
