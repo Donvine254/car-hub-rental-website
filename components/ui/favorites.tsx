@@ -50,7 +50,9 @@ export async function Favorites() {
                   </div>
                   <div>
                     <p className="font-medium">Transmission:</p>
-                    <p className="text-muted-foreground">{car.transmissionType}</p>
+                    <p className="text-muted-foreground">
+                      {car.transmissionType}
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium">Body Type:</p>
@@ -74,9 +76,13 @@ export async function Favorites() {
                     </p>
                   </div>
                   <Link
-                    href={`/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`}
-                    className="mt-4 bg-green-500 text-center text-white px-4 py-1 rounded-md hover:bg-green-600">
-                    Rent Now
+                    href={
+                      car.isRented
+                        ? "#"
+                        : `/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`
+                    }
+                    className="mt-4 bg-green-500 text-center text-white px-4 py-1 rounded-md hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed">
+                    {car.isRented ? "Unavailable" : "Book Now"}
                   </Link>
                 </div>
               </div>

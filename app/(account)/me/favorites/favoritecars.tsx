@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Car } from "@/lib/fetchCars";
-import { Heart, X } from "lucide-react";
+import { X } from "lucide-react";
 import { toast } from "sonner";
 type Props = {
   Cars: Car[];
@@ -11,12 +11,17 @@ type Props = {
 
 export default function FavoriteCars({ Cars }: Props) {
   const [carsToRender, setCarsToRender] = useState(Cars);
-
+  const router = useRouter();
   function handleUnfavorite(id: number) {
     setCarsToRender((prev) => prev.filter((c) => c.id !== id));
     toast.success("Car removed from favorites", {
       position: "top-right",
     });
+  }
+  function handleBooking(car: Car) {
+    router.push(
+      `/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`
+    );
   }
   return (
     <div className="space-y-6">
@@ -85,11 +90,12 @@ export default function FavoriteCars({ Cars }: Props) {
                       ${car.pricePerDay}
                     </p>
                   </div>
-                  <Link
-                    href={`/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`}
-                    className="mt-4 bg-green-500 text-center text-white px-4 py-1 rounded-md hover:bg-green-600">
-                    Rent Now
-                  </Link>
+                  <button
+                    onClick={() => handleBooking(car)}
+                    className="mt-4 bg-green-500 text-center text-white px-4 py-1 rounded-md hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+                    disabled={car.isRented}>
+                    {car.isRented ? "Unavailable" : "Book Now"}
+                  </button>
                 </div>
               </div>
             </div>
