@@ -19,7 +19,6 @@ import Script from "next/script";
 import { handleGuessCar, showModal } from "@/lib/utils";
 import type { Car } from "@/lib/fetchCars";
 import { getSession } from "@/lib/session";
-import CustomHeartIcon from "@/components/ui/HeartIcon";
 type Props = {
   Cars: Car[];
 };

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Car } from "@/lib/fetchCars";
+import { fetchCar, Car } from "@/lib/fetchCars";
 import { toast } from "sonner";
 import Image from "next/image";
 import {
@@ -23,22 +23,20 @@ import secureLocalStorage from "react-secure-storage";
 import { createBooking, Booking } from "@/lib/booking";
 
 type Props = {
-  Cars: Car[] | null;
   User: any | null;
 };
 declare const confetti: any;
 const today = new Date();
 const formattedDate = today.toISOString().substring(0, 10);
-export default function BookingPage({ Cars, User }: Props) {
+export default function BookingPage({ User }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const model_name = searchParams.get("car_model");
+  const carId = searchParams.get("id");
   const defaultData = secureLocalStorage.getItem("react_booking_form_data") as
     | (Booking & { pickupTime?: string })
     | null;
-  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+  const [selectedCar, setSelectedCar] = useState<any | Car | null>(null);
   let price = (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
-
   const [formData, setFormData] = useState<Booking & { pickupTime?: string }>({
     userId: User?.id || 0,
     carId: selectedCar?.id || 0,
@@ -54,24 +52,43 @@ export default function BookingPage({ Cars, User }: Props) {
 
   useEffect(() => {
     async function redirectUser() {
-      if (!model_name) {
+      if (!carId) {
         toast.error("Kindly select a car first", {
           position: "top-center",
         });
         setTimeout(() => {
-          router.push("/cars"), 1000;
+          router.push("/cars");
+        }, 1000);
+        return; // Exit early
+      }
+
+      try {
+        const data = await fetchCar(carId);
+
+        if (!data) {
+          toast.error("Car not found. Redirecting...", {
+            position: "top-center",
+          });
+          setTimeout(() => {
+            router.push("/cars");
+          }, 1000);
+          return; // Exit early
+        }
+
+        setSelectedCar(data);
+      } catch (error) {
+        console.error("Error fetching car:", error);
+        toast.error("Something went wrong. Redirecting...", {
+          position: "top-center",
         });
-      } else if (Cars) {
-        const filteredCars = Cars.filter(
-          (car) =>
-            car.modelName.toLocaleLowerCase() ===
-            model_name?.toLocaleLowerCase()
-        );
-        setSelectedCar(filteredCars[0] || null);
+        setTimeout(() => {
+          router.push("/cars");
+        }, 1000);
       }
     }
+
     redirectUser();
-  }, [model_name, Cars, User, selectedCar, router]);
+  }, [carId, router]);
 
   // effect to update the price dynamically
   useEffect(() => {
@@ -105,8 +122,6 @@ export default function BookingPage({ Cars, User }: Props) {
       toast.error("Kindly select a car first");
       return;
     }
-
-    // Prepare booking dataing
     const startDateTime = new Date(
       `${formData.startDate}T${formData.pickupTime}:00`
     ).toISOString();

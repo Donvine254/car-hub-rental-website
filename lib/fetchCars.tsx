@@ -9,7 +9,7 @@ export type Car = {
   pricePerDay: number;
   transmissionType: string;
   bodyType: string;
-  fuelConsumption: string;
+  fuelConsumption: number;
   seats: number;
   fuelType: string;
   isRented: boolean;
@@ -38,6 +38,22 @@ export default async function fetchCars() {
       console.error("Error fetching cars from fallback API:", fallbackError);
       return null;
     }
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function fetchCar(id: string) {
+  try {
+    const car = await prisma.car.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    return car;
+  } catch (error) {
+    console.error("Error fetching car:", error);
+    return null;
   } finally {
     await prisma.$disconnect();
   }
