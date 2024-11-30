@@ -1,14 +1,24 @@
 "use client";
-import React, { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { InfoIcon, MailIcon, MailCheck, MailX } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
+
 type Props = {};
 type VerificationStatus = "loading" | "success" | "error";
 export default function VerificationPage({}: Props) {
   const [status, setStatus] = useState<VerificationStatus>("error");
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  useEffect(() => {
+    if (!token) {
+      toast.error("No verification token provided");
+      setTimeout(() => router.push("/login"), 3000);
+    }
+  }, [token, router]);
+
   return (
     <section className="flex flex-col items-center justify-center w-full min-h-screen px-4">
       <div
