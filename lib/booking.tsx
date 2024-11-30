@@ -17,7 +17,6 @@ export async function createBooking(formData: Booking | any) {
     const newBooking = await prisma.booking.create({
       data: formData,
     });
-
     return newBooking;
   } catch (error) {
     console.error("Error creating booking:", error);

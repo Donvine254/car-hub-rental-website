@@ -74,12 +74,12 @@ export default function BookingPage({ User }: Props) {
           }, 1000);
           return; // Exit early
         } else if (data.isRented) {
-          toast.error("This car is not available for booking", {
+          toast.info("This car is not available for booking", {
             position: "top-center",
           });
           setTimeout(() => {
             router.push("/cars");
-          }, 1000);
+          }, 2000);
           return;
         }
 
