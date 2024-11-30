@@ -1,4 +1,4 @@
-const baseUrl = "https://carhubke.vercel.app/verify_email"; // Verification URL
+const baseUrl = "https://carhubke.vercel.app/verify"; // Verification URL
 
 // Function to base64 encode the data
 function encodeData(email: string, id: number) {
@@ -13,11 +13,3 @@ export function generateToken(email: string, id: number) {
   const verificationUrl = `${baseUrl}?t=${encodeURIComponent(encodedData)}`;
   return verificationUrl;
 }
-
-// Example usage
-const user = {
-  email: "donvinemugendi@gmail.com",
-  id: 1,
-};
-const verificationUrl = generateToken(user.email, user.id);
-console.log(verificationUrl); // URL with base64-encoded email and userId
