@@ -2,11 +2,6 @@
 import { generateToken } from "@/lib/generatetoken";
 import nodemailer from "nodemailer";
 import { verificationTemplate } from "./templates";
-const user = {
-  name: "donvine mugendi",
-  email: "donvinemugendi@gmail.com",
-  id: 2,
-};
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -32,13 +27,13 @@ export async function sendVerificationEmail(
   userId: number,
   name: string
 ) {
-  const url = generateToken(user.email, user.id);
+  const url = generateToken(email, userId);
   try {
     const response = await sendEmail({
       subject: `Verify your email address`,
       to: email,
       from: sender,
-      html: verificationTemplate(url),
+      html: verificationTemplate(name, url),
     });
     console.log("Email sent successfully");
     return { message: "Email sent successfully" };
