@@ -114,17 +114,19 @@ export default function CarCarousel({ Cars }: Props) {
               {/* div for actions */}
               <hr className="border border-gay-200" />
               <div className="px-4 pt-1 pb-2 flex items-center justify-between  gap-4">
-                <p className="text-sm">
+                {/* <p className="text-sm">
                   Daily Rate From <br />
                   <span className="text-2xl font-semibold">
                     ${car.pricePerDay}
                   </span>
-                </p>
+                </p> */}
                 <button
                   className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
                   onClick={() => handleBooking(car)}
                   disabled={car.isRented}>
-                  {car.isRented ? "Unavailable" : "Book Now"}
+                  {car.isRented
+                    ? "Unavailable"
+                    : `Book Now for $${car.pricePerDay}`}
                 </button>
               </div>
             </div>
