@@ -1,19 +1,23 @@
-import * as jose from "jose";
-const baseUrl = "https://carhubke.vercel.app/verify";
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
+const baseUrl = "http://localhost:3000/verify"; // Verification URL
+
+// Function to base64 encode the data
+function encodeData(email: string, id: number) {
+  const data = JSON.stringify({ email, id });
+  const encodedData = btoa(data); // base64 encode the data
+  return encodedData;
+}
+
+// Function to generate the verification URL
+export function generateToken(email: string, id: number) {
+  const encodedData = encodeData(email, id);
+  const verificationUrl = `${baseUrl}?t=${encodeURIComponent(encodedData)}`;
+  return verificationUrl;
+}
+
+// Example usage
 const user = {
   email: "donvinemugendi@gmail.com",
   id: 2,
 };
-export async function generateToken(email: string, id: number) {
-  // Generate JWT token with a 1-day expiration time
-  const token = await new jose.SignJWT({ userId: id, email: email })
-    .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime("24h")
-    .sign(JWT_SECRET);
-  const verificationUrl = `${baseUrl}?token=${encodeURIComponent(token)}`;
-  return verificationUrl;
-}
-generateToken(user.email, user.id).then((url) => {
-  console.log(url);
-});
+const verificationUrl = generateToken(user.email, user.id);
+console.log(verificationUrl); // URL with base64-encoded email and userId

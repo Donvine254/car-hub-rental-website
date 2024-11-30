@@ -1,25 +1,29 @@
 "use server";
 import { prisma } from "@/db/prisma";
-import * as jose from "jose";
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
+
+// Decode base64 string to JSON
+function decodeData(encodedData: string) {
+  try {
+    const decodedData = atob(encodedData);
+    const parsedData = JSON.parse(decodedData);
+    return parsedData;
+  } catch (error) {
+    return null; // If decoding fails, return null
+  }
+}
 export async function verifyEmail(token: string) {
   const decodedToken = decodeURIComponent(token);
   try {
-    const { payload } = await jose.jwtVerify(decodedToken, JWT_SECRET);
-    if (
-      !payload.email ||
-      !payload.userId ||
-      typeof payload.email !== "string" ||
-      typeof payload.userId !== "string"
-    ) {
-      throw new Error("Invalid token payload");
+    const data = decodeData(decodedToken);
+    if (!data) {
+      throw new Error("Invalid token data");
     }
 
     const user = await prisma.user.findUnique({
-      where: { id: Number(payload.userId) },
+      where: { id: Number(data.userId) },
     });
 
-    if (!user || user.email !== payload.email) {
+    if (!user || user.email !== data.email) {
       throw new Error("User not found or email mismatch");
     }
     const metadata = user.metadata
@@ -27,7 +31,7 @@ export async function verifyEmail(token: string) {
       : {};
     // Update user's emailVerified status
     await prisma.user.update({
-      where: { id: Number(payload.userId) },
+      where: { id: Number(data.userId) },
       data: {
         metadata: {
           ...metadata,
@@ -38,9 +42,6 @@ export async function verifyEmail(token: string) {
     return { success: true };
   } catch (error) {
     console.error(error);
-    if (error instanceof jose.errors.JWTExpired) {
-      return { success: false, error: "Token has expired" };
-    }
     return { success: false, error: "Invalid token" };
   }
 }

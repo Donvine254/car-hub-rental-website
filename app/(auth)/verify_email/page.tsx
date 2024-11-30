@@ -12,7 +12,7 @@ export default function VerificationPage({}: Props) {
   const [status, setStatus] = useState<VerificationStatus>("loading");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const token = searchParams.get("t");
   useEffect(() => {
     if (!token) {
       toast.error("No verification token provided");
@@ -25,7 +25,7 @@ export default function VerificationPage({}: Props) {
           if (result.success) {
             setStatus("success");
             toast.success("Email verified successfully! Redirecting...");
-            setTimeout(() => router.push("/login"), 3000); 
+            setTimeout(() => router.push("/login"), 3000);
           } else {
             setStatus("error");
             toast.error(result.error || "Verification failed");
