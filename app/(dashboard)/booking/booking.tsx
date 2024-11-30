@@ -206,7 +206,7 @@ export default function BookingPage({ User }: Props) {
   };
 
   return (
-    <section className="bg-[url('/hero.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full w-full flex flex-col items-center justify-center p-4 relative ">
+    <section className=" bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70  py-5 h-full w-full flex flex-col items-center justify-center p-4 relative ">
       <Script
         async
         defer
@@ -222,7 +222,7 @@ export default function BookingPage({ User }: Props) {
           </span>
         </p>
       </div>
-      <h1 className=" text-center text-white md:text-start my-4 text-2xl md:text-4xl font-extrabold">
+      <h1 className="text-center md:text-start my-4 text-2xl md:text-4xl font-extrabold">
         Easy Booking
       </h1>
       <div className=" border bg-white  xsm:w-full  rounded-md shadow-md w-2/3">
@@ -454,7 +454,7 @@ export default function BookingPage({ User }: Props) {
                   <div className="py-2">
                     <label htmlFor="cost" className="inline-flex font-bold ">
                       <BadgeDollarSign fill="none" className="text-green-500" />{" "}
-                      &nbsp; Total Cost
+                      &nbsp; Total Price
                     </label>
                     <input
                       type="text"
@@ -477,7 +477,7 @@ export default function BookingPage({ User }: Props) {
               <button
                 className="border  px-3 h-10 py-2 w-full text-white bg-green-500 hover:bg-green-600 text-xl rounded-md flex items-center justify-center "
                 type="submit">
-                Submit
+                Rent Car
               </button>
             </div>
           </form>

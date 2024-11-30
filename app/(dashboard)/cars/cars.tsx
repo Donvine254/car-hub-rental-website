@@ -19,6 +19,7 @@ import Script from "next/script";
 import { handleGuessCar, showModal } from "@/lib/utils";
 import type { Car } from "@/lib/fetchCars";
 import { getSession } from "@/lib/session";
+import { Badge } from "@/components/ui/badge";
 type Props = {
   Cars: Car[];
 };
@@ -170,7 +171,7 @@ export default function Carspage({ Cars }: Props) {
               <div
                 key={car.id}
                 className="w-fit border shadow bg-white rounded-md">
-                <div className="p-2">
+                <div className="p-2 relative">
                   <Image
                     alt={car.modelName}
                     src={car.image}
@@ -183,7 +184,17 @@ export default function Carspage({ Cars }: Props) {
                     onClick={() => showModal(car.id)}
                     priority
                   />
-
+                  {car.isRented ? (
+                    <Badge
+                      variant="secondary"
+                      className="absolute top-3 left-3">
+                      &#x1F552; Booked
+                    </Badge>
+                  ) : (
+                    <Badge variant="success" className="absolute top-3 left-3">
+                      &#x2713; Available
+                    </Badge>
+                  )}
                   <div className="flex items-center justify-between gap-4 pt-2 px-2">
                     <h1 className="font-semibold text-xl text-gray-600 ">
                       {car.modelName}
