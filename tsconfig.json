@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "custom.d.ts"
-, "db/seed.js", "lib/generatetoken.js"  ],
+, "db/seed.js", "lib/generatetoken.ts"  ],
   "exclude": ["node_modules"]
 }
