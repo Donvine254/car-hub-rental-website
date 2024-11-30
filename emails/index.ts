@@ -7,4 +7,5 @@ const user = {
 
 export async function sendVerificationEmail(email: string, userId: string) {
   const url = generateToken(user.email, user.id);
+  
 }
