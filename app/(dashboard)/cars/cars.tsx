@@ -81,7 +81,7 @@ export default function Carspage({ Cars }: Props) {
     }
 
     setCarsToRender(filteredCars);
-  }, [model, brand, price, seats, Cars]);
+  }, [model, brand, price, seats, Cars, location]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
@@ -117,14 +117,10 @@ export default function Carspage({ Cars }: Props) {
         position: "top-center",
       });
       setTimeout(() => {
-        router.push(
-          `/login?post_login_redirect_url=/booking?car_model=${car.modelName}`
-        );
+        router.push(`/login?post_login_redirect_url=/booking?id=${car.id}`);
       }, 1000);
     } else {
-      router.push(
-        `/booking?car_model=${car.modelName}&price=${car.pricePerDay}`
-      );
+      router.push(`/booking?id=${car.id}`);
     }
   }
 
