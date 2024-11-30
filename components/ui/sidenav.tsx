@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
@@ -41,7 +40,7 @@ export default function SideNav({ user }: Props) {
         {user?.email}
       </p>
       <div className="flex flex-col space-y-2 ">
-        <Link
+        <a
           href="/me/profile"
           className={`${
             pathname.startsWith("/me/profile")
@@ -49,8 +48,8 @@ export default function SideNav({ user }: Props) {
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
           <LayoutGrid size={20} /> <span>Dashboard</span>
-        </Link>
-        <Link
+        </a>
+        <a
           href="/me/orders"
           className={`${
             pathname.startsWith("/me/orders")
@@ -58,8 +57,8 @@ export default function SideNav({ user }: Props) {
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
           <CalendarDays size={20} /> <span>My Orders</span>
-        </Link>
-        <Link
+        </a>
+        <a
           href="/me/favorites"
           className={`${
             pathname.startsWith("/me/favorites")
@@ -67,8 +66,8 @@ export default function SideNav({ user }: Props) {
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
           <CarFront size={20} /> <span>My Favorites</span>
-        </Link>
-        <Link
+        </a>
+        <a
           href="/me/settings"
           className={`${
             pathname.startsWith("/me/settings")
@@ -76,13 +75,13 @@ export default function SideNav({ user }: Props) {
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
           <Settings size={20} /> <span>Settings</span>
-        </Link>
+        </a>
         <hr />
-        <Link
+        <a
           className="text-gray-400  font-bold flex items-center gap-4 hover:bg-red-100 hover:text-red-500 p-1.5 rounded-md "
           href="/api/logout">
           <LogOut size={20} /> <span>Sign Out</span>
-        </Link>
+        </a>
       </div>
     </div>
   );

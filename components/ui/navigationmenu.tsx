@@ -172,32 +172,32 @@ export default function NavigationMenu({ variant }: Props) {
                   className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44">
                   <ul className="py-1" aria-labelledby="dropdownLargeButton">
                     <li>
-                      <Link
+                      <a
                         href="/me/profile"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         My Profile
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
+                      <a
                         href="/me/orders"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         My Orders
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
+                      <a
                         href="/me/favorites"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         My Favorite Cars
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
+                      <a
                         href="/me/settings"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Settings
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </div>
