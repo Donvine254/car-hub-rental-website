@@ -33,13 +33,15 @@ export default function BookingPage({ Cars, User }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const model_name = searchParams.get("car_model");
-  const defaultData = secureLocalStorage.getItem(
-    "react_booking_form_data"
-  ) as Booking | null;
+  const defaultData = secureLocalStorage.getItem("react_booking_form_data") as
+    | (Booking & { pickupTime?: string; dropoffTime?: string })
+    | null;
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const price =
     (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
-  const [formData, setFormData] = useState<Booking>({
+  const [formData, setFormData] = useState<
+    Booking & { pickupTime?: string; dropoffTime?: string }
+  >({
     userId: User?.id || 0,
     carId: selectedCar?.id || 0,
     startDate: defaultData?.startDate || formattedDate,
@@ -49,6 +51,8 @@ export default function BookingPage({ Cars, User }: Props) {
     phoneNumber: User?.phone,
     totalPrice: parseInt(price) || 0,
     status: "scheduled",
+    pickupTime: defaultData?.pickupTime || "08:00",
+    dropoffTime: defaultData?.dropoffTime || "08:00",
   });
 
   useEffect(() => {
@@ -96,16 +100,23 @@ export default function BookingPage({ Cars, User }: Props) {
       return;
     }
 
-    // Prepare booking data
+    // Prepare booking dataing
+    const startDateTime = new Date(
+      `${formData.startDate}T${formData.pickupTime}:00`
+    ).toISOString();
+    const endDateTime = new Date(
+      `${formData.endDate}T${formData.dropoffTime}:00`
+    ).toISOString();
     const bookingData = {
-      ...formData,
       pickupLocation: selectedCar.location,
+      dropLocation: formData.dropLocation,
       phoneNumber: parseInt(User.phone, 10),
       carId: selectedCar.id,
+      startDate: startDateTime,
+      endDate: endDateTime,
+      status: "scheduled",
+      totalPrice: formData.totalPrice,
     };
-
-    console.log("Booking data:", bookingData);
-
     try {
       const result = await createBooking(bookingData);
       console.log("Booking created successfully:", result);
@@ -291,17 +302,28 @@ export default function BookingPage({ Cars, User }: Props) {
                     <CalendarDaysIcon fill="none" className="text-green-500" />{" "}
                     &nbsp; Pickup Date and Time
                   </label>
-                  <div className="">
+                  <div className="flex items-center gap-0">
                     <input
-                      type="datetime-local"
+                      type="date"
                       id="pickupDate"
                       name="startDate"
                       value={formData.startDate}
-                      min={new Date().toISOString()}
+                      min={new Date().toISOString().split("T")[0]}
                       required
                       disabled={!selectedCar}
                       onChange={handleInputChange}
                       className="flex h-10 bg-white text-base w-1/2 px-1 py-2 border"
+                    />
+                    <input
+                      type="time"
+                      name="pickupTime"
+                      disabled={!selectedCar}
+                      min="08:00"
+                      max="18:00"
+                      required
+                      value={formData.pickupTime}
+                      onChange={handleInputChange}
+                      className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
                     />
                   </div>
                 </div>
@@ -314,9 +336,9 @@ export default function BookingPage({ Cars, User }: Props) {
                     />{" "}
                     &nbsp; Drop-Off Date and Time
                   </label>
-                  <div className="">
+                  <div className="flex items-center gap-0">
                     <input
-                      type="datetime-local"
+                      type="date"
                       id="dropDate"
                       name="endDate"
                       value={formData.endDate}
@@ -325,6 +347,17 @@ export default function BookingPage({ Cars, User }: Props) {
                       disabled={!selectedCar}
                       onChange={handleInputChange}
                       className="flex h-10 bg-white text-base w-1/2 px-1 py-2 border"
+                    />
+                    <input
+                      type="time"
+                      name="dropoffTime"
+                      disabled={!selectedCar}
+                      min="08:00"
+                      max="18:00"
+                      required
+                      value={formData.dropoffTime}
+                      onChange={handleInputChange}
+                      className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
                     />
                   </div>
                 </div>
