@@ -13,6 +13,7 @@ export default function ResetPasswordPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    // create an actions function that takes the email, checks whether the user exists in the database and calls send password reset function.
     toast.success("Check your email address to reset your password");
     setTimeout(() => {
       router.push("/login");
