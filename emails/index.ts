@@ -49,7 +49,7 @@ export async function sendResetPasswordEmail(
   id: number,
   name: string
 ) {
-  const baseUrl = "https://carhubke.vercel.app/reset_password";
+  const baseUrl = "https://carhubke.vercel.app/new_password";
   const url = generateToken(email, id, baseUrl);
   try {
     const response = await sendEmail({
