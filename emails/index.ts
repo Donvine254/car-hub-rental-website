@@ -27,7 +27,8 @@ export async function sendVerificationEmail(
   id: number,
   name: string
 ) {
-  const url = generateToken(email, id);
+  const baseUrl = "https://carhubke.vercel.app/verify_email";
+  const url = generateToken(email, id, baseUrl);
   try {
     const response = await sendEmail({
       subject: `Verify your email address`,
@@ -48,7 +49,8 @@ export async function sendResetPasswordEmail(
   id: number,
   name: string
 ) {
-  const url = generateToken(email, id);
+  const baseUrl = "https://carhubke.vercel.app/reset_password";
+  const url = generateToken(email, id, baseUrl);
   try {
     const response = await sendEmail({
       subject: `Reset your Carhub account password`,
@@ -57,7 +59,7 @@ export async function sendResetPasswordEmail(
       html: passwordResetTemplate(name, url),
     });
     console.log("Email sent successfully");
-    return { message: "Email sent successfully" };
+    return { message: "Check your email account to reset your password" };
   } catch (error) {
     console.error("Email delivery failed:", error);
     return { message: "Email delivery failed" };

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { handleResetPassword } from "@/lib/resetpassword";
 
 export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
@@ -13,11 +14,19 @@ export default function ResetPasswordPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    // create an actions function that takes the email, checks whether the user exists in the database and calls send password reset function.
-    toast.success("Check your email address to reset your password");
-    setTimeout(() => {
-      router.push("/login");
-    }, 2000);
+    try {
+      const response = await handleResetPassword(email);
+      toast.success(response);
+      setLoading(false);
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    } catch (error: any) {
+      toast.error(error.message, {
+        position: "top-center",
+      });
+      setLoading(false);
+    }
   }
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70 ">
@@ -63,7 +72,13 @@ export default function ResetPasswordPage() {
                 size={20}
               />
             </div>
-
+            {/* <div className="">
+              {error ? (
+                <p className="text-orange-600 text-sm  ">
+                  <span>{error}</span>
+                </p>
+              ) : null}
+            </div> */}
             <button
               type="submit"
               className="inline-flex items-center justify-center w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-md transition duration-200 ease-in-out disabled:pointer-events-none disabled:bg-gray-100 disabled:text-black "
