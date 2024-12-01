@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/db/prisma";
-import { decodeData } from "./decodetoken";
+import { decodeData } from "./generatetoken";
 
 // Decode base64 string to JSON
 
@@ -8,7 +8,6 @@ export async function verifyEmail(token: string) {
   const decodedToken = decodeURIComponent(token);
   try {
     const data = decodeData(decodedToken);
-    console.log(data);
     if (!data) {
       throw new Error("Invalid token data");
     }
