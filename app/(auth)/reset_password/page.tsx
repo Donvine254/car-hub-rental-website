@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import PasswordStrengthMeter from "./passwordmeter";
+import { Loader } from "lucide-react";
+import { toast } from "sonner";
 type Props = {};
 type formStatus = "" | "submitting" | "success" | "error";
 export default function Reset({}: Props) {
@@ -13,8 +15,17 @@ export default function Reset({}: Props) {
     confirmPassword: "",
   });
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const token = searchParams.get("t");
   const router = useRouter();
+  // redirect if there is no token present or its invalid
+  useEffect(() => {
+    if (!token) {
+      toast.error("Unauthorized Request");
+      setTimeout(() => router.push("/login"), 3000);
+    } else {
+      // decode the token and set the user to the data object (email and id. I can pass this to a server action that will decode the token and try to finf the user in the database, and if the user is not found return an error. If user is found we return the user data)
+    }
+  }, [token, router]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -32,6 +43,7 @@ export default function Reset({}: Props) {
   };
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setStatus("submitting");
     console.log(data);
   }
   return (
@@ -152,7 +164,14 @@ export default function Reset({}: Props) {
                 type="submit"
                 title="reset"
                 disabled={status === "submitting"}>
-                Reset Password
+                {status === "submitting" ? (
+                  <Loader
+                    className="animate-spin text-green-500"
+                    fill="#22C55E"
+                  />
+                ) : (
+                  "Reset Password"
+                )}
               </button>
             </div>
           </form>

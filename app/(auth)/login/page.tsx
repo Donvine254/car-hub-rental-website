@@ -170,7 +170,7 @@ export default function Login({}: Props) {
               <div>
                 <a
                   className="hover:text-blue-500 underline underline-offset-2 cursor-pointer"
-                  href="/reset?action=unsafe&not-recommended">
+                  href="/reset">
                   Forgot Password?
                 </a>
               </div>
