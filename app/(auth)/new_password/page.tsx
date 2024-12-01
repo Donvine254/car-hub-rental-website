@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import PasswordStrengthMeter from "./passwordmeter";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
+import { resetPassword } from "@/lib/resetpassword";
 type Props = {};
 type formStatus = "" | "submitting" | "success" | "error";
 export default function Reset({}: Props) {
@@ -22,8 +23,6 @@ export default function Reset({}: Props) {
     if (!token) {
       toast.error("Unauthorized Request");
       setTimeout(() => router.push("/login"), 3000);
-    } else {
-      // decode the token and set the user to the data object (email and id. I can pass this to a server action that will decode the token and try to finf the user in the database, and if the user is not found return an error. If user is found we return the user data)
     }
   }, [token, router]);
 
@@ -44,7 +43,17 @@ export default function Reset({}: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("submitting");
-    console.log(data);
+    try {
+      const response = await resetPassword(token!, data.password);
+      if (response.success) {
+        toast.success("Password reset successfully");
+        setStatus("success");
+        setTimeout(() => router.push("/login"), 3000);
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Something went wrong");
+      setStatus("error");
+    }
   }
   return (
     <section className="w-full bg-[url('/hero-bg.jpg')] bg-center bg-no-repeat bg-cover">

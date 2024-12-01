@@ -1,6 +1,8 @@
 "use server";
 import { prisma } from "@/db/prisma";
 import { sendResetPasswordEmail } from "@/emails";
+import { decodeData } from "./generatetoken";
+import { hashPassword } from "./hashpassword";
 export async function handleResetPassword(email: string) {
   const e = email.toLowerCase();
   try {
@@ -20,5 +22,35 @@ export async function handleResetPassword(email: string) {
     console.error(error);
     // Preserve specific error messages
     throw new Error(error.message || "Something went wrong");
+  }
+}
+
+export async function resetPassword(token: string, password: string) {
+  const decodedToken = decodeURIComponent(token);
+  const hashedPassword = await hashPassword(password);
+  try {
+    const data = decodeData(decodedToken);
+    if (!data) {
+      throw new Error("Invalid or expired token");
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: Number(data.id) },
+    });
+    if (!user) {
+      throw new Error("User not found or email mismatch");
+    }
+    await prisma.user.update({
+      where: { id: Number(data.id) },
+      data: {
+        password_digest: hashedPassword,
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: "Something went wrong" };
+  } finally {
+    await prisma.$disconnect();
   }
 }
