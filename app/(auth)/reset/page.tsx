@@ -14,6 +14,13 @@ export default function ResetPasswordPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      toast.error("Invalid email address", {
+        position: "bottom-center",
+      });
+      setLoading(false);
+      return false;
+    }
     try {
       const response = await handleResetPassword(email);
       toast.success(response);

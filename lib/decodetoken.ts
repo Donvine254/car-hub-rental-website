@@ -36,13 +36,3 @@ export const getUserData = async () => {
 };
 
 
-export function decodeData(encodedData: string) {
-  try {
-    const decodedData = atob(encodedData);
-    const parsedData = JSON.parse(decodedData);
-    console.log("parsed data:" + parsedData);
-    return parsedData;
-  } catch (error) {
-    return null; // If decoding fails, return null
-  }
-}

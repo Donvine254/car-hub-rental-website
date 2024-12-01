@@ -4,7 +4,16 @@ function encodeData(email: string, id: number) {
   const encodedData = btoa(data); // base64 encode the data
   return encodedData;
 }
-
+export function decodeData(encodedData: string) {
+  try {
+    const decodedData = atob(encodedData);
+    const parsedData = JSON.parse(decodedData);
+    console.log("parsed data:" + parsedData);
+    return parsedData;
+  } catch (error) {
+    return null; // If decoding fails, return null
+  }
+}
 // Function to generate the verification URL
 export function generateToken(email: string, id: number, baseUrl: string) {
   const encodedData = encodeData(email, id);
