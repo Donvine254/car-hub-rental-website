@@ -1,7 +1,7 @@
 "use server";
 import { generateToken } from "@/lib/generatetoken";
 import nodemailer from "nodemailer";
-import { verificationTemplate } from "./templates";
+import { passwordResetTemplate, verificationTemplate } from "./templates";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -34,6 +34,27 @@ export async function sendVerificationEmail(
       to: email,
       from: sender,
       html: verificationTemplate(name, url),
+    });
+    console.log("Email sent successfully");
+    return { message: "Email sent successfully" };
+  } catch (error) {
+    console.error("Email delivery failed:", error);
+    return { message: "Email delivery failed" };
+  }
+}
+
+export async function sendResetPasswordEmail(
+  email: string,
+  id: number,
+  name: string
+) {
+  const url = generateToken(email, id);
+  try {
+    const response = await sendEmail({
+      subject: `Reset your Carhub account password`,
+      to: email,
+      from: sender,
+      html: passwordResetTemplate(name, url),
     });
     console.log("Email sent successfully");
     return { message: "Email sent successfully" };
