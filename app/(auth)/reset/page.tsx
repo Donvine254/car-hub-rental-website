@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { handleResetPassword } from "@/lib/resetpassword";
+import { handleResetPassword } from "@/lib/actions/resetpassword";
 
 export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);

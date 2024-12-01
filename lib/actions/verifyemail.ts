@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/db/prisma";
-import { decodeData } from "./generatetoken";
+import { decodeData } from "../utilis/generatetoken";
 
 // Decode base64 string to JSON
 

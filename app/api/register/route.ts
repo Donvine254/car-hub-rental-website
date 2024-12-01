@@ -1,7 +1,7 @@
 "use server";
 
 import { NextRequest, NextResponse } from "next/server";
-import { registerUsers } from "@/lib/register";
+import { registerUsers } from "@/lib/actions/register";
 
 interface Data {
   username: string;

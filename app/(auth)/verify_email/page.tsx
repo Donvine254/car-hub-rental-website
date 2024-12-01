@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { InfoIcon, MailIcon, MailCheck, MailX } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
-import { verifyEmail } from "@/lib/verifyemail";
+import { verifyEmail } from "@/lib/actions/verifyemail";
 
 type Props = {};
 type VerificationStatus = "loading" | "success" | "error";

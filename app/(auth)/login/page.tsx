@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { InfoIcon, Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getSession } from "@/lib/session";
+import { getSession } from "@/lib/actions/session";
 import { toast } from "sonner";
 import Link from "next/link";
 import axios from "axios";

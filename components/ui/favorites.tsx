@@ -1,5 +1,5 @@
 import Image from "next/image";
-import fetchCars from "@/lib/fetchCars";
+import fetchCars from "@/lib/actions/fetchCars";
 import Link from "next/link";
 
 export async function Favorites() {

@@ -14,11 +14,11 @@ import Image from "next/image";
 import { CarSeat, CarFrontIcon, FuelPumpIcon, GearboxIcon } from "@/assets";
 
 import { toast } from "sonner";
-import type { Car } from "@/lib/fetchCars";
-import { getSession } from "@/lib/session";
+import type { Car } from "@/lib/actions/fetchCars";
+import { getSession } from "@/lib/actions/session";
 import CustomHeartIcon from "./HeartIcon";
 import CarModal from "./carModal";
-import { showModal } from "@/lib/utils";
+import { showModal } from "@/lib/utilis";
 import { Star } from "lucide-react";
 import { Badge } from "./badge";
 type Props = {

@@ -2,7 +2,7 @@ import React from "react";
 import BookingPage from "./booking";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getUserData } from "@/lib/decodetoken";
+import { getUserData } from "@/lib/actions/decodetoken";
 
 export const metadata: Metadata = {
   title: "Car Hub - Make a Booking",

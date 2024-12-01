@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Car } from "@/lib/fetchCars";
+import { Car } from "@/lib/actions/fetchCars";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 type Props = {
