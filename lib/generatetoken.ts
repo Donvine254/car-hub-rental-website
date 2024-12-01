@@ -1,4 +1,4 @@
-const baseUrl = "https://carhubke.vercel.app/verify"; // Verification URL
+const baseUrl = "https://carhubke.vercel.app/verify_email"; // Verification URL
 
 // Function to base64 encode the data
 function encodeData(email: string, id: number) {
