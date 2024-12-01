@@ -120,7 +120,7 @@ export default function ResetPasswordPage() {
         <p className="text-center text-gray-600">
           Don&apos;t have an account?{" "}
           <Link
-            href="/signup"
+            href="/register"
             className="text-emerald-600 hover:text-emerald-700 font-medium">
             Get started
           </Link>
