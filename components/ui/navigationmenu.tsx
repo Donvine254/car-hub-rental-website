@@ -27,7 +27,6 @@ export default function NavigationMenu({ variant }: Props) {
   }, []);
   async function handleLogout() {
     router.push("/api/logout");
-    toast.success("logged out successfully");
   }
 
   return (

@@ -21,7 +21,6 @@ const TurnstileComponent: React.FC<TurnstileComponentProps> = ({
       refreshExpired="auto"
       fixedSize={true}
       size="flexible"
-      className="checkbox"
       theme="light"
     />
   );
