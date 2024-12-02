@@ -4,6 +4,7 @@ type Props = {};
 import type { Metadata } from "next";
 import FAQAccordion from "./Accordion";
 import { MailIcon } from "lucide-react";
+import Image from "next/image";
 export const metadata: Metadata = {
   title: "Car Hub - Frequently Asked Questions",
   description:
@@ -31,11 +32,24 @@ export default function FAQs(props: Props) {
               not hesitate to contact our customer support team. We&apos;re here
               to help!
             </p>
-            <a
-              href="mailto:support@carbubke.vercel.app"
-              className="flex items-center gap-2 w-fit bg-white text-green-600 px-6 py-2 rounded-md border hover:bg-green-500 hover:text-white border-green-600 transition-colors">
-              <MailIcon /> Contact Support
-            </a>
+            <div className="flex xsm:flex-col items-center justify-between gap-4">
+              <a
+                href="mailto:support@carbubke.vercel.app"
+                className="flex items-center xsm:justify-center gap-2 w-fit xsm:w-full bg-white text-green-600 px-6 py-2 rounded-md border hover:bg-green-500 hover:text-white border-green-600 transition-colors">
+                <MailIcon /> Contact Support
+              </a>
+              <button
+                className="flex items-center xsm:justify-center  w-fit xsm:w-full bg-white text-green-600 px-6 py-2 rounded-md border hover:bg-gray-600 hover:text-white border-green-600 transition-colors disabled:cursor-not-allowed"
+                disabled>
+                <Image
+                  src="https://res.cloudinary.com/dipkbpinx/image/upload/v1733141454/illustrations/ai-svgrepo-com_boip47.svg"
+                  alt="AI logo"
+                  height={24}
+                  width={24}
+                />
+                <p>Ask AI Support Agent</p>
+              </button>
+            </div>
           </div>
         </div>
       </div>

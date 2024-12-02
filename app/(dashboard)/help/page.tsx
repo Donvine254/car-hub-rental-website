@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Mail, Phone, MessageCircle, SearchIcon } from "lucide-react";
+import { Mail, Phone, SearchIcon, MailIcon } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import ContactForm from "./contact";
 import { WhatsappIcon } from "@/assets";
 export const metadata: Metadata = {
@@ -101,6 +102,24 @@ export default function Help({}: Props) {
               don&apos;t hesitate to use the contact form above or reach out to
               our customer support team directly. We&apos;re here to help!
             </p>
+            <div className="flex xsm:flex-col items-center justify-between gap-4">
+              <a
+                href="mailto:support@carbubke.vercel.app"
+                className="flex items-center xsm:justify-center gap-2 w-fit xsm:w-full bg-white text-green-600 px-6 py-2 rounded-md border hover:bg-green-500 hover:text-white border-green-600 transition-colors">
+                <MailIcon /> Contact Support
+              </a>
+              <button
+                className="flex items-center xsm:justify-center  w-fit xsm:w-full bg-white text-green-600 px-6 py-2 rounded-md border hover:bg-gray-600 hover:text-white border-green-600 transition-colors disabled:cursor-not-allowed"
+                disabled>
+                <Image
+                  src="https://res.cloudinary.com/dipkbpinx/image/upload/v1733141454/illustrations/ai-svgrepo-com_boip47.svg"
+                  alt="AI logo"
+                  height={24}
+                  width={24}
+                />
+                <p>Ask AI Support Agent</p>
+              </button>
+            </div>
           </section>
         </section>
       </div>

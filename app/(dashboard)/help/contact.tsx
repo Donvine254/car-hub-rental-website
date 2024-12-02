@@ -144,12 +144,13 @@ export default function ContactForm() {
         <button
           type="submit"
           className="bg-green-600 text-white px-4 py-1 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
-          disabled={!token}>
+          disabled={!isDev ? !token : false}>
           Send
         </button>
       </div>
       <p className="text-sm text-center text-gray-500">
-        This page is protected by Cloudflare, and subject to the Cloudflare{" "}
+        This page is protected by Cloudflare Turnstile, and subject to the
+        Cloudflare{" "}
         <a
           href="https://www.cloudflare.com/privacypolicy"
           className="text-emerald-600 hover:text-emerald-700">
