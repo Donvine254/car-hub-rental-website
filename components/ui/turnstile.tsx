@@ -24,7 +24,7 @@ const TurnstileComponent: React.FC<TurnstileComponentProps> = ({
       }}
       retry="auto"
       retryInterval={3000}
-      fixedSize={true}
+      fixedSize={false}
       size="flexible"
       theme="light"
     />
