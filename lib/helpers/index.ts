@@ -1,6 +1,6 @@
 //helper functions should be defined here
 //Formatting data for UI, API wrappers.
-export default async function checkTurnstileToken(token: string) {
+export default async function verifyTurnstileToken(token: string) {
   const url = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
   const formData = new FormData();

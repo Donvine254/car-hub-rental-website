@@ -1,5 +1,6 @@
 import React from "react";
 import Turnstile from "react-turnstile";
+import { toast } from "sonner";
 
 interface TurnstileComponentProps {
   onVerify: (token: string) => void;
@@ -11,17 +12,17 @@ const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
 
 const TurnstileComponent: React.FC<TurnstileComponentProps> = ({
   onVerify,
-  onExpire,
-  onError,
 }) => {
   return (
     <Turnstile
       sitekey={siteKey}
       onVerify={onVerify}
-      onExpire={onExpire}
-      onError={onError}
+      onError={() => toast.error("Failed to verify captcha!")}
       refreshExpired="auto"
       fixedSize={true}
+      size="flexible"
+      className="checkbox"
+      theme="light"
     />
   );
 };
