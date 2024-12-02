@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import { GoogleIcon, FacebookIcon } from "@/assets";
 import { useRouter } from "next/navigation";
-import { Loader } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader } from "lucide-react";
 import { toast } from "sonner";
 import Script from "next/script";
 import Axios from "axios";
 import Link from "next/link";
+import TurnstileComponent from "@/components/ui/turnstile";
+import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 
 type Props = {};
 interface FormData {
@@ -24,6 +26,7 @@ export default function Register({}: Props) {
     password: "",
     phone: "",
   });
+  const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -45,6 +48,12 @@ export default function Register({}: Props) {
       toast.error("Invalid email address", {
         position: "bottom-center",
       });
+      return false;
+    }
+    //verify captcha first
+    const result = await verifyTurnstileToken(token);
+    if (!result) {
+      toast.error("Failed to validate captcha");
       return false;
     }
     if (
@@ -185,9 +194,25 @@ export default function Register({}: Props) {
             </div>
             <div className="space-y-2">
               <label
-                className="text-base font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-700"
+                className="text-base font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-700 flex items-center justify-between"
                 htmlFor="password">
-                Password
+                <span>Password</span>
+                {!showPassword ? (
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    title="show password"
+                    className="cursor-pointer">
+                    <EyeIcon size={16} />
+                  </span>
+                ) : (
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    title="hide password"
+                    className="cursor-pointer">
+                    {" "}
+                    <EyeOffIcon size={16} />
+                  </span>
+                )}
               </label>
               <input
                 className="flex h-10 bg-background text-base disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md"
@@ -204,17 +229,20 @@ export default function Register({}: Props) {
                 * Password must have letters and numbers
               </small>
             </div>
-            <div className="flex items-center justify-start gap-1 md:gap-4">
+            {/* <div className="flex items-center justify-start gap-1 md:gap-4">
               <input
                 type="checkbox"
                 checked={showPassword}
                 onChange={() => setShowPassword(!showPassword)}
               />
               <span> {!showPassword ? "Show" : "Hide"} Password</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="items-center px-6 py-2 flex flex-col space-y-2">
+            {!loading && (
+              <TurnstileComponent onVerify={(token) => setToken(token)} />
+            )}
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-green-50 disabled:text-black  h-10 px-4 py-2 w-full bg-green-500 hover:bg-green-600 text-white rounded-md"
               type="submit"

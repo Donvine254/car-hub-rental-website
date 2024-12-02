@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { getSession } from "@/lib/actions/session";
 import { usePathname, useRouter } from "next/navigation";
 import Topnav from "./topnav";
+import { toast } from "sonner";
 
 type Props = {
   variant?: string;

@@ -6,10 +6,13 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { handleResetPassword } from "@/lib/actions/resetpassword";
+import TurnstileComponent from "@/components/ui/turnstile";
+import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 
 export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
   const router = useRouter();
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -21,6 +24,14 @@ export default function ResetPasswordPage() {
       setLoading(false);
       return false;
     }
+    //verify captcha first
+    const result = await verifyTurnstileToken(token);
+    if (!result) {
+      toast.error("Failed to validate captcha");
+      setLoading(false);
+      return false;
+    }
+
     try {
       const response = await handleResetPassword(email);
       if (response.success) {
@@ -86,17 +97,13 @@ export default function ResetPasswordPage() {
                 size={20}
               />
             </div>
-            {/* <div className="">
-              {error ? (
-                <p className="text-orange-600 text-sm  ">
-                  <span>{error}</span>
-                </p>
-              ) : null}
-            </div> */}
+            {!loading && (
+              <TurnstileComponent onVerify={(token) => setToken(token)} />
+            )}
             <button
               type="submit"
               className="inline-flex items-center justify-center w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-md transition duration-200 ease-in-out disabled:pointer-events-none disabled:bg-gray-100 disabled:text-black "
-              disabled={loading}>
+              disabled={loading || !token}>
               {!loading ? (
                 "Send Reset Email"
               ) : (
@@ -107,15 +114,16 @@ export default function ResetPasswordPage() {
               )}
             </button>
             <p className="text-sm text-center text-gray-500">
-              This page is protected by reCAPTCHA, and subject to the Google{" "}
+              This page is protected by Cloudflare, and subject to the
+              Cloudflare{" "}
               <Link
-                href="https://policies.google.com/privacy"
+                href="https://www.cloudflare.com/privacypolicy"
                 className="text-emerald-600 hover:text-emerald-700">
                 Privacy Policy
               </Link>{" "}
               and{" "}
               <Link
-                href="https://policies.google.com/terms"
+                href="https://www.cloudflare.com/website-terms"
                 className="text-emerald-600 hover:text-emerald-700">
                 Terms of Service
               </Link>

@@ -7,6 +7,8 @@ import { getSession } from "@/lib/actions/session";
 import { toast } from "sonner";
 import Link from "next/link";
 import axios from "axios";
+import TurnstileComponent from "@/components/ui/turnstile";
+import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 type Props = {};
 
 interface FormData {
@@ -20,6 +22,7 @@ export default function Login({}: Props) {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const router = useRouter();
@@ -39,6 +42,13 @@ export default function Login({}: Props) {
     setLoading(true);
     // post to /api/login
     try {
+      //verify captcha first
+      const result = await verifyTurnstileToken(token);
+      if (!result) {
+        toast.error("Failed to validate captcha");
+        setLoading(false);
+        return false;
+      }
       const response = await axios.post("/api/login", {
         email: data.email,
         password: data.password,
@@ -108,6 +118,7 @@ export default function Login({}: Props) {
     toast.error("Login with google is not supported");
     return null;
   }
+
   return (
     <form className="w-full " onSubmit={handleSignIn}>
       <div className="flex flex-col items-center justify-center w-full min-h-screen px-4">
@@ -176,12 +187,14 @@ export default function Login({}: Props) {
               </div>
             </div>
           </div>
-
           <div className="items-center p-6 flex flex-col space-y-4">
+            {!loading && (
+              <TurnstileComponent onVerify={(token) => setToken(token)} />
+            )}
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-green-50 disabled:text-black  h-10 px-4 py-2 w-full bg-green-500 hover:bg-green-600 text-white rounded-md"
               type="submit"
-              disabled={loading}
+              disabled={loading || !token}
               title="login">
               {!loading ? (
                 "Login"
