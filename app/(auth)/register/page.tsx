@@ -107,7 +107,11 @@ export default function Register({}: Props) {
   }
 
   return (
-    <form className={`w-full ${!alert ? "py-3" : ""}`} onSubmit={handleSubmit}>
+    <form
+      className={`w-full bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70  ${
+        !alert ? "py-3" : ""
+      }`}
+      onSubmit={handleSubmit}>
       <div
         className={`${
           alert

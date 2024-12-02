@@ -121,7 +121,9 @@ export default function Login({}: Props) {
   }
 
   return (
-    <form className="w-full " onSubmit={handleSignIn}>
+    <form
+      className="w-full bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70"
+      onSubmit={handleSignIn}>
       <div className="flex flex-col items-center justify-center w-full min-h-screen px-4">
         <div
           className="border text-card-foreground w-full max-w-sm mx-auto rounded-xl shadow-md overflow-hidden bg-white"
