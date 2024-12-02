@@ -1,3 +1,4 @@
+"use server";
 export default async function verifyTurnstileToken(token: string) {
   const url = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
