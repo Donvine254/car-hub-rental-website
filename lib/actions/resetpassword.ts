@@ -18,7 +18,7 @@ export async function handleResetPassword(email: string) {
       user.id,
       user.username
     );
-    return result.message;
+    return { success: true, message: result.message };
   } catch (error: any) {
     console.error(error);
     // throw new Error(error.message || "Something went wrong");
