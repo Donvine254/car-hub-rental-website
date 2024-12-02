@@ -5,6 +5,7 @@ import PasswordStrengthMeter from "./passwordmeter";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import { resetPassword } from "@/lib/actions/resetpassword";
+import { decodeData } from "@/lib/utilis/generatetoken";
 type Props = {};
 type formStatus = "" | "submitting" | "success" | "error";
 export default function Reset({}: Props) {
@@ -21,8 +22,18 @@ export default function Reset({}: Props) {
   // redirect if there is no token present or its invalid
   useEffect(() => {
     if (!token) {
-      toast.error("Unauthorized Request");
+      toast.error("Unauthorized Request", {
+        position: "top-center",
+      });
       setTimeout(() => router.push("/login"), 3000);
+    } else {
+      const data = decodeData(token);
+      if (!data) {
+        toast.error("Invalid or expired token", {
+          position: "top-center",
+        });
+        setTimeout(() => router.push("/login"), 3000);
+      }
     }
   }, [token, router]);
 
@@ -49,6 +60,9 @@ export default function Reset({}: Props) {
         toast.success("Password reset successfully");
         setStatus("success");
         setTimeout(() => router.push("/login"), 3000);
+      } else {
+        toast.error(response.error || "Something went wrong");
+        setStatus("error");
       }
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");

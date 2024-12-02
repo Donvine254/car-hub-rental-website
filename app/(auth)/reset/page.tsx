@@ -23,11 +23,18 @@ export default function ResetPasswordPage() {
     }
     try {
       const response = await handleResetPassword(email);
-      toast.success(response);
-      setLoading(false);
-      setTimeout(() => {
-        router.push("/login");
-      }, 2000);
+      if (response.success) {
+        toast.success(response.message);
+        setLoading(false);
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+      } else {
+        toast.error(response.error, {
+          position: "top-center",
+        });
+        setLoading(false);
+      }
     } catch (error: any) {
       toast.error(error.message, {
         position: "top-center",
