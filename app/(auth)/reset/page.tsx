@@ -27,11 +27,13 @@ export default function ResetPasswordPage() {
       return false;
     }
     //verify captcha first
-    const result = await verifyTurnstileToken(token);
-    if (!result) {
-      toast.error("Failed to validate captcha");
-      setLoading(false);
-      return false;
+    if (!isDev) {
+      const result = await verifyTurnstileToken(token);
+      if (!result) {
+        toast.error("Failed to validate captcha");
+        setLoading(false);
+        return false;
+      }
     }
 
     try {
@@ -87,8 +89,7 @@ export default function ResetPasswordPage() {
                 placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 pl-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 disabled:cursor-not-allowed disabled:opacity-50 "
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                className="w-full px-4 pl-8 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 disabled:cursor-not-allowed disabled:opacity-50"
                 title="Please enter a valid email address"
                 disabled={loading}
                 autoFocus
