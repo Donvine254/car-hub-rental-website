@@ -52,10 +52,13 @@ export default function Register({}: Props) {
       return false;
     }
     //verify captcha first
-    const result = await verifyTurnstileToken(token);
-    if (!result) {
-      toast.error("Failed to validate captcha");
-      return false;
+    if (!isDev) {
+      const result = await verifyTurnstileToken(token);
+      if (!result) {
+        toast.error("Failed to validate captcha");
+        setLoading(false);
+        return false;
+      }
     }
     if (
       !/^(?=.*[0-9])(?=.*[a-zA-Z])(?!12345678|password|abcdefgh).{9,}$/.test(

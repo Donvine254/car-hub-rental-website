@@ -44,11 +44,13 @@ export default function Login({}: Props) {
     // post to /api/login
     try {
       //verify captcha first
-      const result = await verifyTurnstileToken(token);
-      if (!result) {
-        toast.error("Failed to validate captcha");
-        setLoading(false);
-        return false;
+      if (!isDev) {
+        const result = await verifyTurnstileToken(token);
+        if (!result) {
+          toast.error("Failed to validate captcha");
+          setLoading(false);
+          return false;
+        }
       }
       const response = await axios.post("/api/login", {
         email: data.email,

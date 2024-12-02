@@ -1,4 +1,5 @@
 "use client";
+import DialogComponent from "@/components/alerts/dialog";
 import TurnstileComponent from "@/components/ui/turnstile";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 import React, { FormEvent, useState } from "react";
@@ -6,8 +7,9 @@ import { toast } from "sonner";
 
 export default function ContactForm() {
   const [error, setError] = useState<string | null>(null);
-  const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const [isOpen, setIsOpen] = useState(false);
   const [token, setToken] = useState("");
+  const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const isDev = process.env.NODE_ENV === "development";
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailValue = e.target.value;
@@ -24,11 +26,12 @@ export default function ContactForm() {
     e.preventDefault();
     const form = e.currentTarget;
     //verify captcha first
-    const res = await verifyTurnstileToken(token);
-    if (!res) {
-      toast.error("Failed to validate captcha");
-      setError("Failed to validate captcha");
-      return false;
+    if (!isDev) {
+      const result = await verifyTurnstileToken(token);
+      if (!result) {
+        toast.error("Failed to validate captcha");
+        return false;
+      }
     }
     const name = (form.elements.namedItem("fullname") as HTMLInputElement)
       ?.value;
@@ -58,7 +61,7 @@ export default function ContactForm() {
 
     const result = await response.json();
     if (result.success) {
-      toast.success("Message sent successfully", { position: "top-center" });
+      setIsOpen(true);
       form.reset();
     } else {
       toast.error("Failed to send message. Please try again.");
@@ -164,6 +167,7 @@ export default function ContactForm() {
         </a>
         .
       </p>
+      <DialogComponent isOpen={isOpen} setIsOpen={setIsOpen} />
     </form>
   );
 }

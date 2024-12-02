@@ -27,11 +27,13 @@ export default function ResetPasswordPage() {
       return false;
     }
     //verify captcha first
-    const result = await verifyTurnstileToken(token);
-    if (!result) {
-      toast.error("Failed to validate captcha");
-      setLoading(false);
-      return false;
+    if (!isDev) {
+      const result = await verifyTurnstileToken(token);
+      if (!result) {
+        toast.error("Failed to validate captcha");
+        setLoading(false);
+        return false;
+      }
     }
 
     try {
