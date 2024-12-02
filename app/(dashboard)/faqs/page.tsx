@@ -46,6 +46,7 @@ export default function FAQs(props: Props) {
                   alt="AI logo"
                   height={24}
                   width={24}
+                  priority
                 />
                 <p>Ask AI Support Agent</p>
               </button>
