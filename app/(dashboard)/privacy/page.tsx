@@ -251,9 +251,16 @@ export default function Privacy({}: Props) {
             </p>
           </section>
 
-          <p className="mt-8  text-gray-600">
-            Last updated: {new Date().toLocaleDateString()}
-          </p>
+          <div className="flex items-center justify-between gap-2 my-2 flex-wrap">
+            <h3 className=" text-gray-600">Last updated: [25/11/2024]</h3>
+            <a
+              href="https://utfs.io/f/IxV6XBUD5hJeJnT1Dc0ZlVkwMADdyW0PSKt39O7ogIcmTjLH"
+              target="_blank"
+              className="bg-green-500 text-white p-2 rounded-md"
+              download>
+              Download PDF
+            </a>
+          </div>
         </div>
       </div>
     </section>

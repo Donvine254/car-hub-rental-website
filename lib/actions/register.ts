@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/db/prisma";
-import { hashPassword } from "./hashpassword";
+import { hashPassword } from "../utilis/hashpassword";
 import { sendVerificationEmail } from "@/emails";
 interface Data {
   username: string;
@@ -20,7 +20,7 @@ export async function registerUsers(data: Data) {
     user = await prisma.user.create({
       data: {
         username: data.username,
-        email: data.email,
+        email: data.email.toLowerCase(),
         phone: data.phone,
         password_digest: hashedPassword,
         role: "user",

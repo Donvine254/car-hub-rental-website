@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
 import React, { useEffect, useState } from "react";
-import { getSession } from "@/lib/session";
+import { getSession } from "@/lib/actions/session";
 import { usePathname, useRouter } from "next/navigation";
 import Topnav from "./topnav";
 

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { fetchCar, Car } from "@/lib/fetchCars";
+import { fetchCar, Car } from "@/lib/actions/fetchCars";
 import { toast } from "sonner";
 import Image from "next/image";
 import {
@@ -20,7 +20,7 @@ import Link from "next/link";
 import CarModal from "@/components/ui/carModal";
 import Script from "next/script";
 import secureLocalStorage from "react-secure-storage";
-import { createBooking, Booking } from "@/lib/booking";
+import { createBooking, Booking } from "@/lib/actions/booking";
 
 type Props = {
   User: any | null;

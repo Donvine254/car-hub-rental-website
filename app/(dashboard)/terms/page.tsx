@@ -375,7 +375,7 @@ export default function Terms({}: Props) {
           <div className="flex items-center justify-between gap-2 my-2 flex-wrap">
             <h3 className=" text-gray-600">Last updated: [25/11/2024]</h3>
             <a
-              href="https://utfs.io/f/P083a1ci0xKVKVovj1Tq3lFb8QEWzVHTm9rKuoRC7Zx6k2Ne"
+              href="https://utfs.io/f/IxV6XBUD5hJeLs6Ie9jycXK0ZrJzUaW9eNqiOolgxvmIF8bf"
               target="_blank"
               className="bg-green-500 text-white p-2 rounded-md"
               download>

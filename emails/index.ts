@@ -1,7 +1,7 @@
 "use server";
-import { generateToken } from "@/lib/generatetoken";
+import { generateToken } from "@/lib/utilis/generatetoken";
 import nodemailer from "nodemailer";
-import { verificationTemplate } from "./templates";
+import { passwordResetTemplate, verificationTemplate } from "./templates";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -27,7 +27,8 @@ export async function sendVerificationEmail(
   id: number,
   name: string
 ) {
-  const url = generateToken(email, id);
+  const baseUrl = "https://carhubke.vercel.app/verify_email";
+  const url = generateToken(email, id, baseUrl);
   try {
     const response = await sendEmail({
       subject: `Verify your email address`,
@@ -37,6 +38,28 @@ export async function sendVerificationEmail(
     });
     console.log("Email sent successfully");
     return { message: "Email sent successfully" };
+  } catch (error) {
+    console.error("Email delivery failed:", error);
+    return { message: "Email delivery failed" };
+  }
+}
+
+export async function sendResetPasswordEmail(
+  email: string,
+  id: number,
+  name: string
+) {
+  const baseUrl = "https://carhubke.vercel.app/new_password";
+  const url = generateToken(email, id, baseUrl);
+  try {
+    const response = await sendEmail({
+      subject: `Reset your Carhub account password`,
+      to: email,
+      from: sender,
+      html: passwordResetTemplate(name, url),
+    });
+    console.log("Email sent successfully");
+    return { message: "Check your email account to reset your password" };
   } catch (error) {
     console.error("Email delivery failed:", error);
     return { message: "Email delivery failed" };

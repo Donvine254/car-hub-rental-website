@@ -1,7 +1,7 @@
 import React from "react";
 import Carspage from "./cars";
 import type { Metadata } from "next";
-import fetchCars, { Car } from "@/lib/fetchCars";
+import fetchCars, { Car } from "@/lib/actions/fetchCars";
 
 export const metadata: Metadata = {
   title: "Car Hub - Explore Cars",

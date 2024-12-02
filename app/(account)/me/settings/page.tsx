@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NotificationsTab from "./notifications";
 import ProfileTab from "./profile-tab";
-import { getUserData } from "@/lib/decodetoken";
+import { getUserData } from "@/lib/actions/decodetoken";
 import { redirect } from "next/navigation";
 export const metadata: Metadata = {
   title: "Car Hub - Update Your Profile ",

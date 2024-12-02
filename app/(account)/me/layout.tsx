@@ -7,7 +7,7 @@ import "../../globals.css";
 import Footer from "@/components/ui/Footer";
 import SideNav from "@/components/ui/sidenav";
 import ProfileHeroComponent from "@/components/ui/profile-hero";
-import { getUserData } from "@/lib/decodetoken";
+import { getUserData } from "@/lib/actions/decodetoken";
 
 export const dynamic = "force-dynamic";
 

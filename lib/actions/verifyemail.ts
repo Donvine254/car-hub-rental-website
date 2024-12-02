@@ -1,22 +1,13 @@
 "use server";
 import { prisma } from "@/db/prisma";
+import { decodeData } from "../utilis/generatetoken";
 
 // Decode base64 string to JSON
-function decodeData(encodedData: string) {
-  try {
-    const decodedData = atob(encodedData);
-    const parsedData = JSON.parse(decodedData);
-    console.log("parsed data:" + parsedData);
-    return parsedData;
-  } catch (error) {
-    return null; // If decoding fails, return null
-  }
-}
+
 export async function verifyEmail(token: string) {
   const decodedToken = decodeURIComponent(token);
   try {
     const data = decodeData(decodedToken);
-    console.log(data);
     if (!data) {
       throw new Error("Invalid token data");
     }
