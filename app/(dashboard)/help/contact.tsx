@@ -1,11 +1,14 @@
 "use client";
+import TurnstileComponent from "@/components/ui/turnstile";
+import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 import React, { FormEvent, useState } from "react";
 import { toast } from "sonner";
 
 export default function ContactForm() {
   const [error, setError] = useState<string | null>(null);
   const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
+  const [token, setToken] = useState("");
+  const isDev = process.env.NODE_ENV === "development";
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailValue = e.target.value;
     if (emailValue.trim() === "") {
@@ -20,7 +23,13 @@ export default function ContactForm() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-
+    //verify captcha first
+    const res = await verifyTurnstileToken(token);
+    if (!res) {
+      toast.error("Failed to validate captcha");
+      setError("Failed to validate captcha");
+      return false;
+    }
     const name = (form.elements.namedItem("fullname") as HTMLInputElement)
       ?.value;
     const email = (form.elements.namedItem("email") as HTMLInputElement)?.value;
@@ -124,6 +133,7 @@ export default function ContactForm() {
           minLength={5}
           required
           placeholder="Type your message here..."></textarea>
+        {!isDev && <TurnstileComponent onVerify={(token) => setToken(token)} />}
       </div>
       <div className="flex items-center justify-end gap-4 py-2">
         <button
@@ -133,10 +143,26 @@ export default function ContactForm() {
         </button>
         <button
           type="submit"
-          className="bg-green-600 text-white px-4 py-1 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors">
+          className="bg-green-600 text-white px-4 py-1 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+          disabled={!token}>
           Send
         </button>
       </div>
+      <p className="text-sm text-center text-gray-500">
+        This page is protected by Cloudflare, and subject to the Cloudflare{" "}
+        <a
+          href="https://www.cloudflare.com/privacypolicy"
+          className="text-emerald-600 hover:text-emerald-700">
+          Privacy Policy
+        </a>{" "}
+        and{" "}
+        <a
+          href="https://www.cloudflare.com/website-terms"
+          className="text-emerald-600 hover:text-emerald-700">
+          Terms of Service
+        </a>
+        .
+      </p>
     </form>
   );
 }
