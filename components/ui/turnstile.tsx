@@ -9,7 +9,6 @@ interface TurnstileComponentProps {
 }
 
 const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string;
-
 const TurnstileComponent: React.FC<TurnstileComponentProps> = ({
   onVerify,
 }) => {
@@ -27,6 +26,7 @@ const TurnstileComponent: React.FC<TurnstileComponentProps> = ({
       fixedSize={false}
       size="flexible"
       theme="light"
+      className="hidden"
     />
   );
 };
