@@ -31,6 +31,7 @@ export default function Register({}: Props) {
   const [alert, setAlert] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
+  const isDev = process.env.NODE_ENV === "development";
   //function for onChange event handler
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -229,24 +230,16 @@ export default function Register({}: Props) {
                 * Password must have letters and numbers
               </small>
             </div>
-            {/* <div className="flex items-center justify-start gap-1 md:gap-4">
-              <input
-                type="checkbox"
-                checked={showPassword}
-                onChange={() => setShowPassword(!showPassword)}
-              />
-              <span> {!showPassword ? "Show" : "Hide"} Password</span>
-            </div> */}
           </div>
 
           <div className="items-center px-6 py-2 flex flex-col space-y-2">
-            {!loading && (
+            {!loading && !isDev && (
               <TurnstileComponent onVerify={(token) => setToken(token)} />
             )}
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-green-50 disabled:text-black  h-10 px-4 py-2 w-full bg-green-500 hover:bg-green-600 text-white rounded-md"
               type="submit"
-              disabled={loading}
+              disabled={loading || !isDev ? !token : false}
               title="register">
               {!loading ? (
                 "Register"

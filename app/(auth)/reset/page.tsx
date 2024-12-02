@@ -14,6 +14,8 @@ export default function ResetPasswordPage() {
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
   const router = useRouter();
+  //
+  const isDev = process.env.NODE_ENV === "development";
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -97,13 +99,13 @@ export default function ResetPasswordPage() {
                 size={20}
               />
             </div>
-            {!loading && (
+            {!loading && !isDev && (
               <TurnstileComponent onVerify={(token) => setToken(token)} />
             )}
             <button
               type="submit"
               className="inline-flex items-center justify-center w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-md transition duration-200 ease-in-out disabled:pointer-events-none disabled:bg-gray-100 disabled:text-black "
-              disabled={loading || !token}>
+              disabled={loading || !isDev ? !token : false}>
               {!loading ? (
                 "Send Reset Email"
               ) : (
