@@ -10,7 +10,8 @@ export async function handleResetPassword(email: string) {
       where: { email: e },
     });
     if (!user) {
-      throw new Error("Oops! We couldn't find your account");
+      // throw new Error("Oops! We couldn't find your account");
+      return { success: false, error: "Oops! We couldn't find your account" };
     }
     const result = await sendResetPasswordEmail(
       user.email,
@@ -20,10 +21,12 @@ export async function handleResetPassword(email: string) {
     return result.message;
   } catch (error: any) {
     console.error(error);
-    // Preserve specific error messages
-    throw new Error(error.message || "Something went wrong");
+    // throw new Error(error.message || "Something went wrong");
+    return { success: false, error: error.message || "Something went wrong" };
   }
 }
+//return the errors for production purposes
+//create error handler function
 
 export async function resetPassword(token: string, password: string) {
   const decodedToken = decodeURIComponent(token);
@@ -31,14 +34,15 @@ export async function resetPassword(token: string, password: string) {
   try {
     const data = decodeData(decodedToken);
     if (!data) {
-      throw new Error("Invalid or expired token");
+      return { success: false, error: "Invalid or expired token" };
     }
 
     const user = await prisma.user.findUnique({
       where: { id: Number(data.id) },
     });
     if (!user) {
-      throw new Error("User not found or email mismatch");
+      // errors are suppressed in production. Instead of throwing errors, i should return them
+      return { success: false, error: "User not found or email mismatch" };
     }
     await prisma.user.update({
       where: { id: Number(data.id) },
@@ -46,7 +50,7 @@ export async function resetPassword(token: string, password: string) {
         password_digest: hashedPassword,
       },
     });
-    return { success: true };
+    return { success: true, message: "Password reset successfully" };
   } catch (error) {
     console.error(error);
     return { success: false, error: "Something went wrong" };
