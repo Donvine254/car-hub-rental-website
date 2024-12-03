@@ -6,10 +6,12 @@ import { Loader } from "lucide-react";
 import { toast } from "sonner";
 import { resetPassword } from "@/lib/actions/resetpassword";
 import { decodeData } from "@/lib/utilis/generatetoken";
+import DialogComponent from "@/components/alerts/dialog";
 type Props = {};
 type formStatus = "" | "submitting" | "success" | "error";
 export default function Reset({}: Props) {
   const [status, setStatus] = useState<formStatus>("");
+  const [isOpen, setIsOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [data, setData] = useState({
@@ -57,7 +59,7 @@ export default function Reset({}: Props) {
     try {
       const response = await resetPassword(token!, data.password);
       if (response.success) {
-        toast.success("Password reset successfully");
+        setIsOpen(true);
         setStatus("success");
         setTimeout(() => router.push("/login"), 3000);
       } else {
@@ -197,6 +199,12 @@ export default function Reset({}: Props) {
                 )}
               </button>
             </div>
+            <DialogComponent
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              title="Password Reset Successfully"
+              description="Your new password has been updated successfully. Kindly proceed to login with your new password."
+            />
           </form>
           <div className="px-6 text-base text-center py-2 bg-green-100 border-t-2 border-green-500 text-gray-500 ">
             Remember Password?{" "}

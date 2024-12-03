@@ -8,9 +8,11 @@ import { useRouter } from "next/navigation";
 import { handleResetPassword } from "@/lib/actions/resetpassword";
 import TurnstileComponent from "@/components/ui/turnstile";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
+import DialogComponent from "@/components/alerts/dialog";
 
 export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
   const router = useRouter();
@@ -39,11 +41,11 @@ export default function ResetPasswordPage() {
     try {
       const response = await handleResetPassword(email);
       if (response.success) {
-        toast.success(response.message);
+        setIsOpen(true);
         setLoading(false);
         setTimeout(() => {
           router.push("/login");
-        }, 2000);
+        }, 4000);
       } else {
         toast.error(response.error, {
           position: "top-center",
@@ -132,6 +134,12 @@ export default function ResetPasswordPage() {
               </Link>
               .
             </p>
+            <DialogComponent
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              title="Email Sent Successfully"
+              description={`We have sent password reset instructions to ${email}. Kindly check your email to reset your password.`}
+            />
           </form>
         </div>
 

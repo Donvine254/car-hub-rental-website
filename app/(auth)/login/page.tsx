@@ -41,17 +41,17 @@ export default function Login({}: Props) {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    //verify captcha first
+    if (!isDev) {
+      const result = await verifyTurnstileToken(token);
+      if (!result) {
+        toast.error("Failed to validate captcha");
+        setLoading(false);
+        return false;
+      }
+    }
     // post to /api/login
     try {
-      //verify captcha first
-      if (!isDev) {
-        const result = await verifyTurnstileToken(token);
-        if (!result) {
-          toast.error("Failed to validate captcha");
-          setLoading(false);
-          return false;
-        }
-      }
       const response = await axios.post("/api/login", {
         email: data.email,
         password: data.password,
@@ -199,7 +199,7 @@ export default function Login({}: Props) {
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-green-50 disabled:text-black  h-10 px-4 py-2 w-full bg-green-500 hover:bg-green-600 text-white rounded-md"
               type="submit"
-              disabled={loading || !isDev ? !token : false}
+              disabled={loading}
               title="login">
               {!loading ? (
                 "Login"

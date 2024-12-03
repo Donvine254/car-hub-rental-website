@@ -6,15 +6,29 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { X } from "lucide-react";
 type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
+  description: string;
 };
-export default function DialogComponent({ isOpen, setIsOpen }: Props) {
+export default function DialogComponent({
+  isOpen,
+  setIsOpen,
+  title,
+  description,
+}: Props) {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
+        <div className="flex justify-end items-start">
+          <AlertDialogTrigger className="hover:text-red-500">
+            <X />
+          </AlertDialogTrigger>
+        </div>
         <AlertDialogHeader>
           <div className="success-checkmark">
             <div className="check-icon">
@@ -24,13 +38,15 @@ export default function DialogComponent({ isOpen, setIsOpen }: Props) {
               <div className="icon-fix"></div>
             </div>
           </div>
-          <AlertDialogTitle className="text-center text-2xl"> Message Sent Successfully</AlertDialogTitle>
-          <AlertDialogDescription>
-            Thank you for your message. We&apos;ll get back to you soon!
+          <AlertDialogTitle className="text-center text-2xl">
+            {title}
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center">
+            {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction className="bg-green-500">Close</AlertDialogAction>
+          <AlertDialogAction className="bg-green-500">Cancel</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
