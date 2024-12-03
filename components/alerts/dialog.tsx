@@ -6,6 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { X } from "lucide-react";
 type Props = {
@@ -22,10 +23,12 @@ export default function DialogComponent({
 }: Props) {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogContent className="relative">
-        <AlertDialogAction className="relative">
-          <X className="absolute top-1 left-1" />
-        </AlertDialogAction>
+      <AlertDialogContent>
+        <div className="flex justify-end items-start">
+          <AlertDialogTrigger className="hover:text-red-500">
+            <X />
+          </AlertDialogTrigger>
+        </div>
         <AlertDialogHeader>
           <div className="success-checkmark">
             <div className="check-icon">
@@ -43,7 +46,7 @@ export default function DialogComponent({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction className="bg-green-500">Close</AlertDialogAction>
+          <AlertDialogAction className="bg-green-500">Cancel</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
