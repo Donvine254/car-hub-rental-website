@@ -7,14 +7,25 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { X } from "lucide-react";
 type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  title: string;
+  description: string;
 };
-export default function DialogComponent({ isOpen, setIsOpen }: Props) {
+export default function DialogComponent({
+  isOpen,
+  setIsOpen,
+  title,
+  description,
+}: Props) {
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogContent>
+      <AlertDialogContent className="relative">
+        <AlertDialogAction className="relative">
+          <X className="absolute top-1 left-1" />
+        </AlertDialogAction>
         <AlertDialogHeader>
           <div className="success-checkmark">
             <div className="check-icon">
@@ -24,9 +35,11 @@ export default function DialogComponent({ isOpen, setIsOpen }: Props) {
               <div className="icon-fix"></div>
             </div>
           </div>
-          <AlertDialogTitle className="text-center text-2xl"> Message Sent Successfully</AlertDialogTitle>
-          <AlertDialogDescription>
-            Thank you for your message. We&apos;ll get back to you soon!
+          <AlertDialogTitle className="text-center text-2xl">
+            {title}
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center">
+            {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
