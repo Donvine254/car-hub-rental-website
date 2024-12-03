@@ -173,9 +173,6 @@ export default function ContactForm() {
         title="Message Sent Successfully"
         description="Thank you for your message. We'll get back to you soon! Kindly note we might take some time to respond if this message was sent outside our working hours."
       />
-      <button type="button" onClick={() => setIsOpen(!isOpen)}>
-        Open
-      </button>
     </form>
   );
 }
