@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import type { Car } from "@/lib/actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import CustomHeartIcon from "./HeartIcon";
-import CarModal from "./carModal";
+import CarModal from "../alerts/carModal";
 import { showModal } from "@/lib/utilis";
 import { Star } from "lucide-react";
 import { Badge } from "./badge";

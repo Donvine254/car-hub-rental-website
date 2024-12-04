@@ -17,7 +17,7 @@ import {
   Phone,
 } from "lucide-react";
 import Link from "next/link";
-import CarModal from "@/components/ui/carModal";
+import CarModal from "@/components/alerts/carModal";
 import Script from "next/script";
 import secureLocalStorage from "react-secure-storage";
 import { createBooking, Booking } from "@/lib/actions/booking";
