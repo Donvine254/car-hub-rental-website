@@ -13,8 +13,8 @@ import {
   Star,
 } from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
-import CarModal from "@/components/ui/carModal";
-import FilterModal from "@/components/ui/Filter";
+import CarModal from "@/components/alerts/carModal";
+import FilterModal from "@/components/alerts/Filter";
 import Script from "next/script";
 import { handleGuessCar, showModal } from "@/lib/utilis";
 import type { Car } from "@/lib/actions/fetchCars";
