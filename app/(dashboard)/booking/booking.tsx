@@ -458,21 +458,7 @@ export default function BookingPage({ User }: Props) {
                         }))
                       }
                     />
-                    {/* <input
-                      type="tel"
-                      name="phoneNumber"
-                      id="phone"
-                      minLength={10}
-                      maxLength={12}
-                      value={formData.phoneNumber}
-                      onChange={handleInputChange}
-                      title="valid phone number must have 10 digits."
-                      pattern="0?[0-9]{9}"
-                      inputMode="numeric"
-                      required
-                      placeholder="**********"
-                      className="flex h-10 bg-white text-base  w-full px-1 py-2  border border-gray-300 rounded-md outline-none "
-                    /> */}
+                  
                   </div>
                   <div className="py-2">
                     <label htmlFor="cost" className="inline-flex font-bold ">
