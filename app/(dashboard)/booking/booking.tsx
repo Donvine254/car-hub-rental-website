@@ -145,7 +145,7 @@ export default function BookingPage({ User }: Props) {
     const bookingData = {
       carId: selectedCar.id,
       userId: User.id,
-      phoneNumber: Number(formData.phoneNumber),
+      phoneNumber: formData.phoneNumber,
       pickupLocation: selectedCar.location,
       dropLocation: formData.dropLocation,
       startDate: startDateTime,

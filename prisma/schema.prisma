@@ -23,6 +23,7 @@ model User {
   reviews         Review[]
   bookings        Booking[]
   favorites       Favorite[]
+  discounts       Discount[]
 }
 
 model Car {
@@ -37,12 +38,14 @@ model Car {
   seats            Int
   fuelType         fuelType
   isRented         Boolean          @default(false)
+  rentedUntill     DateTime?
   rating           Int              @default(5)
   location         Location         @default(nairobi)
   createdAt        DateTime         @default(now())
   reviews          Review[]
   bookings         Booking[]
   favorites        Favorite[]
+  Discount         Discount[]
 }
 
 model Review {
@@ -59,15 +62,15 @@ model Review {
 
 model Booking {
   id             Int      @id @default(autoincrement())
-  user           User     @relation(fields: [userId], references: [id])
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         Int
-  car            Car      @relation(fields: [carId], references: [id])
+  car            Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
   carId          Int
   startDate      DateTime
   endDate        DateTime
   pickupLocation String
   dropLocation   String
-  phoneNumber    Int
+  phoneNumber    String
   totalPrice     Int
   status         Status   @default(ongoing)
   createdAt      DateTime @default(now())
@@ -75,18 +78,21 @@ model Booking {
 
 model Favorite {
   id     Int  @id @default(autoincrement())
-  user   User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
-  car    Car  @relation(fields: [carId], references: [id])
+  car    Car  @relation(fields: [carId], references: [id], onDelete: Cascade)
   carId  Int
 }
 
-model OTP {
+model Discount {
   id        Int      @id @default(autoincrement())
-  email     String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
   code      String
   expiresAt DateTime
   createdAt DateTime @default(now())
+  Car       Car?     @relation(fields: [carId], references: [id])
+  carId     Int?
 }
 
 enum TransmissionType {

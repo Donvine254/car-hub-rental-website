@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import Script from "next/script";
 import Axios from "axios";
 import Link from "next/link";
-import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
@@ -69,10 +68,7 @@ export default function Register({}: Props) {
     {
       setLoading(true);
       try {
-        const response = await Axios.post("/api/register", {
-          ...data,
-          phone: Number(data.phone),
-        });
+        const response = await Axios.post("/api/register", data);
         const responseData = await response.data;
         setLoading(false);
         setAlert(true);

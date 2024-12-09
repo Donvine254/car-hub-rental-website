@@ -30,7 +30,7 @@ export async function createBooking(formData: Booking | any) {
         // Update car's isRented status to true
         await prisma.car.update({
           where: { id: Number(formData.carId) },
-          data: { isRented: true },
+          data: { isRented: true,  rentedUntill: formData.endDate },
         });
       } catch (updateError) {
         console.error("Error updating car's isRented status:", updateError);
