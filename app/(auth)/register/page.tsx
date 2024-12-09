@@ -69,7 +69,10 @@ export default function Register({}: Props) {
     {
       setLoading(true);
       try {
-        const response = await Axios.post("/api/register", data);
+        const response = await Axios.post("/api/register", {
+          ...data,
+          phone: Number(data.phone),
+        });
         const responseData = await response.data;
         setLoading(false);
         setAlert(true);
