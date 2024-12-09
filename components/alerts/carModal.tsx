@@ -5,6 +5,7 @@ import type { Car } from "@/lib/actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { formatDate, isCarAvailable } from "@/lib/helpers";
 interface CarModalProps {
   Car: Car | null;
 }
@@ -126,8 +127,10 @@ export default function CarModal({ Car }: CarModalProps) {
           <button
             onClick={() => handleBooking(Car)}
             className="px-2 py-1 border rounded-md flex-1 bg-green-500 text-white hover:shadow-2xl hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
-            disabled={Car.isRented}>
-            {Car.isRented ? "Unavailable" : "Book Now"}
+            disabled={isCarAvailable(Car.isRented, Car.rentedUntill)}>
+            {isCarAvailable(Car.isRented, Car.rentedUntill)
+              ? `Booked till ${formatDate(Car?.rentedUntill ?? "")}`
+              : "Book Now"}
           </button>
         </div>
       </div>

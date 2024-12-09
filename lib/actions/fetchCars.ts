@@ -13,6 +13,7 @@ export type Car = {
   seats: number;
   fuelType: string;
   isRented: boolean;
+  rentedUntill?: string;
   rating?: number;
   location: string;
   createdAt?: string;
