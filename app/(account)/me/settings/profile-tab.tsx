@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { UploadImage } from "./upload-image";
+import { PhoneInput } from "@/components/ui/phoneinput";
+import { toE164 } from "@/lib/helpers";
 
 interface User {
   id: number;
@@ -51,13 +53,18 @@ export default function ProfileTab({ user }: { user: User }) {
             </div>
             <div className="space-y-2 md:w-1/2">
               <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                placeholder="+254701234567"
-                onChange={handleInputChange}
-              />
+              <PhoneInput
+                      value={toE164(formData.phone)}
+                      defaultCountry="KE"
+                      placeholder="Enter phone number"
+                      onChange={(value) =>
+                        setFormData((prev: any) => ({
+                          ...prev,
+                          phone: value,
+                        }))
+                      }
+                    />
+             
             </div>
           </div>
 
