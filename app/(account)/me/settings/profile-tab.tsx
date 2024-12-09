@@ -103,7 +103,7 @@ export default function ProfileTab({ user }: { user: User }) {
         <button
           type="submit"
           className="bg-green-500 text-white p-2 rounded-lg">
-          Update Profile
+          Save Changes
         </button>
       </form>
       <hr />
@@ -111,7 +111,9 @@ export default function ProfileTab({ user }: { user: User }) {
         <h2 className="text-xl md:text-2xl font-bold">Danger Zone</h2>
         <p>Irreversible and Destructive Actions</p>
         <div className="bg-red-50 border-2 border-red-500 rounded-md px-2 py-4 space-y-4 ">
-          <h3 className="text-base md:text-xl font-bold ">Delete Account</h3>
+          <h3 className="text-base md:text-xl font-bold xsm:text-center">
+            Delete Account
+          </h3>
           <hr className="border border-red-500" />
           <p>
             Once you delete your user account, there is no going back. Please be
@@ -120,6 +122,7 @@ export default function ProfileTab({ user }: { user: User }) {
           <Button
             title="delete user account"
             variant="destructive"
+            className="xsm:w-full"
             onClick={() =>
               toast.error("Kindly confirm that you are not drunk!")
             }>
