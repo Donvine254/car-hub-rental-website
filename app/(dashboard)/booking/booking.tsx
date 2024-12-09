@@ -17,10 +17,13 @@ import {
   Phone,
 } from "lucide-react";
 import Link from "next/link";
-import CarModal from "@/components/ui/carModal";
+import CarModal from "@/components/alerts/carModal";
 import Script from "next/script";
 import secureLocalStorage from "react-secure-storage";
 import { createBooking, Booking } from "@/lib/actions/booking";
+import { PhoneInput } from "@/components/ui/phoneinput";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import { toE164 } from "@/lib/helpers";
 
 type Props = {
   User: any | null;
@@ -130,6 +133,10 @@ export default function BookingPage({ User }: Props) {
       toast.error("Kindly select a car first");
       return;
     }
+    if (!isValidPhoneNumber(toE164(formData.phoneNumber))) {
+      toast.error("Enter a valid phone number");
+      return;
+    }
     const startDateTime = new Date(
       `${formData.startDate}T${formData.pickupTime}:00`
     ).toISOString();
@@ -139,7 +146,7 @@ export default function BookingPage({ User }: Props) {
     const bookingData = {
       carId: selectedCar.id,
       userId: User.id,
-      phoneNumber: parseInt(User.phone, 10),
+      phoneNumber: formData.phoneNumber,
       pickupLocation: selectedCar.location,
       dropLocation: formData.dropLocation,
       startDate: startDateTime,
@@ -204,7 +211,7 @@ export default function BookingPage({ User }: Props) {
       console.log("modal not found");
     }
   };
-
+  
   return (
     <section className=" bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70  py-5 h-full w-full flex flex-col items-center justify-center p-4 relative ">
       <Script
@@ -435,21 +442,18 @@ export default function BookingPage({ User }: Props) {
                       <Phone fill="none" className="text-green-500" /> &nbsp;
                       Phone Number
                     </label>
-                    <input
-                      type="tel"
-                      name="phoneNumber"
-                      id="phone"
-                      minLength={10}
-                      maxLength={12}
-                      value={formData.phoneNumber}
-                      onChange={handleInputChange}
-                      title="valid phone number must have 10 digits."
-                      pattern="0?[0-9]{9}"
-                      inputMode="numeric"
-                      required
-                      placeholder="**********"
-                      className="flex h-10 bg-white text-base  w-full px-1 py-2  border border-gray-300 rounded-md outline-none "
+                    <PhoneInput
+                      value={toE164(formData.phoneNumber)}
+                      defaultCountry="KE"
+                      placeholder="Enter phone number"
+                      onChange={(value) =>
+                        setFormData((prev: any) => ({
+                          ...prev,
+                          phoneNumber: value,
+                        }))
+                      }
                     />
+                  
                   </div>
                   <div className="py-2">
                     <label htmlFor="cost" className="inline-flex font-bold ">

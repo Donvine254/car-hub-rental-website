@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Car } from "@/lib/actions/fetchCars";
 import { X } from "lucide-react";
 import { toast } from "sonner";
+import { isCarAvailable } from "@/lib/helpers";
 type Props = {
   Cars: Car[];
 };
@@ -93,8 +94,8 @@ export default function FavoriteCars({ Cars }: Props) {
                   <button
                     onClick={() => handleBooking(car)}
                     className="mt-4 bg-green-500 text-center text-white px-4 py-1 rounded-md hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
-                    disabled={car.isRented}>
-                    {car.isRented ? "Unavailable" : "Book Now"}
+                    disabled={isCarAvailable(car.isRented, car.rentedUntill)}>
+                    {isCarAvailable(car.isRented, car.rentedUntill)? "Unavailable" : "Book Now"}
                   </button>
                 </div>
               </div>

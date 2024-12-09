@@ -1,5 +1,5 @@
 "use server";
-import { generateToken } from "@/lib/utilis/generatetoken";
+import { generateToken } from "@/lib/utils/generatetoken";
 import nodemailer from "nodemailer";
 import { passwordResetTemplate, verificationTemplate } from "./templates";
 

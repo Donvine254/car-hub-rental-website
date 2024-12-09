@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/db/prisma";
-import { hashPassword } from "../utilis/hashpassword";
+import { hashPassword } from "../utils/hashpassword";
 import { sendVerificationEmail } from "@/emails";
 interface Data {
   username: string;

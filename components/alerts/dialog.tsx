@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from "@/components/alerts/alert-dialog";
 import { X } from "lucide-react";
 type Props = {
   isOpen: boolean;

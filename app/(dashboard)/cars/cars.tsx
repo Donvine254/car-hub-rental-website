@@ -13,13 +13,14 @@ import {
   Star,
 } from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
-import CarModal from "@/components/ui/carModal";
-import FilterModal from "@/components/ui/Filter";
+import CarModal from "@/components/alerts/carModal";
+import FilterModal from "@/components/alerts/Filter";
 import Script from "next/script";
-import { handleGuessCar, showModal } from "@/lib/utilis";
+import { handleGuessCar, showModal } from "@/lib/utils";
 import type { Car } from "@/lib/actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import { Badge } from "@/components/ui/badge";
+import { isCarAvailable } from "@/lib/helpers";
 type Props = {
   Cars: Car[];
 };
@@ -184,7 +185,7 @@ export default function Carspage({ Cars }: Props) {
                     onClick={() => showModal(car.id)}
                     priority
                   />
-                  {car.isRented ? (
+                  {isCarAvailable(car.isRented, car.rentedUntill) ? (
                     <Badge
                       variant="secondary"
                       className="absolute top-3 left-3">
@@ -245,8 +246,10 @@ export default function Carspage({ Cars }: Props) {
                   <button
                     className="px-2 py-1 border rounded-md flex-1 bg-green-500 text-white hover:shadow-2xl hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
                     onClick={() => handleBooking(car)}
-                    disabled={car.isRented}>
-                    {car.isRented ? "Unavailable" : "Book Now"}
+                    disabled={isCarAvailable(car.isRented, car.rentedUntill)}>
+                    {isCarAvailable(car.isRented, car.rentedUntill)
+                      ? "Unavailable"
+                      : "Book Now"}
                   </button>
                 </div>
                 <CarModal Car={car} />

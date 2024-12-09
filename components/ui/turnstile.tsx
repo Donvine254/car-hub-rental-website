@@ -26,7 +26,6 @@ const TurnstileComponent: React.FC<TurnstileComponentProps> = ({
       fixedSize={false}
       size="flexible"
       theme="light"
-      className="hidden"
     />
   );
 };

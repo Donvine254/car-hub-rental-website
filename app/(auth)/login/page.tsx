@@ -41,15 +41,6 @@ export default function Login({}: Props) {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    //verify captcha first
-    if (!isDev) {
-      const result = await verifyTurnstileToken(token);
-      if (!result) {
-        toast.error("Failed to validate captcha");
-        setLoading(false);
-        return false;
-      }
-    }
     // post to /api/login
     try {
       const response = await axios.post("/api/login", {
@@ -57,7 +48,6 @@ export default function Login({}: Props) {
         password: data.password,
       });
       const user = await response.data;
-      setLoading(false);
       toast.success("Logged in successfully", {
         position: "bottom-center",
       });
@@ -191,11 +181,12 @@ export default function Login({}: Props) {
                 </a>
               </div>
             </div>
-          </div>
-          <div className="items-center p-6 flex flex-col space-y-4">
-            {!loading && !isDev && (
+            {!loading && (
               <TurnstileComponent onVerify={(token) => setToken(token)} />
             )}
+          </div>
+
+          <div className="items-center px-6 py-1 flex flex-col space-y-4">
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-green-50 disabled:text-black  h-10 px-4 py-2 w-full bg-green-500 hover:bg-green-600 text-white rounded-md"
               type="submit"
