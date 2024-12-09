@@ -6,6 +6,8 @@ import Image from "next/image";
 import { UploadImage } from "./upload-image";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { toE164 } from "@/lib/helpers";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface User {
   id: number;
@@ -36,7 +38,7 @@ export default function ProfileTab({ user }: { user: User }) {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow">
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 pb-2">
         {/* Responsive grouped inputs */}
         <div className="flex flex-wrap gap-6">
           {/* Group 1 */}
@@ -54,17 +56,16 @@ export default function ProfileTab({ user }: { user: User }) {
             <div className="space-y-2 md:w-1/2">
               <Label htmlFor="phone">Phone Number</Label>
               <PhoneInput
-                      value={toE164(formData.phone)}
-                      defaultCountry="KE"
-                      placeholder="Enter phone number"
-                      onChange={(value) =>
-                        setFormData((prev: any) => ({
-                          ...prev,
-                          phone: value,
-                        }))
-                      }
-                    />
-             
+                value={toE164(formData.phone)}
+                defaultCountry="KE"
+                placeholder="Enter phone number"
+                onChange={(value) =>
+                  setFormData((prev: any) => ({
+                    ...prev,
+                    phone: value,
+                  }))
+                }
+              />
             </div>
           </div>
 
@@ -105,6 +106,27 @@ export default function ProfileTab({ user }: { user: User }) {
           Update Profile
         </button>
       </form>
+      <hr />
+      <div className="py-2 space-y-3">
+        <h2 className="text-xl md:text-2xl font-bold">Danger Zone</h2>
+        <p>Irreversible and Destructive Actions</p>
+        <div className="bg-red-50 border-2 border-red-500 rounded-md px-2 py-4 space-y-4 ">
+          <h3 className="text-base md:text-xl font-bold ">Delete Account</h3>
+          <hr className="border border-red-500" />
+          <p>
+            Once you delete your user account, there is no going back. Please be
+            certain.
+          </p>
+          <Button
+            title="delete user account"
+            variant="destructive"
+            onClick={() =>
+              toast.error("Kindly confirm that you are not drunk!")
+            }>
+            Delete Account
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
