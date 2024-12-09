@@ -8,11 +8,8 @@ import { toast } from "sonner";
 export default function ContactForm() {
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [phone, setPhone] = useState("phone");
-
   const [token, setToken] = useState("");
   const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  const isDev = process.env.NODE_ENV === "development";
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailValue = e.target.value;
     if (emailValue.trim() === "") {
@@ -28,7 +25,7 @@ export default function ContactForm() {
     e.preventDefault();
     const form = e.currentTarget;
     //verify captcha first
-    if (!isDev) {
+    if (token) {
       const result = await verifyTurnstileToken(token);
       if (!result) {
         toast.error("Failed to validate captcha");
@@ -139,7 +136,7 @@ export default function ContactForm() {
           minLength={5}
           required
           placeholder="Type your message here..."></textarea>
-        {!isDev && <TurnstileComponent onVerify={(token) => setToken(token)} />}
+        <TurnstileComponent onVerify={(token) => setToken(token)} />
       </div>
       <div className="flex items-center justify-end gap-4 py-2">
         <button
@@ -150,7 +147,7 @@ export default function ContactForm() {
         <button
           type="submit"
           className="bg-green-600 text-white px-4 py-1 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
-          disabled={!isDev ? !token : false}>
+          disabled={!token}>
           Send
         </button>
       </div>
