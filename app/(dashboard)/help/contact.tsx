@@ -8,6 +8,8 @@ import { toast } from "sonner";
 export default function ContactForm() {
   const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [phone, setPhone] = useState("phone");
+
   const [token, setToken] = useState("");
   const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const isDev = process.env.NODE_ENV === "development";
@@ -123,6 +125,7 @@ export default function ContactForm() {
           {error}
         </p>
       </div>
+
       <div className="space-y-2">
         <label htmlFor="message">
           Your Message<span className="text-red-600 font-bold">*</span>

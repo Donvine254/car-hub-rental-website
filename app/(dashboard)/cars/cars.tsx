@@ -16,7 +16,7 @@ import ScrollToTopButton from "@/components/ui/scrollButton";
 import CarModal from "@/components/alerts/carModal";
 import FilterModal from "@/components/alerts/Filter";
 import Script from "next/script";
-import { handleGuessCar, showModal } from "@/lib/utilis";
+import { handleGuessCar, showModal } from "@/lib/utils";
 import type { Car } from "@/lib/actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import { Badge } from "@/components/ui/badge";
