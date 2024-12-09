@@ -8,6 +8,8 @@ import Script from "next/script";
 import Axios from "axios";
 import Link from "next/link";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
+import { PhoneInput } from "@/components/ui/phoneinput";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 type Props = {};
 interface FormData {
@@ -37,27 +39,34 @@ export default function Register({}: Props) {
       [name]: value,
     }));
   };
-
-  //function to handle form submission
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    //check for email validation
+  function validateFormData(data: FormData): string | null {
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)) {
-      toast.error("Invalid email address", {
-        position: "bottom-center",
-      });
-      return false;
+      return "Invalid email address";
+    }
+    if (!isValidPhoneNumber(data.phone)) {
+      return "Invalid phone number";
     }
     if (
       !/^(?=.*[0-9])(?=.*[a-zA-Z])(?!12345678|password|abcdefgh).{9,}$/.test(
         data.password
       )
     ) {
-      toast.error("Kindly use a strong password", {
-        position: "bottom-center",
+      return "Kindly use a strong password";
+    }
+    return null;
+  }
+  //function to handle form submission
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    //check for errors in the form
+    const errorMessage = validateFormData(data);
+    if (errorMessage) {
+      toast.error(errorMessage, {
+        position: "top-right",
       });
       return false;
-    } else {
+    }
+    {
       setLoading(true);
       try {
         const response = await Axios.post("/api/register", data);
@@ -154,7 +163,7 @@ export default function Register({}: Props) {
                 htmlFor="phone">
                 Phone Number
               </label>
-              <input
+              {/* <input
                 className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md "
                 id="phone"
                 name="phone"
@@ -168,6 +177,18 @@ export default function Register({}: Props) {
                 title="valid phone number must have 10 digits."
                 placeholder="**********"
                 required
+              /> */}
+              <PhoneInput
+                value={data.phone}
+                defaultCountry="KE"
+                placeholder="Enter phone number"
+                onChange={(value) =>
+                  setData((prev) => ({
+                    ...prev,
+                    phone: value,
+                  }))
+                }
+                className="bg-white text-base focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 w-full border-red-500  rounded-md z-50"
               />
             </div>
             <div className="space-y-2 group">

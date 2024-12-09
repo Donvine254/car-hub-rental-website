@@ -74,7 +74,7 @@ export default function DemoContactPage({}: Props) {
               phone: value,
             }))
           }
-          className="bg-white text-base focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 w-full border border-gray-300 rounded-md z-50"
+          className="bg-white text-base focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 w-full border-red-500  rounded-md z-50"
         />
       </div>
       <div className="space-y-2">
