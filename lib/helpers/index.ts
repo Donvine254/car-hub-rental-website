@@ -44,7 +44,7 @@ export function formatDate(inputDate: string): string {
 
 export function isCarAvailable(
   isRented: boolean,
-  rentedUntil: string | undefined
+  rentedUntil: string | any
 ): boolean {
   if (!isRented || !rentedUntil) {
     return false;

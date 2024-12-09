@@ -16,11 +16,11 @@ import { CarSeat, CarFrontIcon, FuelPumpIcon, GearboxIcon } from "@/assets";
 import { toast } from "sonner";
 import type { Car } from "@/lib/actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
-import CustomHeartIcon from "./HeartIcon";
 import CarModal from "../alerts/carModal";
 import { showModal } from "@/lib/utils";
 import { Star } from "lucide-react";
 import { Badge } from "./badge";
+import { isCarAvailable } from "@/lib/helpers";
 type Props = {
   Cars: Car[];
 };
@@ -74,9 +74,10 @@ export default function CarCarousel({ Cars }: Props) {
                   blurDataURL="/vehicle-placeholder.png"
                   priority
                   className="rounded-md hover:scale-105 cursor-pointer"
+                  title="view more details"
                   onClick={() => showModal(car?.id)}
                 />
-                {car.isRented ? (
+                {isCarAvailable(car.isRented, car.rentedUntill) ? (
                   <Badge variant="secondary" className="absolute top-3 left-3">
                     &#x1F552; Booked
                   </Badge>
@@ -123,8 +124,8 @@ export default function CarCarousel({ Cars }: Props) {
                 <button
                   className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
                   onClick={() => handleBooking(car)}
-                  disabled={car.isRented}>
-                  {car.isRented
+                  disabled={isCarAvailable(car.isRented, car.rentedUntill)}>
+                  {isCarAvailable(car.isRented, car.rentedUntill)
                     ? "Unavailable"
                     : `Book Now for $${car.pricePerDay}`}
                 </button>
