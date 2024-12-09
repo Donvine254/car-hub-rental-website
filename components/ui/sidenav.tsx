@@ -58,6 +58,15 @@ export default function SideNav({ user }: Props) {
           <CalendarDays size={20} /> <span>My Orders</span>
         </a>
         <a
+          href="/me/coupons"
+          className={`${
+            pathname.startsWith("/me/orders")
+              ? "bg-green-500 text-white"
+              : "text-green-500 hover:bg-green-500 hover:text-white"
+          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
+          <CalendarDays size={20} /> <span>My Orders</span>
+        </a>
+        <a
           href="/me/favorites"
           className={`${
             pathname.startsWith("/me/favorites")
