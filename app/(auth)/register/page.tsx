@@ -166,21 +166,6 @@ export default function Register({}: Props) {
                 htmlFor="phone">
                 Phone Number
               </label>
-              {/* <input
-                className="flex h-10 bg-background text-base  disabled:cursor-not-allowed disabled:opacity-50 w-full px-3 py-2 border border-gray-300 rounded-md "
-                id="phone"
-                name="phone"
-                value={data.phone}
-                type="tel"
-                pattern="0?[0-9]{9}"
-                inputMode="numeric"
-                onChange={handleChange}
-                minLength={10}
-                maxLength={10}
-                title="valid phone number must have 10 digits."
-                placeholder="**********"
-                required
-              /> */}
               <PhoneInput
                 value={data.phone}
                 defaultCountry="KE"
