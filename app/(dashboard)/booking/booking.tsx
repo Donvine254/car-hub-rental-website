@@ -23,7 +23,7 @@ import secureLocalStorage from "react-secure-storage";
 import { createBooking, Booking } from "@/lib/actions/booking";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { toE164 } from "@/lib/helpers";
+import { isCarAvailable, toE164 } from "@/lib/helpers";
 
 type Props = {
   User: any | null;
@@ -76,7 +76,7 @@ export default function BookingPage({ User }: Props) {
             router.push("/cars");
           }, 1000);
           return; // Exit early
-        } else if (data.isRented) {
+        } else if (isCarAvailable(data?.isRented, data?.rentedUntill)) {
           toast.info("This car is not available for booking", {
             position: "top-center",
           });
@@ -211,7 +211,7 @@ export default function BookingPage({ User }: Props) {
       console.log("modal not found");
     }
   };
-  
+
   return (
     <section className=" bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70  py-5 h-full w-full flex flex-col items-center justify-center p-4 relative ">
       <Script
@@ -453,7 +453,6 @@ export default function BookingPage({ User }: Props) {
                         }))
                       }
                     />
-                  
                   </div>
                   <div className="py-2">
                     <label htmlFor="cost" className="inline-flex font-bold ">
