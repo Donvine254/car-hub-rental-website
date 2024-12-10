@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { toast } from "sonner";
 import { Dispatch } from "react";
+import { Booking } from "@prisma/client";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -80,4 +81,12 @@ export const showModal = async (id: number) => {
   } else {
     console.log("modal not found");
   }
+};
+
+
+export type BookingWithCar = Booking & {
+  car?: {
+    id: number;
+    modelName: string;
+  };
 };

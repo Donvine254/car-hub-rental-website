@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Booking } from "@prisma/client";
 import { NotFound } from "@/components/ui/notfound";
 import { formatISODate } from "@/lib/helpers";
 import {
@@ -21,12 +20,8 @@ import { Button } from "@/components/ui/button";
 import { CancelButton, DetailsButton } from "./order-actions";
 import { PenLine } from "lucide-react";
 import Link from "next/link";
-type BookingWithCar = Booking & {
-  car?: {
-    id: number;
-    modelName: string;
-  };
-};
+import { BookingWithCar } from "@/lib/utils";
+
 type Props = {
   orders: BookingWithCar[];
 };
