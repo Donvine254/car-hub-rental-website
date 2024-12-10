@@ -45,7 +45,7 @@ export default function ProfileTab({ user }: { user: User }) {
       position: "top-right",
     });
     try {
-      const success = await DeleteAccount(user.id);
+      const success = await DeleteAccount(user.id, user.email, user.username);
       toast.success(success.message);
       router.push("/api/logout");
     } catch (error: any) {

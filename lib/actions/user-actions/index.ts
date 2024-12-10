@@ -1,7 +1,12 @@
 "use server";
 
 import { prisma } from "@/db/prisma";
-export async function DeleteAccount(userId: number) {
+import { sendAccountDeletionEmail } from "@/emails";
+export async function DeleteAccount(
+  userId: number,
+  email: string,
+  name: string
+) {
   try {
     const result = await prisma.user.delete({
       where: {
@@ -9,6 +14,7 @@ export async function DeleteAccount(userId: number) {
       },
     });
     // await send email notification to confirm account deletion
+    await sendAccountDeletionEmail(email, name);
     return { success: true, message: "User account deleted successfully." };
   } catch (error: any) {
     console.log(error);

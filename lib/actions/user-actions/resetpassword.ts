@@ -1,8 +1,8 @@
 "use server";
 import { prisma } from "@/db/prisma";
 import { sendResetPasswordEmail } from "@/emails";
-import { decodeData } from "../utils/generatetoken";
-import { hashPassword } from "../utils/hashpassword";
+import { decodeData } from "../../utils/generatetoken";
+import { hashPassword } from "../../utils/hashpassword";
 export async function handleResetPassword(email: string) {
   const e = email.toLowerCase();
   try {
