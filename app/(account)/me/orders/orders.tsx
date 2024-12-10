@@ -1,4 +1,3 @@
-import { Order, orders } from "@/constants";
 import {
   Table,
   TableBody,
@@ -8,8 +7,29 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-
-export function Orders() {
+import { Booking } from "@prisma/client";
+import { NotFound } from "@/components/ui/notfound";
+import { formatISODate } from "@/lib/helpers";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CancelButton, DetailsButton } from "./order-actions";
+import { PenLine } from "lucide-react";
+import Link from "next/link";
+type BookingWithCar = Booking & {
+  car?: {
+    id: number;
+    modelName: string;
+  };
+};
+type Props = {
+  orders: BookingWithCar[];
+};
+export function Orders({ orders }: Props) {
   const scheduledOrders = orders.filter(
     (order) => order.status === "scheduled"
   );
@@ -27,7 +47,10 @@ export function Orders() {
         {scheduledOrders.length > 0 ? (
           <OrderComponent orders={scheduledOrders} />
         ) : (
-          <p>No scheduled orders available.</p>
+          <NotFound
+            title="You have no scheduled orders"
+            description="You have no completed orders. Use the discount code WELCOME20 to enjoy 20% discount on your first booking."
+          />
         )}
       </div>
       <div className="rounded-md border bg-white p-4">
@@ -35,7 +58,10 @@ export function Orders() {
         {completedOrders.length > 0 ? (
           <OrderComponent orders={completedOrders} />
         ) : (
-          <p>No completed orders available.</p>
+          <NotFound
+            title="You have no completed orders"
+            description="You have no completed orders. Use the discount code WELCOME20 to enjoy 20% discount on your first booking."
+          />
         )}
       </div>
       <div className="rounded-md border bg-white p-4">
@@ -43,14 +69,17 @@ export function Orders() {
         {cancelledOrders.length > 0 ? (
           <OrderComponent orders={cancelledOrders} />
         ) : (
-          <p>No cancelled orders available.</p>
+          <NotFound
+            title="You have no cancelled orders"
+            description="You have no cancelled orders. Your cancelled orders will appear here. Kindly note orders must be cancelled 24hrs before pickup time."
+          />
         )}
       </div>
     </div>
   );
 }
 
-function OrderComponent({ orders }: { orders: Order[] }) {
+function OrderComponent({ orders }: { orders: BookingWithCar[] }) {
   return (
     <Table>
       <TableHeader>
@@ -62,19 +91,22 @@ function OrderComponent({ orders }: { orders: Order[] }) {
           <TableHead>Pick Up Date</TableHead>
           <TableHead>Return Date</TableHead>
           <TableHead>Status</TableHead>
+          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {orders.map((order) => (
           <TableRow key={order.id}>
             <TableCell className="font-medium">
-              <Badge variant="default">{order.id}</Badge>
+              <Badge variant="default">#CR00{order.id}</Badge>
             </TableCell>
-            <TableCell>{order.car}</TableCell>
-            <TableCell>{order.pickupLocation}</TableCell>
-            <TableCell>{order.dropoffLocation}</TableCell>
-            <TableCell>{order.pickupDate}</TableCell>
-            <TableCell>{order.returnDate}</TableCell>
+            <TableCell className="capitalize">{order.car?.modelName}</TableCell>
+            <TableCell className="capitalize">{order.pickupLocation}</TableCell>
+            <TableCell className="capitalize">{order.dropLocation}</TableCell>
+            <TableCell>
+              {formatISODate(order.startDate.toISOString())}
+            </TableCell>
+            <TableCell>{formatISODate(order.endDate.toISOString())}</TableCell>
             <TableCell>
               <Badge
                 variant={
@@ -86,6 +118,32 @@ function OrderComponent({ orders }: { orders: Order[] }) {
                 }>
                 {order.status}
               </Badge>
+            </TableCell>
+            <TableCell>
+              {(order.status === "scheduled" ||
+                order.status === "completed") && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                      <span className="sr-only">Open menu</span>
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-fit p-2 border bg-white shadow rounded-md">
+                    {order.status === "scheduled" && (
+                      <CancelButton id={order.id} />
+                    )}
+                    <DetailsButton order={order} />
+                    {order.status === "completed" && (
+                      <Link
+                        className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground w-full justify-start h-10 px-4 py-2"
+                        href={`/reviews/new?car_id=${order?.car?.id}`}>
+                        <PenLine /> <span>Add Review</span>
+                      </Link>
+                    )}
+                  </PopoverContent>
+                </Popover>
+              )}
             </TableCell>
           </TableRow>
         ))}
