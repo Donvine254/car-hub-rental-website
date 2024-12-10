@@ -85,14 +85,17 @@ model Favorite {
 }
 
 model Discount {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  code      String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  Car       Car?     @relation(fields: [carId], references: [id])
-  carId     Int?
+  id          Int            @id @default(autoincrement())
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  code        String         @unique
+  value       Int
+  description String
+  expiresAt   DateTime
+  status      discountStatus @default(unused)
+  createdAt   DateTime       @default(now())
+  Car         Car?           @relation(fields: [carId], references: [id])
+  carId       Int?
 }
 
 enum TransmissionType {
@@ -132,4 +135,10 @@ enum Location {
   mombasa
   eldoret
   kisumu
+}
+
+enum discountStatus {
+  unused
+  used
+  expired
 }
