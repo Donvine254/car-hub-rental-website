@@ -23,7 +23,9 @@ import secureLocalStorage from "react-secure-storage";
 import { createBooking, Booking } from "@/lib/actions/booking";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { toE164 } from "@/lib/helpers";
+import { getISODateString, isCarAvailable, toE164 } from "@/lib/helpers";
+import SuccessDialog from "@/components/alerts/success-dialog";
+import { sendOrderConfirmationEmail } from "@/emails";
 
 type Props = {
   User: any | null;
@@ -52,6 +54,7 @@ export default function BookingPage({ User }: Props) {
     status: "scheduled",
     pickupTime: defaultData?.pickupTime || "08:00",
   });
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     async function redirectUser() {
@@ -76,7 +79,7 @@ export default function BookingPage({ User }: Props) {
             router.push("/cars");
           }, 1000);
           return; // Exit early
-        } else if (data.isRented) {
+        } else if (isCarAvailable(data?.isRented, data?.rentedUntill)) {
           toast.info("This car is not available for booking", {
             position: "top-center",
           });
@@ -137,12 +140,16 @@ export default function BookingPage({ User }: Props) {
       toast.error("Enter a valid phone number");
       return;
     }
-    const startDateTime = new Date(
-      `${formData.startDate}T${formData.pickupTime}:00`
-    ).toISOString();
-    const endDateTime = new Date(
-      `${formData.endDate}T${formData.pickupTime}:00`
-    ).toISOString();
+    const startDateTime = getISODateString(
+      formData.startDate,
+      formData.pickupTime || "08:00"
+    );
+
+    const endDateTime = getISODateString(
+      formData.endDate,
+      formData.pickupTime || "08:00"
+    );
+
     const bookingData = {
       carId: selectedCar.id,
       userId: User.id,
@@ -161,13 +168,18 @@ export default function BookingPage({ User }: Props) {
         spread: 100,
         origin: { y: 0.3 },
       });
-      toast.success("Check your email address to confirm your booking", {
-        position: "top-center",
-      });
+      setIsOpen(true);
+      await sendOrderConfirmationEmail(
+        User.email,
+        User.username,
+        result.id,
+        selectedCar.modelName,
+        result.startDate.toString(),
+        result.endDate.toString(),
+        result.pickupLocation.toUpperCase(),
+        result.totalPrice
+      );
       secureLocalStorage.removeItem("react_booking_form_data");
-      setTimeout(() => {
-        router.push("/me/orders?new_order=true");
-      }, 2000);
     } catch (error) {
       console.error("Failed to create booking:", error);
       toast.error("Failed to create booking. Please try again.");
@@ -211,7 +223,7 @@ export default function BookingPage({ User }: Props) {
       console.log("modal not found");
     }
   };
-  
+
   return (
     <section className=" bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70  py-5 h-full w-full flex flex-col items-center justify-center p-4 relative ">
       <Script
@@ -453,7 +465,6 @@ export default function BookingPage({ User }: Props) {
                         }))
                       }
                     />
-                  
                   </div>
                   <div className="py-2">
                     <label htmlFor="cost" className="inline-flex font-bold ">
@@ -488,6 +499,17 @@ export default function BookingPage({ User }: Props) {
         </div>
       </div>
       <CarModal Car={selectedCar} />
+      <SuccessDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={() => {
+          setTimeout(() => {
+            router.push("/me/orders?new_order=true");
+          }, 500);
+        }}
+        title="Order Placed Successfully"
+        description="Your booking has been successfully placed and we have sent a confirmation email to your registered email."
+      />
     </section>
   );
 }

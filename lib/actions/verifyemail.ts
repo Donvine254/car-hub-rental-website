@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/db/prisma";
 import { decodeData } from "../utils/generatetoken";
+import { sendWelcomeEmail } from "@/emails";
 
 // Decode base64 string to JSON
 
@@ -23,7 +24,7 @@ export async function verifyEmail(token: string) {
       ? JSON.parse(JSON.stringify(user.metadata))
       : {};
     // Update user's emailVerified status
-    await prisma.user.update({
+    const userdata = await prisma.user.update({
       where: { id: Number(data.id) },
       data: {
         metadata: {
@@ -32,6 +33,7 @@ export async function verifyEmail(token: string) {
         },
       },
     });
+    await sendWelcomeEmail(userdata.email, userdata.username);
     return { success: true };
   } catch (error) {
     console.error(error);

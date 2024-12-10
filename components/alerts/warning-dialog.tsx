@@ -8,34 +8,41 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/alerts/alert-dialog";
-import { X } from "lucide-react";
+import { X, AlertTriangle } from "lucide-react";
 type Props = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
   description: string;
+  onClose?: () => void;
+  onConfirm?: () => void;
 };
-export default function DialogComponent({
+export default function WarningDialog({
   isOpen,
   setIsOpen,
   title,
   description,
+  onClose,
+  onConfirm,
 }: Props) {
+  const handleClose = () => {
+    setIsOpen(false);
+    onClose?.();
+  };
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog open={isOpen} onOpenChange={handleClose}>
       <AlertDialogContent>
         <div className="flex justify-end items-start">
-          <AlertDialogTrigger className="hover:text-red-500">
+          <AlertDialogTrigger
+            className="hover:text-red-500"
+            onClick={handleClose}>
             <X />
           </AlertDialogTrigger>
         </div>
         <AlertDialogHeader>
-          <div className="success-checkmark">
-            <div className="check-icon">
-              <span className="icon-line line-tip"></span>
-              <span className="icon-line line-long"></span>
-              <div className="icon-circle"></div>
-              <div className="icon-fix"></div>
+          <div className="flex items-center justify-center my-2">
+            <div className="bg-red-100 rounded-full p-4">
+              <AlertTriangle size={48} className="text-red-500" />
             </div>
           </div>
           <AlertDialogTitle className="text-center text-2xl">
@@ -46,7 +53,14 @@ export default function DialogComponent({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction className="bg-green-500">Cancel</AlertDialogAction>
+          <AlertDialogAction
+            onClick={onConfirm}
+            className="bg-red-500 hover:bg-red-600">
+            Continue
+          </AlertDialogAction>
+          <AlertDialogAction className="bg-green-500" onClick={handleClose}>
+            Cancel
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

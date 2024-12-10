@@ -65,7 +65,7 @@ export default function CarModal({ Car }: CarModalProps) {
             />
           </div>
 
-          <div className="md:flex md:items-center md:justify-between gap 2">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
             <h1 className="text-bold text-2xl my-2 font-semibold">
               {Car.modelName}
             </h1>
@@ -74,7 +74,9 @@ export default function CarModal({ Car }: CarModalProps) {
               {Car.rating}
             </p>
           </div>
-          <h1 className="text-bold text-[18px]">Specifications</h1>
+          <h1 className="text-bold text-[18px] text-green-700">
+            Specifications
+          </h1>
           <div className="text-gray-600 font-semibold py-2 divide divide-y divide-gray-200">
             <div className="flex items-center justify-between ">
               <p className="">Make</p>
@@ -126,7 +128,7 @@ export default function CarModal({ Car }: CarModalProps) {
           </div>
           <button
             onClick={() => handleBooking(Car)}
-            className="px-2 py-1 border rounded-md flex-1 bg-green-500 text-white hover:shadow-2xl hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+            className="px-2 py-1 border rounded-md flex-1 bg-green-500 text-white hover:shadow-2xl hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed xsm:w-full"
             disabled={isCarAvailable(Car.isRented, Car.rentedUntill)}>
             {isCarAvailable(Car.isRented, Car.rentedUntill)
               ? `Booked till ${formatDate(Car?.rentedUntill ?? "")}`

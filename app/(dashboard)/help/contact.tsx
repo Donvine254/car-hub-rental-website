@@ -1,5 +1,5 @@
 "use client";
-import DialogComponent from "@/components/alerts/dialog";
+import SuccessDialog from "@/components/alerts/success-dialog";
 import TurnstileComponent from "@/components/ui/turnstile";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 import React, { FormEvent, useState } from "react";
@@ -167,7 +167,7 @@ export default function ContactForm() {
         </a>
         .
       </p>
-      <DialogComponent
+      <SuccessDialog
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title="Message Sent Successfully"

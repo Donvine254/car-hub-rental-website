@@ -4,9 +4,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import PasswordStrengthMeter from "./passwordmeter";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
-import { resetPassword } from "@/lib/actions/resetpassword";
+import { resetPassword } from "@/lib/actions/user-actions/resetpassword";
 import { decodeData } from "@/lib/utils/generatetoken";
-import DialogComponent from "@/components/alerts/dialog";
+import DialogComponent from "@/components/alerts/success-dialog";
 type Props = {};
 type formStatus = "" | "submitting" | "success" | "error";
 export default function Reset({}: Props) {
