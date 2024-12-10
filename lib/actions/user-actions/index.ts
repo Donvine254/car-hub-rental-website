@@ -9,6 +9,7 @@ export async function DeleteAccount(userId: number) {
         id: Number(userId),
       },
     });
+    // await send email notification to confirm account deletion
     return { success: true, message: "User account deleted successfully." };
   } catch (error: any) {
     console.log(error);
