@@ -37,7 +37,7 @@ export default async function OrdersPage({}: Props) {
     },
   });
   return (
-    <section>
+    <section className="md:w-full">
       <Orders orders={orders} />
     </section>
   );

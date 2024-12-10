@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Booking } from "@prisma/client";
 import { NotFound } from "@/components/ui/notfound";
@@ -33,6 +34,8 @@ export function Orders({ orders }: Props) {
   const scheduledOrders = orders.filter(
     (order) => order.status === "scheduled"
   );
+  const ongoingOrders = orders.filter((order) => order.status === "ongoing");
+
   const completedOrders = orders.filter(
     (order) => order.status === "completed"
   );
@@ -41,39 +44,84 @@ export function Orders({ orders }: Props) {
   );
 
   return (
-    <div className="space-y-4">
-      <div className="rounded-md border bg-white p-4">
-        <h2 className="text-lg font-semibold mb-2">Scheduled Orders</h2>
-        {scheduledOrders.length > 0 ? (
-          <OrderComponent orders={scheduledOrders} />
-        ) : (
-          <NotFound
-            title="You have no scheduled orders"
-            description="You have no completed orders. Use the discount code WELCOME20 to enjoy 20% discount on your first booking."
-          />
-        )}
-      </div>
-      <div className="rounded-md border bg-white p-4">
-        <h2 className="text-lg font-semibold mb-2">Completed Orders</h2>
-        {completedOrders.length > 0 ? (
-          <OrderComponent orders={completedOrders} />
-        ) : (
-          <NotFound
-            title="You have no completed orders"
-            description="You have no completed orders. Use the discount code WELCOME20 to enjoy 20% discount on your first booking."
-          />
-        )}
-      </div>
-      <div className="rounded-md border bg-white p-4">
-        <h2 className="text-lg font-semibold mb-2">Cancelled Orders</h2>
-        {cancelledOrders.length > 0 ? (
-          <OrderComponent orders={cancelledOrders} />
-        ) : (
-          <NotFound
-            title="You have no cancelled orders"
-            description="You have no cancelled orders. Your cancelled orders will appear here. Kindly note orders must be cancelled 24hrs before pickup time."
-          />
-        )}
+    <div className="space-y-4 w-full">
+      <div className="p-4 bg-white shadow rounded-md border">
+        <Tabs defaultValue="scheduled" className="w-full">
+          <TabsList className="flex justify-between gap-2 overflow-x-auto w-full   border-b rounded-none h-auto p-0 bg-transparent">
+            <TabsTrigger
+              value="scheduled"
+              className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 ">
+              Scheduled
+            </TabsTrigger>
+            <TabsTrigger
+              value="ongoing"
+              className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 ">
+              Ongoing
+            </TabsTrigger>
+            <TabsTrigger
+              value="completed"
+              className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 ">
+              Completed
+            </TabsTrigger>
+            <TabsTrigger
+              value="cancelled"
+              className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 ">
+              Cancelled
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="scheduled" className="mt-4 w-full">
+            <div className="rounded-md border bg-white p-4">
+              <h2 className="text-lg font-semibold mb-2">Scheduled Orders</h2>
+              {scheduledOrders.length > 0 ? (
+                <OrderComponent orders={scheduledOrders} />
+              ) : (
+                <NotFound
+                  title="You have no scheduled orders"
+                  description="You have no scheduled orders. Use the discount code WELCOME20 to enjoy 20% discount on your first booking."
+                />
+              )}
+            </div>
+          </TabsContent>
+          <TabsContent value="ongoing" className="mt-4 w-full">
+            <div className="rounded-md border bg-white p-4">
+              <h2 className="text-lg font-semibold mb-2">Ongoing Orders</h2>
+              {ongoingOrders.length > 0 ? (
+                <OrderComponent orders={ongoingOrders} />
+              ) : (
+                <NotFound
+                  title="You have no ongoing orders"
+                  description="You have no ongoing orders. Your ongoing orders will appear here once they are in progress."
+                />
+              )}
+            </div>
+          </TabsContent>
+          <TabsContent value="completed" className="mt-4 w-full">
+            <div className="rounded-md border bg-white p-4">
+              <h2 className="text-lg font-semibold mb-2">Completed Orders</h2>
+              {completedOrders.length > 0 ? (
+                <OrderComponent orders={completedOrders} />
+              ) : (
+                <NotFound
+                  title="You have no completed orders"
+                  description="You have no completed orders. Use the discount code WELCOME20 to enjoy 20% discount on your first booking."
+                />
+              )}
+            </div>
+          </TabsContent>
+          <TabsContent value="cancelled" className="mt-4 w-full">
+            <div className="rounded-md border bg-white p-4">
+              <h2 className="text-lg font-semibold mb-2">Cancelled Orders</h2>
+              {cancelledOrders.length > 0 ? (
+                <OrderComponent orders={cancelledOrders} />
+              ) : (
+                <NotFound
+                  title="You have no cancelled orders"
+                  description="You have no cancelled orders. Your cancelled orders will appear here. Kindly note orders must be cancelled 24hrs before pickup time."
+                />
+              )}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

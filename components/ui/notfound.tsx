@@ -16,7 +16,9 @@ export function NotFound({
         className="mb-6"
         priority
       />
-      <h3 className="text-2xl font-semibold text-gray-800 mb-2">{title}</h3>
+      <h3 className="xsm:text-xl text-2xl font-semibold text-gray-800 mb-2 text-center">
+        {title}
+      </h3>
       <p className="text-gray-600 text-center">{description}</p>
     </div>
   );
