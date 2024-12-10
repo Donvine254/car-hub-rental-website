@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 interface CouponProps {
   code: string;
@@ -44,9 +45,11 @@ export function Coupon({
         <div className="flex justify-between items-center px-6 py-4 ">
           <p className="text-sm">Validity: {expiresAt}</p>
           {status === "unused" ? (
-            <button className="px-6 py-1 bg-black text-white rounded-md hover:bg-black/90 transition-colors">
+            <a
+              href="/cars"
+              className="px-6 py-1  bg-white border-black text-black hover:text-white rounded-md hover:bg-black/90 transition-colors">
               Use Now
-            </button>
+            </a>
           ) : (
             <button
               className="px-6 py-1 bg-black text-white rounded-md hover:bg-black/90 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors capitalize"
@@ -59,3 +62,4 @@ export function Coupon({
     </div>
   );
 }
+

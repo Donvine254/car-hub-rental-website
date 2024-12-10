@@ -6,6 +6,7 @@ import { Car } from "@/lib/actions/fetchCars";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { isCarAvailable } from "@/lib/helpers";
+import { NotFound } from "@/components/ui/notfound";
 type Props = {
   Cars: Car[];
 };
@@ -95,7 +96,9 @@ export default function FavoriteCars({ Cars }: Props) {
                     onClick={() => handleBooking(car)}
                     className="mt-4 bg-green-500 text-center text-white px-4 py-1 rounded-md hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
                     disabled={isCarAvailable(car.isRented, car.rentedUntill)}>
-                    {isCarAvailable(car.isRented, car.rentedUntill)? "Unavailable" : "Book Now"}
+                    {isCarAvailable(car.isRented, car.rentedUntill)
+                      ? "Unavailable"
+                      : "Book Now"}
                   </button>
                 </div>
               </div>
@@ -103,29 +106,11 @@ export default function FavoriteCars({ Cars }: Props) {
           </div>
         ))
       ) : (
-        <div className="p-6 space-y-4 ">
-          <div className="flex items-center justify-center py-1 ">
-            {" "}
-            <Image
-              src="https://res.cloudinary.com/dipkbpinx/image/upload/v1706566325/cars/dusl0mvwvodod8jcz4hz.png"
-              alt="placeholder"
-              height={250}
-              width={450}
-              style={{
-                width: "450px",
-                height: "auto",
-                aspectRatio: "16 / 9",
-              }}
-            />
-          </div>
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-700 leading-loose tracking-wide text-center">
-            You have no favorite cars yet.
-          </h2>
-          <p className="xsm:text-sm text-center ">
-            Save your memorable vehicles here to remind yourself you the
-            experience you shared with them!
-          </p>
-        </div>
+        <NotFound
+          title="You have no favorite cars yet"
+          description="Save your memorable vehicles here to remind yourself you the
+            experience you shared with them!"
+        />
       )}
     </div>
   );

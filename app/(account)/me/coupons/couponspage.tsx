@@ -2,11 +2,12 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Coupon } from "./coupon";
+import { NotFound } from "@/components/ui/notfound";
 
 const coupons = {
   unused: [
     {
-      code: "EarlyBird25",
+      code: "EARLYBIRD25",
       value: 25,
       description: "25% OFF for bookings made 30 days in advance.",
       expiresAt: "14/08/24 - 26/04/25",
@@ -28,9 +29,9 @@ const coupons = {
   ],
   expired: [
     {
-      code: "Adventure20",
+      code: "ADVENTURE20",
       value: 20,
-      description: "20% OFF on offroad vehicles",
+      description: "20% OFF on selected offroad vehicles",
       expiresAt: "14/08/24 - 26/04/25",
     },
   ],
@@ -59,19 +60,43 @@ export default function CouponCenter() {
         </TabsList>
         <div className="mt-8">
           <TabsContent value="unused">
-            {coupons.unused.map((coupon, index) => (
-              <Coupon key={index} {...coupon} status="unused" />
-            ))}
+            {coupons.unused.length > 0 ? (
+              coupons.unused.map((coupon, index) => (
+                <Coupon key={index} {...coupon} status="unused" />
+              ))
+            ) : (
+              <NotFound
+                title="No Coupons Found"
+                description="It looks like there are no coupons available at the moment. Check back
+        later for new offers!"
+              />
+            )}
           </TabsContent>
           <TabsContent value="used">
-            {coupons.used.map((coupon, index) => (
-              <Coupon key={index} {...coupon} status="used" />
-            ))}
+            {coupons.used.length > 0 ? (
+              coupons.used.map((coupon, index) => (
+                <Coupon key={index} {...coupon} status="used" />
+              ))
+            ) : (
+              <NotFound
+                title="No Coupons Found"
+                description="It looks like there are no coupons available at the moment. Check back
+                later for new offers!"
+              />
+            )}
           </TabsContent>
           <TabsContent value="expired">
-            {coupons.expired.map((coupon, index) => (
-              <Coupon key={index} {...coupon} status="expired" />
-            ))}
+            {coupons.expired?.length > 0 ? (
+              coupons?.expired?.map((coupon, index) => (
+                <Coupon key={index} {...coupon} status="expired" />
+              ))
+            ) : (
+              <NotFound
+                title="No Coupons Found"
+                description="It looks like there are no coupons available at the moment. Check back
+                later for new offers!"
+              />
+            )}
           </TabsContent>
         </div>
       </Tabs>
