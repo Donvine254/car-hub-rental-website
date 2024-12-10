@@ -23,9 +23,18 @@ export function Coupon({
           status === "unused"
             ? "bg-green-400 text-white"
             : status === "used"
-            ? "bg-green-50 cursor-not-allowed"
+            ? "bg-gray-200 cursor-not-allowed"
             : "bg-red-50 cursor-not-allowed"
         }`}>
+        <Image
+          src="https://res.cloudinary.com/dipkbpinx/image/upload/v1733859016/illustrations/coupon-bg_bbjnbu.svg"
+          width={120}
+          height={120}
+          priority
+          fetchPriority="high"
+          alt="coupon-bg"
+          className="absolute top-0 right-0"
+        />
         {/* Left circle cutout */}
         <div className="absolute left-[-10px] top-[60%] transform -translate-y-1/2 w-[20px] h-[20px]  bg-white rounded-full z-50" />
         {/* Right circle cutout */}
