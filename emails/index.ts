@@ -6,7 +6,9 @@ import {
   welcomeTemplate,
   verificationTemplate,
   accountDeletionTemplate,
+  orderConfirmationEmail,
 } from "./templates";
+import { Order } from "@/constants";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -94,6 +96,40 @@ export async function sendAccountDeletionEmail(email: string, name: string) {
       to: email,
       from: sender,
       html: accountDeletionTemplate(name),
+    });
+    console.log("Email sent successfully");
+    return { message: "email sent successfully" };
+  } catch (error) {
+    console.error("Email delivery failed:", error);
+    return { message: "Email delivery failed" };
+  }
+}
+
+async function sendOrderConfirmationEmail(
+  email: string,
+  name: string,
+  bookingId: number,
+  vehicleModel: string,
+  startDate: string,
+  endDate: string,
+  pickupLocation: string,
+  totalAmount: number
+) {
+  //before passing the values to the template, convert the startdate and endDate from ISO format to something like  1st July 2050 at 10:00 AM
+  try {
+    const response = await sendEmail({
+      subject: `Your Carhub Kenya Account Has Been Deleted`,
+      to: email,
+      from: sender,
+      html: orderConfirmationEmail(
+        name,
+        bookingId,
+        vehicleModel,
+        startDate,
+        endDate,
+        pickupLocation,
+        totalAmount
+      ),
     });
     console.log("Email sent successfully");
     return { message: "email sent successfully" };

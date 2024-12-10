@@ -134,7 +134,9 @@ export const passwordResetTemplate = (
     </div>
 </body>`;
 
-export const accountDeletionTemplate = (name) => `<div style="margin:5px auto; max-width: 768px; padding:5px;" >
+export const accountDeletionTemplate = (
+  name
+) => `<div style="margin:5px auto; max-width: 768px; padding:5px;" >
     <div style="text-align: center; padding: 5px; width: 100%;">
   <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1732997580/logos/sfrttgj1lm0ssqg72zb8.png" alt="carhub logo" height="30" width="200" style="margin: 5px auto"/>
 </div>
@@ -175,4 +177,65 @@ export const accountDeletionTemplate = (name) => `<div style="margin:5px auto; m
     <p><a href="https://carhubke.vercel.app/privacy">Privacy Policy</a> | <a href="https://carhubke.vercel.app/help">Contact Details </a></p>
     </footer> 
   </div>
+`;
+
+export const orderConfirmationEmail = (
+  name,
+  bookingId,
+  vehicleModel,
+  startDate,
+  endDate,
+  pickupLocation,
+  totalAmount
+) => `<div style="margin:5px auto; max-width: 768px; padding:5px;">
+  <div style="text-align: center; padding: 5px; width: 100%;">
+    <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1732997580/logos/sfrttgj1lm0ssqg72zb8.png" alt="Carhub Logo" height="30" width="200" style="margin: 5px auto"/>
+  </div>
+  <h3 style="font-weight:bold;">Your Booking Is Confirmed! 🚗</h3>
+  <p>Hi ${name},</p>
+  <p>Thank you for choosing Carhub Kenya for your journey. We're delighted to confirm your upcoming car rental.</p>
+  <p>Here are the details of your booking:</p>
+  <ul>
+     <li><strong>Booking Reference Number:</strong> ${bookingId}</li>
+    <li><strong>Vehicle:</strong> ${vehicleModel}</li>
+    <li><strong>Rental Period:</strong> From ${startDate} to ${endDate}</li>
+    <li><strong>Pickup Location:</strong> ${pickupLocation}</li>
+    <li><strong>Total Amount:</strong> $${totalAmount}</li>
+  </ul>
+  <h4>Important Information</h4>
+  <ul>
+    <li> <strong>Driver Information: </strong>Please ensure the primary driver presents a valid driver's license at the time of pick-up.</li>
+   <li> <strong>Cancellation Policy: </strong>Cancellations and modifications made 24 hours or less before pick-up are free of charge. Cancellations made beyond 24 hours will incur a fee equivalent to one day's rental.</li>
+   <li> <strong>Pickup Instructions: </strong>Upon arrival at our offices, please proceed to our rental counter and present a copy of this confirmation email along with your driver's license and credit card.</li>
+  </ul>
+
+  <p>If you have any questions or need to make changes to your booking, feel free to contact our support team. We're here to help!</p>
+  <p>Thank you for being part of our journey,</p>
+  <p>The Carhub Kenya Team 🚘</p>
+  <small>This email is for information purposes only. Kindly do not reply to this email.</small>
+  <hr style="border-color: #22C55E"/>
+  <footer style="font-size: 12px; padding: 5px; margin: 10px 0px; text-align:center; color: #22C55E">  
+    <table align="center" style="margin: 10px auto;">
+      <tr>
+        <td style="padding: 0 5px;">
+          <a href="https://www.facebook.com/diamond.degesh.3" title="Facebook">
+            <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1697311304/logos/facebook-logo-removebg-preview_k2pief.png" alt="Facebook" width="30" height="30">
+          </a>
+        </td>
+        <td style="padding: 0 5px;">
+          <a href="https://x.com/diamonddegesh" title="Twitter">
+            <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1697311304/logos/twitter-logo-removebg-preview_hc45pq.png" alt="Twitter" width="30">
+          </a>
+        </td>
+        <td style="padding: 0 5px;">
+          <a href="https://instagram.com/Donvine254" title="Instagram">
+            <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1697311304/logos/instagram-logo-removebg-preview_jh0wxb.png" alt="Instagram" width="30" height="30">
+          </a>
+        </td>
+      </tr>
+    </table>
+    <p style="font-weight:bold">123 Kimathi Street, Nairobi, Kenya</p>
+    <p><a href="https://carhubke.vercel.app/privacy">Privacy Policy</a> | <a href="https://carhubke.vercel.app/help">Contact Details</a></p>
+  </footer>
+</div>
 `;
