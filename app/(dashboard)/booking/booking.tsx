@@ -23,8 +23,9 @@ import secureLocalStorage from "react-secure-storage";
 import { createBooking, Booking } from "@/lib/actions/booking";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { isCarAvailable, toE164 } from "@/lib/helpers";
+import { getISODateString, isCarAvailable, toE164 } from "@/lib/helpers";
 import SuccessDialog from "@/components/alerts/success-dialog";
+import { sendOrderConfirmationEmail } from "@/emails";
 
 type Props = {
   User: any | null;
@@ -139,12 +140,16 @@ export default function BookingPage({ User }: Props) {
       toast.error("Enter a valid phone number");
       return;
     }
-    const startDateTime = new Date(
-      `${formData.startDate}T${formData.pickupTime}:00`
-    ).toISOString();
-    const endDateTime = new Date(
-      `${formData.endDate}T${formData.pickupTime}:00`
-    ).toISOString();
+    const startDateTime = getISODateString(
+      formData.startDate,
+      formData.pickupTime || "08:00"
+    );
+
+    const endDateTime = getISODateString(
+      formData.endDate,
+      formData.pickupTime || "08:00"
+    );
+
     const bookingData = {
       carId: selectedCar.id,
       userId: User.id,
@@ -164,6 +169,16 @@ export default function BookingPage({ User }: Props) {
         origin: { y: 0.3 },
       });
       setIsOpen(true);
+      await sendOrderConfirmationEmail(
+        User.email,
+        User.username,
+        result.id,
+        selectedCar.modelName,
+        result.startDate.toString(),
+        result.endDate.toString(),
+        result.pickupLocation.toUpperCase(),
+        result.totalPrice
+      );
       secureLocalStorage.removeItem("react_booking_form_data");
     } catch (error) {
       console.error("Failed to create booking:", error);

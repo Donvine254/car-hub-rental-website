@@ -191,12 +191,12 @@ export const orderConfirmationEmail = (
   <div style="text-align: center; padding: 5px; width: 100%;">
     <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1732997580/logos/sfrttgj1lm0ssqg72zb8.png" alt="Carhub Logo" height="30" width="200" style="margin: 5px auto"/>
   </div>
-  <h3 style="font-weight:bold;">Your Booking Is Confirmed! 🚗</h3>
+  <h3 style="font-weight:bold;">Your Booking Is Confirmed!</h3>
   <p>Hi ${name},</p>
-  <p>Thank you for choosing Carhub Kenya for your journey. We're delighted to confirm your upcoming car rental.</p>
-  <p>Here are the details of your booking:</p>
+  <p>Thank you for choosing Carhub Kenya for your journey. We're delighted to confirm your upcoming car rental. Below, you will find all the details regarding your reservation:</p>
+  <h4>Booking Details:</h4>
   <ul>
-     <li><strong>Booking Reference Number:</strong> ${bookingId}</li>
+     <li><strong>Booking Reference Number:</strong> #CR00${bookingId}</li>
     <li><strong>Vehicle:</strong> ${vehicleModel}</li>
     <li><strong>Rental Period:</strong> From ${startDate} to ${endDate}</li>
     <li><strong>Pickup Location:</strong> ${pickupLocation}</li>

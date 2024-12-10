@@ -9,6 +9,7 @@ import {
   orderConfirmationEmail,
 } from "./templates";
 import { Order } from "@/constants";
+import { formatISODate } from "@/lib/helpers";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -105,7 +106,7 @@ export async function sendAccountDeletionEmail(email: string, name: string) {
   }
 }
 
-async function sendOrderConfirmationEmail(
+export async function sendOrderConfirmationEmail(
   email: string,
   name: string,
   bookingId: number,
@@ -115,7 +116,6 @@ async function sendOrderConfirmationEmail(
   pickupLocation: string,
   totalAmount: number
 ) {
-  //before passing the values to the template, convert the startdate and endDate from ISO format to something like  1st July 2050 at 10:00 AM
   try {
     const response = await sendEmail({
       subject: `Your Carhub Kenya Account Has Been Deleted`,
@@ -125,8 +125,8 @@ async function sendOrderConfirmationEmail(
         name,
         bookingId,
         vehicleModel,
-        startDate,
-        endDate,
+        formatISODate(startDate),
+        formatISODate(endDate),
         pickupLocation,
         totalAmount
       ),
