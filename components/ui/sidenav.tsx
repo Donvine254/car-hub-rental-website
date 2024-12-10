@@ -8,6 +8,7 @@ import {
   CalendarDays,
   Settings,
   LogOut,
+  Tag,
 } from "lucide-react";
 type Props = {
   user: {
@@ -60,11 +61,11 @@ export default function SideNav({ user }: Props) {
         <a
           href="/me/coupons"
           className={`${
-            pathname.startsWith("/me/orders")
+            pathname.startsWith("/me/coupons")
               ? "bg-green-500 text-white"
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
-          <CalendarDays size={20} /> <span>My Orders</span>
+          <Tag size={20} /> <span> Coupon Center</span>
         </a>
         <a
           href="/me/favorites"
@@ -73,7 +74,7 @@ export default function SideNav({ user }: Props) {
               ? "bg-green-500 text-white"
               : "text-green-500 hover:bg-green-500 hover:text-white"
           } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
-          <CarFront size={20} /> <span>My Favorites</span>
+          <CarFront size={20} /> <span> Favorite Cars</span>
         </a>
         <a
           href="/me/settings"
