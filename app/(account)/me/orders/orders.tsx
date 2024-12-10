@@ -129,9 +129,9 @@ function OrderComponent({ orders }: { orders: BookingWithCar[] }) {
         <TableRow>
           <TableHead>Order ID</TableHead>
           <TableHead>Car Name</TableHead>
-          <TableHead>Pick Up Location</TableHead>
-          <TableHead>Drop Off Location</TableHead>
-          <TableHead>Pick Up Date</TableHead>
+          <TableHead>Pickup Location</TableHead>
+          <TableHead>Dropoff Location</TableHead>
+          <TableHead>Pickup Date</TableHead>
           <TableHead>Return Date</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Actions</TableHead>

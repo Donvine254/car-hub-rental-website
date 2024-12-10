@@ -47,7 +47,7 @@ export default async function Profile({}: Props) {
     .slice(0, 5);
   return (
     <section>
-      <Stats />
+      <Stats orders={orders} />
       <RecentOrders orders={recentOrders} />
       <Favorites />
     </section>
