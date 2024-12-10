@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { handleResetPassword } from "@/lib/actions/resetpassword";
 import TurnstileComponent from "@/components/ui/turnstile";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
-import DialogComponent from "@/components/alerts/dialog";
+import DialogComponent from "@/components/alerts/success-dialog";
 
 export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);

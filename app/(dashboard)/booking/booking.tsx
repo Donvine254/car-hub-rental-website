@@ -24,7 +24,7 @@ import { createBooking, Booking } from "@/lib/actions/booking";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { isCarAvailable, toE164 } from "@/lib/helpers";
-import DialogComponent from "@/components/alerts/dialog";
+import SuccessDialog from "@/components/alerts/success-dialog";
 
 type Props = {
   User: any | null;
@@ -484,7 +484,7 @@ export default function BookingPage({ User }: Props) {
         </div>
       </div>
       <CarModal Car={selectedCar} />
-      <DialogComponent
+      <SuccessDialog
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         onClose={() => {
