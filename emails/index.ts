@@ -8,7 +8,6 @@ import {
   accountDeletionTemplate,
   orderConfirmationEmail,
 } from "./templates";
-import { Order } from "@/constants";
 import { formatISODate } from "@/lib/helpers";
 
 const transporter = nodemailer.createTransport({
