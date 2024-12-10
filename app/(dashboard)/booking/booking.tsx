@@ -24,6 +24,7 @@ import { createBooking, Booking } from "@/lib/actions/booking";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { isCarAvailable, toE164 } from "@/lib/helpers";
+import DialogComponent from "@/components/alerts/dialog";
 
 type Props = {
   User: any | null;
@@ -52,6 +53,7 @@ export default function BookingPage({ User }: Props) {
     status: "scheduled",
     pickupTime: defaultData?.pickupTime || "08:00",
   });
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     async function redirectUser() {
@@ -161,13 +163,8 @@ export default function BookingPage({ User }: Props) {
         spread: 100,
         origin: { y: 0.3 },
       });
-      toast.success("Check your email address to confirm your booking", {
-        position: "top-center",
-      });
+      setIsOpen(true);
       secureLocalStorage.removeItem("react_booking_form_data");
-      setTimeout(() => {
-        router.push("/me/orders?new_order=true");
-      }, 2000);
     } catch (error) {
       console.error("Failed to create booking:", error);
       toast.error("Failed to create booking. Please try again.");
@@ -487,6 +484,17 @@ export default function BookingPage({ User }: Props) {
         </div>
       </div>
       <CarModal Car={selectedCar} />
+      <DialogComponent
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={() => {
+          setTimeout(() => {
+            router.push("/me/orders?new_order=true");
+          }, 500);
+        }}
+        title="Order Placed Successfully"
+        description="Your booking has been successfully placed and we have sent a confirmation email to your registered email."
+      />
     </section>
   );
 }

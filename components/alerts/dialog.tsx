@@ -14,18 +14,26 @@ type Props = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
   description: string;
+  onClose?: () => void;
 };
 export default function DialogComponent({
   isOpen,
   setIsOpen,
   title,
   description,
+  onClose,
 }: Props) {
+  const handleClose = () => {
+    setIsOpen(false);
+    onClose?.();
+  };
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog open={isOpen} onOpenChange={handleClose}>
       <AlertDialogContent>
         <div className="flex justify-end items-start">
-          <AlertDialogTrigger className="hover:text-red-500">
+          <AlertDialogTrigger
+            className="hover:text-red-500"
+            onClick={handleClose}>
             <X />
           </AlertDialogTrigger>
         </div>
@@ -46,7 +54,9 @@ export default function DialogComponent({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction className="bg-green-500">Cancel</AlertDialogAction>
+          <AlertDialogAction className="bg-green-500" onClick={handleClose}>
+            Confirm
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
