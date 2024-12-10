@@ -23,31 +23,31 @@ export function Coupon({
           status === "unused"
             ? "bg-green-400 text-white"
             : status === "used"
-            ? "bg-gray-100"
-            : "bg-gray-200"
+            ? "bg-green-50 cursor-not-allowed"
+            : "bg-red-50 cursor-not-allowed"
         }`}>
         {/* Left circle cutout */}
-        <div className="absolute left-[-10px] top-[60%] transform -translate-y-1/2 w-[20px] h-[20px] bg-white rounded-full z-50" />
+        <div className="absolute left-[-10px] top-[60%] transform -translate-y-1/2 w-[20px] h-[20px]  bg-white rounded-full z-50" />
         {/* Right circle cutout */}
         <div className="absolute right-[-10px] top-[60%] transform -translate-y-1/2 w-[20px] h-[20px] bg-white rounded-full z-50" />
         <div className="px-6 py-4">
           <div className="flex justify-start items-center gap-4">
-            <h3 className="text-2xl font-bold">{code}</h3>
+            <h3 className="text-xl md:text-2xl font-bold">{code}</h3>
             {status === "unused" && (
               <Badge variant="default" className="bg-white">
                 Exclusive
               </Badge>
             )}
           </div>
-          <p className="text-xl font-extralight">{description}</p>
+          <p className="text-base md:text-xl font-extralight">{description}</p>
         </div>
         <div className="absolute left-0 right-0 top-[60%] border-t-2 border-dotted border-black/20 z-0 overflow-x-hidden" />
-        <div className="flex justify-between items-center px-6 py-4 ">
+        <div className="flex justify-between items-center flex-wrap px-6 py-4 gap-2 xsm:mt-4 ">
           <p className="text-sm">Validity: {expiresAt}</p>
           {status === "unused" ? (
             <a
               href="/cars"
-              className="px-6 py-1  bg-white border-black text-black hover:text-white rounded-md hover:bg-black/90 transition-colors">
+              className="px-6 py-1  bg-white border-black text-black hover:text-white rounded-md hover:bg-black/90 transition-colors xsm:w-full xsm:text-center">
               Use Now
             </a>
           ) : (
@@ -62,4 +62,3 @@ export function Coupon({
     </div>
   );
 }
-

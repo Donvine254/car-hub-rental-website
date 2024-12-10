@@ -39,67 +39,69 @@ const coupons = {
 
 export default function CouponCenter() {
   return (
-    <div className="container mx-auto p-4 bg-white shadow rounded-md border">
-      <Tabs defaultValue="unused" className="w-full">
-        <TabsList className="w-full justify-start border-b rounded-none h-auto p-0 bg-transparent">
-          <TabsTrigger
-            value="unused"
-            className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 pb-2">
-            Unused
-          </TabsTrigger>
-          <TabsTrigger
-            value="used"
-            className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 pb-2">
-            Used
-          </TabsTrigger>
-          <TabsTrigger
-            value="expired"
-            className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 pb-2">
-            Expired
-          </TabsTrigger>
-        </TabsList>
-        <div className="mt-8">
-          <TabsContent value="unused">
-            {coupons.unused.length > 0 ? (
-              coupons.unused.map((coupon, index) => (
-                <Coupon key={index} {...coupon} status="unused" />
-              ))
-            ) : (
-              <NotFound
-                title="No Coupons Found"
-                description="It looks like there are no coupons available at the moment. Check back
+    <section className="space-y-4">
+      <div className="p-4 bg-white shadow rounded-md border">
+        <Tabs defaultValue="unused" className="w-full">
+          <TabsList className="w-full justify-start border-b rounded-none h-auto p-0 bg-transparent">
+            <TabsTrigger
+              value="unused"
+              className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 pb-2">
+              Unused
+            </TabsTrigger>
+            <TabsTrigger
+              value="used"
+              className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 pb-2">
+              Used
+            </TabsTrigger>
+            <TabsTrigger
+              value="expired"
+              className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 pb-2">
+              Expired
+            </TabsTrigger>
+          </TabsList>
+          <div className="mt-8">
+            <TabsContent value="unused">
+              {coupons.unused.length > 0 ? (
+                coupons.unused.map((coupon, index) => (
+                  <Coupon key={index} {...coupon} status="unused" />
+                ))
+              ) : (
+                <NotFound
+                  title="No Coupons Found"
+                  description="It looks like there are no coupons available at the moment. Check back
         later for new offers!"
-              />
-            )}
-          </TabsContent>
-          <TabsContent value="used">
-            {coupons.used.length > 0 ? (
-              coupons.used.map((coupon, index) => (
-                <Coupon key={index} {...coupon} status="used" />
-              ))
-            ) : (
-              <NotFound
-                title="No Coupons Found"
-                description="It looks like there are no coupons available at the moment. Check back
+                />
+              )}
+            </TabsContent>
+            <TabsContent value="used">
+              {coupons.used.length > 0 ? (
+                coupons.used.map((coupon, index) => (
+                  <Coupon key={index} {...coupon} status="used" />
+                ))
+              ) : (
+                <NotFound
+                  title="No Coupons Found"
+                  description="It looks like there are no coupons available at the moment. Check back
                 later for new offers!"
-              />
-            )}
-          </TabsContent>
-          <TabsContent value="expired">
-            {coupons.expired?.length > 0 ? (
-              coupons?.expired?.map((coupon, index) => (
-                <Coupon key={index} {...coupon} status="expired" />
-              ))
-            ) : (
-              <NotFound
-                title="No Coupons Found"
-                description="It looks like there are no coupons available at the moment. Check back
+                />
+              )}
+            </TabsContent>
+            <TabsContent value="expired">
+              {coupons.expired?.length > 0 ? (
+                coupons?.expired?.map((coupon, index) => (
+                  <Coupon key={index} {...coupon} status="expired" />
+                ))
+              ) : (
+                <NotFound
+                  title="No Coupons Found"
+                  description="It looks like there are no coupons available at the moment. Check back
                 later for new offers!"
-              />
-            )}
-          </TabsContent>
-        </div>
-      </Tabs>
-    </div>
+                />
+              )}
+            </TabsContent>
+          </div>
+        </Tabs>
+      </div>
+    </section>
   );
 }

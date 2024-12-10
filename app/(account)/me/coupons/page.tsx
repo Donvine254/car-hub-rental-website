@@ -11,7 +11,7 @@ type Props = {};
 
 export default function CouponPage({}: Props) {
   return (
-    <section className="w-full">
+    <section className="md:container">
       <CouponCenter />
     </section>
   );
