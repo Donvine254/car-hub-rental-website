@@ -134,4 +134,45 @@ export const passwordResetTemplate = (
     </div>
 </body>`;
 
-export const accountDeletionTemplate = (name) => ``;
+export const accountDeletionTemplate = (name) => `<div style="margin:5px auto; max-width: 768px; padding:5px;" >
+    <div style="text-align: center; padding: 5px; width: 100%;">
+  <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1732997580/logos/sfrttgj1lm0ssqg72zb8.png" alt="carhub logo" height="30" width="200" style="margin: 5px auto"/>
+</div>
+<h3 style="font-weight:bold;">Important: Your Account Has Been Deleted</h3>
+<p>Hi ${name},</p>
+<p>We are writing to inform you that someone (hopefully you) as requested to delete your Carhub Account.</p>
+
+<p>As per your request, your account and all associated data has been deleted. Kindly note that this action cannot be undone.</p>
+<p>If this deletion was unintentional or you change your mind, we’d still love to have you as part of the Carhub Kenya family.</p>
+<p>While we cannot recover your deleted data, you are always welcome to create a new account and continue exploring the open road with us</p>
+<p>Should you have any questions or need assistance, feel free to reach out to our support team.</p>
+
+<p>Thank you for being part of our journey,</p>
+<p>The Carhub Kenya Team 🚘</p>
+ <small>This email is for information purposes only. Kindly do not reply to this email.</small>
+    <hr style="border-color: #22C55E"/>
+    <footer style="font-size: 12px; padding: 5px; margin: 10px 0px; text-align:center; color: #22C55E">  
+    <table align="center" style="margin: 10px auto;">
+      <tr>
+        <td style="padding: 0 5px;">
+          <a href="https://www.facebook.com/diamond.degesh.3" title="Facebook">
+            <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1697311304/logos/facebook-logo-removebg-preview_k2pief.png" alt="Facebook" width="30" height="30" >
+          </a>
+        </td>
+        <td style="padding: 0 5px;">
+          <a href="https://x.com/diamonddegesh" title="Twitter">
+            <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1697311304/logos/twitter-logo-removebg-preview_hc45pq.png" alt="Twitter" width="30" >
+          </a>
+        </td>
+        <td style="padding: 0 5px;">
+          <a href="https://instagram.com/Donvine254" title="instagram">
+            <img src="https://res.cloudinary.com/dipkbpinx/image/upload/v1697311304/logos/instagram-logo-removebg-preview_jh0wxb.png" alt="instagram" width="30" height="30" >
+          </a>
+        </td>
+      </tr>
+    </table>
+    <p style="font-weight:bold">123 Kimathi Street, Nairobi, Kenya</p>
+    <p><a href="https://carhubke.vercel.app/privacy">Privacy Policy</a> | <a href="https://carhubke.vercel.app/help">Contact Details </a></p>
+    </footer> 
+  </div>
+`;

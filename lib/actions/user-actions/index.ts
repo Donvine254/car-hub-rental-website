@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/db/prisma";
-import { redirect } from "next/navigation";
 export async function DeleteAccount(userId: number) {
   try {
     const result = await prisma.user.delete({
