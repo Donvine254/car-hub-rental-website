@@ -33,7 +33,7 @@ export default function FavoriteCars({ Cars }: Props) {
             key={car.id}
             className="bg-white rounded-lg shadow-lg border overflow-hidden flex items-center flex-wrap p-4 relative">
             <button
-              className="absolute right-2 top-2 hover:text-red-500"
+              className="absolute right-1 top-1 hover:text-red-500 xsm:bg-gray-200 rounded-full p-1 "
               title="remove from favorites"
               onClick={() => handleUnfavorite(car.id)}>
               {" "}
