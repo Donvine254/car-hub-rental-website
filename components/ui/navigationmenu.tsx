@@ -189,6 +189,13 @@ export default function NavigationMenu({ variant }: Props) {
                     </li>
                     <li>
                       <a
+                        href="/me/coupons"
+                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        Coupon Center
+                      </a>
+                    </li>
+                    <li>
+                      <a
                         href="/me/favorites"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         My Favorite Cars

@@ -178,11 +178,14 @@ function OrderComponent({ orders }: { orders: BookingWithCar[] }) {
                     )}
                     <DetailsButton order={order} />
                     {order.status === "completed" && (
-                      <Link
-                        className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground w-full justify-start h-10 px-4 py-2"
-                        href={`/reviews/new?car_id=${order?.car?.id}`}>
-                        <PenLine /> <span>Add Review</span>
-                      </Link>
+                      <>
+                        <Link
+                          className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground w-full justify-start h-10 px-4 py-2"
+                          href={`/reviews/new?car_id=${order?.car?.id}`}>
+                          <PenLine /> <span>Add Review</span>
+                        </Link>
+                        <button>❤️Add to Favorites</button>
+                      </>
                     )}
                   </PopoverContent>
                 </Popover>
