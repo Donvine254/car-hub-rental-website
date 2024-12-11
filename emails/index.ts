@@ -117,7 +117,7 @@ export async function sendOrderConfirmationEmail(
 ) {
   try {
     const response = await sendEmail({
-      subject: `Your Carhub Kenya Account Has Been Deleted`,
+      subject: `Your Booking Has Been Confirmed! `,
       to: email,
       from: sender,
       html: orderConfirmationEmail(
