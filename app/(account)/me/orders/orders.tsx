@@ -17,7 +17,7 @@ import {
 } from "@radix-ui/react-popover";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CancelButton, DetailsButton } from "./order-actions";
+import { CancelButton, DetailsButton, FavoriteButton } from "./order-actions";
 import { PenLine } from "lucide-react";
 import Link from "next/link";
 import { BookingWithCar } from "@/lib/utils";
@@ -42,7 +42,12 @@ export function Orders({ orders }: Props) {
     <div className="space-y-4 w-full">
       <div className="p-4 bg-white shadow rounded-md border">
         <Tabs defaultValue="scheduled" className="w-full">
-          <TabsList className="flex justify-between gap-2 overflow-x-auto w-full   border-b rounded-none h-auto p-0 bg-transparent">
+          <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
+            <TabsTrigger
+              value="All"
+              className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 ">
+              All
+            </TabsTrigger>
             <TabsTrigger
               value="scheduled"
               className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6 ">
@@ -64,6 +69,19 @@ export function Orders({ orders }: Props) {
               Cancelled
             </TabsTrigger>
           </TabsList>
+          <TabsContent value="All" className="mt-4 w-full">
+            <div className="rounded-md border bg-white p-4">
+              <h2 className="text-lg font-semibold mb-2">All Orders</h2>
+              {orders.length > 0 ? (
+                <OrderComponent orders={orders} />
+              ) : (
+                <NotFound
+                  title="You have no booking history."
+                  description="Your adventure awaits. Use the discount code WELCOME20 to enjoy 20% discount on your first booking."
+                />
+              )}
+            </div>
+          </TabsContent>
           <TabsContent value="scheduled" className="mt-4 w-full">
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Scheduled Orders</h2>
@@ -184,7 +202,7 @@ function OrderComponent({ orders }: { orders: BookingWithCar[] }) {
                           href={`/reviews/new?car_id=${order?.car?.id}`}>
                           <PenLine /> <span>Add Review</span>
                         </Link>
-                        <button>❤️Add to Favorites</button>
+                        <FavoriteButton order={order} />
                       </>
                     )}
                   </PopoverContent>

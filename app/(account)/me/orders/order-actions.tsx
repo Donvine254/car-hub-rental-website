@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Booking } from "@prisma/client";
-import { View, X } from "lucide-react";
+import { HeartIcon, View, X } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 
@@ -46,6 +46,22 @@ export function DetailsButton({ order }: DetailsButtonProps) {
       variant="ghost"
       onClick={handleViewDetails}>
       <View /> <span>View Details</span>
+    </Button>
+  );
+}
+export function FavoriteButton({ order }: DetailsButtonProps) {
+  function handleFavorite() {
+    //opens a details modal
+    toast.info("Upcoming feature!");
+  }
+
+  return (
+    <Button
+      className="w-full flex items-center gap-2 justify-start group"
+      variant="ghost"
+      onClick={handleFavorite}>
+      <HeartIcon className="group-hover:text-red-600" />
+      <span>Add to Favorites</span>
     </Button>
   );
 }
