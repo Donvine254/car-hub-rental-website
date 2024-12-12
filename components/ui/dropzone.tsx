@@ -140,8 +140,8 @@ export default function Dropzone({ setCarImage, imageUrl }: Props) {
         </div>
       </div>
       {imageUrl ? (
-        <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg flex-wrap gap-3">
-          <div className="flex items-center xsm:flex-col gap-2">
+        <div className=" p-4 bg-gray-100 rounded-lg gap-3">
+          <div className="flex items-center justify-between xsm:flex-col gap-2">
             {/*  eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imageUrl}
@@ -150,23 +150,23 @@ export default function Dropzone({ setCarImage, imageUrl }: Props) {
               height={160}
               width={90}
             />
-            <div className="flex items-center gap-2 xsm:justify-between">
+            <div className="flex items-center justify-end gap-4 xsm:justify-between">
               <Button
                 type="button"
                 variant="default"
-                className="bg-blue-500 text-white hover:bg-blue-600"
+                disabled={loading}
+                className="bg-green-500 text-white hover:bg-green-600"
                 onClick={() => {
-                  setImage(null);
-                  setCarImage("");
+                  fileInputRef.current?.click();
                 }}>
                 Change
               </Button>
               <Button
                 type="button"
-                variant="default"
-                className="bg-red-500 text-white hover:bg-red-600"
+                variant="destructive"
+                disabled={loading}
+                className="disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed"
                 onClick={() => {
-                  setImage(null);
                   setCarImage("");
                 }}>
                 Remove
