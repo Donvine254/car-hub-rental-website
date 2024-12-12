@@ -48,7 +48,7 @@ export default async function ProfileLayout({
             <div className="w-full min-h-[500px] mx-auto px-2 md:px-8 mt:24 md:mt-6 ">
               <div className="flex flex-col gap-2 md:flex-row  md:items-start md:gap-4 relative">
                 <SideNav user={User} />
-                {children}
+                <section className="md:flex-1"> {children}</section>
               </div>
             </div>
           </section>
