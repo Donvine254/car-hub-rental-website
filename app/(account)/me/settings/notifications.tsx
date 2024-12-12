@@ -31,7 +31,7 @@ export default function NotificationsTab() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="bg-white md:p-6 md:rounded-lg md:shadow">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 w-full">
           {/* Group 1 */}

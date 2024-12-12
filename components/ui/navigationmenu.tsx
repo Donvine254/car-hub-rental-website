@@ -22,7 +22,6 @@ export default function NavigationMenu({ variant }: Props) {
       const session = await getSession();
       if (session) {
         setUser(session);
-        console.log(session);
       }
     })();
   }, []);

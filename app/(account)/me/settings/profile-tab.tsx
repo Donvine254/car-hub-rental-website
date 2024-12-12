@@ -54,7 +54,7 @@ export default function ProfileTab({ user }: { user: User }) {
     }
   }
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="bg-white md:p-6 md:rounded-lg md:shadow">
       <form onSubmit={handleSubmit} className="space-y-6 pb-2">
         {/* Responsive grouped inputs */}
         <div className="flex flex-wrap gap-6">
