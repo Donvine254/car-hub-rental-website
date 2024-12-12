@@ -5,8 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Dropzone from "@/components/ui/dropzone";
+import { createNewCar } from "@/lib/actions/car-actions";
+import { toast, Toaster } from "sonner";
+import { Loader } from "lucide-react";
 export default function NewCarEntry() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     modelName: "",
     image: "",
@@ -27,10 +31,42 @@ export default function NewCarEntry() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    // router.push("/cars");
+    setLoading(true);
+    try {
+      const result = await createNewCar({
+        ...formData,
+        year: Number(formData.year),
+        pricePerDay: Number(formData.pricePerDay),
+        fuelConsumption: Number(formData.fuelConsumption),
+        seats: Number(formData.seats),
+      });
+      if (result.success) {
+        toast.success("Car created successfully");
+        clearFormData();
+      } else {
+        toast.error(result.error);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
-
+  function clearFormData() {
+    setFormData({
+      modelName: "",
+      image: "",
+      year: "",
+      pricePerDay: "",
+      transmissionType: "",
+      bodyType: "",
+      fuelConsumption: "",
+      seats: "",
+      fuelType: "",
+      location: "",
+    });
+  }
   return (
     <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-6">Add New Car</h2>
@@ -175,12 +211,28 @@ export default function NewCarEntry() {
           setCarImage={(url: string) => {
             setFormData({ ...formData, image: url });
           }}
+          imageUrl={formData.image}
         />
-        <Button
-          type="submit"
-          className="w-full bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-100 disabled:text-black disabled:cursor-not-allowed">
-          Add Car
-        </Button>
+        <div className="flex items-center justify-end gap-4">
+          <Button
+            type="reset"
+            variant="default"
+            disabled={loading}
+            onClick={clearFormData}
+            className="disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed hover:bg-red-500 bg-gray-700 text-white">
+            Clear
+          </Button>
+          <Button
+            type="submit"
+            disabled={loading}
+            className="bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed">
+            {!loading ? (
+              "Add Car"
+            ) : (
+              <Loader className="animate-spin text-green-500" fill="#22C55E" />
+            )}
+          </Button>
+        </div>
       </form>
     </div>
   );

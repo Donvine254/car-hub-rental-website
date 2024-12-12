@@ -2,17 +2,19 @@
 import React, { useRef, useState } from "react";
 import { Loader, X } from "lucide-react";
 import { Button } from "./button";
-import Image from "next/image";
 import { Label } from "./label";
 import { toast } from "sonner";
+import { uploadToCloudinary } from "@/lib/utils/cloudinaryupload";
 type Props = {
   setCarImage: (url: string) => void;
+  imageUrl: string;
 };
-export default function Dropzone({ setCarImage }: Props) {
+export default function Dropzone({ setCarImage, imageUrl }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const maxAllowedSize = 5 * 1024 * 1024;
     if (e.target.files && e.target.files[0].size > maxAllowedSize) {
@@ -22,7 +24,6 @@ export default function Dropzone({ setCarImage }: Props) {
     }
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
-      handleUpload(e.target.files[0]);
     }
   };
 
@@ -41,15 +42,55 @@ export default function Dropzone({ setCarImage }: Props) {
     setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       setImage(e.dataTransfer.files[0]);
-      handleUpload(e.dataTransfer.files[0]);
     }
   };
 
-  const handleUpload = async (file: File) => {
-    // Here you would implement the file upload logic to Cloudinary
-    console.log("Uploading file:", file);
-    setLoading(true);
+  const handleUpload = async () => {
+    if (!image || !(image instanceof File)) {
+      toast.error("Kindly select an image first");
+    } else {
+      setLoading(true);
+      const validTypes = [
+        "image/png",
+        "image/jpg",
+        "image/jpeg",
+        "image/webp",
+        "image/avif",
+      ];
+
+      if (validTypes.includes(image.type)) {
+        const imageUrl = URL.createObjectURL(image);
+        const img = new Image();
+        img.onload = async () => {
+          const aspectRatio = (img.width / img.height).toFixed(2);
+          if (Number(aspectRatio) !== 1.78) {
+            setLoading(false);
+            toast.error(
+              "Image must have a 16:9 aspect ratio for better results"
+            );
+            console.log(aspectRatio);
+            setImage(null);
+            return;
+          }
+          await uploadToCloudinary(image, "cars", setCarImage);
+          setLoading(false);
+        };
+
+        img.onerror = () => {
+          setLoading(false);
+          toast.error("Failed to load image. Please try again.");
+          setImage(null);
+        };
+
+        // Start loading the image
+        img.src = imageUrl;
+      } else {
+        setLoading(false);
+        toast.error("Unsupported file type. Please upload a valid image.");
+      }
+    }
   };
+
   return (
     <div className="space-y-4">
       <Label>Image</Label>
@@ -92,20 +133,32 @@ export default function Dropzone({ setCarImage }: Props) {
             Drag and drop a file or click to browse
           </p>
           <p className="text-sm text-muted-foreground">
-            Image files only. Max size 5mb
+            Image files only. Max size 5mb and 16:9 in aspect ratio.
           </p>
         </div>
       </div>
       {image && (
         <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg flex-wrap gap-3">
           <div className="flex items-center gap-2">
-            <Image
-              src={URL.createObjectURL(image)}
-              className=" object-center h-[90px] w-[160px] italic"
-              alt="image"
-              height={160}
-              width={90}
-            />
+            {imageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={imageUrl}
+                className="object-center h-[90px] w-[160px] italic"
+                alt="image"
+                height={160}
+                width={90}
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={URL.createObjectURL(image)}
+                className="object-center h-[90px] w-[160px] italic"
+                alt="image"
+                height={160}
+                width={90}
+              />
+            )}
             <span className="xsm:text-xs">
               {image.name} | {(image.size / 1000).toFixed(1)}
               .Kb
@@ -121,15 +174,16 @@ export default function Dropzone({ setCarImage }: Props) {
             <Button
               type="button"
               variant="default"
-              className="bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-100 disabled:text-black disabled:cursor-not-allowed"
-              onClick={() => image && handleUpload(image)}>
-              {loading ? (
+              disabled={loading}
+              className="bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed"
+              onClick={() => image && handleUpload()}>
+              {!loading ? (
+                "Upload"
+              ) : (
                 <Loader
                   className="animate-spin text-green-500"
                   fill="#22C55E"
                 />
-              ) : (
-                "Upload"
               )}
             </Button>
           </div>
