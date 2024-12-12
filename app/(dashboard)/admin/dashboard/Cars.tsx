@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ImageIcon, X } from "lucide-react";
-
+import Image from "next/image";
 export default function NewCarEntry() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -34,6 +34,7 @@ export default function NewCarEntry() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFormData({ ...formData, image: e.target.files[0] });
+      console.log(e.target.files[0]);
     }
   };
 
@@ -222,6 +223,7 @@ export default function NewCarEntry() {
             }`}>
             <input
               type="file"
+              name="image"
               ref={fileInputRef}
               onChange={handleFileChange}
               accept="image/*"
@@ -247,14 +249,25 @@ export default function NewCarEntry() {
               <p className="text-lg font-medium">
                 Drag and drop a file or click to browse
               </p>
-              <p className="text-sm text-muted-foreground">Image files only</p>
+              <p className="text-sm text-muted-foreground">
+                Image files only. Max size 5mb
+              </p>
             </div>
           </div>
           {formData.image && (
             <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg flex-wrap gap-3">
               <div className="flex items-center gap-2">
-                <ImageIcon className="w-4 h-4" />
-                <span className="xsm:text-xs">{formData.image.name}</span>
+                <Image
+                  src={URL.createObjectURL(formData.image)}
+                  className=" object-center h-[90px] w-[160px] italic"
+                  alt="image"
+                  height={160}
+                  width={90}
+                />
+                <span className="xsm:text-xs">
+                  {formData.image.name} |{" "}
+                  {(formData.image.size / 1000).toFixed(1)}.Kb
+                </span>
               </div>
               <div className="flex items-center gap-2 xsm:justify-between">
                 <span
