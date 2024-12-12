@@ -27,12 +27,16 @@ export default async function Settings({}: Props) {
   }
   return (
     <section>
-      <Tabs defaultValue="profile" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="profile" className="text-lg font-bold">
+      <Tabs defaultValue="profile" className="w-full bg-white p-6">
+        <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
+          <TabsTrigger
+            value="profile"
+            className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6">
             Profile
           </TabsTrigger>
-          <TabsTrigger value="notifications" className="text-lg font-bold">
+          <TabsTrigger
+            value="notifications"
+            className="font-medium text-xl data-[state=active]:border-b-2 data-[state=active]:border-green-500 rounded-none px-6">
             Notifications
           </TabsTrigger>
         </TabsList>
