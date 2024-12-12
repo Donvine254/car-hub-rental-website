@@ -2,15 +2,18 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Image from "next/image";
 import { UploadImage } from "./upload-image";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { toE164 } from "@/lib/helpers";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import WarningDialog from "@/components/alerts/warning-dialog";
-import { DeleteAccount } from "@/lib/actions/user-actions";
+import {
+  DeleteAccount,
+  UpdateAccountDetails,
+} from "@/lib/actions/user-actions";
 import { useRouter } from "next/navigation";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 interface User {
   id: number;
@@ -24,11 +27,13 @@ interface User {
 export default function ProfileTab({ user }: { user: User }) {
   const [formData, setFormData] = useState({
     username: user.username,
+    image: user.image,
     phone: user.phone,
     currentPassword: "",
     newPassword: "",
   });
   const [isOpen, setIsOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,7 +42,7 @@ export default function ProfileTab({ user }: { user: User }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log("Form submitted:", formData);
+    UpdateAccountDetails({ ...formData, userId: user.id });
   };
 
   async function handleDeleteAccount() {
@@ -89,11 +94,31 @@ export default function ProfileTab({ user }: { user: User }) {
           {/* Group 2 */}
           <div className="flex flex-col md:flex-row md:gap-6 w-full">
             <div className="space-y-2 md:w-1/2">
-              <Label htmlFor="currentPassword">Current Password</Label>
+              <Label
+                htmlFor="newPassword"
+                className="text-base font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-700 flex items-center justify-between">
+                <span>Current Password</span>{" "}
+                {!showPassword ? (
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    title="show password"
+                    className="cursor-pointer">
+                    <EyeIcon size={16} />
+                  </span>
+                ) : (
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    title="hide password"
+                    className="cursor-pointer">
+                    {" "}
+                    <EyeOffIcon size={16} />
+                  </span>
+                )}
+              </Label>
               <Input
                 id="currentPassword"
                 name="currentPassword"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="*******"
                 minLength={8}
                 value={formData.currentPassword}
@@ -101,11 +126,31 @@ export default function ProfileTab({ user }: { user: User }) {
               />
             </div>
             <div className="space-y-2 md:w-1/2">
-              <Label htmlFor="newPassword">New Password</Label>
+              <Label
+                htmlFor="newPassword"
+                className="text-base font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-700 flex items-center justify-between">
+                <span>New Password</span>{" "}
+                {!showPassword ? (
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    title="show password"
+                    className="cursor-pointer">
+                    <EyeIcon size={16} />
+                  </span>
+                ) : (
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    title="hide password"
+                    className="cursor-pointer">
+                    {" "}
+                    <EyeOffIcon size={16} />
+                  </span>
+                )}
+              </Label>
               <Input
                 id="newPassword"
                 name="newPassword"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="*******"
                 minLength={8}
                 value={formData.newPassword}
@@ -116,7 +161,12 @@ export default function ProfileTab({ user }: { user: User }) {
         </div>
 
         {/* Submit button */}
-        <UploadImage image_url={user.image} />
+        <UploadImage
+          image_url={user.image}
+          onImageUpload={(url: string) => {
+            setFormData({ ...formData, image: url });
+          }}
+        />
         <button
           type="submit"
           className="bg-green-500 text-white p-2 rounded-lg">

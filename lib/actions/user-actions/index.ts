@@ -2,6 +2,16 @@
 
 import { prisma } from "@/db/prisma";
 import { sendAccountDeletionEmail } from "@/emails";
+import { hashPassword } from "@/lib/utils/hashpassword";
+
+export async function UpdateAccountDetails(data: {
+  userId: number;
+  username: string;
+  currentPassword?: string;
+  newPassword?: string;
+  image: string;
+}) {}
+
 export async function DeleteAccount(
   userId: number,
   email: string,
