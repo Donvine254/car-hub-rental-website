@@ -88,7 +88,11 @@ export async function POST(req: NextRequest) {
 
     // Return user details and token
     const response = NextResponse.json({ user, token }, { status: 202 });
-    response.cookies.set("token", token, { httpOnly: true });
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      maxAge: 8 * 60 * 60,
+      sameSite: "strict",
+    });
     return response;
   } catch (error) {
     console.error(error);
