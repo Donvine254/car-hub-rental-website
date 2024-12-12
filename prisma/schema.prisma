@@ -29,7 +29,7 @@ model User {
 model Car {
   id               Int              @id @default(autoincrement())
   modelName        String
-  image            String
+  image            String           @unique
   year             Int
   pricePerDay      Int
   transmissionType TransmissionType
@@ -46,6 +46,8 @@ model Car {
   bookings         Booking[]
   favorites        Favorite[]
   Discount         Discount[]
+
+  @@unique([modelName, year])
 }
 
 model Review {

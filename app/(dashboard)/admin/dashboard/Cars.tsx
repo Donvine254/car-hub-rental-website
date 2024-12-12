@@ -1,18 +1,21 @@
 "use client";
-
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ImageIcon, X } from "lucide-react";
-import Image from "next/image";
+import Dropzone from "@/components/ui/dropzone";
+import { createNewCar } from "@/lib/actions/car-actions";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
+import SuccessDialog from "@/components/alerts/success-dialog";
 export default function NewCarEntry() {
   const router = useRouter();
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     modelName: "",
-    image: null as File | null,
+    image: "",
     year: "",
     pricePerDay: "",
     transmissionType: "",
@@ -22,53 +25,55 @@ export default function NewCarEntry() {
     fuelType: "",
     location: "",
   });
-  const [isDragging, setIsDragging] = useState(false);
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, image: e.target.files[0] });
-      console.log(e.target.files[0]);
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFormData({ ...formData, image: e.dataTransfer.files[0] });
-    }
-  };
-
-  const handleUpload = async (file: File) => {
-    // Here you would implement the file upload logic
-    console.log("Uploading file:", file);
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would typically send the data to your API
-    console.log(formData);
-    // Redirect to the cars list page after submission
-    router.push("/cars");
-  };
 
+    if (!formData.image) {
+      toast.error("Kindly upload the car image!", { position: "top-right" });
+      return false;
+    }
+    try {
+      setLoading(true);
+      const result = await createNewCar({
+        ...formData,
+        year: Number(formData.year),
+        pricePerDay: Number(formData.pricePerDay),
+        fuelConsumption: Number(formData.fuelConsumption),
+        seats: Number(formData.seats),
+      });
+      if (result.success) {
+        setIsOpen(true);
+        clearFormData();
+      } else {
+        toast.error(result.error);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+  function clearFormData() {
+    setFormData({
+      modelName: "",
+      image: "",
+      year: "",
+      pricePerDay: "",
+      transmissionType: "",
+      bodyType: "",
+      fuelConsumption: "",
+      seats: "",
+      fuelType: "",
+      location: "",
+    });
+  }
   return (
     <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-6">Add New Car</h2>
@@ -209,97 +214,38 @@ export default function NewCarEntry() {
             </select>
           </div>
         </div>
-        <div className="space-y-4">
-          <Label>Image</Label>
-          <div
-            onClick={() => fileInputRef.current?.click()}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-              isDragging
-                ? "border-primary bg-primary/10"
-                : "hover:border-primary/50"
-            }`}>
-            <input
-              type="file"
-              name="image"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              accept="image/*"
-              required
-              className="hidden"
-            />
-            <div className="flex flex-col items-center gap-2 ">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-16 h-16 text-muted-foreground">
-                <path d="M12 13v8" />
-                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-                <path d="m8 17 4-4 4 4" />
-              </svg>
-              <p className="text-lg font-medium">
-                Drag and drop a file or click to browse
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Image files only. Max size 5mb
-              </p>
-            </div>
-          </div>
-          {formData.image && (
-            <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg flex-wrap gap-3">
-              <div className="flex items-center gap-2">
-                <Image
-                  src={URL.createObjectURL(formData.image)}
-                  className=" object-center h-[90px] w-[160px] italic"
-                  alt="image"
-                  height={160}
-                  width={90}
-                />
-                <span className="xsm:text-xs">
-                  {formData.image.name} |{" "}
-                  {(formData.image.size / 1000).toFixed(1)}.Kb
-                </span>
-              </div>
-              <div className="flex items-center gap-2 xsm:justify-between">
-                <span
-                  title="Clear"
-                  className="hover:text-red-500 xsm:px-6 xsm:py-2 xsm:bg-black xsm:text-white xsm:rounded-md"
-                  onClick={() =>
-                    setFormData({
-                      ...formData,
-                      image: null,
-                    })
-                  }>
-                  <X />
-                </span>
-                <Button
-                  type="button"
-                  variant="default"
-                  className="bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-100 disabled:text-black disabled:cursor-not-allowed"
-                  onClick={() =>
-                    formData.image && handleUpload(formData.image)
-                  }>
-                  Upload
-                </Button>
-              </div>
-            </div>
-          )}
+        <Dropzone
+          setCarImage={(url: string) => {
+            setFormData({ ...formData, image: url });
+          }}
+          imageUrl={formData.image}
+        />
+        <div className="flex items-center justify-end gap-4">
+          <Button
+            type="reset"
+            variant="default"
+            disabled={loading}
+            onClick={clearFormData}
+            className="disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed hover:bg-red-500 bg-gray-700 text-white">
+            Clear
+          </Button>
+          <Button
+            type="submit"
+            disabled={loading}
+            className="bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed">
+            {!loading ? (
+              "Add Car"
+            ) : (
+              <Loader className="animate-spin text-green-500" fill="#22C55E" />
+            )}
+          </Button>
         </div>
-
-        <Button
-          type="submit"
-          className="w-full bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-100 disabled:text-black disabled:cursor-not-allowed">
-          Add Car
-        </Button>
+        <SuccessDialog
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title="Car created successfully!"
+          description="A new car has been successfully created in the database."
+        />
       </form>
     </div>
   );
