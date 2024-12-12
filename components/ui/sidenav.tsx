@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
@@ -9,7 +9,11 @@ import {
   Settings,
   LogOut,
   Tag,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
 type Props = {
   user: {
     id: number;
@@ -23,74 +27,109 @@ type Props = {
 
 export default function SideNav({ user }: Props) {
   const pathname = usePathname();
-  return (
-    <div className="p-6 bg-white border shadow rounded-md md:sticky md:top-12 md:min-w-80 xsm:hidden ">
-      <Image
-        src={user?.image ?? "./placeholder.png"}
-        height={100}
-        width={100}
-        alt="User Profile"
-        className="w-[100px] h-[100px] rounded-full m-auto ring-offset-4 ring-2 ring-green-600 ring-offset-white"
-      />
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-      <p className="text-gray-700 font-semibold my-2 text-center capitalize">
-        {user?.username}
-      </p>
-      <p className="text-gray-500 mb-2 break-words text-center">
-        {user?.email}
-      </p>
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  const navItems = [
+    {
+      href: "/me/profile",
+      icon: LayoutGrid,
+      label: "Dashboard",
+      title: "View Dashboard",
+    },
+    {
+      href: "/me/orders",
+      icon: CalendarDays,
+      label: "My Orders",
+      title: "View My Orders",
+    },
+    {
+      href: "/me/coupons",
+      icon: Tag,
+      label: "Coupon Center",
+      title: "Access Coupon Center",
+    },
+    {
+      href: "/me/favorites",
+      icon: CarFront,
+      label: "Favorite Cars",
+      title: "View Favorite Cars",
+    },
+    {
+      href: "/me/settings",
+      icon: Settings,
+      label: "Settings",
+      title: "Adjust Settings",
+    },
+  ];
+
+  return (
+    <div
+      className={cn(
+        "bg-white border shadow rounded-md md:sticky md:top-12 xsm:hidden transition-all duration-300",
+        isCollapsed ? "w-fit md:min-w-32" : "md:min-w-80"
+      )}>
+      <button
+        onClick={toggleCollapse}
+        className="absolute top-2 right-[-10px] p-1 rounded-lg bg-[#F1F3FF] hover:bg-gray-200 transition-colors border shadow"
+        title={isCollapsed ? "Expand Menu" : "Collapse Menu"}>
+        {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+      </button>
+      <div className="flex flex-col items-center px-6 pt-4">
+        <Image
+          src={user?.image ?? "/placeholder.svg"}
+          height={isCollapsed ? 40 : 100}
+          width={isCollapsed ? 40 : 100}
+          alt="User Profile"
+          className={cn(
+            "rounded-full m-auto ring-offset-4 ring-2 ring-green-600 ring-offset-white object-fit",
+            isCollapsed ? "w-10 h-10 mb-4" : "w-[100px] h-[100px]"
+          )}
+        />
+        {!isCollapsed && (
+          <>
+            <p className="text-gray-700 font-semibold my-2 text-center capitalize">
+              {user?.username}
+            </p>
+            <p className="text-gray-500 mb-2 break-words text-center">
+              {user?.email}
+            </p>
+          </>
+        )}
+      </div>
       <div className="flex flex-col space-y-2 ">
-        <a
-          href="/me/profile"
-          className={`${
-            pathname.startsWith("/me/profile")
-              ? "bg-green-500 text-white"
-              : "text-green-500 hover:bg-green-500 hover:text-white"
-          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
-          <LayoutGrid size={20} /> <span>Dashboard</span>
-        </a>
-        <a
-          href="/me/orders"
-          className={`${
-            pathname.startsWith("/me/orders")
-              ? "bg-green-500 text-white"
-              : "text-green-500 hover:bg-green-500 hover:text-white"
-          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
-          <CalendarDays size={20} /> <span>My Orders</span>
-        </a>
-        <a
-          href="/me/coupons"
-          className={`${
-            pathname.startsWith("/me/coupons")
-              ? "bg-green-500 text-white"
-              : "text-green-500 hover:bg-green-500 hover:text-white"
-          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
-          <Tag size={20} /> <span> Coupon Center</span>
-        </a>
-        <a
-          href="/me/favorites"
-          className={`${
-            pathname.startsWith("/me/favorites")
-              ? "bg-green-500 text-white"
-              : "text-green-500 hover:bg-green-500 hover:text-white"
-          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
-          <CarFront size={20} /> <span> Favorite Cars</span>
-        </a>
-        <a
-          href="/me/settings"
-          className={`${
-            pathname.startsWith("/me/settings")
-              ? "bg-green-500 text-white"
-              : "text-green-500 hover:bg-green-500 hover:text-white"
-          } font-bold flex items-center gap-4 p-1.5 rounded-md`}>
-          <Settings size={20} /> <span>Settings</span>
-        </a>
+        {navItems.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            title={item.title}
+            className={cn(
+              "font-bold flex items-center gap-4 py-1.5 px-4 transition-colors",
+              pathname.startsWith(item.href)
+                ? "bg-green-500 text-white"
+                : "text-green-500 hover:bg-green-500 hover:text-white",
+              isCollapsed && "justify-center"
+            )}>
+            <item.icon size={20} />
+            {!isCollapsed && <span>{item.label}</span>}
+          </a>
+        ))}
         <hr />
-        <a
-          className="text-gray-400  font-bold flex items-center gap-4 hover:bg-red-100 hover:text-red-500 p-1.5 rounded-md "
-          href="/api/logout">
-          <LogOut size={20} /> <span>Sign Out</span>
-        </a>
+        <div className="pb-6">
+          <a
+            className={cn(
+              "text-gray-400 font-bold flex items-center gap-4 hover:bg-red-100 hover:text-red-500 py-1.5 px-4 transition-colors ",
+              isCollapsed && "justify-center"
+            )}
+            href="/api/logout"
+            title="Sign Out">
+            <LogOut size={20} />
+            {!isCollapsed && <span>Sign Out</span>}
+          </a>
+        </div>
       </div>
     </div>
   );
