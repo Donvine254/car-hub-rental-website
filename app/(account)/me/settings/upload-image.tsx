@@ -1,12 +1,14 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { uploadToCloudinary } from "@/lib/utils/cloudinaryupload";
 
 type Props = {
   image_url: string;
+  onImageUpload: (url: string) => void;
 };
 
-export function UploadImage({ image_url }: Props) {
+export function UploadImage({ image_url, onImageUpload }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef(null);
   const [image, setImage] = useState<File | null>(null);
@@ -33,7 +35,13 @@ export function UploadImage({ image_url }: Props) {
   }
 
   async function handleImageUpload() {
+    if (!image || !(image instanceof File)) {
+      toast.error("Kindly select an image first");
+      return false;
+    }
     setIsLoading(true);
+    await uploadToCloudinary(image, "carhub/avatars", onImageUpload);
+    setIsLoading(false);
   }
   return (
     <div className="flex-1">
