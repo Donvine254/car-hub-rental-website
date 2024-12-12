@@ -6,11 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Dropzone from "@/components/ui/dropzone";
 import { createNewCar } from "@/lib/actions/car-actions";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import SuccessDialog from "@/components/alerts/success-dialog";
 export default function NewCarEntry() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     modelName: "",
     image: "",
@@ -31,8 +33,13 @@ export default function NewCarEntry() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+
+    if (!formData.image) {
+      toast.error("Kindly upload the car image!", { position: "top-right" });
+      return false;
+    }
     try {
+      setLoading(true);
       const result = await createNewCar({
         ...formData,
         year: Number(formData.year),
@@ -41,7 +48,7 @@ export default function NewCarEntry() {
         seats: Number(formData.seats),
       });
       if (result.success) {
-        toast.success("Car created successfully");
+        setIsOpen(true);
         clearFormData();
       } else {
         toast.error(result.error);
@@ -233,6 +240,12 @@ export default function NewCarEntry() {
             )}
           </Button>
         </div>
+        <SuccessDialog
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title="Car created successfully!"
+          description="A new car has been successfully created in the database."
+        />
       </form>
     </div>
   );

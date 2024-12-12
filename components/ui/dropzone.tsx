@@ -48,6 +48,7 @@ export default function Dropzone({ setCarImage, imageUrl }: Props) {
   const handleUpload = async () => {
     if (!image || !(image instanceof File)) {
       toast.error("Kindly select an image first");
+      return false;
     } else {
       setLoading(true);
       const validTypes = [
@@ -74,6 +75,7 @@ export default function Dropzone({ setCarImage, imageUrl }: Props) {
           }
           await uploadToCloudinary(image, "cars", setCarImage);
           setLoading(false);
+          setImage(null);
         };
 
         img.onerror = () => {
@@ -137,34 +139,57 @@ export default function Dropzone({ setCarImage, imageUrl }: Props) {
           </p>
         </div>
       </div>
-      {image && (
+      {imageUrl ? (
         <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg flex-wrap gap-3">
-          <div className="flex items-center gap-2">
-            {imageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={imageUrl}
-                className="object-center h-[90px] w-[160px] italic"
-                alt="image"
-                height={160}
-                width={90}
-              />
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={URL.createObjectURL(image)}
-                className="object-center h-[90px] w-[160px] italic"
-                alt="image"
-                height={160}
-                width={90}
-              />
-            )}
+          <div className="flex items-center xsm:flex-col gap-2">
+            {/*  eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageUrl}
+              className="object-center h-[90px] w-[160px] italic"
+              alt="image"
+              height={160}
+              width={90}
+            />
+            <div className="flex items-center gap-2 xsm:justify-between">
+              <Button
+                type="button"
+                variant="default"
+                className="bg-blue-500 text-white hover:bg-blue-600"
+                onClick={() => {
+                  setImage(null);
+                  setCarImage("");
+                }}>
+                Change
+              </Button>
+              <Button
+                type="button"
+                variant="default"
+                className="bg-red-500 text-white hover:bg-red-600"
+                onClick={() => {
+                  setImage(null);
+                  setCarImage("");
+                }}>
+                Remove
+              </Button>
+            </div>
+          </div>
+        </div>
+      ) : image ? (
+        <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg flex-wrap gap-3">
+          <div className="flex items-center gap-2 xsm:flex-col xsm:w-full">
+            {/*  eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={URL.createObjectURL(image)}
+              className="object-center h-[90px] w-[160px] xsm:w-full xsm:h-auto italic"
+              alt="image"
+              height={160}
+              width={90}
+            />
             <span className="xsm:text-xs">
-              {image.name} | {(image.size / 1000).toFixed(1)}
-              .Kb
+              {image.name} | {(image.size / 1000).toFixed(1)} KB
             </span>
           </div>
-          <div className="flex items-center gap-2 xsm:justify-between">
+          <div className="flex items-center gap-2 xsm:justify-between xsm:w-full">
             <span
               title="Clear"
               className="hover:text-red-500 xsm:px-6 xsm:py-2 xsm:bg-black xsm:text-white xsm:rounded-md"
@@ -174,6 +199,7 @@ export default function Dropzone({ setCarImage, imageUrl }: Props) {
             <Button
               type="button"
               variant="default"
+              title="upload"
               disabled={loading}
               className="bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed"
               onClick={() => image && handleUpload()}>
@@ -188,7 +214,7 @@ export default function Dropzone({ setCarImage, imageUrl }: Props) {
             </Button>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
