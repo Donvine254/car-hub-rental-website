@@ -27,7 +27,7 @@ export default async function Settings({}: Props) {
   }
   return (
     <section>
-      <Tabs defaultValue="profile" className="w-full bg-white p-6">
+      <Tabs defaultValue="profile" className="w-full bg-white p-2 only:md:p-6">
         <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
           <TabsTrigger
             value="profile"

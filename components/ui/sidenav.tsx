@@ -69,7 +69,7 @@ export default function SideNav({ user }: Props) {
   return (
     <div
       className={cn(
-        "bg-white border shadow rounded-md md:sticky md:top-12 xsm:hidden transition-all duration-300",
+        "bg-white border shadow rounded-md md:sticky md:top-12 hidden md:block transition-all duration-300",
         isCollapsed ? "w-fit md:min-w-32" : "md:min-w-80"
       )}>
       <button
