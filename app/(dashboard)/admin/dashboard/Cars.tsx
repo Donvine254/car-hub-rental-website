@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FileIcon, ImageIcon, X } from "lucide-react";
+import { ImageIcon, X } from "lucide-react";
 
 export default function NewCarEntry() {
   const router = useRouter();
@@ -105,6 +105,7 @@ export default function NewCarEntry() {
               name="pricePerDay"
               type="number"
               placeholder="Price per day"
+              min={20}
               value={formData.pricePerDay}
               onChange={handleChange}
               required
@@ -142,20 +143,6 @@ export default function NewCarEntry() {
               <option value="pickup">Pickup</option>
             </select>
           </div>
-
-          <div>
-            <Label htmlFor="fuelConsumption">Fuel Consumption (km/l)</Label>
-            <Input
-              id="fuelConsumption"
-              name="fuelConsumption"
-              type="number"
-              value={formData.fuelConsumption}
-              placeholder="Fuel consumption"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
           <div>
             <Label htmlFor="seats">Number of Seats</Label>
             <Input
@@ -170,7 +157,6 @@ export default function NewCarEntry() {
               required
             />
           </div>
-
           <div>
             <Label htmlFor="fuelType">Fuel Type</Label>
             <select
@@ -188,6 +174,18 @@ export default function NewCarEntry() {
               <option value="electric">Electric</option>
               <option value="hybrid">Hybrid</option>
             </select>
+          </div>
+          <div>
+            <Label htmlFor="fuelConsumption">Fuel Consumption (km/l)</Label>
+            <Input
+              id="fuelConsumption"
+              name="fuelConsumption"
+              type="number"
+              value={formData.fuelConsumption}
+              placeholder="Fuel consumption"
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div>
@@ -210,7 +208,6 @@ export default function NewCarEntry() {
             </select>
           </div>
         </div>
-
         <div className="space-y-4">
           <Label>Image</Label>
           <div
@@ -228,10 +225,25 @@ export default function NewCarEntry() {
               ref={fileInputRef}
               onChange={handleFileChange}
               accept="image/*"
+              required
               className="hidden"
             />
-            <div className="flex flex-col items-center gap-2">
-              <FileIcon className="w-12 h-12 text-muted-foreground" />
+            <div className="flex flex-col items-center gap-2 ">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-16 h-16 text-muted-foreground">
+                <path d="M12 13v8" />
+                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                <path d="m8 17 4-4 4 4" />
+              </svg>
               <p className="text-lg font-medium">
                 Drag and drop a file or click to browse
               </p>
