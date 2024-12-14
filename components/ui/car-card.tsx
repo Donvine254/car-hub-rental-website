@@ -16,7 +16,7 @@ type Props = {
 export default function Carcard({ car, handleBooking, key }: Props) {
   const isAvailable = isCarAvailable(car.isRented, car.rentedUntill);
   return (
-    <div key={key} className="w-fit border shadow bg-white rounded-md">
+    <div key={key} className="w-fit border shadow bg-white rounded-md ">
       <div className="p-2 relative">
         <Image
           alt={car.modelName}

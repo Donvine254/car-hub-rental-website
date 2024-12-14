@@ -12,7 +12,6 @@ import Autoplay from "embla-carousel-autoplay";
 import { toast } from "sonner";
 import type { Car } from "@/lib/actions/car-actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
-import CarModal from "../alerts/carModal";
 import Carcard from "./car-card";
 type Props = {
   Cars: Car[];
@@ -56,7 +55,6 @@ export default function CarCarousel({ Cars }: Props) {
             key={car.id}
             className="xsm:w-full md:basis-1/2 lg:basis-1/3 px-2">
             <Carcard car={car} key={car.id} handleBooking={handleBooking} />
-            <CarModal Car={car} />
           </CarouselItem>
         ))}
       </CarouselContent>

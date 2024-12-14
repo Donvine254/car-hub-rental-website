@@ -7,6 +7,7 @@ import { getUserData } from "@/lib/actions/decodetoken";
 import { redirect } from "next/navigation";
 import fetchCars, { Car } from "@/lib/actions/car-actions/fetchCars";
 import CarCarousel from "@/components/ui/carCarousel";
+import Favorites from "./favorites";
 export const metadata: Metadata = {
   title: "Car Hub - My Profile ",
   description:
@@ -54,7 +55,8 @@ export default async function Profile({}: Props) {
     <section>
       <Stats orders={orders} />
       <RecentOrders orders={recentOrders} />
-      {cars && <CarCarousel Cars={randomCars} />}
+      {/* favorite car showcase */}
+      <Favorites Cars={randomCars} />
     </section>
   );
 }
