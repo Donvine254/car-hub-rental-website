@@ -41,6 +41,11 @@ export default function Login({}: Props) {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    //verify token
+    const isHuman = await verifyTurnstileToken(token);
+    if (!isHuman) {
+      toast.error("Kindly complete the recaptcha challenge");
+    }
     // post to /api/login
     try {
       const response = await axios.post("/api/login", {
@@ -190,7 +195,7 @@ export default function Login({}: Props) {
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-green-50 disabled:text-black  h-10 px-4 py-2 w-full bg-green-500 hover:bg-green-600 text-white rounded-md"
               type="submit"
-              disabled={loading}
+              disabled={loading || !token}
               title="login">
               {!loading ? (
                 "Login"
