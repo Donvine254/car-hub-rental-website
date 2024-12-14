@@ -6,6 +6,7 @@ import { UpdateOrderStatus } from "@/lib/actions/booking-actions";
 import { Booking } from "@prisma/client";
 import { HeartIcon, View, X } from "lucide-react";
 import { toast } from "sonner";
+import { addFavorite } from "@/lib/actions/car-actions/favorite";
 
 type CancelButtonProps = {
   id: number;
@@ -126,10 +127,28 @@ export function DetailsButton({ order }: DetailsButtonProps) {
     </Button>
   );
 }
-export function FavoriteButton({ order }: DetailsButtonProps) {
-  function handleFavorite() {
-    //opens a details modal
-    toast.info("Upcoming feature!");
+export function FavoriteButton({
+  carId,
+  userId,
+}: {
+  carId: number;
+  userId: number;
+}) {
+  //handle cases where the car is already favorited
+  async function handleFavorite() {
+    try {
+      const res = await addFavorite(userId, carId);
+      if (res.success) {
+        toast.success("Car added to favorites", {
+          position: "top-right",
+        });
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
   }
 
   return (

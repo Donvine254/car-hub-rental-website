@@ -1,31 +1,16 @@
 "use client";
-import { Car } from "@/lib/actions/car-actions/fetchCars";
 import { useRouter } from "next/navigation";
-import React, { useRef } from "react";
+import React from "react";
 import Image from "next/image";
 import { NotFound } from "@/components/ui/notfound";
 import { isCarAvailable } from "@/lib/helpers";
+import { Car } from "@prisma/client";
 type Props = {
   Cars: Car[];
 };
 
 export default function Favorites({ Cars }: Props) {
-  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollTo =
-        direction === "left"
-          ? scrollLeft - clientWidth
-          : scrollLeft + clientWidth;
-
-      scrollRef.current.scrollTo({
-        left: scrollTo,
-        behavior: "smooth",
-      });
-    }
-  };
   const router = useRouter();
   async function handleBooking(car: Car) {
     router.push(

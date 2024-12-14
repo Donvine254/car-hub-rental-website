@@ -21,11 +21,19 @@ import { CancelButton, DetailsButton, FavoriteButton } from "./order-actions";
 import { PenLine } from "lucide-react";
 import Link from "next/link";
 import { BookingWithCar } from "@/lib/utils";
-
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  phone: number;
+  role: string;
+  image: string;
+}
 type Props = {
   orders: BookingWithCar[];
+  currentUser: User;
 };
-export function Orders({ orders }: Props) {
+export function Orders({ orders, currentUser }: Props) {
   const scheduledOrders = orders.filter(
     (order) => order.status === "scheduled"
   );
@@ -73,7 +81,7 @@ export function Orders({ orders }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">All Orders</h2>
               {orders.length > 0 ? (
-                <OrderComponent orders={orders} />
+                <OrderComponent orders={orders} currentUser={currentUser} />
               ) : (
                 <NotFound
                   title="You have no booking history."
@@ -86,7 +94,7 @@ export function Orders({ orders }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Scheduled Orders</h2>
               {scheduledOrders.length > 0 ? (
-                <OrderComponent orders={scheduledOrders} />
+                <OrderComponent orders={scheduledOrders} currentUser={currentUser}/>
               ) : (
                 <NotFound
                   title="You have no scheduled orders"
@@ -99,7 +107,7 @@ export function Orders({ orders }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Ongoing Orders</h2>
               {ongoingOrders.length > 0 ? (
-                <OrderComponent orders={ongoingOrders} />
+                <OrderComponent orders={ongoingOrders} currentUser={currentUser}/>
               ) : (
                 <NotFound
                   title="You have no ongoing orders"
@@ -112,7 +120,7 @@ export function Orders({ orders }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Completed Orders</h2>
               {completedOrders.length > 0 ? (
-                <OrderComponent orders={completedOrders} />
+                <OrderComponent orders={completedOrders} currentUser={currentUser}/>
               ) : (
                 <NotFound
                   title="You have no completed orders"
@@ -125,7 +133,7 @@ export function Orders({ orders }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Cancelled Orders</h2>
               {cancelledOrders.length > 0 ? (
-                <OrderComponent orders={cancelledOrders} />
+                <OrderComponent orders={cancelledOrders} currentUser={currentUser}/>
               ) : (
                 <NotFound
                   title="You have no cancelled orders"
@@ -140,7 +148,13 @@ export function Orders({ orders }: Props) {
   );
 }
 
-function OrderComponent({ orders }: { orders: BookingWithCar[] }) {
+function OrderComponent({
+  orders,
+  currentUser,
+}: {
+  orders: BookingWithCar[];
+  currentUser: User;
+}) {
   return (
     <Table>
       <TableHeader>
@@ -206,7 +220,10 @@ function OrderComponent({ orders }: { orders: BookingWithCar[] }) {
                           href={`/reviews/new?car_id=${order?.car?.id}`}>
                           <PenLine /> <span>Add Review</span>
                         </Link>
-                        <FavoriteButton order={order} />
+                        <FavoriteButton
+                          carId={order?.car?.id}
+                          userId={currentUser.id}
+                        />
                       </>
                     )}
                   </PopoverContent>

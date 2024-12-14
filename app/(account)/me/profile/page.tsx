@@ -5,9 +5,8 @@ import type { Metadata } from "next";
 import { prisma } from "@/db/prisma";
 import { getUserData } from "@/lib/actions/decodetoken";
 import { redirect } from "next/navigation";
-import fetchCars, { Car } from "@/lib/actions/car-actions/fetchCars";
-import CarCarousel from "@/components/ui/carCarousel";
 import Favorites from "./favorites";
+import { Car } from "@prisma/client";
 export const metadata: Metadata = {
   title: "Car Hub - My Profile ",
   description:
@@ -46,16 +45,22 @@ export default async function Profile({}: Props) {
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     ) // Sort by `createdAt` in descending order
     .slice(0, 5);
-  const cars = (await fetchCars()) as Car[];
-  // Shuffle the cars array and select the first three cars
-  const randomCars = cars
-    ? [...cars].sort(() => 0.5 - Math.random()).slice(0, 5)
-    : [];
+  const favoritecars = (
+    await prisma.favorite.findMany({
+      where: {
+        userId: User.id,
+      },
+      select: {
+        car: true,
+      },
+      take: 5,
+    })
+  ).map((favorite) => favorite.car) as Car[];
   return (
     <section>
       <Stats orders={orders} />
       <RecentOrders orders={recentOrders} />
-      <Favorites Cars={randomCars} />
+      <Favorites Cars={favoritecars} />
     </section>
   );
 }
