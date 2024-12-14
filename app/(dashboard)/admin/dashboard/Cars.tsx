@@ -51,7 +51,7 @@ export default function NewCarEntry() {
       if (result.success) {
         setIsOpen(true);
         clearFormData();
-        revalidatePath('/cars', 'page')
+        revalidatePath("/cars", "page");
       } else {
         toast.error(result.error);
       }
@@ -228,13 +228,13 @@ export default function NewCarEntry() {
             variant="default"
             disabled={loading}
             onClick={clearFormData}
-            className="disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed hover:bg-red-500 bg-gray-700 text-white">
+            className="disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed h-10 hover:bg-red-500 bg-gray-700 text-white">
             Clear
           </Button>
           <Button
             type="submit"
             disabled={loading}
-            className="bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-200 border disabled:text-black disabled:cursor-not-allowed">
+            className="bg-green-500 text-white hover:bg-green-600 disabled:bg-green-100 h-10 border disabled:text-black disabled:cursor-not-allowed">
             {!loading ? (
               "Add Car"
             ) : (
