@@ -335,3 +335,25 @@ input[type="number"] {
     top: 38px;
   }
 }
+/* keyframes for fancy hover animations */
+@keyframes pulse-right-to-left {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hover\:fancy-hover:hover {
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    to left,
+    #34d399,
+    #3b82f6,
+    #8b5cf6,
+    #3b82f6,
+    #34d399
+  );
+  animation: pulse-right-to-left 2s ease infinite;
+}

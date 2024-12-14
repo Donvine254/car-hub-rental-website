@@ -96,9 +96,14 @@ export default function CarModal({ Car }: CarModalProps) {
               <p className="capitalize text-green-600">{Car.seats}</p>
             </div>
             <div className="flex items-center justify-between ">
-              <p className="">Fuel Consumption</p>
+              <p className="">
+                {Car.fuelType !== "electric"
+                  ? "Fuel Consumption"
+                  : "Long-Distance Range "}
+              </p>
               <p className="capitalize text-green-600">
-                {Car.fuelConsumption} Km/L
+                {Car.fuelConsumption}{" "}
+                {Car.fuelType !== "electric" ? "Km/L" : "Km"}
               </p>
             </div>
             <div className="flex items-center justify-between ">
