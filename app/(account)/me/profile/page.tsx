@@ -55,7 +55,6 @@ export default async function Profile({}: Props) {
     <section>
       <Stats orders={orders} />
       <RecentOrders orders={recentOrders} />
-      {/* favorite car showcase */}
       <Favorites Cars={randomCars} />
     </section>
   );
