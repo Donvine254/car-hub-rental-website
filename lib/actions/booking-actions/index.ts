@@ -3,7 +3,11 @@
 import { prisma } from "@/db/prisma";
 
 type Status = "ongoing" | "cancelled" | "completed";
-export async function UpdateOrderStatus(id: number, status: Status) {
+export async function UpdateOrderStatus(
+  id: number,
+  status: Status,
+  carId: number
+) {
   try {
     await prisma.booking.update({
       where: { id },

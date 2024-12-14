@@ -83,9 +83,8 @@ export const showModal = async (id: number) => {
   }
 };
 
-
 export type BookingWithCar = Booking & {
-  car?: {
+  car: {
     id: number;
     modelName: string;
   };

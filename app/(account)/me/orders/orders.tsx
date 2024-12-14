@@ -192,7 +192,11 @@ function OrderComponent({ orders }: { orders: BookingWithCar[] }) {
                   </PopoverTrigger>
                   <PopoverContent className="w-fit p-2 border bg-white shadow rounded-md">
                     {order.status === "scheduled" && (
-                      <CancelButton id={order.id} />
+                      <CancelButton
+                        id={order.id}
+                        carId={order?.car?.id}
+                        endDate={order.endDate.toString()}
+                      />
                     )}
                     <DetailsButton order={order} />
                     {order.status === "completed" && (

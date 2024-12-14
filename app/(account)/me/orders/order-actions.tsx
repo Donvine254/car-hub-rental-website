@@ -9,6 +9,8 @@ import { toast } from "sonner";
 
 type CancelButtonProps = {
   id: number;
+  carId: number;
+  endDate: string;
 };
 type BookingWithCar = Booking & {
   car?: {
@@ -19,17 +21,48 @@ type BookingWithCar = Booking & {
 type DetailsButtonProps = {
   order: BookingWithCar; // Correctly define the prop type
 };
+const cancellationReasons = [
+  "Found a better deal",
+  "Change in travel plans",
+  "Booked by mistake",
+  "Poor customer service",
+  "Vehicle unavailable",
+  "Other",
+];
 
-export function CancelButton({ id }: CancelButtonProps) {
+async function sendCancellationReasonEmail(reason: string, orderId: number) {
+  const message = `A user has requested to cancel order #CR00${orderId} for the following reason: ${reason}. Kindly note that this order has been cancelled automatically and no action is required from you`;
+  const response = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      access_key: "c0376663-dd70-4ab4-ba1b-e849ba57eecc",
+      message,
+      from_name: "Carhub Kenya",
+      subject: "A user has canceled a booking at carhubke.vercel.app.",
+    }),
+  });
+}
+
+export function CancelButton({ id, carId, endDate}: CancelButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [reason, setReason] = useState("");
   async function handleCancelOrder() {
     //add logic to check the deadline, this will ensure passing the startDate of the order
+    if (!reason.trim()) {
+      toast.error("Please provide a reason for cancelling your order.");
+      return;
+    }
     try {
-      const res = await UpdateOrderStatus(id, "cancelled");
+      const res = await UpdateOrderStatus(id, "cancelled", carId);
       if (res.success) {
         toast.info("Your order has been cancelled", {
           position: "top-center",
         });
+        sendCancellationReasonEmail(reason, id);
       } else {
         toast.error(res.error || "Something went wrong!");
       }
@@ -53,7 +86,23 @@ export function CancelButton({ id }: CancelButtonProps) {
         setIsOpen={setIsOpen}
         isOpen={isOpen}
         onConfirm={handleCancelOrder}
-      />
+        disabled={!reason}>
+        <div className="mt-4">
+          <select
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            <option value="" hidden>
+              Select reason for cancellation
+            </option>
+            {cancellationReasons.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+      </WarningDialog>
     </>
   );
 }
