@@ -33,6 +33,12 @@ type Props = {
 declare const confetti: any;
 const today = new Date();
 const formattedDate = today.toISOString().substring(0, 10);
+const nextDayDate = (currentDate: string): string => {
+  const date = new Date(currentDate);
+  date.setDate(date.getDate() + 1);
+  return date.toISOString().split("T")[0];
+};
+
 export default function BookingPage({ User }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -46,8 +52,9 @@ export default function BookingPage({ User }: Props) {
     userId: User?.id || 0,
     carId: selectedCar?.id || 0,
     startDate: defaultData?.startDate || formattedDate,
-    endDate: defaultData?.endDate || formattedDate,
-    pickupLocation: defaultData?.pickupLocation || selectedCar?.location || "",
+    endDate: defaultData?.endDate || nextDayDate(new Date().toISOString()),
+    pickupLocation:
+      defaultData?.pickupLocation || selectedCar?.location || "nairobi",
     dropLocation: defaultData?.dropLocation || "",
     phoneNumber: User?.phone,
     totalPrice: parseInt(price) || 0,

@@ -127,7 +127,13 @@ export default function Homebooking({}: Props) {
                   "drop-offDate"
                 ) as HTMLInputElement | null;
                 if (dropOffDateInput) {
-                  dropOffDateInput.min = e.target.value;
+                  const selectedPickupDate = new Date(e.target.value);
+                  const nextDay = new Date(selectedPickupDate);
+                  nextDay.setDate(selectedPickupDate.getDate() + 1); // Add 1 day
+                  const nextDayString = nextDay.toISOString().split("T")[0];
+
+                  dropOffDateInput.min = nextDayString; // Update min for drop-off
+                  dropOffDateInput.value = nextDayString;
                   if (
                     new Date(dropOffDateInput.value) < new Date(e.target.value)
                   ) {
@@ -158,10 +164,18 @@ export default function Homebooking({}: Props) {
             <input
               type="date"
               name="endDate"
-              min={new Date().toISOString().split("T")[0]}
+              min={
+                new Date(new Date().setDate(new Date().getDate() + 1))
+                  .toISOString()
+                  .split("T")[0]
+              }
               id="drop-offDate"
               required
-              defaultValue={formattedDate}
+              defaultValue={
+                new Date(new Date().setDate(new Date().getDate() + 1))
+                  .toISOString()
+                  .split("T")[0]
+              }
               className="flex h-10 bg-white text-base  w-1/2 px-1 py-2 border-y border-l border-gray-300 rounded-l-md outline-none "
             />
             <input
