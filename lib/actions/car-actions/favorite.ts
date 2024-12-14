@@ -3,7 +3,7 @@
 import { prisma } from "@/db/prisma";
 export async function addFavorite(userId: number, carId: number) {
   try {
-    const favorite = await prisma.favorite.create({
+    await prisma.favorite.create({
       data: {
         userId: userId,
         carId: carId,
@@ -12,7 +12,15 @@ export async function addFavorite(userId: number, carId: number) {
     return { success: true, message: "Car successfully added to favorites" };
   } catch (error: any) {
     console.error(error);
-    return { success: false, error: error.message || " Something went wrong" };
+    if (
+      error.code === "P2002" // Unique constraint violation
+    ) {
+      return { success: false, error: "Car already added to favorites" };
+    } else
+      return {
+        success: false,
+        error: error.message || " Something went wrong",
+      };
   } finally {
     await prisma.$disconnect();
   }
