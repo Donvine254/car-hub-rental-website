@@ -1,4 +1,4 @@
-import fetchCars from "@/lib/actions/fetchCars";
+import fetchCars from "@/lib/actions/car-actions/fetchCars";
 import { NextResponse } from "next/server";
 
 export async function GET() {

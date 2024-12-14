@@ -1,9 +1,10 @@
 "use client";
-
+import React, { useState } from "react";
+import WarningDialog from "@/components/alerts/warning-dialog";
 import { Button } from "@/components/ui/button";
+import { UpdateOrderStatus } from "@/lib/actions/booking-actions";
 import { Booking } from "@prisma/client";
 import { HeartIcon, View, X } from "lucide-react";
-import React from "react";
 import { toast } from "sonner";
 
 type CancelButtonProps = {
@@ -20,17 +21,40 @@ type DetailsButtonProps = {
 };
 
 export function CancelButton({ id }: CancelButtonProps) {
-  function handleCancelOrder() {
-    toast.success(`Cancelling order ${id}`);
+  const [isOpen, setIsOpen] = useState(false);
+  async function handleCancelOrder() {
+    //add logic to check the deadline, this will ensure passing the startDate of the order
+    try {
+      const res = await UpdateOrderStatus(id, "cancelled");
+      if (res.success) {
+        toast.info("Your order has been cancelled", {
+          position: "top-center",
+        });
+      } else {
+        toast.error(res.error || "Something went wrong!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong!");
+    }
   }
 
   return (
-    <Button
-      className="flex items-center gap-2 w-full justify-start"
-      variant="ghost"
-      onClick={handleCancelOrder}>
-      <X className="text-red-500" /> <span>Cancel Order</span>
-    </Button>
+    <>
+      <Button
+        className="flex items-center gap-2 w-full justify-start"
+        variant="ghost"
+        onClick={() => setIsOpen(!isOpen)}>
+        <X className="text-red-500" /> <span>Cancel Order</span>
+      </Button>
+      <WarningDialog
+        title="Are you sure you want to cancel this order?"
+        description="Cancelling too many orders might affect your ability to pre-book vehicles without a security deposit. Kindly note orders must be cancelled 24hrs before the pickup time"
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        onConfirm={handleCancelOrder}
+      />
+    </>
   );
 }
 export function DetailsButton({ order }: DetailsButtonProps) {

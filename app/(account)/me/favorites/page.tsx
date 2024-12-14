@@ -1,6 +1,6 @@
 import React from "react";
-import fetchCars from "@/lib/actions/fetchCars";
-import { Car } from "@/lib/actions/fetchCars";
+import fetchCars from "@/lib/actions/car-actions/fetchCars";
+import { Car } from "@/lib/actions/car-actions/fetchCars";
 type Props = {};
 import type { Metadata } from "next";
 import FavoriteCars from "./favoritecars";

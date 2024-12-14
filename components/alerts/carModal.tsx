@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Star, X } from "lucide-react";
-import type { Car } from "@/lib/actions/fetchCars";
+import type { Car } from "@/lib/actions/car-actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

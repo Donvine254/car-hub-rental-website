@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import fetchCars, { Car } from "@/lib/actions/fetchCars";
+import fetchCars, { Car } from "@/lib/actions/car-actions/fetchCars";
 import CarCarousel from "./carCarousel";
 
 export default async function Carshowcase() {

@@ -14,7 +14,7 @@ import Image from "next/image";
 import { CarSeat, CarFrontIcon, FuelPumpIcon, GearboxIcon } from "@/assets";
 
 import { toast } from "sonner";
-import type { Car } from "@/lib/actions/fetchCars";
+import type { Car } from "@/lib/actions/car-actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import CarModal from "../alerts/carModal";
 import { showModal } from "@/lib/utils";

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { fetchCar, Car } from "@/lib/actions/fetchCars";
+import { fetchCar, Car } from "@/lib/actions/car-actions/fetchCars";
 import { toast } from "sonner";
 import Image from "next/image";
 import {
@@ -20,7 +20,7 @@ import Link from "next/link";
 import CarModal from "@/components/alerts/carModal";
 import Script from "next/script";
 import secureLocalStorage from "react-secure-storage";
-import { createBooking, Booking } from "@/lib/actions/booking";
+import { createBooking, Booking } from "@/lib/actions/booking-actions/booking";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { getISODateString, isCarAvailable, toE164 } from "@/lib/helpers";

@@ -17,7 +17,7 @@ import CarModal from "@/components/alerts/carModal";
 import FilterModal from "@/components/alerts/Filter";
 import Script from "next/script";
 import { handleGuessCar, showModal } from "@/lib/utils";
-import type { Car } from "@/lib/actions/fetchCars";
+import type { Car } from "@/lib/actions/car-actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import { Badge } from "@/components/ui/badge";
 import { isCarAvailable } from "@/lib/helpers";

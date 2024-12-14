@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Car } from "@/lib/actions/fetchCars";
+import { Car } from "@/lib/actions/car-actions/fetchCars";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { isCarAvailable } from "@/lib/helpers";
