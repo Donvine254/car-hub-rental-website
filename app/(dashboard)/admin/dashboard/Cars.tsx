@@ -9,7 +9,6 @@ import { createNewCar } from "@/lib/actions/car-actions";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
 import SuccessDialog from "@/components/alerts/success-dialog";
-import { revalidatePath } from "next/cache";
 export default function NewCarEntry() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -51,7 +50,6 @@ export default function NewCarEntry() {
       if (result.success) {
         setIsOpen(true);
         clearFormData();
-        revalidatePath("/cars", "page");
       } else {
         toast.error(result.error);
       }

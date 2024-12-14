@@ -1,6 +1,6 @@
 import React from "react";
 import { X } from "lucide-react";
-import type { Car } from "@/lib/actions/fetchCars";
+import type { Car } from "@/lib/actions/car-actions/fetchCars";
 import PriceRangeFilter from "../ui/Slider";
 type Props = {
   Cars: Car[];

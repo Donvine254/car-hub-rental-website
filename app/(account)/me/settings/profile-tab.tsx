@@ -43,6 +43,14 @@ export default function ProfileTab({ user }: { user: User }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    if (formData.currentPassword && !formData.newPassword) {
+      toast.info(
+        "If you wish to change your password, enter your new password."
+      ),
+        { position: "top-right" };
+      setLoading(false);
+      return false;
+    }
     try {
       const updatedFields = Object.fromEntries(
         Object.entries(formData).filter(([key, value]) => {

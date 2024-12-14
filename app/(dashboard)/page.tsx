@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Homebooking from "@/components/ui/homebooking";
-import fetchCars from "@/lib/actions/fetchCars";
+import fetchCars from "@/lib/actions/car-actions/fetchCars";
 import {
   Clock10Icon,
   MapPinIcon,

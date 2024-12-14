@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { fetchCar, Car } from "@/lib/actions/fetchCars";
+import { fetchCar, Car } from "@/lib/actions/car-actions/fetchCars";
 import { toast } from "sonner";
 import Image from "next/image";
 import {
@@ -20,7 +20,7 @@ import Link from "next/link";
 import CarModal from "@/components/alerts/carModal";
 import Script from "next/script";
 import secureLocalStorage from "react-secure-storage";
-import { createBooking, Booking } from "@/lib/actions/booking";
+import { createBooking, Booking } from "@/lib/actions/booking-actions/booking";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { getISODateString, isCarAvailable, toE164 } from "@/lib/helpers";
@@ -33,6 +33,12 @@ type Props = {
 declare const confetti: any;
 const today = new Date();
 const formattedDate = today.toISOString().substring(0, 10);
+const nextDayDate = (currentDate: string): string => {
+  const date = new Date(currentDate);
+  date.setDate(date.getDate() + 1);
+  return date.toISOString().split("T")[0];
+};
+
 export default function BookingPage({ User }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -46,8 +52,9 @@ export default function BookingPage({ User }: Props) {
     userId: User?.id || 0,
     carId: selectedCar?.id || 0,
     startDate: defaultData?.startDate || formattedDate,
-    endDate: defaultData?.endDate || formattedDate,
-    pickupLocation: defaultData?.pickupLocation || selectedCar?.location || "",
+    endDate: defaultData?.endDate || nextDayDate(new Date().toISOString()),
+    pickupLocation:
+      defaultData?.pickupLocation || selectedCar?.location || "nairobi",
     dropLocation: defaultData?.dropLocation || "",
     phoneNumber: User?.phone,
     totalPrice: parseInt(price) || 0,

@@ -1,12 +1,12 @@
 import React from "react";
 import { Stats } from "@/components/ui/stats";
 import { RecentOrders } from "@/components/ui/recentorders";
-import { Favorites } from "@/components/ui/favorites";
 import type { Metadata } from "next";
 import { prisma } from "@/db/prisma";
 import { getUserData } from "@/lib/actions/decodetoken";
 import { redirect } from "next/navigation";
-import { BookingWithCar } from "@/lib/utils";
+import Favorites from "./favorites";
+import { Car } from "@prisma/client";
 export const metadata: Metadata = {
   title: "Car Hub - My Profile ",
   description:
@@ -45,11 +45,22 @@ export default async function Profile({}: Props) {
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     ) // Sort by `createdAt` in descending order
     .slice(0, 5);
+  const favoritecars = (
+    await prisma.favorite.findMany({
+      where: {
+        userId: User.id,
+      },
+      select: {
+        car: true,
+      },
+      take: 5,
+    })
+  ).map((favorite) => favorite.car) as Car[];
   return (
     <section>
       <Stats orders={orders} />
       <RecentOrders orders={recentOrders} />
-      <Favorites />
+      <Favorites Cars={favoritecars} />
     </section>
   );
 }

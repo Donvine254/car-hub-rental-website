@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Star, X } from "lucide-react";
-import type { Car } from "@/lib/actions/fetchCars";
+import type { Car } from "@/lib/actions/car-actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -96,9 +96,14 @@ export default function CarModal({ Car }: CarModalProps) {
               <p className="capitalize text-green-600">{Car.seats}</p>
             </div>
             <div className="flex items-center justify-between ">
-              <p className="">Fuel Consumption</p>
+              <p className="">
+                {Car.fuelType !== "electric"
+                  ? "Fuel Consumption"
+                  : "Long-Distance Range "}
+              </p>
               <p className="capitalize text-green-600">
-                {Car.fuelConsumption} Km/L
+                {Car.fuelConsumption}{" "}
+                {Car.fuelType !== "electric" ? "Km/L" : "Km"}
               </p>
             </div>
             <div className="flex items-center justify-between ">

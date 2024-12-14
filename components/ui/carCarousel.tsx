@@ -9,18 +9,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
-
-import { CarSeat, CarFrontIcon, FuelPumpIcon, GearboxIcon } from "@/assets";
-
 import { toast } from "sonner";
-import type { Car } from "@/lib/actions/fetchCars";
+import type { Car } from "@/lib/actions/car-actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
-import CarModal from "../alerts/carModal";
-import { showModal } from "@/lib/utils";
-import { Star } from "lucide-react";
-import { Badge } from "./badge";
-import { isCarAvailable } from "@/lib/helpers";
+import Carcard from "./car-card";
 type Props = {
   Cars: Car[];
 };
@@ -62,76 +54,7 @@ export default function CarCarousel({ Cars }: Props) {
           <CarouselItem
             key={car.id}
             className="xsm:w-full md:basis-1/2 lg:basis-1/3 px-2">
-            <div className="w-fit border shadow bg-white rounded-md">
-              <div className="p-2 relative">
-                <Image
-                  alt={car.modelName}
-                  src={car.image}
-                  width={300}
-                  height={300}
-                  style={{ width: "auto", height: "auto" }}
-                  placeholder="blur"
-                  blurDataURL="/vehicle-placeholder.png"
-                  priority
-                  className="rounded-md hover:scale-105 cursor-pointer"
-                  title="view more details"
-                  onClick={() => showModal(car?.id)}
-                />
-                {isCarAvailable(car.isRented, car.rentedUntill) ? (
-                  <Badge variant="secondary" className="absolute top-3 left-3">
-                    &#x1F552; Booked
-                  </Badge>
-                ) : (
-                  <Badge variant="success" className="absolute top-3 left-3">
-                    &#x2713; Available
-                  </Badge>
-                )}
-                <div className="flex items-center justify-between gap-4 pt-2 px-2">
-                  <h1 className="text-bold text-xl ">{car.modelName}</h1>
-                  <p className="flex items-center">
-                    <Star className="fill-amber-500 stroke-none" size={16} />
-                    {car.rating}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center justify-between gap-2 px-4 py-1">
-                <div className="flex flex-col items-center gap-0.5">
-                  <CarFrontIcon />
-                  <span className="capitalize">{car.bodyType}</span>
-                </div>
-                <div className="flex flex-col items-center gap-0.5">
-                  <GearboxIcon />
-                  <span>{car.transmissionType}</span>
-                </div>
-                <div className="flex flex-col items-center gap-0.5">
-                  <CarSeat />
-                  <span>{car.seats} Seats</span>
-                </div>
-                <div className="flex flex-col items-center gap-0.5">
-                  <FuelPumpIcon />
-                  <span>{car.fuelConsumption}Km/L</span>
-                </div>
-              </div>
-              {/* div for actions */}
-              <hr className="border border-gay-200" />
-              <div className="px-4 pt-1 pb-2 flex items-center justify-between  gap-4">
-                {/* <p className="text-sm">
-                  Daily Rate From <br />
-                  <span className="text-2xl font-semibold">
-                    ${car.pricePerDay}
-                  </span>
-                </p> */}
-                <button
-                  className="px-2 py-1 border hover:shadow-2xl bg-green-500 text-white hover:bg-green-600 rounded-md flex-1 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
-                  onClick={() => handleBooking(car)}
-                  disabled={isCarAvailable(car.isRented, car.rentedUntill)}>
-                  {isCarAvailable(car.isRented, car.rentedUntill)
-                    ? "Unavailable"
-                    : `Book Now for $${car.pricePerDay}`}
-                </button>
-              </div>
-            </div>
-            <CarModal Car={car} />
+            <Carcard car={car} key={car.id} handleBooking={handleBooking} />
           </CarouselItem>
         ))}
       </CarouselContent>

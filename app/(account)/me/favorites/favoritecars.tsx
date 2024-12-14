@@ -2,23 +2,35 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Car } from "@/lib/actions/fetchCars";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { isCarAvailable } from "@/lib/helpers";
 import { NotFound } from "@/components/ui/notfound";
+import { Car } from "@prisma/client";
+import { removeFavorite } from "@/lib/actions/car-actions/favorite";
 type Props = {
   Cars: Car[];
+  userId: number;
 };
 
-export default function FavoriteCars({ Cars }: Props) {
+export default function FavoriteCars({ Cars, userId }: Props) {
   const [carsToRender, setCarsToRender] = useState(Cars);
   const router = useRouter();
-  function handleUnfavorite(id: number) {
-    setCarsToRender((prev) => prev.filter((c) => c.id !== id));
-    toast.success("Car removed from favorites", {
-      position: "top-right",
-    });
+  async function handleUnfavorite(carId: number) {
+    setCarsToRender((prev) => prev.filter((c) => c.id !== carId));
+    try {
+      const res = await removeFavorite(userId, carId);
+      if (res.success) {
+        toast.success("Car removed from favorites", {
+          position: "top-right",
+        });
+      } else {
+        toast.error(res.error);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
   }
   function handleBooking(car: Car) {
     router.push(

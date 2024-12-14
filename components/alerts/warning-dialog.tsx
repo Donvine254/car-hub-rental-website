@@ -16,6 +16,8 @@ type Props = {
   description: string;
   onClose?: () => void;
   onConfirm?: () => void;
+  disabled?: boolean;
+  children?: React.ReactNode;
 };
 export default function WarningDialog({
   isOpen,
@@ -24,6 +26,8 @@ export default function WarningDialog({
   description,
   onClose,
   onConfirm,
+  disabled,
+  children,
 }: Props) {
   const handleClose = () => {
     setIsOpen(false);
@@ -52,9 +56,11 @@ export default function WarningDialog({
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
+        {children && <div className="">{children}</div>}
         <AlertDialogFooter>
           <AlertDialogAction
             onClick={onConfirm}
+            disabled={disabled}
             className="bg-red-500 hover:bg-red-600">
             Continue
           </AlertDialogAction>

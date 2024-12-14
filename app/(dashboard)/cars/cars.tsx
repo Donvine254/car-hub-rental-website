@@ -3,24 +3,18 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "sonner";
-import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
 import {
   FilterIcon,
-  InfoIcon,
-  MoveRightIcon,
   RefreshCwIcon,
   Search,
-  Star,
 } from "lucide-react";
 import ScrollToTopButton from "@/components/ui/scrollButton";
-import CarModal from "@/components/alerts/carModal";
 import FilterModal from "@/components/alerts/Filter";
 import Script from "next/script";
-import { handleGuessCar, showModal } from "@/lib/utils";
-import type { Car } from "@/lib/actions/fetchCars";
+import { handleGuessCar } from "@/lib/utils";
+import type { Car } from "@/lib/actions/car-actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
-import { Badge } from "@/components/ui/badge";
-import { isCarAvailable } from "@/lib/helpers";
+import Carcard from "@/components/ui/car-card";
 type Props = {
   Cars: Car[];
 };
@@ -169,91 +163,7 @@ export default function Carspage({ Cars }: Props) {
         {CarsToRender && CarsToRender.length > 0 ? (
           <section className=" grid gap-4 md:grid-cols-2 lg:grid-cols-3 py-2 ">
             {CarsToRender.slice(0, displayCount).map((car) => (
-              <div
-                key={car.id}
-                className="w-fit border shadow bg-white rounded-md">
-                <div className="p-2 relative">
-                  <Image
-                    alt={car.modelName}
-                    src={car.image}
-                    width={300}
-                    height={300}
-                    placeholder="blur"
-                    blurDataURL="/vehicle-placeholder.png"
-                    className="rounded-md hover:scale-y-105 cursor-pointer"
-                    style={{ width: "auto", height: "auto" }}
-                    onClick={() => showModal(car.id)}
-                    priority
-                  />
-                  {isCarAvailable(car.isRented, car.rentedUntill) ? (
-                    <Badge
-                      variant="secondary"
-                      className="absolute top-3 left-3">
-                      &#x1F552; Booked
-                    </Badge>
-                  ) : (
-                    <Badge variant="success" className="absolute top-3 left-3">
-                      &#x2713; Available
-                    </Badge>
-                  )}
-                  <div className="flex items-center justify-between gap-4 pt-2 px-2">
-                    <h1 className="font-semibold text-xl text-gray-600 ">
-                      {car.modelName}
-                    </h1>
-                    <p className="flex items-center">
-                      <Star className="fill-amber-500 stroke-none" size={16} />
-                      {car.rating}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between gap-2 px-4 py-1 my-1 group h-12">
-                  <div className="flex flex-col items-center gap-0.5 group-hover:hidden">
-                    <CarFrontIcon />
-                    <span className="capitalize">{car.bodyType}</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1 group-hover:hidden">
-                    <GearboxIcon />
-
-                    <span>{car.transmissionType}</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1 group-hover:hidden">
-                    <CarSeat />
-                    <span>{car.seats} Seats</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-1 group-hover:hidden">
-                    <FuelPumpIcon />
-                    <span>{car.fuelConsumption}Km/L</span>
-                  </div>
-                  <button
-                    className="hidden group-hover:flex items-center justify-between  w-full h-full bg-green-500 text-white group  rounded-md p-2 "
-                    onClick={() => showModal(car.id)}>
-                    <InfoIcon />
-                    <span className="font-medium flex item-center gap-0.5">
-                      View More
-                    </span>
-                    <MoveRightIcon className="bg-green-300 self-end p-1 rounded-md  " />
-                  </button>
-                </div>
-                <hr className="border border-gay-200" />
-                {/* div for actions */}
-                <div className="px-4 pt-1 pb-2 flex items-center justify-between  gap-4">
-                  <p className="text-sm">
-                    Daily Rate From <br />
-                    <span className="text-2xl font-semibold">
-                      ${car.pricePerDay}
-                    </span>
-                  </p>
-                  <button
-                    className="px-2 py-1 border rounded-md flex-1 bg-green-500 text-white hover:shadow-2xl hover:bg-green-600 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
-                    onClick={() => handleBooking(car)}
-                    disabled={isCarAvailable(car.isRented, car.rentedUntill)}>
-                    {isCarAvailable(car.isRented, car.rentedUntill)
-                      ? "Unavailable"
-                      : "Book Now"}
-                  </button>
-                </div>
-                <CarModal Car={car} />
-              </div>
+              <Carcard car={car} key={car.id} handleBooking={handleBooking}/>
             ))}
           </section>
         ) : (
