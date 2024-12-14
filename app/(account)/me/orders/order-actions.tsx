@@ -31,7 +31,7 @@ const cancellationReasons = [
 ];
 
 async function sendCancellationReasonEmail(reason: string, orderId: number) {
-  const message = `A user has requested to cancel order #CR00${orderId} for the following reason: ${reason}. Kindly note that this order has been cancelled automatically and no action is required from you`;
+  const message = `A user has requested to cancel order #CR00${orderId} for the following reason: <strong>${reason}</strong>. Kindly note that this order has been cancelled automatically and no action is required from you`;
   const response = await fetch("https://api.web3forms.com/submit", {
     method: "POST",
     headers: {
@@ -47,7 +47,7 @@ async function sendCancellationReasonEmail(reason: string, orderId: number) {
   });
 }
 
-export function CancelButton({ id, carId, endDate}: CancelButtonProps) {
+export function CancelButton({ id, carId, endDate }: CancelButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [reason, setReason] = useState("");
   async function handleCancelOrder() {
