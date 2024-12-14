@@ -74,7 +74,7 @@ model Booking {
   dropLocation   String
   phoneNumber    String
   totalPrice     Int
-  status         Status   @default(ongoing)
+  status         Status   @default(scheduled)
   createdAt      DateTime @default(now())
 }
 
