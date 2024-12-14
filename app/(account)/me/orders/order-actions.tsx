@@ -25,8 +25,12 @@ const cancellationReasons = [
   "Found a better deal",
   "Change in travel plans",
   "Booked by mistake",
+  "Emergency or unforeseen circumstances",
   "Poor customer service",
-  "Vehicle unavailable",
+  "The pickup or drop-off location is inconvenient",
+  "The vehicle i wanted is unavailable or not in good condition",
+  "The vehicle is different from what was advertised",
+  "Vehicle no longer required",
   "Other",
 ];
 
@@ -87,7 +91,7 @@ export function CancelButton({ id, carId, endDate }: CancelButtonProps) {
         isOpen={isOpen}
         onConfirm={handleCancelOrder}
         disabled={!reason}>
-        <div className="mt-4">
+        <div className="">
           <select
             value={reason}
             onChange={(e) => setReason(e.target.value)}

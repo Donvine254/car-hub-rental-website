@@ -56,7 +56,7 @@ export default function WarningDialog({
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        {children && <div className="mt-4">{children}</div>}
+        {children && <div className="">{children}</div>}
         <AlertDialogFooter>
           <AlertDialogAction
             onClick={onConfirm}
