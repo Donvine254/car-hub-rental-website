@@ -1,7 +1,6 @@
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
 
-
 export async function POST(req: Request) {
   try {
     // Parse the request body and ensure the required fields are present
@@ -26,7 +25,6 @@ export async function POST(req: Request) {
       temperature: 0.7,
       topP: 0.4,
     });
-    console.log(result.toDataStreamResponse());
     return result.toDataStreamResponse();
   } catch (error) {
     console.error("Error in POST handler:", error);

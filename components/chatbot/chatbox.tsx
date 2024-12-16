@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { RefreshCcw, Maximize2, X, Send } from "lucide-react";
+import { RefreshCcw, Maximize2, X, Send, AlertTriangle } from "lucide-react";
 import { useChat } from "ai/react";
 
 interface ChatBoxProps {
@@ -27,6 +27,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
     input,
     handleInputChange,
     handleSubmit,
+    error,
     isLoading,
   } = useChat({
     api: "/api/chat",
@@ -222,6 +223,21 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                 </div>
               </div>
             ))}
+            {error && (
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-6 h-6 rounded-full bg-[#22C55E] flex items-center justify-center">
+                    <span className="text-white text-xs">A</span>
+                  </div>
+                  <span className="text-sm text-gray-600 font-semibold">
+                    AI Assistant
+                  </span>
+                </div>
+                <div className="px-3 py-2 flex items-center gap-2 bg-red-100 text-gray-500 border-2 border-red-400 rounded-md">
+                  <AlertTriangle size={16} /> <span>Something went wrong.</span>
+                </div>
+              </div>
+            )}
             {isLoading && (
               <div className="flex items-center gap-1 mb-2">
                 <div className="w-6 h-6 rounded-full bg-[#22C55E] flex items-center justify-center">
@@ -253,6 +269,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
             type="submit"
             size="icon"
             id="submit"
+            title="submit message"
             disabled={!input}
             className="bg-[#22C55E] hover:bg-[#1ea550] disabled:bg-gray-200 disabled:text-gray-600 disabled:cursor-not-allowed">
             <Send className="h-4 w-4" />
