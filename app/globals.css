@@ -386,6 +386,9 @@ input[type="number"] {
 
 /* styling for markdown */
 /* Style for headings */
+.marked * {
+  overflow-wrap: anywhere;
+}
 .marked h1 {
   font-size: 1.5rem;
   font-weight: bold;
@@ -425,6 +428,7 @@ input[type="number"] {
 .marked a {
   color: #0070f3;
   text-decoration: none;
+  overflow-wrap: anywhere;
 }
 
 .marked a:hover {

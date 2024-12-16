@@ -41,7 +41,9 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
   } = useChat({
     api: "/api/chat",
   });
-  const [feedback, setFeedback] = useState<"like" | "dislike" | null>(null);
+  const [feedback, setFeedback] = useState<
+    Record<string, "like" | "dislike" | null>
+  >({});
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -217,10 +219,9 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                           className="marked"
                           dangerouslySetInnerHTML={{
                             __html: marked.parse(message.content),
-                          }}
-                        />
+                          }}></div>
                       ) : (
-                        <p>{message.content}</p>
+                        <p className="break-words">{message.content}</p>
                       )}
                     </div>
                     <div className="flex justify-between gap-4 items-center">
@@ -229,7 +230,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                           ? `${formatDate(message.createdAt?.toISOString())}`
                           : `${formatDate(new Date().toISOString())}`}
                       </span>
-                      {message.role === "assistant" && (
+                      {/* {message.role === "assistant" && (
                         <div className="flex items-center gap-2 ">
                           <button
                             title="good response"
@@ -248,6 +249,46 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                             onClick={() => setFeedback("dislike")}
                             className={`text-xs  px-1 py-0.5 hover:bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hidden ${
                               feedback === "dislike"
+                                ? "text-red-500"
+                                : "text-gray-700"
+                            }`}>
+                            <ThumbsDown size={12} />
+                          </button>
+                        </div>
+                      )} */}
+                      {message.role === "assistant" && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            title="Good response"
+                            disabled={feedback[message.id] === "dislike"}
+                            onClick={() =>
+                              setFeedback((prev) => ({
+                                ...prev,
+                                [message.id]:
+                                  prev[message.id] === "like" ? null : "like",
+                              }))
+                            }
+                            className={`text-xs px-1 py-0.5 hover:bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hidden ${
+                              feedback[message.id] === "like"
+                                ? "text-green-500"
+                                : "text-gray-700"
+                            }`}>
+                            <ThumbsUp size={12} />
+                          </button>
+                          <button
+                            title="Bad response"
+                            disabled={feedback[message.id] === "like"}
+                            onClick={() =>
+                              setFeedback((prev) => ({
+                                ...prev,
+                                [message.id]:
+                                  prev[message.id] === "dislike"
+                                    ? null
+                                    : "dislike",
+                              }))
+                            }
+                            className={`text-xs px-1 py-0.5 hover:bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hidden ${
+                              feedback[message.id] === "dislike"
                                 ? "text-red-500"
                                 : "text-gray-700"
                             }`}>
