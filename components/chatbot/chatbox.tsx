@@ -243,6 +243,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
           <Input
             value={input}
             onChange={handleInputChange}
+            minLength={5}
             placeholder="Type your message..."
             className="flex-grow"
           />
