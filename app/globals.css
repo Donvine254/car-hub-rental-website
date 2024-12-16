@@ -357,19 +357,33 @@ input[type="number"] {
   );
   animation: pulse-right-to-left 2s ease infinite;
 }
+/* styling for typing indicator */
+/* HTML: <div class="loader"></div> */
 .typing {
-  width: 20px;
-  aspect-ratio: 4;
-  background: radial-gradient(circle closest-side, #22c55e 90%, #0000) 0 /
-    calc(100% / 3) 100% space;
-  clip-path: inset(0 100% 0 0);
-  animation: l1 1s steps(4) infinite;
+  width: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
 }
-@keyframes l1 {
-  to {
-    clip-path: inset(0 -34% 0 0);
+@keyframes l5 {
+  0% {
+    box-shadow: 20px 0 #22c55e, -20px 0 #bbf7d0;
+    background: #22c55e;
+  }
+  33% {
+    box-shadow: 20px 0 #22c55e, -20px 0 #bbf7d0;
+    background: #bbf7d0;
+  }
+  66% {
+    box-shadow: 20px 0 #bbf7d0, -20px 0 #22c55e;
+    background: #bbf7d0;
+  }
+  100% {
+    box-shadow: 20px 0 #bbf7d0, -20px 0 #22c55e;
+    background: #22c55e;
   }
 }
+
 /* styling for markdown */
 /* Style for headings */
 .marked h1 {
