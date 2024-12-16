@@ -9,14 +9,14 @@ import { InfoIcon, MoveRightIcon, Star, BatteryCharging } from "lucide-react";
 import { showModal } from "@/lib/utils";
 type Props = {
   car: Car;
-  key: number;
+  uniqueKey?: number;
   handleBooking: (car: Car) => void;
 };
 
-export default function Carcard({ car, handleBooking, key }: Props) {
+export default function Carcard({ car, handleBooking, uniqueKey }: Props) {
   const isAvailable = isCarAvailable(car.isRented, car.rentedUntill);
   return (
-    <div key={key} className="w-fit border shadow bg-white rounded-md ">
+    <div key={uniqueKey} className="w-fit border shadow bg-white rounded-md ">
       <div className="p-2 relative">
         <Image
           alt={car.modelName}
