@@ -172,7 +172,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                     <span className="font-semibold">AI Assistant</span>{" "}
                     <span className="italic text-sm">Typing</span>
                   </p>{" "}
-                  <div className="loader mb-1"></div>
+                  <div className="typing mb-1"></div>
                 </div>
               </div>
             )}
