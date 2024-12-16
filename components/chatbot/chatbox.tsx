@@ -5,12 +5,13 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { RefreshCcw, Maximize2, X, Send, AlertTriangle } from "lucide-react";
 import { useChat } from "ai/react";
+import Script from "next/script";
 
 interface ChatBoxProps {
   isMobile: boolean;
   onClose: () => void;
 }
-
+declare const marked: any;
 const formatDate = (input: string | number = Date.now()) => {
   const now = new Date(input);
   return now.toLocaleTimeString("en-US", {
@@ -58,6 +59,11 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
           ? "fixed inset-0"
           : "fixed bottom-4 right-4 w-[400px] h-[600px]"
       } flex flex-col bg-white border md:max-h-[80%] shadow rounded-lg overflow-hidden`}>
+      <Script
+        src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"
+        async
+        defer
+      />
       <div className="flex flex-row items-center py-3 px-4 border-b bg-muted">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-[#22C55E] flex items-center justify-center">
@@ -185,15 +191,16 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                           ? "bg-[#22C55E] text-white"
                           : "bg-[#f2f2f2] text-gray-800"
                       } ${message.role === "user" ? "ml-12" : "mr-12"}`}>
-                      <p
-                        className="text-sm whitespace-pre-wrap"
-                        dangerouslySetInnerHTML={{
-                          __html: message.content.replace(
-                            /\*\*(.*?)\*\*/g,
-                            "<strong>$1</strong>"
-                          ),
-                        }}
-                      />
+                      {message.role === "assistant" ? (
+                        <div
+                          className="marked"
+                          dangerouslySetInnerHTML={{
+                            __html: marked.parse(message.content),
+                          }}
+                        />
+                      ) : (
+                        <p>{message.content}</p>
+                      )}
                     </div>
                     <span className="text-xs text-gray-500 px-1">
                       {message.createdAt
