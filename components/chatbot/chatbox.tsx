@@ -191,13 +191,16 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                           ? "bg-[#22C55E] text-white"
                           : "bg-[#f2f2f2] text-gray-800"
                       } ${message.role === "user" ? "ml-12" : "mr-12"}`}>
-                      <div
-                        className="marked"
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            marked.parse(message.content) || message.content,
-                        }}
-                      />
+                      {message.role === "assistant" ? (
+                        <div
+                          className="marked"
+                          dangerouslySetInnerHTML={{
+                            __html: marked.parse(message.content),
+                          }}
+                        />
+                      ) : (
+                        <p>{message.content}</p>
+                      )}
                     </div>
                     <span className="text-xs text-gray-500 px-1">
                       {message.createdAt
