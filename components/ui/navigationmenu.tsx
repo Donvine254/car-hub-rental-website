@@ -234,12 +234,11 @@ export default function NavigationMenu({ variant }: Props) {
                   className="hidden bg-white text-base z-10 list-none divide-y divide-gray-200 rounded shadow my-4 w-[84%] md:w-44">
                   <ul className="py-1" aria-labelledby="dropdownLargeButton">
                     <li>
-                      <a
-                        role="link"
-                        aria-disabled="true"
+                      <Link
+                        href="/locations"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Locations
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <a
@@ -251,7 +250,7 @@ export default function NavigationMenu({ variant }: Props) {
                     </li>
                     <li>
                       <Link
-                        href="/contact"
+                        href="/help"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Contact
                       </Link>
@@ -267,7 +266,7 @@ export default function NavigationMenu({ variant }: Props) {
                   </ul>
                   <div className="py-1">
                     <Link
-                      href="/contact/help"
+                      href="/help"
                       className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                       Help Center
                     </Link>

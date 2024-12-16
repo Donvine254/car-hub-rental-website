@@ -18,8 +18,8 @@ export default function ProfileHeroComponent() {
   const displayTitle = pathTitles[pathname] || "Page";
 
   return (
-    <div className="bg-[url('/hero.jpg')] bg-cover bg-center bg-no-repeat">
-      <div className="bg-black flex items-center justify-center bg-opacity-60 px-6 py-10 md:py-20">
+    <div className="bg-[url('/subheader.jpg')] bg-cover bg-center bg-no-repeat">
+      <div className="bg-black flex items-center justify-center bg-opacity-30 px-6 py-10 md:py-20">
         <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize text-white md:py-4">
           {displayTitle}
         </h1>

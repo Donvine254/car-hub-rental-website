@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Homebooking from "@/components/ui/homebooking";
-import fetchCars from "@/lib/actions/car-actions/fetchCars";
 import {
   Clock10Icon,
   MapPinIcon,
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className=" bg-green-500 w-full relative">
-      <section className="relative bg-[url('/hero-bg-2.jpeg')] bg-cover bg-no-repeat bg-right py-5 h-full ">
+      <section className="relative bg-[url('/subheader.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full ">
         <div className="md:h-screen w-full  px-4 py-2 md:flex md:items-center md:justify-center md:gap-4 ">
           <div className="flex-1 p-2">
             <h1 className="text-white text-center md:text-start xsm:text-3xl text-5xl md:text-6xl font-semibold md:leading-tight  md:tracking-wide ">
