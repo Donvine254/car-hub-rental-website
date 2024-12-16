@@ -251,7 +251,7 @@ export default function NavigationMenu({ variant }: Props) {
                     </li>
                     <li>
                       <Link
-                        href="/contact"
+                        href="/help"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Contact
                       </Link>
