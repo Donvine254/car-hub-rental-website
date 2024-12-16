@@ -8,6 +8,7 @@ import { Car } from "@/lib/actions/car-actions/fetchCars";
 import { getSession } from "@/lib/actions/session";
 import { Clock, Mail, MapPinnedIcon, Phone } from "lucide-react";
 import { toast } from "sonner";
+import { NotFound } from "@/components/ui/notfound";
 
 type Props = {
   Cars: Car[];
@@ -67,8 +68,9 @@ export default function LocationsPage({ Cars }: Props) {
                 <span className="capitalize">{location.name}</span>
               </h2>
               <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 py-2 ">
-                {Cars.filter((car) => car.location === location.name).length >
-                0 ? (
+                {Cars &&
+                Cars.filter((car) => car.location === location.name).length >
+                  0 ? (
                   Cars.filter((car) => car.location === location.name).map(
                     (car) => (
                       <div
@@ -79,8 +81,11 @@ export default function LocationsPage({ Cars }: Props) {
                     )
                   )
                 ) : (
-                  <div className="text-center text-gray-500 col-span-full">
-                    No cars available for this location
+                  <div className="bg-white col-span-full">
+                    <NotFound
+                      title="No Cars Available in this Location"
+                      description="We currently have no cars available in this location. If this is a mistake, kindly let us know by contacting us."
+                    />
                   </div>
                 )}
               </section>
