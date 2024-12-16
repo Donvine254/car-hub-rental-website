@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ContactForm from "./contact";
 import { WhatsappIcon } from "@/assets";
+import { Chatbot } from "@/components/chatbot";
 export const metadata: Metadata = {
   title: "Car Hub - Help Page",
   description:
@@ -108,18 +109,7 @@ export default function Help({}: Props) {
                 className="flex items-center xsm:justify-center gap-2 w-fit xsm:w-full bg-white text-green-600 px-6 py-2 rounded-md border hover:bg-green-500 hover:text-white border-green-600 transition-colors">
                 <MailIcon /> Contact Support
               </a>
-              <button
-                className="flex items-center xsm:justify-center  w-fit xsm:w-full bg-white text-green-600 px-6 py-2 rounded-md border hover:bg-gray-600 hover:text-white border-green-600 transition-colors disabled:cursor-not-allowed"
-                disabled>
-                <Image
-                  src="https://res.cloudinary.com/dipkbpinx/image/upload/v1733141454/illustrations/ai-svgrepo-com_boip47.svg"
-                  alt="AI logo"
-                  height={24}
-                  width={24}
-                  priority
-                />
-                <p>Ask AI Support Agent</p>
-              </button>
+              <Chatbot />
             </div>
           </section>
         </section>

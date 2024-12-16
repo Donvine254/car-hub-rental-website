@@ -163,7 +163,7 @@ export default function Carspage({ Cars }: Props) {
         {CarsToRender && CarsToRender.length > 0 ? (
           <section className=" grid gap-4 md:grid-cols-2 lg:grid-cols-3 py-2 ">
             {CarsToRender.slice(0, displayCount).map((car) => (
-              <Carcard car={car} key={car.id} handleBooking={handleBooking}/>
+              <div key={car.id}><Carcard car={car} handleBooking={handleBooking}/></div>
             ))}
           </section>
         ) : (

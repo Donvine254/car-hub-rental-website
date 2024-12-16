@@ -54,7 +54,7 @@ export default function CarCarousel({ Cars }: Props) {
           <CarouselItem
             key={car.id}
             className="xsm:w-full md:basis-1/2 lg:basis-1/3 px-2">
-            <Carcard car={car} key={car.id} handleBooking={handleBooking} />
+            <Carcard car={car} handleBooking={handleBooking} />
           </CarouselItem>
         ))}
       </CarouselContent>
