@@ -48,19 +48,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
   }
 
   async function handleRefresh() {
-    setMessages([
-      {
-        role: "assistant",
-        content:
-          "Hi! 👋 I'm Alex, your CarHub guide. How can I help you today?",
-        id: "aaanfhghgfggj",
-      },
-      {
-        role: "assistant",
-        content: "What would you like to know about our services?",
-        id: "rjehthfuehthfuehth",
-      },
-    ]);
+    setMessages([]);
   }
 
   return (
@@ -90,16 +78,9 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
           <Button
             variant="ghost"
             size="icon"
-            title="resize"
-            className="h-8 w-8 text-gray-500 hover:text-gray-700">
-            <Maximize2 className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
             onClick={onClose}
             title="close"
-            className="h-8 w-8 text-gray-500 hover:text-gray-700">
+            className="h-8 w-8 text-gray-500 hover:text-red-500">
             <X className="h-4 w-4" />
           </Button>
         </div>
@@ -262,6 +243,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
           <Input
             value={input}
             onChange={handleInputChange}
+            minLength={5}
             placeholder="Type your message..."
             className="flex-grow"
           />

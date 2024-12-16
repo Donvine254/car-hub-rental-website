@@ -65,7 +65,7 @@ export default function FAQAccordion() {
             </span>
           </AccordionTrigger>
           <AccordionContent className="px-6 py-4 bg-green-50">
-            <p className="text-green-800 xsm:text-xs md:text-base">
+            <p className="text-green-800 xsm:text-sm md:text-base">
               {faq.answer}
             </p>
           </AccordionContent>
