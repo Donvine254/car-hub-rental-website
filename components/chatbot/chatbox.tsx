@@ -1,11 +1,19 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { RefreshCcw, Maximize2, X, Send, AlertTriangle } from "lucide-react";
+import {
+  RefreshCcw,
+  X,
+  Send,
+  AlertTriangle,
+  ThumbsDown,
+  ThumbsUp,
+} from "lucide-react";
 import { useChat } from "ai/react";
 import Script from "next/script";
+import Image from "next/image";
 
 interface ChatBoxProps {
   isMobile: boolean;
@@ -33,7 +41,9 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
   } = useChat({
     api: "/api/chat",
   });
-
+  const [feedback, setFeedback] = useState<
+    Record<string, "like" | "dislike" | null>
+  >({});
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -64,12 +74,17 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
         async
         defer
       />
-      <div className="flex flex-row items-center py-3 px-4 border-b bg-muted">
+      <div className="flex flex-row items-center py-3 px-4 border-b bg-gradient-to-r from-green-400  to-blue-400 text-white">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-[#22C55E] flex items-center justify-center">
-            <span className="text-white text-sm">A</span>
-          </div>
-          <span className="font-semibold text-gray-800">AI Assistant</span>
+          <Image
+            alt="bot avatar"
+            src="https://res.cloudinary.com/dipkbpinx/image/upload/v1734387416/carhub/avatars/o2pky8rdruuxi7cozdlo.png"
+            width={32}
+            height={32}
+            className="w-8 h-8 rounded-full"
+          />
+
+          <span className="font-semibold ">Auto Assist</span>
         </div>
         <div className="ml-auto flex gap-2">
           {/* reset messages to their initial state */}
@@ -78,7 +93,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
             size="icon"
             onClick={handleRefresh}
             title="refresh chat"
-            className="h-8 w-8 text-gray-500 hover:text-gray-700">
+            className="h-8 w-8 text-white hover:text-gray-700">
             <RefreshCcw className="h-4 w-4" />
           </Button>
           <Button
@@ -86,7 +101,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
             size="icon"
             onClick={onClose}
             title="close"
-            className="h-8 w-8 text-gray-500 hover:text-red-500">
+            className="h-8 w-8 text-white hover:text-red-500">
             <X className="h-4 w-4" />
           </Button>
         </div>
@@ -110,11 +125,15 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                 <div key={index} className="mb-4">
                   {!message.isUser && (
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 rounded-full bg-[#22C55E] flex items-center justify-center">
-                        <span className="text-white text-xs">A</span>
-                      </div>
+                      <Image
+                        alt="bot avatar"
+                        src="https://res.cloudinary.com/dipkbpinx/image/upload/v1734387416/carhub/avatars/o2pky8rdruuxi7cozdlo.png"
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 rounded-full"
+                      />
                       <span className="text-sm text-gray-600 font-semibold">
-                        AI Assistant
+                        Auto Assist
                       </span>
                     </div>
                   )}
@@ -169,11 +188,15 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
               <div key={index} className="mb-4">
                 {message.role !== "user" && (
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 rounded-full bg-[#22C55E] flex items-center justify-center">
-                      <span className="text-white text-xs">A</span>
-                    </div>
+                    <Image
+                      alt="bot avatar"
+                      src="https://res.cloudinary.com/dipkbpinx/image/upload/v1734387416/carhub/avatars/o2pky8rdruuxi7cozdlo.png"
+                      width={32}
+                      height={32}
+                      className="w-8 h-8 rounded-full"
+                    />
                     <span className="text-sm text-gray-600 font-semibold">
-                      AI Assistant
+                      Auto Assist
                     </span>
                   </div>
                 )}
@@ -196,17 +219,84 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
                           className="marked"
                           dangerouslySetInnerHTML={{
                             __html: marked.parse(message.content),
-                          }}
-                        />
+                          }}></div>
                       ) : (
-                        <p>{message.content}</p>
+                        <p className="break-words">{message.content}</p>
                       )}
                     </div>
-                    <span className="text-xs text-gray-500 px-1">
-                      {message.createdAt
-                        ? `${formatDate(message.createdAt?.toISOString())}`
-                        : `${formatDate(new Date().toISOString())}`}
-                    </span>
+                    <div className="flex justify-between gap-4 items-center">
+                      <span className="text-xs text-gray-500 px-1">
+                        {message.createdAt
+                          ? `${formatDate(message.createdAt?.toISOString())}`
+                          : `${formatDate(new Date().toISOString())}`}
+                      </span>
+                      {/* {message.role === "assistant" && (
+                        <div className="flex items-center gap-2 ">
+                          <button
+                            title="good response"
+                            disabled={feedback === "dislike"}
+                            onClick={() => setFeedback("like")}
+                            className={`text-xs  px-1 py-0.5 hover:bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hidden ${
+                              feedback === "like"
+                                ? "text-green-500"
+                                : "text-gray-700"
+                            }`}>
+                            <ThumbsUp size={12} />
+                          </button>
+                          <button
+                            title="bad response"
+                            disabled={feedback === "like"}
+                            onClick={() => setFeedback("dislike")}
+                            className={`text-xs  px-1 py-0.5 hover:bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hidden ${
+                              feedback === "dislike"
+                                ? "text-red-500"
+                                : "text-gray-700"
+                            }`}>
+                            <ThumbsDown size={12} />
+                          </button>
+                        </div>
+                      )} */}
+                      {message.role === "assistant" && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            title="Good response"
+                            disabled={feedback[message.id] === "dislike"}
+                            onClick={() =>
+                              setFeedback((prev) => ({
+                                ...prev,
+                                [message.id]:
+                                  prev[message.id] === "like" ? null : "like",
+                              }))
+                            }
+                            className={`text-xs px-1 py-0.5 hover:bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hidden ${
+                              feedback[message.id] === "like"
+                                ? "text-green-500"
+                                : "text-gray-700"
+                            }`}>
+                            <ThumbsUp size={12} />
+                          </button>
+                          <button
+                            title="Bad response"
+                            disabled={feedback[message.id] === "like"}
+                            onClick={() =>
+                              setFeedback((prev) => ({
+                                ...prev,
+                                [message.id]:
+                                  prev[message.id] === "dislike"
+                                    ? null
+                                    : "dislike",
+                              }))
+                            }
+                            className={`text-xs px-1 py-0.5 hover:bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hidden ${
+                              feedback[message.id] === "dislike"
+                                ? "text-red-500"
+                                : "text-gray-700"
+                            }`}>
+                            <ThumbsDown size={12} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -214,11 +304,15 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
             {error && (
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 rounded-full bg-[#22C55E] flex items-center justify-center">
-                    <span className="text-white text-xs">A</span>
-                  </div>
+                  <Image
+                    alt="bot avatar"
+                    src="https://res.cloudinary.com/dipkbpinx/image/upload/v1734387416/carhub/avatars/o2pky8rdruuxi7cozdlo.png"
+                    width={32}
+                    height={32}
+                    className="w-8 h-8 rounded-full"
+                  />
                   <span className="text-sm text-gray-600 font-semibold">
-                    AI Assistant
+                    Auto Assist
                   </span>
                 </div>
                 <div className="px-3 py-2 flex items-center gap-2 bg-red-100 text-gray-500 border-2 border-red-400 rounded-md">
@@ -228,15 +322,15 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
             )}
             {isLoading && (
               <div className="flex items-center gap-1 mb-2">
-                <div className="w-6 h-6 rounded-full bg-[#22C55E] flex items-center justify-center">
-                  <span className="text-white text-xs">A</span>
-                </div>
-                <div className="flex items-end gap-1">
-                  <p>
-                    <span className="font-semibold">AI Assistant</span>{" "}
-                    <span className="italic text-sm">Typing</span>
-                  </p>{" "}
-                  <div className="typing mb-1"></div>
+                <Image
+                  alt="bot avatar"
+                  src="https://res.cloudinary.com/dipkbpinx/image/upload/v1734387416/carhub/avatars/o2pky8rdruuxi7cozdlo.png"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-full"
+                />
+                <div className=" bg-[#f2f2f2] py-3 px-10 rounded-lg ">
+                  <div className="typing"></div>
                 </div>
               </div>
             )}
@@ -251,8 +345,9 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
             value={input}
             onChange={handleInputChange}
             minLength={5}
+            name="input"
             placeholder="Type your message..."
-            className="flex-grow"
+            className="flex-grow focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
           <Button
             type="submit"
@@ -271,7 +366,7 @@ export const ChatBox: React.FC<ChatBoxProps> = ({ isMobile, onClose }) => {
 
 const initialMessages = [
   {
-    text: "Hi! 👋 I'm Alex, your CarHub guide. How can I help you today?",
+    text: "Hi! 👋 I'm an FAQ bot designed to answer questions about our rental services. How can I help you today?",
     isUser: false,
     timestamp: formatDate(),
   },
