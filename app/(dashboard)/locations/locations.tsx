@@ -99,7 +99,7 @@ export default function LocationsPage({ Cars }: Props) {
 
 const LocationCard = ({ location }: { location: Location }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-5 py-2">
+    <div className="flex flex-col md:flex-row gap-5 py-2 md:pb-4">
       {/* first child */}
       <div className="border shadow rounded-md bg-white py-6 px-4 space-y-4 flex-shrink">
         <h2 className="text-2xl xsm:text-lg font-semibold mb-4 capitalize">
@@ -112,7 +112,7 @@ const LocationCard = ({ location }: { location: Location }) => {
         </div>
         <div className="flex items-center space-x-2 mb-4">
           <Phone className="mr-2 fill-green-500 stroke-none" />
-          <span>{location.phone}</span>
+          <a href={`tel:${location.phone}`}>{location.phone}</a>
         </div>
         <div className="flex items-center space-x-2 mb-4">
           <Mail className="mr-2" fill="#22C55E" stroke="white" />
@@ -133,12 +133,12 @@ const LocationCard = ({ location }: { location: Location }) => {
         </a>
       </div>
       {/* second child */}
-      <div className="h-[300px] flex-1">
+      <div className="h-[300px] flex-1 ">
         <iframe
           src={location.mapUrl}
           width="100%"
           height="100%"
-          className="border rounded-md xsm:min-h-[350px]"
+          className="border shadow rounded-md xsm:min-h-[350px]"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
           loading="lazy"></iframe>
