@@ -38,6 +38,12 @@ const GoogleLoginButton = ({ router, origin_url }: Props) => {
         });
         router.replace(origin_url);
       } else {
+        if (result.error === "User not found") {
+          toast.error(result.error);
+          router.replace(
+            `/login/account_not_found?referrer=google&token=${access_token}`
+          );
+        }
         toast.error(result.error);
         return false;
       }

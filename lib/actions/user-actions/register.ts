@@ -10,6 +10,7 @@ interface Data {
   role?: string;
   image?: string;
   phone: string;
+  metadata?: {};
 }
 
 export async function registerUsers(data: Data) {
@@ -24,7 +25,14 @@ export async function registerUsers(data: Data) {
         phone: data.phone,
         password_digest: hashedPassword,
         role: "user",
-        image: `https://ui-avatars.com/api/?background=random&name=${data.username}`,
+        image:
+          data.image ||
+          `https://ui-avatars.com/api/?background=random&name=${data.username}`,
+        metadata: data.metadata || {
+          provider: "email",
+          emailVerified: false,
+          phoneVerified: false,
+        },
       },
     });
     return user;
@@ -43,3 +51,4 @@ export async function registerUsers(data: Data) {
     await prisma.$disconnect();
   }
 }
+

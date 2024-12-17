@@ -10,6 +10,7 @@ interface Data {
   phone: string;
   role?: string;
   imageUrl?: string;
+  metadata?: {};
 }
 
 export async function POST(req: NextRequest) {

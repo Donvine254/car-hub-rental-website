@@ -10,26 +10,29 @@ export async function authenticateGoogleLogin(email: string) {
     const user = await prisma.user.findUnique({
       where: { email: email },
     });
-    if (user) {
-      const token = await new jose.SignJWT({
-        userId: user.id,
-        email: user.email,
-        role: user.role,
-      })
-        .setProtectedHeader({ alg: "HS256" })
-        .setExpirationTime("8h")
-        .sign(JWT_SECRET);
-      cookieStore.set("token", token, {
-        httpOnly: true,
-        maxAge: 8 * 60 * 60,
-        sameSite: "strict",
-      });
-      return { success: true, message: "User updated successfully" };
-    } else {
+    if (!user) {
       return { success: false, error: "User not found" };
     }
+    const token = await new jose.SignJWT({
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("8h")
+      .sign(JWT_SECRET);
+    cookieStore.set("token", token, {
+      httpOnly: true,
+      maxAge: 8 * 60 * 60,
+      sameSite: "strict",
+    });
+    return { success: true, message: "User updated successfully" };
   } catch (error) {
     console.error(error);
     return { success: false, error: "Something went wrong" };
   }
+}
+
+export async function registerGoogleUsers(data: any) {
+    
 }

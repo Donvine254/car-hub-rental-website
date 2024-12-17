@@ -70,7 +70,6 @@ export default function Login({}: Props) {
   useEffect(() => {
     (async () => {
       const session = await getSession();
-      console.log(session);
       if (session) {
         setIsLoggedIn(true);
       }

@@ -95,3 +95,24 @@ async function comparePassword(userId: number, current_password: string) {
     return isPasswordValid;
   } else return false;
 }
+
+export async function setAuthToken(userData: {
+  id: number;
+  email: string;
+  role: string;
+}) {
+  const cookieStore = await cookies();
+  const token = await new jose.SignJWT({
+    userId: userData.id,
+    email: userData.email,
+    role: userData.role,
+  })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("8h")
+    .sign(JWT_SECRET);
+  cookieStore.set("token", token, {
+    httpOnly: true,
+    maxAge: 8 * 60 * 60,
+    sameSite: "strict",
+  });
+}
