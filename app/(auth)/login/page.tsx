@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { GoogleIcon, FacebookIcon } from "@/assets";
+import { FacebookIcon } from "@/assets";
 import { InfoIcon, Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getSession } from "@/lib/actions/session";
@@ -9,6 +9,7 @@ import Link from "next/link";
 import axios from "axios";
 import TurnstileComponent from "@/components/ui/turnstile";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
+import GoogleLoginButton from "./google-login";
 type Props = {};
 
 interface FormData {
@@ -75,6 +76,7 @@ export default function Login({}: Props) {
       }
     })();
   }, []);
+
   //handle Logout function
   async function handleLogout() {
     await fetch("/api/logout");
@@ -109,12 +111,6 @@ export default function Login({}: Props) {
         </div>
       </section>
     );
-  }
-
-  //function to login with google
-  async function loginWithGoogle() {
-    toast.error("Login with google is not supported");
-    return null;
   }
 
   return (
@@ -214,14 +210,8 @@ export default function Login({}: Props) {
               </div>
               <hr className="border border-gray-200 w-full" />
             </div>
-            <div className="flex items-center justify-between gap-2 xsm:gap-1 py-2 px-1 w-full ">
-              <button
-                className="rounded-md text-base font-medium  border  hover:bg-gray-200 hover:text-black  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-                type="button"
-                onClick={loginWithGoogle}>
-                <GoogleIcon />
-                <span>Google</span>
-              </button>
+            <div className="flex items-center justify-between gap-2 xsm:gap-1 pb-4 px-1 w-full ">
+              <GoogleLoginButton router={router} origin_url={redirect} />
               <button
                 className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
                 type="button"

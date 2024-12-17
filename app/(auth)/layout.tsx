@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/sonner";
 import "../../app/globals.css";
 import { EB_Garamond } from "next/font/google";
+import { GoogleContextProvider } from "@/providers/google";
 const eb_garamond = EB_Garamond({
   subsets: ["latin"],
   display: "swap",
@@ -24,7 +25,7 @@ export default function AuthLayout({
       <body className={eb_garamond.className}>
         <Toaster />
         <Sonner richColors closeButton theme="light" />
-        {children}
+        <GoogleContextProvider> {children}</GoogleContextProvider>
       </body>
     </html>
   );

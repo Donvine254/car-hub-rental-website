@@ -2,7 +2,7 @@
 
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-export function GoogleContextProviders({
+export function GoogleContextProvider({
   children,
 }: {
   children: React.ReactNode;
