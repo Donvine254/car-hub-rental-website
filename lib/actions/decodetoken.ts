@@ -23,6 +23,7 @@ export const getUserData = async () => {
         phone: true,
       },
     });
+
     if (!user) {
       console.error("User not found in the database");
       return null;
