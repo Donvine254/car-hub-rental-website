@@ -5,13 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertCircle, Mail, User, Phone, Loader } from "lucide-react";
 import { PhoneInput } from "@/components/ui/phoneinput";
+import { isValidPhoneNumber } from "react-phone-number-input";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Script from "next/script";
-import Axios from "axios";
-import { setAuthToken } from "@/lib/actions/user-actions";
-import { sendWelcomeEmail } from "@/emails";
+import { registerSSOUsers } from "@/lib/actions/user-actions/sso";
 
 declare const confetti: any;
 export default function GoogleSignupRedirect() {
@@ -49,7 +48,6 @@ export default function GoogleSignupRedirect() {
           }
         );
         const data = await response.json();
-        console.log(data);
         setFormData({
           ...formData,
           email: data.email,
@@ -77,27 +75,28 @@ export default function GoogleSignupRedirect() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!isValidPhoneNumber(formData.phone)) {
+      toast.error(`Invalid phone number: ${formData.phone}`);
+      return "Invalid phone number";
+    }
     toast.info("Processing request..");
     setLoading(true);
     try {
-      const response = await Axios.post("/api/register", formData);
-      const responseData = await response.data;
-      // set the token response here
-      console.log(responseData);
-      await setAuthToken({
-        id: responseData.id,
-        email: responseData.email,
-        role: responseData.role,
-      });
-      setLoading(false);
-      toast.success("Account registration successful!");
-      confetti({
-        particleCount: 700,
-        spread: 100,
-        origin: { y: 0.3 },
-      });
-      await sendWelcomeEmail(responseData.email, responseData.username);
-      setTimeout(() => router.replace("/"), 1000);
+      const response = await registerSSOUsers(formData);
+      if (response.success) {
+        setLoading(false);
+        toast.success("Account registration successful!");
+        confetti({
+          particleCount: 700,
+          spread: 100,
+          origin: { y: 0.3 },
+        });
+
+        setTimeout(() => router.replace("/"), 1000);
+      } else {
+        setLoading(false);
+        toast.error(response.error);
+      }
     } catch (error: any) {
       setLoading(false);
       console.log(error);

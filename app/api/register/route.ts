@@ -32,9 +32,8 @@ export async function POST(req: NextRequest) {
     user = await registerUsers(params);
     return NextResponse.json({ user }, { status: 201 });
   } catch (error: any) {
-    // Log the error for debugging
     console.error("Registration error:", error.message || error);
-    const statusCode = error.message.includes("exists") ? 409 : 500; // Conflict or Internal Server Error
+    const statusCode = error.message.includes("exists") ? 409 : 500;
     return NextResponse.json(
       { error: error.message || "Internal Server Error" },
       { status: statusCode }

@@ -3,7 +3,7 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "sonner";
 import { GoogleIcon } from "@/assets";
-import { authenticateGoogleLogin } from "@/lib/actions/user-actions/google-login";
+import { authenticateGoogleLogin } from "@/lib/actions/user-actions/sso";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 type Props = {
   router: AppRouterInstance;
