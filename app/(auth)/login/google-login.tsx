@@ -2,7 +2,7 @@
 import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
 import { toast } from "sonner";
 import { GoogleIcon } from "@/assets";
-import { authenticateGoogleLogin } from "@/lib/actions/user-actions/sso";
+import { authenticateSSOLogin } from "@/lib/actions/user-actions/sso";
 import { useEffect, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { getSession } from "@/lib/actions/session";
@@ -34,7 +34,7 @@ const GoogleLoginButton = ({ router, origin_url }: Props) => {
         }
       );
       const userInfo = await response.json();
-      const result = await authenticateGoogleLogin(userInfo.email);
+      const result = await authenticateSSOLogin(userInfo.email);
       if (result.success) {
         toast.success("Logged in successfully", {
           position: "bottom-center",
@@ -88,7 +88,7 @@ export function GoogleOneTapLogin() {
           `https://oauth2.googleapis.com/tokeninfo?id_token=${credentialResponse.credential}`
         );
         const userInfo = await response.json();
-        const result = await authenticateGoogleLogin(userInfo.email);
+        const result = await authenticateSSOLogin(userInfo.email);
         if (result.success) {
           toast.success("Logged in successfully", {
             position: "bottom-center",

@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { registerUsers } from "./register";
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export async function authenticateGoogleLogin(email: string) {
+export async function authenticateSSOLogin(email: string) {
   const cookieStore = await cookies();
   try {
     const user = await prisma.user.findUnique({

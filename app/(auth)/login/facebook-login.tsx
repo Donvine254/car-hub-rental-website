@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { FacebookIcon } from "@/assets";
 import { toast } from "sonner";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { authenticateSSOLogin } from "@/lib/actions/user-actions/sso";
 declare const window: any; // To handle 'fbAsyncInit'
 declare let FB: any; // For Facebook SDK object
 
@@ -52,13 +53,38 @@ const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
     );
   };
 
-  const fetchUserProfile = (accessToken: string) => {
+  const fetchUserProfile = async (accessToken: string) => {
     FB.api(
       "/me",
       { fields: "id,name,email,picture", access_token: accessToken },
       (user: any) => {
         if (user) {
           console.log("Facebook User Data:", user);
+          if (!user.email) {
+            toast.error("Your facebook account cannot be used to login.");
+            return false;
+          } else {
+            (async () => {
+              const result = await authenticateSSOLogin(user.email);
+              if (result.success) {
+                toast.success("Logged in successfully", {
+                  position: "bottom-center",
+                });
+                if (typeof window !== "undefined") {
+                  window.location.reload();
+                }
+              } else {
+                if (result.error === "User not found") {
+                  toast.error(result.error);
+                  router.replace(
+                    `/login/account_not_found?referrer=facebook&token=${accessToken}`
+                  );
+                }
+                toast.error(result.error);
+                return false;
+              }
+            })();
+          }
         } else {
           console.error("Failed to retrieve user profile data.");
         }
