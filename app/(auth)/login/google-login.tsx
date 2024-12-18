@@ -69,18 +69,8 @@ const GoogleLoginButton = ({ router, origin_url }: Props) => {
 
 export default GoogleLoginButton;
 
-export function GoogleOneTapLogin() {
-  const [session, setSession] = useState<any | null>(null);
+export function GoogleOneTapLogin({ session }: { session: any | null }) {
   const router = useRouter();
-  useEffect(() => {
-    (async () => {
-      const session = await getSession();
-      if (session) {
-        setSession(session);
-      }
-    })();
-  }, []);
-
   useGoogleOneTapLogin({
     onSuccess: async (credentialResponse) => {
       try {
