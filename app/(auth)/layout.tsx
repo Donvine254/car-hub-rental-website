@@ -25,7 +25,9 @@ export default function AuthLayout({
       <body className={eb_garamond.className}>
         <Toaster />
         <Sonner richColors closeButton theme="light" />
-        <GoogleContextProvider> {children}</GoogleContextProvider>
+        <GoogleContextProvider>
+          <main>{children}</main>
+        </GoogleContextProvider>
       </body>
     </html>
   );
