@@ -123,6 +123,7 @@ export function GoogleOneTapLogin() {
       console.log("Prompt moment notification:", notification);
     },
     auto_select: true,
+    use_fedcm_for_prompt: true,
   });
 
   return null;
