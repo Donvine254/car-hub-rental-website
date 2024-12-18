@@ -14,7 +14,7 @@ import Carshowcase from "@/components/ui/carshowcase";
 import ScrollToTopButton from "@/components/ui/scrollButton";
 import HeroSection from "@/components/ui/heroSection";
 import Link from "next/link";
-import { GoogleOneTapWrapper } from "../(auth)/login/google-login";
+import { GoogleOneTapLogin} from "../(auth)/login/google-login";
 
 export const metadata: Metadata = {
   title: "Car Hub - Homepage",
@@ -26,7 +26,7 @@ export default function Home() {
   
   return (
     <div className=" bg-green-500 w-full relative">
-      <GoogleOneTapWrapper />
+      <GoogleOneTapLogin />
       <section className="relative bg-[url('/subheader.jpg')] bg-cover bg-no-repeat bg-right py-5 h-full ">
         <div className="md:h-screen w-full  px-4 py-2 md:flex md:items-center md:justify-center md:gap-4 ">
           <div className="flex-1 p-2">

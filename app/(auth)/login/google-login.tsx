@@ -69,7 +69,7 @@ const GoogleLoginButton = ({ router, origin_url }: Props) => {
 
 export default GoogleLoginButton;
 
-export function GoogleOneTapWrapper() {
+export function GoogleOneTapLogin() {
   const [session, setSession] = useState<any | null>(null);
   const router = useRouter();
   useEffect(() => {
@@ -88,12 +88,14 @@ export function GoogleOneTapWrapper() {
           "https://www.googleapis.com/oauth2/v3/userinfo",
           {
             headers: {
-              Authorization: `Bearer ${credentialResponse}`,
+              Authorization: `Bearer ${credentialResponse.credential}`,
             },
           }
         );
         const userInfo = await response.json();
+        console.log(userInfo);
         const result = await authenticateGoogleLogin(userInfo.email);
+        console.log(result);
         if (result.success) {
           toast.success("Logged in successfully", {
             position: "bottom-center",
@@ -120,6 +122,7 @@ export function GoogleOneTapWrapper() {
     promptMomentNotification: (notification) => {
       console.log("Prompt moment notification:", notification);
     },
+    auto_select: true,
   });
 
   return null;
