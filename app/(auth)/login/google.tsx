@@ -52,6 +52,8 @@ const GoogleLoginButton = ({ router, origin_url }: Props) => {
       containerProps={{
         style: {
           width: "100% !important",
+          display: "flex !important",
+          justifyContent: "center !important",
         },
       }}
     />
@@ -127,6 +129,8 @@ export const GoogleSignupButton = ({ router }: Pick<Props, "router">) => {
       containerProps={{
         style: {
           width: "100% !important",
+          display: "flex !important",
+          justifyContent: "center !important",
         },
       }}
       useOneTap
