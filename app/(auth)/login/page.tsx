@@ -11,6 +11,7 @@ import TurnstileComponent from "@/components/ui/turnstile";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 import GoogleLoginButton from "./google-login";
 import FacebookLoginButton from "./facebook-login";
+import Script from "next/script";
 type Props = {};
 
 interface FormData {
@@ -88,6 +89,10 @@ export default function Login({}: Props) {
   if (isLoggedIn) {
     return (
       <section className="w-full h-screen flex items-center justify-center bg-[#f8f9fa]">
+        <Script
+          src="https://connect.facebook.net/en_US/sdk.js"
+          async
+          defer></Script>
         <div
           id="login_modal"
           className="rounded-md flex flex-col gap-5 items-center justify-center py-10 border px-4 bg-white xsm:mx-2">

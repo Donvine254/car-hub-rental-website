@@ -29,12 +29,6 @@ const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
         });
         setSdkLoaded(true); // Mark SDK as loaded
       };
-
-      // Load the SDK script
-      const script = document.createElement("script");
-      script.src = "https://connect.facebook.net/en_US/sdk.js";
-      script.async = true;
-      document.body.appendChild(script);
     }
   }, []);
 
