@@ -7,7 +7,7 @@ import "../globals.css";
 import Footer from "@/components/ui/Footer";
 import { GoogleContextProvider } from "@/providers/google";
 import { getUserData } from "@/lib/actions/decodetoken";
-import { GoogleOneTapLogin } from "../(auth)/login/google-login";
+import { GoogleOneTapLogin } from "../(auth)/login/google";
 
 const eb_garamond = EB_Garamond({
   subsets: ["latin"],

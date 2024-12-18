@@ -62,7 +62,7 @@ export async function registerSSOUsers(data: Data) {
     });
     return { success: true, message: "User registered successfully" };
   } catch (error: any) {
-    console.error("Error in registerGoogleUsers:", error);
+    console.error("Error in while registering users:", error);
     return {
       success: false,
       error: error.message || "something went wrong",

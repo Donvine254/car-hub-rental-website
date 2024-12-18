@@ -42,8 +42,7 @@ export async function registerUsers(data: Data) {
       error.code === "P2002" // Unique constraint violation
     ) {
       throw new Error("Email or Phone number already exists.");
-    }
-    throw new Error("An unexpected error occurred during registration.");
+    } else throw new Error("An unexpected error occurred during registration.");
   } finally {
     if (user && !error) {
       await sendVerificationEmail(user.email, user.id, user.username);
@@ -51,4 +50,3 @@ export async function registerUsers(data: Data) {
     await prisma.$disconnect();
   }
 }
-

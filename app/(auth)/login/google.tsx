@@ -1,11 +1,8 @@
 "use client";
-import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
 import { toast } from "sonner";
-import { GoogleIcon } from "@/assets";
 import { authenticateSSOLogin } from "@/lib/actions/user-actions/sso";
-import { useEffect, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { getSession } from "@/lib/actions/session";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -13,25 +10,10 @@ type Props = {
   origin_url: string;
 };
 const GoogleLoginButton = ({ router, origin_url }: Props) => {
-  const handleGoogleLogin = useGoogleLogin({
-    flow: "implicit",
-    onSuccess: (tokenResponse) => {
-      loginGoogleUsers(tokenResponse.access_token);
-    },
-    onError: (error) => {
-      console.error("Login Failed:", error);
-      toast.error(error.error_description || "Something went wrong");
-    },
-  });
-  async function loginGoogleUsers(access_token: string) {
+  async function loginGoogleUsers(credential: string) {
     try {
       const response = await fetch(
-        "https://www.googleapis.com/oauth2/v3/userinfo",
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        }
+        `https://oauth2.googleapis.com/tokeninfo?id_token=${credential}`
       );
       const userInfo = await response.json();
       const result = await authenticateSSOLogin(userInfo.email);
@@ -44,7 +26,7 @@ const GoogleLoginButton = ({ router, origin_url }: Props) => {
         if (result.error === "User not found") {
           toast.error(result.error);
           router.replace(
-            `/login/account_not_found?referrer=google&token=${access_token}`
+            `/login/account_not_found?referrer=google&token=${credential}`
           );
         }
         toast.error(result.error);
@@ -57,13 +39,22 @@ const GoogleLoginButton = ({ router, origin_url }: Props) => {
   }
 
   return (
-    <button
-      className="rounded-md text-base font-medium border hover:bg-gray-200 hover:text-black h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-      type="button"
-      onClick={() => handleGoogleLogin()}>
-      <GoogleIcon />
-      <span>Google</span>
-    </button>
+    <GoogleLogin
+      size="large"
+      onSuccess={(credentialResponse) => {
+        if (credentialResponse.credential) {
+          loginGoogleUsers(credentialResponse.credential);
+        } else toast.error("Missing credential response.");
+      }}
+      onError={() => {
+        toast.error("Something went wrong with Google Login.");
+      }}
+      containerProps={{
+        style: {
+          width: "100%",
+        },
+      }}
+    />
   );
 };
 
@@ -90,7 +81,7 @@ export function GoogleOneTapLogin({ session }: { session: any | null }) {
           if (result.error === "User not found") {
             toast.error(result.error);
             router.replace(
-              `/login/account_not_found?referrer=google&token=${credentialResponse.credential}`
+              `/login/account_not_found?action=login&token=${credentialResponse.credential}`
             );
           }
           toast.error(result.error);
@@ -117,3 +108,30 @@ export function GoogleOneTapLogin({ session }: { session: any | null }) {
 
   return null;
 }
+
+export const GoogleSignupButton = ({ router }: Pick<Props, "router">) => {
+  return (
+    <GoogleLogin
+      size="large"
+      text="signup_with"
+      onSuccess={(credentialResponse) => {
+        if (credentialResponse.credential) {
+          router.replace(
+            `/login/account_not_found?action=signup&token=${credentialResponse.credential}`
+          );
+        } else toast.error("Missing credential response.");
+      }}
+      onError={() => {
+        toast.error("Something went wrong with Google Signup.");
+      }}
+      containerProps={{
+        style: {
+          width: "100%",
+        },
+      }}
+      useOneTap
+      auto_select
+      use_fedcm_for_prompt
+    />
+  );
+};

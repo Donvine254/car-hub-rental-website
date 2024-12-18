@@ -9,6 +9,7 @@ import Axios from "axios";
 import Link from "next/link";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import { GoogleSignupButton } from "../login/google";
 
 type Props = {};
 interface FormData {
@@ -250,33 +251,11 @@ export default function Register({}: Props) {
             {/* beginning of social logins */}
             <div className="flex items-center gap-2 w-full ">
               <hr className="border border-gray-200 w-full" />
-              <div className="text-sm flex-1 w-fit whitespace-nowrap">
-                Or Register With
-              </div>
+              <div className="text-sm flex-1 w-fit whitespace-nowrap">Or</div>
               <hr className="border border-gray-200 w-full" />
             </div>
-            <div className="flex items-center justify-between gap-2 xsm:gap-1 py-2 px-1 w-full ">
-              <button
-                className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white   h-10 px-4 py-2 w-1/2 flex justify-center items-center space-x-2"
-                type="button"
-                onClick={loginWithGoogle}>
-                <GoogleIcon />
-                <span>Google</span>
-              </button>
-              <button
-                className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white  h-10 px-4 py-2 w-1/2 flex justify-center items-center space-x-2"
-                type="button"
-                onClick={() => {
-                  toast.info("Facebook Signup is not supported yet!", {
-                    style: {
-                      backgroundColor: "#22C55E",
-                      color: "#fff",
-                    },
-                  });
-                }}>
-                <FacebookIcon />
-                <span>Facebook</span>
-              </button>
+            <div className="flex items-center justify-between gap-2 xsm:gap-1 pb-4 px-1 w-full ">
+              <GoogleSignupButton router={router} />
             </div>
           </div>
         </div>

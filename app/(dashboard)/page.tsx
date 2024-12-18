@@ -14,7 +14,7 @@ import Carshowcase from "@/components/ui/carshowcase";
 import ScrollToTopButton from "@/components/ui/scrollButton";
 import HeroSection from "@/components/ui/heroSection";
 import Link from "next/link";
-import { GoogleOneTapLogin } from "../(auth)/login/google-login";
+import { GoogleOneTapLogin } from "../(auth)/login/google";
 
 export const metadata: Metadata = {
   title: "Car Hub - Homepage",

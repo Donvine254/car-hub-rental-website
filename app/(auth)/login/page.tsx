@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { FacebookIcon } from "@/assets";
 import { InfoIcon, Loader } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getSession } from "@/lib/actions/session";
@@ -9,12 +8,9 @@ import Link from "next/link";
 import axios from "axios";
 import TurnstileComponent from "@/components/ui/turnstile";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
-import GoogleLoginButton from "./google-login";
-import FacebookLoginButton from "./facebook-login";
-import Script from "next/script";
+import GoogleLoginButton from "./google";
 type Props = {};
-declare const window: any; // To handle 'fbAsyncInit'
-declare let FB: any; // For Facebook SDK object
+
 interface FormData {
   email: string;
   password: string;
@@ -32,7 +28,6 @@ export default function Login({}: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("post_login_redirect_url") ?? "/";
-  const isDev = process.env.NODE_ENV === "development";
   //function for onChange event handler
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -90,22 +85,6 @@ export default function Login({}: Props) {
   if (isLoggedIn) {
     return (
       <section className="w-full h-screen flex items-center justify-center bg-[#f8f9fa]">
-        <Script
-          src="https://connect.facebook.net/en_US/sdk.js"
-          strategy="afterInteractive"
-          onLoad={() => {
-            if (window.FB) {
-              window.fbAsyncInit = function () {
-                FB.init({
-                  appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID,
-                  cookie: true,
-                  xfbml: false,
-                  version: "v19.0",
-                });
-              };
-            }
-          }}
-        />
         <div
           id="login_modal"
           className="rounded-md flex flex-col gap-5 items-center justify-center py-10 border px-4 bg-white xsm:mx-2">
@@ -223,14 +202,11 @@ export default function Login({}: Props) {
             {/* beginning of social logins */}
             <div className="flex items-center gap-2 w-full ">
               <hr className="border border-gray-200 w-full" />
-              <div className="text-sm flex-1 w-fit whitespace-nowrap">
-                Or Login With
-              </div>
+              <div className="text-sm flex-1 w-fit whitespace-nowrap">Or</div>
               <hr className="border border-gray-200 w-full" />
             </div>
             <div className="flex items-center justify-between gap-2 xsm:gap-1 pb-4 px-1 w-full ">
               <GoogleLoginButton router={router} origin_url={redirect} />
-              <FacebookLoginButton router={router}  />
             </div>
           </div>
         </div>
