@@ -10,6 +10,7 @@ import axios from "axios";
 import TurnstileComponent from "@/components/ui/turnstile";
 import verifyTurnstileToken from "@/lib/actions/verifycaptcha";
 import GoogleLoginButton from "./google-login";
+import FacebookLoginButton from "./facebook-login";
 type Props = {};
 
 interface FormData {
@@ -211,20 +212,7 @@ export default function Login({}: Props) {
             </div>
             <div className="flex items-center justify-between gap-2 xsm:gap-1 pb-4 px-1 w-full ">
               <GoogleLoginButton router={router} origin_url={redirect} />
-              <button
-                className="rounded-md text-base font-medium  border  hover:bg-blue-600 hover:text-white  h-10 px-4 py-2 w-full flex justify-center items-center space-x-2"
-                type="button"
-                onClick={() => {
-                  toast.info("Login with Facebook is not supported yet!", {
-                    style: {
-                      backgroundColor: "#22C55E",
-                      color: "#fff",
-                    },
-                  });
-                }}>
-                <FacebookIcon />
-                <span>Facebook</span>
-              </button>
+              <FacebookLoginButton router={router} origin_url={redirect} />
             </div>
           </div>
         </div>

@@ -1,10 +1,13 @@
 "use client";
-
-import { useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
 import { toast } from "sonner";
 import { GoogleIcon } from "@/assets";
 import { authenticateGoogleLogin } from "@/lib/actions/user-actions/sso";
+import { useEffect, useState } from "react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { getSession } from "@/lib/actions/session";
+import { useRouter } from "next/navigation";
+
 type Props = {
   router: AppRouterInstance;
   origin_url: string;
@@ -65,3 +68,59 @@ const GoogleLoginButton = ({ router, origin_url }: Props) => {
 };
 
 export default GoogleLoginButton;
+
+export function GoogleOneTapWrapper() {
+  const [session, setSession] = useState<any | null>(null);
+  const router = useRouter();
+  useEffect(() => {
+    (async () => {
+      const session = await getSession();
+      if (session) {
+        setSession(session);
+      }
+    })();
+  }, []);
+
+  useGoogleOneTapLogin({
+    onSuccess: async (credentialResponse) => {
+      try {
+        const response = await fetch(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${credentialResponse}`,
+            },
+          }
+        );
+        const userInfo = await response.json();
+        const result = await authenticateGoogleLogin(userInfo.email);
+        if (result.success) {
+          toast.success("Logged in successfully", {
+            position: "bottom-center",
+          });
+          router.replace("/");
+        } else {
+          if (result.error === "User not found") {
+            toast.error(result.error);
+            router.replace(
+              `/login/account_not_found?referrer=google&token=${credentialResponse}`
+            );
+          }
+          toast.error(result.error);
+          return false;
+        }
+      } catch (error) {
+        console.error("Login Failed:", error);
+      }
+    },
+    onError: () => {
+      console.error("Login Failed");
+    },
+    disabled: session,
+    promptMomentNotification: (notification) => {
+      console.log("Prompt moment notification:", notification);
+    },
+  });
+
+  return null;
+}
