@@ -5,40 +5,18 @@ import { FacebookIcon } from "@/assets";
 import { toast } from "sonner";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { authenticateSSOLogin } from "@/lib/actions/user-actions/sso";
-declare const window: any; // To handle 'fbAsyncInit'
-declare let FB: any; // For Facebook SDK object
 
 interface FacebookLoginButtonProps {
   router: AppRouterInstance;
+  FB: any;
 }
 
 const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
   router,
+  FB,
 }) => {
-  const [sdkLoaded, setSdkLoaded] = useState(false); // Track SDK load status
-
-  // Load Facebook SDK dynamically
-  useEffect(() => {
-    if (!window.FB) {
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID,
-          cookie: true,
-          xfbml: false,
-          version: "v19.0",
-        });
-        setSdkLoaded(true); // Mark SDK as loaded
-      };
-    }
-  }, []);
-
   // Handle Facebook Login
   const handleFacebookLogin = () => {
-    if (!sdkLoaded) {
-      toast.error("Facebook SDK is still loading...");
-      return;
-    }
-
     toast.info("Processing request...");
     FB.login(
       (response: any) => {

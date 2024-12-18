@@ -13,7 +13,8 @@ import GoogleLoginButton from "./google-login";
 import FacebookLoginButton from "./facebook-login";
 import Script from "next/script";
 type Props = {};
-
+declare const window: any; // To handle 'fbAsyncInit'
+declare let FB: any; // For Facebook SDK object
 interface FormData {
   email: string;
   password: string;
@@ -91,8 +92,20 @@ export default function Login({}: Props) {
       <section className="w-full h-screen flex items-center justify-center bg-[#f8f9fa]">
         <Script
           src="https://connect.facebook.net/en_US/sdk.js"
-          async
-          defer></Script>
+          strategy="afterInteractive"
+          onLoad={() => {
+            if (window.FB) {
+              window.fbAsyncInit = function () {
+                FB.init({
+                  appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID,
+                  cookie: true,
+                  xfbml: false,
+                  version: "v19.0",
+                });
+              };
+            }
+          }}
+        />
         <div
           id="login_modal"
           className="rounded-md flex flex-col gap-5 items-center justify-center py-10 border px-4 bg-white xsm:mx-2">
@@ -217,7 +230,7 @@ export default function Login({}: Props) {
             </div>
             <div className="flex items-center justify-between gap-2 xsm:gap-1 pb-4 px-1 w-full ">
               <GoogleLoginButton router={router} origin_url={redirect} />
-              <FacebookLoginButton router={router} />
+              <FacebookLoginButton router={router} FB={FB} />
             </div>
           </div>
         </div>
