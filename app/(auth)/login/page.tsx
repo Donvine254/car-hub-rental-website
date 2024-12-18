@@ -230,7 +230,7 @@ export default function Login({}: Props) {
             </div>
             <div className="flex items-center justify-between gap-2 xsm:gap-1 pb-4 px-1 w-full ">
               <GoogleLoginButton router={router} origin_url={redirect} />
-              <FacebookLoginButton router={router} FB={FB} />
+              <FacebookLoginButton router={router}  />
             </div>
           </div>
         </div>

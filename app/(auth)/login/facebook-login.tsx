@@ -1,21 +1,31 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import { FacebookIcon } from "@/assets";
 import { toast } from "sonner";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { authenticateSSOLogin } from "@/lib/actions/user-actions/sso";
-
+import { useEffect } from "react";
+declare const window: any; // To handle 'fbAsyncInit'
+declare let FB: any; // For Facebook SDK object
 interface FacebookLoginButtonProps {
   router: AppRouterInstance;
-  FB: any;
 }
 
 const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
   router,
-  FB,
 }) => {
   // Handle Facebook Login
+  useEffect(() => {
+    if (!window.FB) {
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID,
+          cookie: true,
+          xfbml: false,
+          version: "v19.0",
+        });
+      };
+    }
+  });
   const handleFacebookLogin = () => {
     toast.info("Processing request...");
     FB.login(
