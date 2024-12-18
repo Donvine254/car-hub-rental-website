@@ -85,12 +85,7 @@ export function GoogleOneTapLogin() {
     onSuccess: async (credentialResponse) => {
       try {
         const response = await fetch(
-          "https://www.googleapis.com/oauth2/v3/userinfo",
-          {
-            headers: {
-              Authorization: `Bearer ${credentialResponse.credential}`,
-            },
-          }
+          `https://oauth2.googleapis.com/tokeninfo?id_token=${credentialResponse.credential}`
         );
         const userInfo = await response.json();
         console.log(userInfo);
@@ -117,12 +112,17 @@ export function GoogleOneTapLogin() {
     },
     onError: () => {
       console.error("Login Failed");
+      if (typeof window !== "undefined") {
+        document.cookie =
+          "g_state=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      }
     },
     disabled: session,
     promptMomentNotification: (notification) => {
       console.log("Prompt moment notification:", notification);
     },
     auto_select: true,
+    use_fedcm_for_prompt: true,
   });
 
   return null;
