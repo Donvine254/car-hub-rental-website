@@ -16,7 +16,7 @@ declare const confetti: any;
 export default function GoogleSignupRedirect() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const referrer = searchParams.get("referrer");
+  const action = searchParams.get("action");
   const token = searchParams.get("token");
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,8 +29,11 @@ export default function GoogleSignupRedirect() {
     metadata: {},
   });
   useEffect(() => {
+    if (action === "signup") {
+      setShowForm(true);
+    }
     (async () => {
-      if (!referrer || !token) {
+      if (!token) {
         toast.error("Invalid token");
         setTimeout(() => {
           router.replace("/login");
@@ -40,12 +43,7 @@ export default function GoogleSignupRedirect() {
 
       try {
         const response = await fetch(
-          "https://www.googleapis.com/oauth2/v3/userinfo",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`
         );
         const data = await response.json();
         setFormData({
@@ -65,8 +63,8 @@ export default function GoogleSignupRedirect() {
         toast.error("Failed to fetch user info. Please try again.");
       }
     })();
-    // eslint-disable-next-line
-  }, []);
+    //eslint-disable-next-line;
+  }, [action, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -118,10 +116,8 @@ export default function GoogleSignupRedirect() {
               Oops! We couldn&apos;t find your account
             </h1>
             <p className="text-gray-600 mb-6">
-              It looks like you don&apos;t have an account linked to your&nbsp;
-              <span className="capitalize font-semibold">{referrer}</span>{" "}
-              profile yet. Would you like to create one using your&nbsp;
-              <span className="capitalize font-semibold">{referrer}</span>{" "}
+              It looks like you don&apos;t have an account linked to your Google
+              profile yet. Would you like to create one using your Google
               information?
             </p>
             <Button
@@ -210,6 +206,25 @@ export default function GoogleSignupRedirect() {
                   className="bg-white text-base focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 w-full border-red-500  rounded-md z-50"
                 />
               </div>
+            </div>
+            <div className="inline-flex gap-1 items-center">
+              <input
+                type="checkbox"
+                name="terms"
+                required
+                title="terms"
+                className="z-50"
+                aria-label="Agree to terms and conditions"
+              />
+              <label className="text-sm font-extralight">
+                Agree with{" "}
+                <Link
+                  target="_blank"
+                  href="/terms"
+                  className="text-green-500 cursor-pointer hover:underline">
+                  Terms and Conditions
+                </Link>
+              </label>
             </div>
             <Button
               type="submit"
