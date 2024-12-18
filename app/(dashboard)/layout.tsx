@@ -5,6 +5,7 @@ import NavigationMenu from "@/components/ui/navigationmenu";
 
 import "../globals.css";
 import Footer from "@/components/ui/Footer";
+import { GoogleContextProvider } from "@/providers/google";
 
 const eb_garamond = EB_Garamond({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export default function DashboardLayout({
       <body className={eb_garamond.className}>
         <Toaster richColors closeButton theme="light" />
         <NavigationMenu />
-        {children}
+        <GoogleContextProvider>{children}</GoogleContextProvider>
         <Footer />
       </body>
     </html>
