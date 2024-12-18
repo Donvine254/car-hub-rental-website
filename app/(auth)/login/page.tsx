@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Login from "./Login";
 export const metadata: Metadata = {
-  title: "Car Hub",
+  title: "Car Hub- Login to your account",
   description:
     "Car Hub is a car rental service that provides customers with ease access to high-end, high-performance and affordable rental vehicles",
 };
