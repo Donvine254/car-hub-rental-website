@@ -184,7 +184,7 @@ export default function Login({}: Props) {
             )}
           </div>
 
-          <div className="items-center px-6 py-1 flex flex-col space-y-4">
+          <div className="px-6 py-1">
             <button
               className="inline-flex items-center justify-center text-xl font-medium border disabled:pointer-events-none disabled:bg-green-50 disabled:text-black  h-10 px-4 py-2 w-full bg-green-500 hover:bg-green-600 text-white rounded-md"
               type="submit"
@@ -200,12 +200,12 @@ export default function Login({}: Props) {
               )}
             </button>
             {/* beginning of social logins */}
-            <div className="flex items-center gap-2 w-full ">
+            <div className="flex items-center gap-2 w-full py-2 ">
               <hr className="border border-gray-200 w-full" />
               <div className="text-sm flex-1 w-fit whitespace-nowrap">Or</div>
               <hr className="border border-gray-200 w-full" />
             </div>
-            <div className="flex items-center justify-between gap-2 xsm:gap-1 pb-4 px-1 w-full ">
+            <div className="px-1 pb-4 w-full ">
               <GoogleLoginButton router={router} origin_url={redirect} />
             </div>
           </div>
