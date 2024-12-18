@@ -88,19 +88,19 @@ export function GoogleOneTapLogin() {
           `https://oauth2.googleapis.com/tokeninfo?id_token=${credentialResponse.credential}`
         );
         const userInfo = await response.json();
-        console.log(userInfo);
         const result = await authenticateGoogleLogin(userInfo.email);
-        console.log(result);
         if (result.success) {
           toast.success("Logged in successfully", {
             position: "bottom-center",
           });
-          router.replace("/");
+          if (typeof window !== "undefined") {
+            window.location.reload();
+          }
         } else {
           if (result.error === "User not found") {
             toast.error(result.error);
             router.replace(
-              `/login/account_not_found?referrer=google&token=${credentialResponse}`
+              `/login/account_not_found?referrer=google&token=${credentialResponse.credential}`
             );
           }
           toast.error(result.error);
