@@ -42,7 +42,7 @@ export default async function ProfileLayout({
       <body className={eb_garamond.className}>
         <Toaster richColors closeButton theme="light" />
         <NavigationMenu />
-        <section>
+        <main>
           <ProfileHeroComponent />
           <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70 p-2 ">
             <div className="w-full min-h-[500px] mx-auto px-2 md:px-8 mt:24 md:mt-6 ">
@@ -52,7 +52,7 @@ export default async function ProfileLayout({
               </div>
             </div>
           </section>
-        </section>
+        </main>
         <Footer />
       </body>
     </html>

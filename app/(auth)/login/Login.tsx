@@ -203,7 +203,7 @@ export default function Login({}: Props) {
               <div className="text-sm flex-1 w-fit whitespace-nowrap">Or</div>
               <hr className="border border-gray-200 w-full" />
             </div>
-            <div className="px-1 pb-4 w-full ">
+            <div className="px-1 pb-4 !w-full ">
               <GoogleLoginButton router={router} origin_url={redirect} />
             </div>
           </div>

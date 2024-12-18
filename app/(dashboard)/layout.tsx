@@ -40,7 +40,7 @@ export default async function DashboardLayout({
         <NavigationMenu />
         <GoogleContextProvider>
           <GoogleOneTapLogin session={User} />
-          {children}
+          <main> {children}</main>
         </GoogleContextProvider>
         <Footer />
       </body>
