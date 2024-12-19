@@ -43,7 +43,12 @@ export default function GoogleSignupRedirect() {
 
       try {
         const response = await fetch(
-          `https://oauth2.googleapis.com/tokeninfo?id_token=${token}`
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         const data = await response.json();
         setFormData({
