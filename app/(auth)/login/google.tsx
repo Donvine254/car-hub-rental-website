@@ -133,9 +133,6 @@ export const GoogleSignupButton = ({ router }: Pick<Props, "router">) => {
           justifyContent: "center !important",
         },
       }}
-      useOneTap
-      auto_select
-      use_fedcm_for_prompt
-    />
+  />
   );
 };
