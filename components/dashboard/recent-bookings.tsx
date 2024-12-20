@@ -1,38 +1,33 @@
 import Image from "next/image";
 import { formatISODate } from "@/lib/helpers";
-import { useState, useEffect } from "react";
-import { getLatestBookings } from ".";
-
-const RecentBookings = () => {
-  const [recentBookings, setRecentBookings] = useState<any>([]);
-  useEffect(() => {
-    const fetchBookings = async () => {
-      const data = await getLatestBookings();
-      if (data) {
-        console.log("Latest bookings:", data);
-        setRecentBookings(data);
-      } else {
-        console.log("Failed to fetch bookings.");
-      }
-    };
-
-    fetchBookings();
-
-    return () => {};
-  }, []);
-
+import { Badge } from "../ui/badge";
+type Props = {
+  recentBookings: [];
+};
+const RecentBookings = ({ recentBookings }: Props) => {
   return (
-    <div className="space-y-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
       {recentBookings?.map((booking: any, index: number) => (
         <div
           key={index}
-          className="flex items-center border shadow p-2 rounded-md bg-white">
+          className="flex items-center border shadow p-2 rounded-md bg-white relative">
+          <Badge
+            className="absolute top-2 right-2"
+            variant={
+              booking.status === "completed"
+                ? "success"
+                : booking.status === "cancelled"
+                ? "destructive"
+                : "default"
+            }>
+            {booking.status}
+          </Badge>
           <Image
             src={booking.car.image}
             alt={booking.car.modelName}
             height={90}
             width={160}
-            className="rounded-md object-cover border "
+            className="rounded-md object-cover border bg-green-500 "
           />
           <div className="ml-4 space-y-1">
             <p className="text-sm font-medium leading-none whitespace-nowrap">

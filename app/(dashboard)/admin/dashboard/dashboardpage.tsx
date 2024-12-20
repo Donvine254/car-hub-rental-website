@@ -5,9 +5,22 @@ import Overview from "@/components/dashboard/overview";
 import { CarsList } from "@/components/dashboard/cars-table";
 type Props = {
   cars: Car[];
+  stats: {
+    totalCars: number;
+    totalBookings: number;
+    totalRevenue: number;
+    totalUsers: number;
+  };
+  bookings: any;
+  recentOrders: any | [];
 };
 
-export default function AdminDashboard({ cars }: Props) {
+export default function AdminDashboard({
+  cars,
+  stats,
+  bookings,
+  recentOrders,
+}: Props) {
   return (
     <section>
       <div className="bg-[url('https://res.cloudinary.com/dipkbpinx/image/upload/v1732663821/illustrations/rbjvkffgkhbvn6mmjoxs.png')] bg-cover  bg-bottom bg-no-repeat">
@@ -18,7 +31,7 @@ export default function AdminDashboard({ cars }: Props) {
         </div>
       </div>
       <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70">
-        <Tabs defaultValue="Vehicles" className="w-full max-w-5xl mx-auto  p-2">
+        <Tabs defaultValue="Overview" className="w-full max-w-5xl mx-auto  p-2">
           <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
             <TabsTrigger
               value="Overview"
@@ -47,10 +60,10 @@ export default function AdminDashboard({ cars }: Props) {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="Overview" className="mt-4 w-full">
-            <Overview />
+            <Overview recentBookings={recentOrders} stats={stats} />
           </TabsContent>
           <TabsContent value="Vehicles" className="mt-4 w-full">
-            <CarsList vehicles={cars}/>
+            <CarsList vehicles={cars} />
           </TabsContent>
           <TabsContent value="Bookings" className="mt-4 w-full">
             {/* show bookings data table */}
