@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, Loader, MoreHorizontal, SearchIcon } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -72,7 +72,7 @@ export function CarsList() {
 }
 
 const StatusBadge = ({ isRented }: { isRented: boolean }) => (
-  <Badge variant={isRented ? "destructive" : "success"}>
+  <Badge variant={isRented ? "destructive" : "success"} className="z-0">
     {isRented ? "Rented" : "Available"}
   </Badge>
 );
@@ -98,7 +98,7 @@ export const columns: ColumnDef<Car>[] = [
           objectFit="cover"
           height={56.25}
           width={100}
-          className="rounded-md border "
+          className="rounded-md border z-0"
         />
         <span className="capitalize font-semibold whitespace-nowrap ">
           {row.getValue("modelName")}
@@ -222,7 +222,7 @@ export function CarsDataTable({ data }: { data: Car[] }) {
   });
 
   return (
-    <div className="w-full xsm:mx-1 z-0">
+    <div className="w-full xsm:mx-1 !z-0">
       <div className="flex items-center justify-between gap-4">
         <h1 className="md:text-xl font-semibold my-2 ">Manage Vehicle Fleet</h1>
         <Link
@@ -235,8 +235,8 @@ export function CarsDataTable({ data }: { data: Car[] }) {
           <span>Add Car</span>
         </Link>
       </div>
-      <div className="flex flex-col md:flex-row items-center justify-between py-4 w-full md:gap-4">
-        <div className="relative">
+      <div className="flex flex-col md:flex-row items-center justify-between py-4 w-full md:gap-4 gap-2">
+        <div className="relative flex-1 xsm:w-full">
           <Input
             placeholder="Search by model name...."
             value={
@@ -249,9 +249,9 @@ export function CarsDataTable({ data }: { data: Car[] }) {
           />
           <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
         </div>
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center justify-between gap-4 xsm:w-full">
           <select
-            className="ml-4 h-10 w-[180px] rounded-md border border-input bg-background px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="md:ml-4 h-10 w-1/2 md:w-[180px] rounded-md border border-input bg-background px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
             onChange={(event) =>
               table
                 .getColumn("isRented")
@@ -264,7 +264,7 @@ export function CarsDataTable({ data }: { data: Car[] }) {
             <option value="true">Rented</option>
           </select>
           <select
-            className="ml-4 h-10 w-[180px] rounded-md border border-input bg-background px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="md:ml-4 h-10 w-1/2 md:w-[180px] rounded-md border border-input bg-background px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
             onChange={(event) =>
               table
                 .getColumn("location")
