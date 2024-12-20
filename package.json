@@ -23,6 +23,7 @@
     "@radix-ui/react-switch": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.1",
     "@react-oauth/google": "^0.12.1",
+    "@tanstack/react-table": "^8.20.6",
     "@types/recharts": "^1.8.29",
     "ai": "^4.0.18",
     "axios": "^1.6.5",
