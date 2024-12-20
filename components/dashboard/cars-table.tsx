@@ -31,29 +31,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import fetchCars, { Car } from "@/lib/actions/car-actions/fetchCars";
-export function CarsList() {
-  const [cars, setCars] = useState<Car[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchAllCars = async () => {
-      try {
-        const data = (await fetchCars()) as Car[];
-        setCars(data);
-        setIsLoading(false);
-      } catch (err) {
-        setError("An error occurred while fetching cars");
-        setIsLoading(false);
-      }
-    };
-
-    fetchAllCars();
-  }, []);
-
-  if (isLoading) {
+type Props = {
+  vehicles: Car[];
+};
+export function CarsList({ vehicles }: Props) {
+  if (!vehicles) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="loader-container">
@@ -64,11 +48,7 @@ export function CarsList() {
     );
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  return <CarsDataTable data={cars} />;
+  return <CarsDataTable data={vehicles} />;
 }
 
 const StatusBadge = ({ isRented }: { isRented: boolean }) => (
@@ -95,10 +75,9 @@ export const columns: ColumnDef<Car>[] = [
         <Image
           src={row.original.image}
           alt={row.getValue("modelName")}
-          objectFit="cover"
           height={56.25}
           width={100}
-          className="rounded-md border z-0"
+          className="rounded-md object-cover border z-0"
         />
         <span className="capitalize font-semibold whitespace-nowrap ">
           {row.getValue("modelName")}

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { getLatestBookings } from ".";
 import { formatISODate } from "@/lib/helpers";
 import { useState, useEffect } from "react";
+import { getLatestBookings } from ".";
 
 const RecentBookings = () => {
   const [recentBookings, setRecentBookings] = useState<any>([]);
@@ -32,8 +32,7 @@ const RecentBookings = () => {
             alt={booking.car.modelName}
             height={90}
             width={160}
-            objectFit="cover"
-            className="rounded-md border "
+            className="rounded-md object-cover border "
           />
           <div className="ml-4 space-y-1">
             <p className="text-sm font-medium leading-none whitespace-nowrap">
