@@ -1,6 +1,5 @@
 "use server";
 import { prisma } from "@/db/prisma";
-import type { Car } from "./fetchCars";
 import { revalidatePath } from "next/cache";
 
 export async function createNewCar(Data: any) {
@@ -36,6 +35,7 @@ export async function updateCarDetails(id: number, data: any) {
     return { success: true, message: "Car updated successfully" };
   } catch (error: any) {
     isErrored = true;
+    console.error(error);
     return { success: false, error: "Something went wrong" };
   } finally {
     if (!isErrored) revalidatePath("/cars", "page");

@@ -1,6 +1,5 @@
 import React from "react";
 import { prisma } from "@/db/prisma";
-import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import EditForm from "./editform";
 type Props = {
@@ -14,7 +13,6 @@ export default async function Page({ params }: Props) {
     where: { id: Number(params.id) },
   });
   if (!car) {
-    toast.error("Car to update not found");
     redirect("/admin");
   }
   return (

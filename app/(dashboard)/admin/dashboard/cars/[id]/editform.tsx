@@ -47,7 +47,13 @@ export default function EditForm({ car }: Props) {
     }
     try {
       setLoading(true);
-      const result = await updateCarDetails(car.id, { ...formData });
+      const result = await updateCarDetails(car.id, {
+        ...formData,
+        year: Number(formData.year),
+        pricePerDay: Number(formData.pricePerDay),
+        fuelConsumption: Number(formData.fuelConsumption),
+        seats: Number(formData.seats),
+      });
       if (result.success) {
         setIsOpen(true);
       } else {
