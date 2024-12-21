@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
+import { Bar } from "react-chartjs-2";
 import {
-  Line,
-  LineChart,
-  ResponsiveContainer,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
   Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+  Legend,
+} from "chart.js";
 import { Receipt, TrendingUp, CarFront, CalendarCheck } from "lucide-react";
 import RecentBookings from "./recent-bookings";
 
@@ -106,7 +108,7 @@ export default function Overview({ recentBookings, stats }: Props) {
               Revenue Overview
             </h3>
           </div>
-          <div className="p-2">
+          <div className="py-2">
             <RevenueChart />
           </div>
         </div>
@@ -121,41 +123,56 @@ export default function Overview({ recentBookings, stats }: Props) {
   );
 }
 
-const RevenueChart = () => {
-  const data = [
-    { month: "Jan", revenue: 5200 },
-    { month: "Feb", revenue: 4800 },
-    { month: "Mar", revenue: 6800 },
-    { month: "Apr", revenue: 7200 },
-    { month: "May", revenue: 6800 },
-    { month: "Jun", revenue: 7600 },
-    { month: "Jul", revenue: 8200 },
-    { month: "Aug", revenue: 8600 },
-    { month: "Sep", revenue: 9200 },
-    { month: "Oct", revenue: 8800 },
-    { month: "Nov", revenue: 9800 },
-    { month: "Dec", revenue: 9200 },
-  ];
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-  return (
-    <ResponsiveContainer
-      width="100%"
-      height={350}
-      className="bg-white rounded-md shadow">
-      <LineChart data={data}>
-        <XAxis
-          dataKey="month"
-          tickFormatter={(value, index) => (index % 2 === 0 ? value : "")}
-        />
-        <YAxis />
-        <Tooltip />
-        <Line
-          type="monotone"
-          dataKey="revenue"
-          stroke="#22c55e"
-          strokeWidth={2}
-        />
-      </LineChart>
-    </ResponsiveContainer>
-  );
+const data = {
+  labels: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
+  datasets: [
+    {
+      label: "Revenue",
+      data: [
+        5200, 4800, 6800, 7200, 6800, 7600, 8200, 8600, 9200, 8800, 9800, 9200,
+      ],
+      backgroundColor: "#010010",
+      borderRadius: 5,
+    },
+  ],
 };
+
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: { display: false },
+  },
+  scales: {
+    x: { grid: { display: false } },
+    y: { beginAtZero: true },
+  },
+};
+
+const RevenueChart = () => (
+  <div style={{ height: 350 }}>
+    <Bar data={data} options={options} />
+  </div>
+);
