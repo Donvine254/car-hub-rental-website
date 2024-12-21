@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Car } from "@/lib/actions/car-actions/fetchCars";
 import Overview from "@/components/dashboard/overview";
 import { CarsList } from "@/components/dashboard/cars-table";
+import { BookingsDataTable } from "@/components/dashboard/bookings-table";
 type Props = {
   cars: Car[];
   stats: {
@@ -66,7 +67,7 @@ export default function AdminDashboard({
             <CarsList vehicles={cars} />
           </TabsContent>
           <TabsContent value="Bookings" className="mt-4 w-full">
-            {/* show bookings data table */}
+            <BookingsDataTable data={bookings}/>
           </TabsContent>
           <TabsContent value="Coupons" className="mt-4 w-full">
             {/* show coupons data-table */}
