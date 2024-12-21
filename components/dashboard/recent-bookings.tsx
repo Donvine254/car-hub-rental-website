@@ -12,7 +12,7 @@ const RecentBookings = ({ recentBookings }: Props) => {
           key={index}
           className="flex items-center border shadow p-2 rounded-md bg-white relative">
           <Badge
-            className="absolute top-2 right-2"
+            className="absolute top-1 sm:top-2 left-1 sm:right-2  "
             variant={
               booking.status === "completed"
                 ? "success"

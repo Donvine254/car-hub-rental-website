@@ -126,7 +126,7 @@ export default function Overview({
               Analytics
             </h3>
           </div>
-          <div className="py-2 flex items-center justify-between gap-4 w-full divide-x-2">
+          <div className="py-2 flex flex-wrap  items-center justify-between gap-4 w-full divide-x-2">
             <RevenueChart />
             <VisitorsChart />
           </div>
@@ -158,7 +158,7 @@ export default function Overview({
                   <TableRow key={car.id} className="bg-white">
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>
-                      <div className="flex items-center space-x-3 xsm:mx-2">
+                      <div className="flex items-center space-x-3 xsm:mx-2 xsm:min-w-[200px]">
                         <Image
                           src={car.image}
                           alt={car.modelName}
@@ -166,12 +166,12 @@ export default function Overview({
                           width={100}
                           className="rounded-md object-cover border z-0"
                         />
-                        <span className="capitalize font-semibold whitespace-nowrap ">
+                        <span className="capitalize font-semibold whitespace-nowrap">
                           {car.modelName}
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="capitalize ">
+                    <TableCell className="capitalize xsm:ml-2">
                       {car.bodyType}
                     </TableCell>
                     <TableCell className="capitalize ">{car.year}</TableCell>
