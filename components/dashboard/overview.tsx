@@ -126,9 +126,13 @@ export default function Overview({
               Analytics
             </h3>
           </div>
-          <div className="py-2 flex flex-wrap  items-center justify-between gap-4 w-full divide-x-2">
-            <RevenueChart />
-            <VisitorsChart />
+          <div className="py-2 grid grid-cols-1 md:grid-cols-2  gap-4 w-full xsm:divide-y-2 md:divide-x-2 ">
+            <div className="w-full">
+              <RevenueChart />
+            </div>
+            <div className="w-full">
+              <VisitorsChart />
+            </div>
           </div>
         </div>
         <div className="w-full">
@@ -176,7 +180,7 @@ export default function Overview({
                     </TableCell>
                     <TableCell className="capitalize ">{car.year}</TableCell>
                     <TableCell className="capitalize ">
-                      <Badge variant="default">${car.pricePerDay}</Badge>
+                      <Badge variant="default">${car.pricePerDay}/ Day</Badge>
                     </TableCell>
                     <TableCell className="capitalize ">
                       {car.location}
@@ -258,7 +262,7 @@ const options = {
 };
 
 const RevenueChart = () => (
-  <div style={{ height: 350 }} className="w-full md:w-1/2">
+  <div style={{ height: 350 }}>
     <Bar data={data} options={options} />
   </div>
 );
@@ -322,7 +326,7 @@ const visitorsOptions: ChartOptions<"line"> = {
 };
 
 const VisitorsChart = () => (
-  <div style={{ height: 350 }} className="w-full md:w-1/2">
+  <div style={{ height: 350 }}>
     <Line data={visitorsData} options={visitorsOptions} />
   </div>
 );
