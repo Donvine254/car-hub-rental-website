@@ -11,7 +11,15 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal, SearchIcon } from "lucide-react";
+import {
+  ArrowUpDown,
+  Cog,
+  Eye,
+  MoreHorizontal,
+  PenLine,
+  SearchIcon,
+  Trash2,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -148,29 +156,30 @@ export const columns: ColumnDef<Car>[] = [
           </PopoverTrigger>
           <PopoverContent align="end" className="w-[200px]">
             <div>
-              <Button
-                variant="ghost"
-                className="w-full"
-                onClick={() => console.log("View details", car.id)}>
+              <Button variant="ghost" className="w-full justify-start">
+                <Eye className="mr-2 h-4 w-4" />
                 View details
               </Button>
               <Link
-                className="w-full inline-flex items-center justify-center  whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground  h-10 px-4 py-2"
+                className="w-full inline-flex items-center justify-start  whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground  h-10 px-4 py-2"
                 href={`/admin/dashboard/cars/${car.id}`}
                 target="_blank">
+                <PenLine className="mr-2 h-4 w-4" />
                 Update details
               </Link>
               <Button
                 variant="ghost"
-                className="w-full"
+                className=" w-full justify-start"
                 onClick={() => console.log("Change status", car.id)}>
+                <Cog className="mr-2 h-4 w-4" />
                 Change status
               </Button>
               <Button
-                variant="destructive"
-                className="w-full"
+                variant="ghost"
+                className="w-full justify-start text-destructive hover:bg-destructive hover:text-destructive-foreground"
                 onClick={() => console.log("Delete", car.id)}>
-                Delete
+                <Trash2 className="mr-2 h-4 w-4" />
+                Decommission
               </Button>
             </div>
           </PopoverContent>
