@@ -32,14 +32,11 @@ async function getBookings() {
   });
   return bookings as BookingWithCar[];
 }
-
-// Function to get users (assuming you have a User model in your Prisma schema)
 async function getUsers() {
   const users = await prisma.user.findMany();
   return users; // Returns an array of users
 }
 
-// Function to calculate total revenue by summing up the total price of all bookings
 function calculateRevenue(bookings: BookingWithCar[]) {
   const totalRevenue = bookings.reduce(
     (acc, booking) => acc + (booking.totalPrice || 0),
@@ -47,8 +44,6 @@ function calculateRevenue(bookings: BookingWithCar[]) {
   );
   return totalRevenue;
 }
-
-// Function to create stats object
 async function getStats() {
   const cars = await fetchCars();
   const bookings = await getBookings();
@@ -68,7 +63,8 @@ async function getStats() {
 async function getLatestBookings() {
   try {
     const latestBookings = await prisma.booking.findMany({
-      take: 10,
+      where: { status: { not: "cancelled" } },
+      take: 6,
       orderBy: {
         createdAt: "desc",
       },
