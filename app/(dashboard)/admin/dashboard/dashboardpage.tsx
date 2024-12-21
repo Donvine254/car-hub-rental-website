@@ -33,7 +33,9 @@ export default function AdminDashboard({
         </div>
       </div>
       <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70">
-        <Tabs defaultValue="Overview" className="w-full max-w-5xl mx-auto  p-2">
+        <Tabs
+          defaultValue="Overview"
+          className="w-full max-w-5xl mx-auto  p-2 md:my-2">
           <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
             <TabsTrigger
               value="Overview"

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +9,9 @@ import {
   Title,
   Tooltip,
   Legend,
+  LineElement,
+  PointElement,
+  ChartOptions,
 } from "chart.js";
 import { Receipt, TrendingUp, CarFront, CalendarCheck } from "lucide-react";
 import RecentBookings from "./recent-bookings";
@@ -26,9 +29,9 @@ type Props = {
 export default function Overview({ recentBookings, stats }: Props) {
   return (
     <section>
-      <div className="grid gap-4 md:grid-cols-2 ">
+      <div className="grid gap-4 md:grid-cols-3 ">
         {/* first card */}
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border bg-gradient-to-tr from-green-300 to-blue-300 text-card-foreground shadow-sm">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Revenue</h3>
             <Receipt className=" fill-green-500 stroke-white" size={32} />
@@ -46,7 +49,7 @@ export default function Overview({ recentBookings, stats }: Props) {
           </div>
         </div>
         {/* second card */}
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border bg-green-100 text-card-foreground shadow-sm">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Active Cars</h3>
             <CarFront className="text-green-500" size={32} />
@@ -60,7 +63,7 @@ export default function Overview({ recentBookings, stats }: Props) {
             </p>
           </div>
         </div>
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 text-card-foreground shadow-sm ">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Bookings</h3>
             <CalendarCheck className="text-green-500" size={32} />
@@ -74,7 +77,7 @@ export default function Overview({ recentBookings, stats }: Props) {
             </p>
           </div>
         </div>
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+        {/* <div className="rounded-lg border bg-gradient-to-br from-green-300 to-[#AAC9FF] text-card-foreground shadow-sm">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Active Customers</h3>
             <svg
@@ -99,22 +102,29 @@ export default function Overview({ recentBookings, stats }: Props) {
               <TrendingUp className="text-green-500" /> +2 from last month
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-col gap-4">
         <div className="mt-2 h-fit">
           <div className="flex flex-col space-y-1.5 py-2">
             <h3 className="text-2xl font-semibold leading-none tracking-tight">
-              Revenue Overview
+              Analytics
             </h3>
           </div>
-          <div className="py-2">
+          <div className="py-2 flex items-center justify-between gap-4 w-full divide-x-2">
             <RevenueChart />
+            <VisitorsChart />
           </div>
         </div>
         <div className="w-full">
           <h3 className="text-2xl my-4 font-semibold leading-none tracking-tight">
             Recent Bookings
+          </h3>
+          <RecentBookings recentBookings={recentBookings} />
+        </div>
+        <div className="w-full">
+          <h3 className="text-2xl my-4 font-semibold leading-none tracking-tight">
+            Popular Cars
           </h3>
           <RecentBookings recentBookings={recentBookings} />
         </div>
@@ -129,9 +139,12 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
+  LineElement,
+  PointElement,
   Legend
 );
-
+const currentMonth = "Dec";
+const lowerValueThreshold = 7000;
 const data = {
   labels: [
     "Jan",
@@ -153,7 +166,14 @@ const data = {
       data: [
         5200, 4800, 6800, 7200, 6800, 7600, 8200, 8600, 9200, 8800, 9800, 9200,
       ],
-      backgroundColor: "#010010",
+      backgroundColor: function (context: any) {
+        const value = context.raw as number;
+        const label = context.chart.data.labels?.[context.dataIndex] as string;
+        if (label === currentMonth) {
+          return "#1f2937";
+        }
+        return value < lowerValueThreshold ? "#d1d5db" : "#6b7280";
+      },
       borderRadius: 5,
     },
   ],
@@ -163,16 +183,87 @@ const options = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    legend: { display: false },
+    legend: { display: true },
   },
   scales: {
     x: { grid: { display: false } },
-    y: { beginAtZero: true },
+    y: {
+      beginAtZero: false,
+      ticks: {
+        callback: function (value: any) {
+          return `$${value.toLocaleString()}`;
+        },
+      },
+    },
   },
 };
 
 const RevenueChart = () => (
-  <div style={{ height: 350 }}>
+  <div style={{ height: 350 }} className="w-full md:w-1/2">
     <Bar data={data} options={options} />
+  </div>
+);
+
+const visitorsData = {
+  labels: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
+  datasets: [
+    {
+      label: "Site Visitors",
+      data: [
+        1200, 1900, 3000, 5000, 2500, 4100, 4700, 5600, 6200, 7800, 8000, 9200,
+      ],
+      borderColor: "#22c55e",
+      backgroundColor: "rgba(34, 197, 94, 0.2)",
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: "#16a34a",
+      pointBorderColor: "#16a34a",
+      pointHoverBackgroundColor: "#14532d",
+      pointHoverBorderColor: "#14532d",
+    },
+  ],
+};
+
+const visitorsOptions: ChartOptions<"line"> = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: true,
+      position: "top",
+    },
+    tooltip: {
+      mode: "index",
+      intersect: false,
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      beginAtZero: true,
+    },
+  },
+};
+
+const VisitorsChart = () => (
+  <div style={{ height: 350 }} className="w-full md:w-1/2">
+    <Line data={visitorsData} options={visitorsOptions} />
   </div>
 );
