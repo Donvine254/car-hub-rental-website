@@ -65,7 +65,7 @@ async function getStats() {
   return stats as Stats;
 }
 
-export async function getLatestBookings() {
+async function getLatestBookings() {
   try {
     const latestBookings = await prisma.booking.findMany({
       take: 10,
