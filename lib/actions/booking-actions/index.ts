@@ -33,6 +33,7 @@ export async function UpdateOrderStatus(
         data: { isRented: false, rentedUntill: null },
       });
       revalidatePath("/cars", "page");
+      revalidatePath("/admin", "layout");
     }
     await prisma.$disconnect();
   }

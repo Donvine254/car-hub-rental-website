@@ -40,6 +40,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { UpdateOrderStatus } from "@/lib/actions/booking-actions";
+import { toast } from "sonner";
 
 export interface Car {
   id: number;
@@ -179,193 +181,226 @@ export function BookingsDataTable({ data }: { data: Booking[] }) {
   );
 }
 
-
-
-
-
 const StatusBadge = ({ status }: { status: Status }) => {
-    const color = {
-      cancelled: "destructive",
-      completed: "success",
-      ongoing: "outline",
-      scheduled: "secondary",
-    }[status];
-  
-    return (
-      <Badge
-        variant={color as any}
-        className={status === "ongoing" ? "bg-blue-500 text-white" : ""}>
-        {status}
+  const color = {
+    cancelled: "destructive",
+    completed: "success",
+    ongoing: "outline",
+    scheduled: "secondary",
+  }[status];
+
+  return (
+    <Badge
+      variant={color as any}
+      className={status === "ongoing" ? "bg-blue-500 text-white" : ""}>
+      {status}
+    </Badge>
+  );
+};
+
+export const columns: ColumnDef<Booking>[] = [
+  {
+    accessorKey: "id",
+    header: "Order ID",
+    cell: ({ row }) => (
+      <Badge variant="outline">
+        CR#{row.original.id.toString().padStart(5, "0")}
       </Badge>
-    );
-  };
-  
-  export const columns: ColumnDef<Booking>[] = [
-    {
-      accessorKey: "id",
-      header: "Order ID",
-      cell: ({ row }) => (
-        <Badge variant="outline">
-          CR#{row.original.id.toString().padStart(5, "0")}
-        </Badge>
-      ),
+    ),
+  },
+  {
+    accessorKey: "car",
+    header: "Car",
+    cell: ({ row }) => (
+      <div className="flex items-center space-x-3">
+        <Image
+          src={row.original.car.image}
+          alt={row.original.car.modelName}
+          height={56.25}
+          width={100}
+          className="rounded-md object-cover border z-0"
+        />
+
+        <span className="capitalize font-semibold whitespace-nowrap ">
+          {row.original.car.modelName}
+        </span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "user",
+    header: "Customer",
+    cell: ({ row }) => <div>{row.original.user.username}</div>,
+  },
+  {
+    accessorKey: "startDate",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Start Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
-    {
-      accessorKey: "car",
-      header: "Car",
-      cell: ({ row }) => (
-        <div className="flex items-center space-x-3">
-          <Image
-            src={row.original.car.image}
-            alt={row.original.car.modelName}
-            height={56.25}
-            width={100}
-            className="rounded-md object-cover border z-0"
-          />
-  
-          <span className="capitalize font-semibold whitespace-nowrap ">
-            {row.original.car.modelName}
-          </span>
-        </div>
-      ),
+    cell: ({ row }) => (
+      <div>{new Date(row.original.startDate).toLocaleDateString()}</div>
+    ),
+  },
+  {
+    accessorKey: "endDate",
+    header: "End Date",
+    cell: ({ row }) => (
+      <div>{new Date(row.original.endDate).toLocaleDateString()}</div>
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => <StatusBadge status={row.original.status} />,
+  },
+  {
+    accessorKey: "totalPrice",
+    header: () => <div className="text-right">Price</div>,
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("totalPrice"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+      return <div className="text-right font-medium">{formatted}</div>;
     },
-    {
-      accessorKey: "user",
-      header: "Customer",
-      cell: ({ row }) => <div>{row.original.user.username}</div>,
-    },
-    {
-      accessorKey: "startDate",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-            Start Date
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }) => (
-        <div>{new Date(row.original.startDate).toLocaleDateString()}</div>
-      ),
-    },
-    {
-      accessorKey: "endDate",
-      header: "End Date",
-      cell: ({ row }) => (
-        <div>{new Date(row.original.endDate).toLocaleDateString()}</div>
-      ),
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => <StatusBadge status={row.original.status} />,
-    },
-    {
-      accessorKey: "totalPrice",
-      header: () => <div className="text-right">Price</div>,
-      cell: ({ row }) => {
-        const amount = parseFloat(row.getValue("totalPrice"));
-        const formatted = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-        }).format(amount);
-        return <div className="text-right font-medium">{formatted}</div>;
-      },
-    },
-    {
-      id: "actions",
-      header: "Actions",
-      cell: ({ row }) => {
-        const booking = row.original;
-  
-        return (
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-56">
-              <div className="grid gap-4">
-                <div className="grid gap-2">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="ghost" className="w-full justify-start">
-                        <Eye className="mr-2 h-4 w-4" />
-                        View details
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-80">
-                      <div className="grid gap-4">
-                        <div className="space-y-2">
-                          <h4 className="font-medium leading-none">
-                            Booking Details
-                          </h4>
-                          <p className="text-sm text-muted-foreground">
-                            View the details of booking CR#
-                            {booking.id.toString().padStart(5, "0")}
-                          </p>
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const booking = row.original;
+
+      return (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-56">
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" className="w-full justify-start">
+                      <Eye className="mr-2 h-4 w-4" />
+                      View details
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <div className="grid gap-4">
+                      <div className="space-y-2">
+                        <h4 className="font-medium leading-none">
+                          Booking Details
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          View the details of booking CR#
+                          {booking.id.toString().padStart(5, "0")}
+                        </p>
+                      </div>
+                      <div className="grid gap-2">
+                        <div className="grid grid-cols-3 items-center gap-4">
+                          <span className="text-sm font-medium capitalize">
+                            Pickup:
+                          </span>
+                          <span className="col-span-2 text-sm capitalize">
+                            {booking.pickupLocation}
+                          </span>
                         </div>
-                        <div className="grid gap-2">
-                          <div className="grid grid-cols-3 items-center gap-4">
-                            <span className="text-sm font-medium capitalize">
-                              Pickup:
-                            </span>
-                            <span className="col-span-2 text-sm">
-                              {booking.pickupLocation}
-                            </span>
-                          </div>
-                          <div className="grid grid-cols-3 items-center gap-4">
-                            <span className="text-sm font-medium">Drop-off:</span>
-                            <span className="col-span-2 text-sm capitalize">
-                              {booking.dropLocation}
-                            </span>
-                          </div>
-                          <div className="grid grid-cols-3 items-center gap-4">
-                            <span className="text-sm font-medium">Phone:</span>
-                            <span className="col-span-2 text-sm">
-                              {booking.phoneNumber}
-                            </span>
-                          </div>
-                          <div className="grid grid-cols-3 items-center gap-4">
-                            <span className="text-sm font-medium">Email:</span>
-                            <span className="col-span-2 text-sm">
-                              {booking.user.email}
-                            </span>
-                          </div>
+                        <div className="grid grid-cols-3 items-center gap-4">
+                          <span className="text-sm font-medium">Drop-off:</span>
+                          <span className="col-span-2 text-sm capitalize">
+                            {booking.dropLocation}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-3 items-center gap-4">
+                          <span className="text-sm font-medium">Phone:</span>
+                          <span className="col-span-2 text-sm">
+                            {booking.phoneNumber}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-3 items-center gap-4">
+                          <span className="text-sm font-medium">Email:</span>
+                          <span className="col-span-2 text-sm">
+                            {booking.user.email}
+                          </span>
                         </div>
                       </div>
-                    </PopoverContent>
-                  </Popover>
-                  {booking.status === "scheduled" && (
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-destructive">
-                      <X className="mr-2 h-4 w-4" />
-                      Cancel order
-                    </Button>
-                  )}
-                  {booking.status === "cancelled" && (
-                    <Button variant="ghost" className="w-full justify-start">
-                      <Play className="mr-2 h-4 w-4" />
-                      Mark as ongoing
-                    </Button>
-                  )}
-                  {booking.status === "ongoing" && (
-                    <Button variant="ghost" className="w-full justify-start">
-                      <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
-                      Mark as completed
-                    </Button>
-                  )}
-                </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+                {booking.status === "scheduled" && (
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-destructive"
+                    onClick={() =>
+                      handleStatusUpdate(
+                        booking.id,
+                        "cancelled",
+                        booking.car.id
+                      )
+                    }>
+                    <X className="mr-2 h-4 w-4" />
+                    Cancel order
+                  </Button>
+                )}
+                {booking.status === "scheduled" && (
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() =>
+                      handleStatusUpdate(booking.id, "ongoing", booking.car.id)
+                    }>
+                    <Play className="mr-2 h-4 w-4" />
+                    Mark as ongoing
+                  </Button>
+                )}
+                {booking.status === "ongoing" && (
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    onClick={() =>
+                      handleStatusUpdate(
+                        booking.id,
+                        "completed",
+                        booking.car.id
+                      )
+                    }>
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    Mark as completed
+                  </Button>
+                )}
               </div>
-            </PopoverContent>
-          </Popover>
-        );
-      },
+            </div>
+          </PopoverContent>
+        </Popover>
+      );
     },
-  ];
-  
+  },
+];
+
+async function handleStatusUpdate(id: number, status: any, carId: number) {
+  try {
+    const result = await UpdateOrderStatus(id, status, carId);
+    if (result.success) {
+      toast.success(result.message);
+      if (typeof window !== undefined) {
+        window.location.reload();
+      }
+    } else {
+      toast.error(result.error);
+    }
+  } catch (error: any) {
+    console.error(error);
+    toast.error(error?.message || "something went wrong");
+  }
+}

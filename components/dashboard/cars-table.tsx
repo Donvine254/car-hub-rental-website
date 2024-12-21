@@ -266,9 +266,9 @@ export function CarsDataTable({ data }: { data: Car[] }) {
           </select>
         </div>
       </div>
-      <div className="rounded-md overflow-x-auto border bg-white  shadow p-2">
+      <div className="rounded-md overflow-x-auto border bg-white  shadow ">
         <Table>
-          <TableHeader className="bg-[#f2f2f2] text-base font-semibold">
+          <TableHeader className="bg-green-100 text-base font-semibold">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {

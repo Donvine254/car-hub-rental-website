@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Car } from "@/lib/actions/car-actions/fetchCars";
@@ -67,7 +68,7 @@ export default function AdminDashboard({
             <CarsList vehicles={cars} />
           </TabsContent>
           <TabsContent value="Bookings" className="mt-4 w-full">
-            <BookingsDataTable data={bookings}/>
+            <BookingsDataTable data={bookings} />
           </TabsContent>
           <TabsContent value="Coupons" className="mt-4 w-full">
             {/* show coupons data-table */}
