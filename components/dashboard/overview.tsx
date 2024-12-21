@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import {
-  Bar,
-  BarChart,
+  Line,
+  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -142,12 +142,20 @@ const RevenueChart = () => {
       width="100%"
       height={350}
       className="bg-white rounded-md shadow">
-      <BarChart data={data}>
-        <XAxis dataKey="month" />
+      <LineChart data={data}>
+        <XAxis
+          dataKey="month"
+          tickFormatter={(value, index) => (index % 2 === 0 ? value : "")}
+        />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="revenue" fill="#22c55e" />
-      </BarChart>
+        <Line
+          type="monotone"
+          dataKey="revenue"
+          stroke="#22c55e"
+          strokeWidth={2}
+        />
+      </LineChart>
     </ResponsiveContainer>
   );
 };

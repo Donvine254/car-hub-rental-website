@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import fetchCars, { Car } from "@/lib/actions/car-actions/fetchCars";
+import { Car } from "@/lib/actions/car-actions/fetchCars";
 type Props = {
   vehicles: Car[];
 };
@@ -52,12 +52,17 @@ export function CarsList({ vehicles }: Props) {
 }
 
 const StatusBadge = ({ isRented }: { isRented: boolean }) => (
-  <Badge variant={isRented ? "destructive" : "success"} className="z-0">
+  <Badge variant={isRented ? "default" : "success"} className="z-0">
     {isRented ? "Rented" : "Available"}
   </Badge>
 );
 
 export const columns: ColumnDef<Car>[] = [
+  {
+    accessorKey: "id",
+    header: "Id",
+    cell: ({ row }) => <Badge variant="outline">#00{row.getValue("id")}</Badge>,
+  },
   {
     accessorKey: "modelName",
     header: ({ column }) => {
@@ -241,6 +246,7 @@ export function CarsDataTable({ data }: { data: Car[] }) {
             <option value="all">All Statuses</option>
             <option value="false">Available</option>
             <option value="true">Rented</option>
+            <option value="maintenance">Maintenance</option>
           </select>
           <select
             className="md:ml-4 h-10 w-1/2 md:w-[180px] rounded-md border border-input bg-background px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -252,10 +258,11 @@ export function CarsDataTable({ data }: { data: Car[] }) {
                 )
             }>
             <option value="all">All Locations</option>
-            <option value="New York">New York</option>
-            <option value="Los Angeles">Los Angeles</option>
-            <option value="Chicago">Chicago</option>
-            <option value="Houston">Houston</option>
+            <option value="nairobi">Nairobi</option>
+            <option value="thika">Thika</option>
+            <option value="eldoret">Eldoret</option>
+            <option value="kisumu">Kisumu</option>
+            <option value="mombasa">Mombasa</option>
           </select>
         </div>
       </div>
