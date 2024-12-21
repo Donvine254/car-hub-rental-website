@@ -22,3 +22,23 @@ export async function createNewCar(Data: any) {
     await prisma.$disconnect();
   }
 }
+
+export async function updateCarDetails(id: number, data: any) {
+  let isErrored = false;
+  try {
+    await prisma.car.update({
+      where: {
+        id: id,
+      },
+      data: { ...data },
+    });
+    return { success: true, message: "Car updated successfully" };
+  } catch (error: any) {
+    isErrored = true;
+    console.error(error);
+    return { success: false, error: "Something went wrong" };
+  } finally {
+    if (!isErrored) revalidatePath("/cars", "page");
+    await prisma.$disconnect();
+  }
+}

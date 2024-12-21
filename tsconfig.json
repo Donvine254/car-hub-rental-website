@@ -30,6 +30,6 @@
     "custom.d.ts",
     "db/seed.js",
     "lib/utils/generatetoken.ts"
-  ],
+, "app/(dashboard)/admin/dashboard/dashboardpage.tsx"  ],
   "exclude": ["node_modules"]
 }

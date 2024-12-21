@@ -112,7 +112,6 @@ export default function Dropzone({ setCarImage, imageUrl }: Props) {
           ref={fileInputRef}
           onChange={handleFileChange}
           accept="image/*"
-          required
           className="hidden"
         />
         <div className="flex flex-col items-center gap-2 ">
