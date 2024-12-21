@@ -15,7 +15,17 @@ import {
 } from "chart.js";
 import { Receipt, TrendingUp, CarFront, CalendarCheck } from "lucide-react";
 import RecentBookings from "./recent-bookings";
-
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import Image from "next/image";
+import { Car } from "@prisma/client";
+import { Badge } from "../ui/badge";
 type Props = {
   recentBookings: [];
   stats: {
@@ -24,9 +34,14 @@ type Props = {
     totalRevenue: number;
     totalUsers: number;
   };
+  popularCars: [];
 };
 
-export default function Overview({ recentBookings, stats }: Props) {
+export default function Overview({
+  recentBookings,
+  stats,
+  popularCars,
+}: Props) {
   return (
     <section>
       <div className="grid gap-4 md:grid-cols-3 ">
@@ -124,9 +139,53 @@ export default function Overview({ recentBookings, stats }: Props) {
         </div>
         <div className="w-full">
           <h3 className="text-2xl my-4 font-semibold leading-none tracking-tight">
-            Popular Cars
+            Popular Cars ✨✨
           </h3>
-          <RecentBookings recentBookings={recentBookings} />
+          <div className="rounded-md overflow-x-auto">
+            <Table className="w-full table-auto ">
+              <TableHeader className=" bg-green-100 ">
+                <TableRow>
+                  <TableHead className="w-16">#</TableHead>
+                  <TableHead>Car</TableHead>
+                  <TableHead>Body</TableHead>
+                  <TableHead>Year</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Location</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {popularCars.map((car: Car, index: number) => (
+                  <TableRow key={car.id} className="bg-white">
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center space-x-3 xsm:mx-2">
+                        <Image
+                          src={car.image}
+                          alt={car.modelName}
+                          height={56.25}
+                          width={100}
+                          className="rounded-md object-cover border z-0"
+                        />
+                        <span className="capitalize font-semibold whitespace-nowrap ">
+                          {car.modelName}
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="capitalize ">
+                      {car.bodyType}
+                    </TableCell>
+                    <TableCell className="capitalize ">{car.year}</TableCell>
+                    <TableCell className="capitalize ">
+                      <Badge variant="default">${car.pricePerDay}</Badge>
+                    </TableCell>
+                    <TableCell className="capitalize ">
+                      {car.location}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </div>
     </section>
