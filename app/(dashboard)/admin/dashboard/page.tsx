@@ -25,6 +25,16 @@ async function getBookings() {
         select: {
           id: true,
           modelName: true,
+          location: true,
+          year: true,
+          image: true,
+        },
+      },
+      user: {
+        select: {
+          username: true,
+          email: true,
+          phone: true,
           image: true,
         },
       },
