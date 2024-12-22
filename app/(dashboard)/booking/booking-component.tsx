@@ -21,6 +21,7 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { toast } from "sonner";
 import { isCarAvailable, toE164 } from "@/lib/helpers";
 import Link from "next/link";
+import CarModal from "@/components/alerts/carModal";
 type Props = {
   User: any | null;
 };
@@ -77,6 +78,18 @@ export default function BookingComponent({ User }: Props) {
 
     redirectUser();
   }, [carId, router]);
+
+  //function to show modal
+  const showModal = async (id: number) => {
+    const modal = document.getElementById(
+      `my_modal_${id}`
+    ) as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    } else {
+      console.log("modal not found");
+    }
+  };
   return (
     <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50">
       <div className="bg-[url('/subheader.jpg')] bg-cover bg-center bg-no-repeat">
@@ -279,7 +292,8 @@ export default function BookingComponent({ User }: Props) {
                         alt={selectedCar?.modelName}
                         width={160}
                         height={90}
-                        className="object-cover rounded-md"
+                        className="object-cover rounded-md cursor-pointer"
+                        onClick={() => showModal(selectedCar?.id)}
                       />
                       <div>
                         <h3 className="font-semibold text-lg">
@@ -382,6 +396,7 @@ export default function BookingComponent({ User }: Props) {
           </div>
         </form>
       </div>
+      <CarModal Car={selectedCar} />
     </section>
   );
 }
