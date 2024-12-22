@@ -78,7 +78,7 @@ export default function Overview({
             </p>
           </div>
         </div>
-        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 text-card-foreground shadow-sm hover:bg-purple-300">
+        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 hover:bg-blue-300 text-card-foreground shadow-sm ">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Bookings</h3>
             <CalendarCheck className="text-green-500" size={32} />

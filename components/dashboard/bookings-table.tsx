@@ -19,7 +19,7 @@ import {
   MoreHorizontal,
   Eye,
   X,
-  Play,
+  AlarmClockPlus,
   CheckCircle2,
 } from "lucide-react";
 import Image from "next/image";
@@ -339,35 +339,40 @@ export const columns: ColumnDef<Booking>[] = [
                   </PopoverContent>
                 </Popover>
                 {booking.status === "scheduled" && (
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-destructive"
-                    onClick={() =>
-                      handleStatusUpdate(
-                        booking.id,
-                        "cancelled",
-                        booking.car.id
-                      )
-                    }>
-                    <X className="mr-2 h-4 w-4" />
-                    Cancel order
-                  </Button>
+                  <>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start"
+                      onClick={() =>
+                        handleStatusUpdate(
+                          booking.id,
+                          "ongoing",
+                          booking.car.id
+                        )
+                      }>
+                      <AlarmClockPlus className="mr-2 h-4 w-4" />
+                      Mark as ongoing
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                      onClick={() =>
+                        handleStatusUpdate(
+                          booking.id,
+                          "cancelled",
+                          booking.car.id
+                        )
+                      }>
+                      <X className="mr-2 h-4 w-4" />
+                      Cancel order
+                    </Button>
+                  </>
                 )}
-                {booking.status === "scheduled" && (
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start"
-                    onClick={() =>
-                      handleStatusUpdate(booking.id, "ongoing", booking.car.id)
-                    }>
-                    <Play className="mr-2 h-4 w-4" />
-                    Mark as ongoing
-                  </Button>
-                )}
+
                 {booking.status === "ongoing" && (
                   <Button
                     variant="ghost"
-                    className="w-full justify-start"
+                    className="w-full justify-start hover:bg-green-500 hover:text-white group"
                     onClick={() =>
                       handleStatusUpdate(
                         booking.id,
@@ -375,7 +380,7 @@ export const columns: ColumnDef<Booking>[] = [
                         booking.car.id
                       )
                     }>
-                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500" />
+                    <CheckCircle2 className="mr-2 h-4 w-4 text-green-500 group-hover:text-white" />
                     Mark as completed
                   </Button>
                 )}
