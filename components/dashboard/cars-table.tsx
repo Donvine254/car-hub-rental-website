@@ -86,7 +86,7 @@ export const columns: ColumnDef<Car>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="flex items-center space-x-3 xsm:mx-2">
+      <div className="flex items-center space-x-3 xsm:mx-2 xsm:min-w-[200px]">
         <Image
           src={row.original.image}
           alt={row.getValue("modelName")}

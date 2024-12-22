@@ -46,7 +46,7 @@ export default function Overview({
     <section>
       <div className="grid gap-4 md:grid-cols-3 ">
         {/* first card */}
-        <div className="rounded-lg border bg-gradient-to-tr from-green-300 to-blue-300 text-card-foreground shadow-sm">
+        <div className="rounded-lg border bg-gradient-to-tr from-green-300 to-blue-300 text-card-foreground shadow-sm hover:bg-gradient-to-tr hover:from-blue-300 hover:to-green-300">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Revenue</h3>
             <Receipt className=" fill-green-500 stroke-white" size={32} />
@@ -64,21 +64,21 @@ export default function Overview({
           </div>
         </div>
         {/* second card */}
-        <div className="rounded-lg border bg-green-100 text-card-foreground shadow-sm">
+        <div className="rounded-lg border bg-green-400 hover:bg-green-100 hover:text-gray-600 text-white shadow-sm ">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Active Cars</h3>
-            <CarFront className="text-green-500" size={32} />
+            <CarFront className="" size={32} />
           </div>
           <div className="p-6 pt-0">
             <div className="text-2xl md:text-4xl font-bold">
               {stats.totalCars}
             </div>
-            <p className="text-xs text-muted-foreground flex items-center gap-1">
-              <TrendingUp className="text-green-500" /> +180.1% from last month
+            <p className="text-xs  flex items-center gap-1">
+              <TrendingUp /> +180.1% from last month
             </p>
           </div>
         </div>
-        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 text-card-foreground shadow-sm ">
+        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 text-card-foreground shadow-sm hover:bg-purple-300">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Bookings</h3>
             <CalendarCheck className="text-green-500" size={32} />
@@ -180,7 +180,12 @@ export default function Overview({
                     </TableCell>
                     <TableCell className="capitalize ">{car.year}</TableCell>
                     <TableCell className="capitalize ">
-                      <Badge variant="default">${car.pricePerDay}/ Day</Badge>
+                      <Badge variant="default" className="whitespace-nowrap">
+                        {new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        }).format(car.pricePerDay)}
+                      </Badge>
                     </TableCell>
                     <TableCell className="capitalize ">
                       {car.location}

@@ -212,7 +212,7 @@ export const columns: ColumnDef<Booking>[] = [
     accessorKey: "car",
     header: "Car",
     cell: ({ row }) => (
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-3 xsm:min-w-[200px]">
         <Image
           src={row.original.car.image}
           alt={row.original.car.modelName}
