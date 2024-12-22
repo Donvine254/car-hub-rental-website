@@ -3,6 +3,7 @@ import BookingPage from "./booking";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getUserData } from "@/lib/actions/decodetoken";
+import BookingComponent from "./booking-component";
 
 export const metadata: Metadata = {
   title: "Car Hub - Make a Booking",
@@ -25,7 +26,7 @@ export default async function page() {
   }
   return (
     <section>
-      <BookingPage User={User} />
+      <BookingComponent User={User} />
     </section>
   );
 }
