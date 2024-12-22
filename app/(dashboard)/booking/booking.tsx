@@ -1,35 +1,24 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { fetchCar, Car } from "@/lib/actions/car-actions/fetchCars";
-import { toast } from "sonner";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import {
-  BadgeDollarSign,
-  BookUserIcon,
-  CalendarCheck2Icon,
-  CalendarDaysIcon,
-  CarFront,
-  CircleUser,
-  InfoIcon,
-  MailOpenIcon,
-  MapPinIcon,
-  Phone,
-} from "lucide-react";
-import Link from "next/link";
-import CarModal from "@/components/alerts/carModal";
-import Script from "next/script";
-import secureLocalStorage from "react-secure-storage";
-import { createBooking, Booking } from "@/lib/actions/booking-actions/booking";
+import { EyeIcon, InfoIcon, Loader, MapPin } from "lucide-react";
+import { fetchCar, Car } from "@/lib/actions/car-actions/fetchCars";
+import { useSearchParams, useRouter } from "next/navigation";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
-import { getISODateString, isCarAvailable, toE164 } from "@/lib/helpers";
+import Script from "next/script";
+import secureLocalStorage from "react-secure-storage";
 import SuccessDialog from "@/components/alerts/success-dialog";
 import { sendOrderConfirmationEmail } from "@/emails";
-
+import { createBooking, Booking } from "@/lib/actions/booking-actions/booking";
+import { toast } from "sonner";
+import { getISODateString, isCarAvailable, toE164 } from "@/lib/helpers";
+import Link from "next/link";
+import CarModal from "@/components/alerts/carModal";
 type Props = {
   User: any | null;
 };
+
 declare const confetti: any;
 const today = new Date();
 const formattedDate = today.toISOString().substring(0, 10);
@@ -39,14 +28,18 @@ const nextDayDate = (currentDate: string): string => {
   return date.toISOString().split("T")[0];
 };
 
-export default function BookingPage({ User }: Props) {
+export default function BookingComponent({ User }: Props) {
+  const [selectedCar, setSelectedCar] = useState<any | Car | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [discount, setDiscount] = useState("");
+  const [discountValue, setDiscountValue] = useState(0);
   const router = useRouter();
   const searchParams = useSearchParams();
   const carId = searchParams.get("id");
   const defaultData = secureLocalStorage.getItem("react_booking_form_data") as
     | (Booking & { pickupTime?: string })
     | null;
-  const [selectedCar, setSelectedCar] = useState<any | Car | null>(null);
   let price = (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
   const [formData, setFormData] = useState<Booking & { pickupTime?: string }>({
     userId: User?.id || 0,
@@ -61,7 +54,6 @@ export default function BookingPage({ User }: Props) {
     status: "scheduled",
     pickupTime: defaultData?.pickupTime || "08:00",
   });
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     async function redirectUser() {
@@ -74,10 +66,8 @@ export default function BookingPage({ User }: Props) {
         }, 1000);
         return; // Exit early
       }
-
       try {
         const data = await fetchCar(carId);
-
         if (!data) {
           toast.error("Car not found. Redirecting...", {
             position: "top-center",
@@ -111,6 +101,17 @@ export default function BookingPage({ User }: Props) {
     redirectUser();
   }, [carId, router]);
 
+  //function to show modal
+  const showModal = async (id: number) => {
+    const modal = document.getElementById(
+      `my_modal_${id}`
+    ) as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    } else {
+      console.log("modal not found");
+    }
+  };
   // effect to update the price dynamically
   useEffect(() => {
     if (defaultData?.startDate && defaultData?.endDate && selectedCar) {
@@ -118,7 +119,8 @@ export default function BookingPage({ User }: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultData, selectedCar]);
-  // function to handle input changes
+
+  //function to handle form input
   function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
@@ -169,6 +171,7 @@ export default function BookingPage({ User }: Props) {
       totalPrice: formData.totalPrice,
     };
     try {
+      setLoading(true);
       const result = await createBooking(bookingData);
       confetti({
         particleCount: 1000,
@@ -186,8 +189,10 @@ export default function BookingPage({ User }: Props) {
         result.pickupLocation.toUpperCase(),
         result.totalPrice
       );
+      setLoading(false);
       secureLocalStorage.removeItem("react_booking_form_data");
     } catch (error) {
+      setLoading(false);
       console.error("Failed to create booking:", error);
       toast.error("Failed to create booking. Please try again.");
     }
@@ -219,128 +224,64 @@ export default function BookingPage({ User }: Props) {
     }
   }
 
-  //function to show car details
-  const showModal = async (id: number) => {
-    const modal = document.getElementById(
-      `my_modal_${id}`
-    ) as HTMLDialogElement | null;
-    if (modal) {
-      modal.showModal();
-    } else {
-      console.log("modal not found");
-    }
-  };
-
   return (
-    <section className=" bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70  py-5 h-full w-full flex flex-col items-center justify-center p-4 relative ">
+    <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50">
       <Script
         async
         defer
         src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.2/tsparticles.confetti.bundle.min.js"></Script>
-      <div className="absolute top-0 xsm:hidden bg-amber-100 border border-amber-400 w-full ">
-        <p className=" flex flex-wrap gap-1 items-center justify-center  text-amber-600 font-bold">
-          <InfoIcon />
-          <span>
-            Before completing booking, kindly read our{" "}
-            <a href="/terms" className="hover:underline">
-              rental terms and conditions
-            </a>
-          </span>
-        </p>
-      </div>
-      <h1 className="text-center md:text-start my-4 text-2xl md:text-4xl font-extrabold">
-        Easy Booking
-      </h1>
-      <div className=" border bg-white  xsm:w-full  rounded-md shadow-md w-2/3">
-        <div className="bg-green-500 h-fit z-50 text-white  w-full">
-          <h1 className="text-2xl text-center font-extrabold mb-1">
-            Complete Reservation
+      <div className="bg-[url('/subheader.jpg')] bg-cover bg-center bg-no-repeat">
+        <div className="bg-black flex items-center justify-center  bg-opacity-60 px-6 py-10 md:py-20">
+          <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize  text-white md:py-4 ">
+            Complete your Booking
           </h1>
-          <div className="w-full px-2 bg-green-100 text-green-600 py-2">
-            <div className="inline-flex gap-1 text-xl font-bold w-full ">
-              <InfoIcon className="text-green-500" />
-              <span>Upon completing this booking form, you will receive:</span>
-            </div>
-            <p>
-              Your car rental voucher to be produced on arrival at the rental
-              desk and a toll-free customer support number.
-            </p>
-          </div>
         </div>
-        <div className="px-4 py-4">
-          <div className="py-2">
-            {selectedCar ? (
-              <div className="md:flex h-fit md:h-20  text-base  w-full px-3 py-2 border border-gray-300 rounded-md items-center gap-2 font-bold">
-                <Image
-                  src={selectedCar?.image || ""}
-                  width={120}
-                  height={120}
-                  alt="car_image"
-                />
-                <span>{selectedCar?.modelName} &#8212; </span>
-                <span>${selectedCar?.pricePerDay} Per Day</span>
-                <button
-                  className="py-1 px-2 rounded-md bg-green-500 border text-white"
-                  onClick={() => showModal(selectedCar?.id)}>
-                  View More Details
-                </button>
-              </div>
-            ) : (
-              <div className="h-20 px-3 py-2 border border-gray-300 rounded-md bg-background">
-                <Link
-                  className=" bg-green-500 rounded-md border px-5 py-1 text-white"
-                  href="/cars">
-                  Select A Vehicle
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <form onSubmit={handleBooking}>
-            <section className="flex flex-col gap-2 md:grid md:grid-cols-2  md:gap-4">
-              {/* div for two cards */}
-              {/* first card */}
-              <div>
-                <label className="inline-flex font-bold" htmlFor="model">
-                  <CarFront fill="none" className="text-green-500" />
-                  <span className="text-xl"> &nbsp; Car Details *</span>
-                </label>
-                <div className="py-2">
+      </div>
+      <div className="container xsm:p-2 md:p-4">
+        <form
+          className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white rounded-md border my-4"
+          onSubmit={handleBooking}>
+          {/* Left Column */}
+          <div className="lg:col-span-2 space-y-2">
+            {/* Booking Details */}
+            <div className="p-2 md:p-6  space-y-2 md:space-y-4">
+              <h2 className="text-xl md:text-2xl font-semibold">
+                Booking Details
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
                   <label
                     htmlFor="pickupLocation"
-                    className="inline-flex font-bold">
-                    <MapPinIcon fill="none" className="text-green-500" /> &nbsp;
-                    Pick-Up Location
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Pickup Location <span className="text-red-500">*</span>
                   </label>
-                  {/* a car can only be picked in its location */}
                   <select
-                    className="flex h-10 bg-white text-base w-full px-3 py-2 border border-gray-300 rounded-md capitalize"
-                    name="pickupLocation"
                     id="pickupLocation"
-                    value={formData.pickupLocation} // Bind to formData
-                    aria-readonly
-                    title="Vehicles can only be picked in their location. You can request for a delivery at an additional fee."
-                    disabled>
-                    <option value="" hidden>
-                      {selectedCar?.location}
-                    </option>
+                    name="pickupLocation"
+                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 capitalize focus:ring-green-500 focus:border-green-500"
+                    disabled
+                    aria-describedby="pickupLocationHelp">
+                    <option>{selectedCar?.location}</option>
                   </select>
+                  <p
+                    id="pickupLocationHelp"
+                    className="mt-1 text-sm text-gray-500">
+                    Vehicles can only be picked up at its current location
+                  </p>
                 </div>
 
-                <div className="py-2">
+                <div>
                   <label
                     htmlFor="dropLocation"
-                    className="inline-flex font-bold">
-                    <MapPinIcon fill="none" className="text-green-500" /> &nbsp;
-                    Drop-Off Location
+                    className="inline-flex gap1 font-bold text-gray-700">
+                    Drop-off Location <span className="text-red-500">*</span>
                   </label>
                   <select
-                    className="flex h-10 bg-white text-base w-full px-3 py-2 border border-gray-300 rounded-md"
+                    id="dropLocation"
                     name="dropLocation"
-                    id="dropoffLocation"
-                    value={formData.dropLocation} 
+                    value={formData.dropLocation}
                     onChange={handleInputChange}
-                    disabled={!selectedCar}
+                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     required>
                     <option value="" hidden>
                       Choose a Drop-Off Location
@@ -349,14 +290,15 @@ export default function BookingPage({ User }: Props) {
                     <option value="kisumu">Kisumu</option>
                     <option value="mombasa">Mombasa</option>
                     <option value="thika">Thika</option>
-                    <option value="nakuru">Nakuru</option>
                     <option value="eldoret">Eldoret</option>
                   </select>
                 </div>
-                <div className="py-2">
-                  <label htmlFor="pickupDate" className="inline-flex font-bold">
-                    <CalendarDaysIcon fill="none" className="text-green-500" />{" "}
-                    &nbsp; Pickup Date and Time
+
+                <div>
+                  <label
+                    htmlFor="pickupDate"
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Pickup Date & Time <span className="text-red-500">*</span>
                   </label>
                   <div className="flex items-center gap-0">
                     <input
@@ -368,7 +310,7 @@ export default function BookingPage({ User }: Props) {
                       required
                       disabled={!selectedCar}
                       onChange={handleInputChange}
-                      className="flex h-10 bg-white text-base w-1/2 px-1 py-2 border"
+                      className="flex rounded-l-md  bg-white text-base w-1/2 border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                     <input
                       type="time"
@@ -379,18 +321,16 @@ export default function BookingPage({ User }: Props) {
                       required
                       value={formData.pickupTime}
                       onChange={handleInputChange}
-                      className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
+                      className=" w-1/2 bg-white text-base border-gray-300 rounded-r-md outline-none border px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                   </div>
                 </div>
 
-                <div className="py-2">
-                  <label htmlFor="dropDate" className="inline-flex font-bold">
-                    <CalendarCheck2Icon
-                      fill="none"
-                      className="text-green-500"
-                    />{" "}
-                    &nbsp; Drop-Off Date and Time
+                <div>
+                  <label
+                    htmlFor="dropDate"
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Drop-off Date & Time <span className="text-red-500">*</span>
                   </label>
                   <div className="flex items-center gap-0">
                     <input
@@ -402,7 +342,7 @@ export default function BookingPage({ User }: Props) {
                       required
                       disabled={!selectedCar}
                       onChange={handleInputChange}
-                      className="flex h-10 bg-white text-base w-1/2 px-1 py-2 border"
+                      className="flex rounded-l-md  bg-white text-base w-1/2 border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                     <input
                       type="time"
@@ -410,100 +350,223 @@ export default function BookingPage({ User }: Props) {
                       disabled
                       aria-readonly
                       value={formData.pickupTime}
+                      required
                       title="Booking runs for 24hrs and cars must be returned at the same time as they were picked up"
-                      className="h-10 w-1/2 bg-white text-base px-1 py-2 border-gray-300 rounded-r-md outline-none border"
+                      className=" w-1/2 bg-white text-base border-gray-300 rounded-r-md outline-none border px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                   </div>
                 </div>
               </div>
-              {/* second card */}
-              <div>
-                <label className="inline-flex font-bold" htmlFor="model">
-                  <CircleUser fill="none" className="text-green-500" />
-                  <span className="text-xl"> &nbsp; Contact Details *</span>
-                </label>
-                <div className="">
-                  <label htmlFor="name" className="inline-flex font-bold py-2">
-                    <BookUserIcon fill="none" className="text-green-500" />{" "}
-                    &nbsp; Your Name
+            </div>
+            <hr />
+            {/* Contact Information */}
+            <div className="p-2 md:p-6  space-y-2">
+              <h2 className="text-xl md:text-2xl font-semibold">
+                Contact Information
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                <div>
+                  <label
+                    htmlFor="fullName"
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Full Name <span className="text-red-500">*</span>
                   </label>
-                  <div className="flex items-center gap-0">
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      readOnly
-                      required
-                      defaultValue={User.username}
-                      className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none capitalize"
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    placeholder="fullname"
+                    value={User.username}
+                    readOnly
+                    required
+                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <PhoneInput
+                    value={toE164(User?.phone)}
+                    defaultCountry="KE"
+                    placeholder="Enter phone number"
+                  />
+                </div>
 
-                  <div className="py-2 ">
-                    <label
-                      htmlFor="email"
-                      className="inline-flex font-bold py-1">
-                      <MailOpenIcon fill="none" className="text-green-500" />{" "}
-                      &nbsp; Email Address
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      readOnly
-                      required
-                      defaultValue={User?.email ?? "you@example.com"}
-                      className="flex h-10 bg-white text-base  w-full px-1 py-2  border border-gray-300 rounded-md outline-none "
-                    />
-                  </div>
-                  <div className="py-2">
-                    <label htmlFor="phone" className="inline-flex font-bold">
-                      <Phone fill="none" className="text-green-500" /> &nbsp;
-                      Phone Number
-                    </label>
-                    <PhoneInput
-                      value={toE164(formData.phoneNumber)}
-                      defaultCountry="KE"
-                      placeholder="Enter phone number"
-                      onChange={(value) =>
-                        setFormData((prev: any) => ({
-                          ...prev,
-                          phoneNumber: value,
-                        }))
-                      }
-                    />
-                  </div>
-                  <div className="py-2">
-                    <label htmlFor="cost" className="inline-flex font-bold ">
-                      <BadgeDollarSign fill="none" className="text-green-500" />{" "}
-                      &nbsp; Total Price
-                    </label>
+                <div className="md:col-span-2">
+                  <label
+                    htmlFor="email"
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Email Address <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="email address"
+                    value={User.email}
+                    readOnly
+                    required
+                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Right Column - Price Summary */}
+          <div className="lg:col-span-1">
+            <div className="bg-white md:bg-gradient-to-r md:from-green-50 md:via-slate-50 md:to-green-50 p-2 md:p-6 sticky top-4 space-y-3">
+              {/* Order Summary */}
+              <div>
+                <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
+                <div className="border shadow p-2 rounded-lg">
+                  {selectedCar ? (
+                    <div className="flex gap-4 items-center">
+                      <Image
+                        src={selectedCar?.image}
+                        alt={selectedCar?.modelName}
+                        width={160}
+                        height={90}
+                        title="View more details"
+                        className="object-cover rounded-md cursor-pointer"
+                        onClick={() => showModal(selectedCar?.id)}
+                      />
+                      <div>
+                        <h3 className="font-semibold text-lg">
+                          {selectedCar?.modelName}
+                        </h3>
+                        <p className="text-green-600 font-semibold">
+                          ${selectedCar?.pricePerDay} per day
+                        </p>
+                        <div className="flex items-center gap-1 text-gray-600 mt-2">
+                          <MapPin size={16} aria-hidden="true" />
+                          <span className="capitalize">
+                            {selectedCar?.location}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      className=" bg-green-500 rounded-md border px-5 py-1 text-white my-6 mx-auto"
+                      href="/cars">
+                      Select A Vehicle
+                    </Link>
+                  )}
+                </div>
+              </div>
+              <hr className="border-gray-200" />
+              {/* Price Details */}
+              <div>
+                <div className="flex gap-2 mb-6">
+                  <div className="relative flex-1">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        height="24"
+                        width="24"
+                        className="h-6 w-6">
+                        <path d="M21 5H3a1 1 0 00-1 1v4h.893c.996 0 1.92.681 2.08 1.664A2.001 2.001 0 013 14H2v4a1 1 0 001 1h18a1 1 0 001-1v-4h-1a2.001 2.001 0 01-1.973-2.336c.16-.983 1.084-1.664 2.08-1.664H22V6a1 1 0 00-1-1zM9 9a1 1 0 110 2 1 1 0 110-2zm-.8 6.4l6-8 1.6 1.2-6 8-1.6-1.2zM15 15a1 1 0 110-2 1 1 0 110 2z" />
+                      </svg>
+                    </span>
                     <input
                       type="text"
-                      name="totalPrice"
-                      id="cost"
-                      readOnly
-                      value={price ? `$${formData.totalPrice}` : "$--"}
-                      className="flex h-10 bg-white text-base  w-full px-1 py-2 border border-gray-300 rounded-md outline-none "
+                      name="discount"
+                      title="enter a coupon discount code"
+                      onChange={(e) => setDiscount(e.target.value)}
+                      placeholder="Discount code"
+                      className="w-full pl-10 rounded-md border border-gray-300 px-3 py-2"
                     />
+                  </div>
+                  <button
+                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed"
+                    type="button"
+                    disabled={!discount}
+                    title="discount">
+                    Apply
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Subtotal</span>
+                    <span>
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(formData.totalPrice)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Discount</span>
+                    <span className="text-green-600">
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(discountValue)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Taxes</span>
+                    <span>
+                      {" "}
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(formData.totalPrice * 0.16)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between border-t border-gray-200 pt-3 font-semibold">
+                    <span>Total</span>
+                    <span>
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(formData.totalPrice - discountValue)}
+                    </span>
                   </div>
                 </div>
               </div>
-            </section>
-            <div className="py-2 md:py-0 flex md:items-end md:justify-end md:pb-2 gap-2">
+
+              <div className="mt-6">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    name="terms"
+                    required
+                    className="rounded border-gray-300 focus:outline-none"
+                  />
+                  <span className="text-xs text-gray-600">
+                    I have read and agree to the{" "}
+                    <a
+                      href="/terms"
+                      className="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                      rental terms and conditions
+                    </a>
+                  </span>
+                </label>
+              </div>
+
               <button
-                className="border  px-3 h-10 py-2 w-full  border-green-500 hover:bg-red-100 hover:border-red-300 text-xl rounded-md flex items-center justify-center "
-                type="reset">
-                Clear
-              </button>
-              <button
-                className="border  px-3 h-10 py-2 w-full text-white bg-green-500 hover:bg-green-600 text-xl rounded-md flex items-center justify-center "
-                type="submit">
-                Rent Car
+                type="submit"
+                className="w-full bg-green-500 text-white py-3 rounded-md mt-6 hover:bg-green-600 font-medium focus:outline-none h-10 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center disabled:bg-muted border disabled:text-muted-foreground disabled:cursor-not-allowed"
+                disabled={loading}>
+                {loading ? (
+                  <Loader
+                    className="animate-spin text-green-500"
+                    fill="#22C55E"
+                  />
+                ) : (
+                  "Confirm Booking"
+                )}
               </button>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
       <CarModal Car={selectedCar} />
       <SuccessDialog
