@@ -49,7 +49,7 @@ export default function Overview({
         <div className="rounded-lg border bg-gradient-to-tr from-green-300 to-blue-300 text-card-foreground shadow-sm hover:bg-gradient-to-tr hover:from-blue-300 hover:to-green-300">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Revenue</h3>
-            <Receipt className=" fill-green-500 stroke-white" size={32} />
+            <Receipt className=" text-green-500" size={32} />
           </div>
           <div className="p-6 pt-0">
             <div className="text-2xl md:text-4xl font-bold">
