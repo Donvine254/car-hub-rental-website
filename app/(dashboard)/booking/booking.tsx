@@ -338,7 +338,7 @@ export default function BookingPage({ User }: Props) {
                     className="flex h-10 bg-white text-base w-full px-3 py-2 border border-gray-300 rounded-md"
                     name="dropLocation"
                     id="dropoffLocation"
-                    value={formData.dropLocation} // Bind to formData
+                    value={formData.dropLocation} 
                     onChange={handleInputChange}
                     disabled={!selectedCar}
                     required>

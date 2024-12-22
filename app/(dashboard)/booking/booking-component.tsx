@@ -1,37 +1,57 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import {
-  BadgeDollarSign,
-  BookUserIcon,
-  CalendarCheck2Icon,
-  CalendarDaysIcon,
-  CarFront,
-  CircleUser,
-  InfoIcon,
-  MailOpenIcon,
-  MapPin,
-  MapPinIcon,
-  Phone,
-} from "lucide-react";
+import { InfoIcon, MapPin } from "lucide-react";
 import { fetchCar, Car } from "@/lib/actions/car-actions/fetchCars";
 import { useSearchParams, useRouter } from "next/navigation";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import Script from "next/script";
+import secureLocalStorage from "react-secure-storage";
+import SuccessDialog from "@/components/alerts/success-dialog";
+import { sendOrderConfirmationEmail } from "@/emails";
+import { createBooking, Booking } from "@/lib/actions/booking-actions/booking";
 import { toast } from "sonner";
-import { isCarAvailable, toE164 } from "@/lib/helpers";
+import { getISODateString, isCarAvailable, toE164 } from "@/lib/helpers";
 import Link from "next/link";
 import CarModal from "@/components/alerts/carModal";
 type Props = {
   User: any | null;
 };
 
+declare const confetti: any;
+const today = new Date();
+const formattedDate = today.toISOString().substring(0, 10);
+const nextDayDate = (currentDate: string): string => {
+  const date = new Date(currentDate);
+  date.setDate(date.getDate() + 1);
+  return date.toISOString().split("T")[0];
+};
+
 export default function BookingComponent({ User }: Props) {
   const [selectedCar, setSelectedCar] = useState<any | Car | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [discount, setDiscount] = useState(0);
   const router = useRouter();
   const searchParams = useSearchParams();
   const carId = searchParams.get("id");
+  const defaultData = secureLocalStorage.getItem("react_booking_form_data") as
+    | (Booking & { pickupTime?: string })
+    | null;
   let price = (searchParams.get("price") as string) ?? selectedCar?.pricePerDay;
+  const [formData, setFormData] = useState<Booking & { pickupTime?: string }>({
+    userId: User?.id || 0,
+    carId: selectedCar?.id || 0,
+    startDate: defaultData?.startDate || formattedDate,
+    endDate: defaultData?.endDate || nextDayDate(new Date().toISOString()),
+    pickupLocation:
+      defaultData?.pickupLocation || selectedCar?.location || "nairobi",
+    dropLocation: defaultData?.dropLocation || "",
+    phoneNumber: User?.phone,
+    totalPrice: parseInt(price) || 0,
+    status: "scheduled",
+    pickupTime: defaultData?.pickupTime || "08:00",
+  });
 
   useEffect(() => {
     async function redirectUser() {
@@ -90,8 +110,121 @@ export default function BookingComponent({ User }: Props) {
       console.log("modal not found");
     }
   };
+  // effect to update the price dynamically
+  useEffect(() => {
+    if (defaultData?.startDate && defaultData?.endDate && selectedCar) {
+      calculateTotalCost(defaultData.startDate, defaultData.endDate);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultData, selectedCar]);
+
+  //function to handle form input
+  function handleInputChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    if (name === "startDate" || name === "endDate") {
+      const updatedStartDate =
+        name === "startDate" ? value : formData.startDate;
+      const updatedEndDate = name === "endDate" ? value : formData.endDate;
+      calculateTotalCost(updatedStartDate, updatedEndDate);
+    }
+  }
+
+  //   function to handle bookings
+  async function handleBooking(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!selectedCar) {
+      toast.error("Kindly select a car first");
+      return;
+    }
+    if (!isValidPhoneNumber(toE164(formData.phoneNumber))) {
+      toast.error("Enter a valid phone number");
+      return;
+    }
+    const startDateTime = getISODateString(
+      formData.startDate,
+      formData.pickupTime || "08:00"
+    );
+
+    const endDateTime = getISODateString(
+      formData.endDate,
+      formData.pickupTime || "08:00"
+    );
+
+    const bookingData = {
+      carId: selectedCar.id,
+      userId: User.id,
+      phoneNumber: formData.phoneNumber,
+      pickupLocation: selectedCar.location,
+      dropLocation: formData.dropLocation,
+      startDate: startDateTime,
+      endDate: endDateTime,
+      status: "scheduled",
+      totalPrice: formData.totalPrice,
+    };
+    try {
+      const result = await createBooking(bookingData);
+      confetti({
+        particleCount: 1000,
+        spread: 100,
+        origin: { y: 0.3 },
+      });
+      setIsOpen(true);
+      await sendOrderConfirmationEmail(
+        User.email,
+        User.username,
+        result.id,
+        selectedCar.modelName,
+        result.startDate.toString(),
+        result.endDate.toString(),
+        result.pickupLocation.toUpperCase(),
+        result.totalPrice
+      );
+      secureLocalStorage.removeItem("react_booking_form_data");
+    } catch (error) {
+      console.error("Failed to create booking:", error);
+      toast.error("Failed to create booking. Please try again.");
+    }
+  }
+
+  function calculateTotalCost(startDate: string, endDate: string) {
+    if (!selectedCar) return;
+    try {
+      const pickupDateObj = new Date(startDate);
+      const dropoffDateObj = new Date(endDate);
+      // Check if endDate is before startDate
+      if (dropoffDateObj < pickupDateObj) {
+        setFormData((prev) => ({
+          ...prev,
+          totalPrice: parseInt(price),
+        }));
+        return;
+      }
+      const timeDiff = dropoffDateObj.getTime() - pickupDateObj.getTime();
+      const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) || 1;
+
+      const totalCost = days * parseInt(price);
+      setFormData((prev) => ({
+        ...prev,
+        totalPrice: totalCost,
+      }));
+    } catch (error) {
+      console.error("Error parsing dates:", error);
+    }
+  }
+
   return (
     <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50">
+      <Script
+        async
+        defer
+        src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.2/tsparticles.confetti.bundle.min.js"></Script>
       <div className="bg-[url('/subheader.jpg')] bg-cover bg-center bg-no-repeat">
         <div className="bg-black flex items-center justify-center  bg-opacity-60 px-6 py-10 md:py-20">
           <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize  text-white md:py-4 ">
@@ -100,7 +233,7 @@ export default function BookingComponent({ User }: Props) {
         </div>
       </div>
       {/* Info Alert */}
-      <div className="w-full px-2 mb-8 bg-green-100 text-green-600 py-2">
+      {/* <div className="w-full px-2 mb-8 bg-green-100 text-green-600 py-2">
         <div className="inline-flex gap-1 text-base md:text-xl w-full">
           <InfoIcon className="text-green-500 font-bold" aria-hidden="true" />
           <div>
@@ -113,15 +246,25 @@ export default function BookingComponent({ User }: Props) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* add form */}
+      {/* <div className="flex items-center justify-center">
+        <h1 className="text-xl md:text-2xl lg:text-3xl mb-4 font-bold text-center px-3 py-2 bg-gray-200 text-green-500 w-fit rounded-md">
+          Checkout
+        </h1>
+      </div> */}
+
       <div className="container xsm:p-2">
-        <form className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white rounded-md border px-2">
+        <form
+          className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white rounded-md border px-2"
+          onSubmit={handleBooking}>
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
             {/* Booking Details */}
             <div className="bg-white p-6 rounded-lg  space-y-4">
-              <h2 className="text-xl font-semibold">Booking Details</h2>
+              <h2 className="text-lg md:text-xl font-semibold">
+                Booking Details
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label
@@ -153,6 +296,8 @@ export default function BookingComponent({ User }: Props) {
                   <select
                     id="dropLocation"
                     name="dropLocation"
+                    value={formData.dropLocation}
+                    onChange={handleInputChange}
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     required>
                     <option value="" hidden>
@@ -177,9 +322,11 @@ export default function BookingComponent({ User }: Props) {
                       type="date"
                       id="pickupDate"
                       name="startDate"
+                      value={formData.startDate}
                       min={new Date().toISOString().split("T")[0]}
                       required
                       disabled={!selectedCar}
+                      onChange={handleInputChange}
                       className="flex rounded-l-md  bg-white text-base w-1/2 border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                     <input
@@ -189,6 +336,8 @@ export default function BookingComponent({ User }: Props) {
                       min="08:00"
                       max="18:00"
                       required
+                      value={formData.pickupTime}
+                      onChange={handleInputChange}
                       className=" w-1/2 bg-white text-base border-gray-300 rounded-r-md outline-none border px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                   </div>
@@ -204,19 +353,22 @@ export default function BookingComponent({ User }: Props) {
                     <input
                       type="date"
                       id="dropDate"
-                      name="startDate"
-                      min={new Date().toISOString().split("T")[0]}
+                      name="endDate"
+                      value={formData.endDate}
+                      min={formData.startDate}
                       required
                       disabled={!selectedCar}
+                      onChange={handleInputChange}
                       className="flex rounded-l-md  bg-white text-base w-1/2 border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                     <input
                       type="time"
-                      name="dropTime"
-                      disabled={!selectedCar}
-                      min="08:00"
-                      max="18:00"
+                      name="dropoffTime"
+                      disabled
+                      aria-readonly
+                      value={formData.pickupTime}
                       required
+                      title="Booking runs for 24hrs and cars must be returned at the same time as they were picked up"
                       className=" w-1/2 bg-white text-base border-gray-300 rounded-r-md outline-none border px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                   </div>
@@ -283,8 +435,8 @@ export default function BookingComponent({ User }: Props) {
             <div className="bg-white p-6 rounded-lg shadow-sm sticky top-4 space-y-6">
               {/* Order Summary */}
               <div>
-                <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-                <div className="flex gap-4 border shadow rounded-lg">
+                <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
+                <div className="flex gap-4 border shadow p-2 rounded-lg">
                   {selectedCar ? (
                     <>
                       <Image
@@ -292,6 +444,7 @@ export default function BookingComponent({ User }: Props) {
                         alt={selectedCar?.modelName}
                         width={160}
                         height={90}
+                        title="View more details"
                         className="object-cover rounded-md cursor-pointer"
                         onClick={() => showModal(selectedCar?.id)}
                       />
@@ -299,7 +452,7 @@ export default function BookingComponent({ User }: Props) {
                         <h3 className="font-semibold text-lg">
                           {selectedCar?.modelName}
                         </h3>
-                        <p className="text-gray-600">
+                        <p className="text-green-600 font-semibold">
                           ${selectedCar?.pricePerDay} per day
                         </p>
                         <div className="flex items-center gap-1 text-gray-600 mt-2">
@@ -342,7 +495,10 @@ export default function BookingComponent({ User }: Props) {
                       className="w-full pl-10 rounded-md border border-gray-300 px-3 py-2"
                     />
                   </div>
-                  <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                  <button
+                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                    type="button"
+                    title="discount">
                     Apply
                   </button>
                 </div>
@@ -350,19 +506,40 @@ export default function BookingComponent({ User }: Props) {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
-                    <span>$450</span>
+                    <span>
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(formData.totalPrice)}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Discount</span>
-                    <span className="text-green-600">-$45</span>
+                    <span className="text-green-600">
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(discount)}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Taxes</span>
-                    <span>$40.50</span>
+                    <span>
+                      {" "}
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(formData.totalPrice * 0.16)}
+                    </span>
                   </div>
                   <div className="flex justify-between border-t border-gray-200 pt-3 font-semibold">
                     <span>Total</span>
-                    <span>$445.50</span>
+                    <span>
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(formData.totalPrice - discount)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -397,6 +574,17 @@ export default function BookingComponent({ User }: Props) {
         </form>
       </div>
       <CarModal Car={selectedCar} />
+      <SuccessDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onClose={() => {
+          setTimeout(() => {
+            router.push("/me/orders?new_order=true");
+          }, 500);
+        }}
+        title="Order Placed Successfully"
+        description="Your booking has been successfully placed and we have sent a confirmation email to your registered email."
+      />
     </section>
   );
 }
