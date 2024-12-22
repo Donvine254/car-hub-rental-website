@@ -269,7 +269,11 @@ export const columns: ColumnDef<Booking>[] = [
         style: "currency",
         currency: "USD",
       }).format(amount);
-      return <div className="text-right font-medium">{formatted}</div>;
+      return (
+        <div className="text-right text-green-600 font-medium">
+          +{formatted}
+        </div>
+      );
     },
   },
   {
