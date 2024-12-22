@@ -293,12 +293,12 @@ export function CarsDataTable({ data }: { data: Car[] }) {
       </div>
       <div className="rounded-md overflow-x-auto border bg-white  shadow ">
         <Table>
-          <TableHeader className="bg-green-100 text-base font-semibold">
+          <TableHeader className="bg-green-500 text-base font-semibold">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="text-white">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
