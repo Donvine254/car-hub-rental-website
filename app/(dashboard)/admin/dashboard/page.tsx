@@ -100,7 +100,10 @@ async function getPopularCars() {
   try {
     const popularCars = await prisma.car.findMany({
       include: {
-        bookings: true,
+        _count: {
+          select: { bookings: true },
+        },
+        bookings: { where: { status: { not: "cancelled" } } },
       },
       orderBy: {
         bookings: {
@@ -110,7 +113,21 @@ async function getPopularCars() {
       take: 5,
     });
 
-    return popularCars;
+    const carsWithRevenue = popularCars.map((car) => {
+      const completedBookings = car.bookings.filter(
+        (booking) => booking.status === "completed"
+      );
+      const totalRevenue = completedBookings.reduce(
+        (sum, booking) => sum + booking.totalPrice,
+        0
+      );
+      return {
+        ...car,
+        totalRevenue,
+      };
+    });
+    console.log(carsWithRevenue);
+    return carsWithRevenue;
   } catch (error) {
     console.error("Error fetching popular cars:", error);
     throw new Error("Could not fetch popular cars");

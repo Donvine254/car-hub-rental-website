@@ -49,7 +49,7 @@ export default function Overview({
         <div className="rounded-lg border bg-gradient-to-tr from-green-300 to-blue-300 text-card-foreground shadow-sm hover:bg-gradient-to-tr hover:from-blue-300 hover:to-green-300">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Revenue</h3>
-            <Receipt className=" fill-green-500 stroke-white" size={32} />
+            <Receipt className=" text-green-500" size={32} />
           </div>
           <div className="p-6 pt-0">
             <div className="text-2xl md:text-4xl font-bold">
@@ -64,7 +64,7 @@ export default function Overview({
           </div>
         </div>
         {/* second card */}
-        <div className="rounded-lg border bg-green-400 hover:bg-green-100 hover:text-gray-600 text-white shadow-sm ">
+        <div className="rounded-lg border bg-gradient-to-bl from-teal-300  to-green-300 hover:bg-green-100 hover:text-gray-600 text-muted-foreground shadow-sm ">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Active Cars</h3>
             <CarFront className="" size={32} />
@@ -78,7 +78,7 @@ export default function Overview({
             </p>
           </div>
         </div>
-        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 hover:bg-blue-300 text-card-foreground shadow-sm ">
+        <div className="rounded-lg border bg-gradient-to-br from-green-200 to-pink-100 hover:bg-blue-100  shadow-sm ">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Bookings</h3>
             <CalendarCheck className="text-green-500" size={32} />
@@ -154,11 +154,12 @@ export default function Overview({
                   <TableHead>Body</TableHead>
                   <TableHead>Year</TableHead>
                   <TableHead>Price</TableHead>
+                  <TableHead>Revenue</TableHead>
                   <TableHead>Location</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {popularCars.map((car: Car, index: number) => (
+                {popularCars.map((car: any, index: number) => (
                   <TableRow key={car.id} className="bg-white">
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>
@@ -186,6 +187,14 @@ export default function Overview({
                           currency: "USD",
                         }).format(car.pricePerDay)}
                       </Badge>
+                    </TableCell>
+                    <TableCell
+                      className="capitalize text-green-500 font-semibold"
+                      title="Revenue from completed orders">
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(car.totalRevenue)}
                     </TableCell>
                     <TableCell className="capitalize ">
                       {car.location}
@@ -238,9 +247,9 @@ const data = {
         const value = context.raw as number;
         const label = context.chart.data.labels?.[context.dataIndex] as string;
         if (label === currentMonth) {
-          return "#1f2937";
+          return "#16a34a";
         }
-        return value < lowerValueThreshold ? "#d1d5db" : "#6b7280";
+        return value < lowerValueThreshold ? "#bbf7d0 " : "#4ade80";
       },
       borderRadius: 5,
     },
