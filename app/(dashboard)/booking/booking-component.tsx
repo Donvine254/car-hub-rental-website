@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { EyeIcon, InfoIcon, MapPin } from "lucide-react";
+import { EyeIcon, InfoIcon, Loader, MapPin } from "lucide-react";
 import { fetchCar, Car } from "@/lib/actions/car-actions/fetchCars";
 import { useSearchParams, useRouter } from "next/navigation";
 import { PhoneInput } from "@/components/ui/phoneinput";
@@ -31,6 +31,7 @@ const nextDayDate = (currentDate: string): string => {
 export default function BookingComponent({ User }: Props) {
   const [selectedCar, setSelectedCar] = useState<any | Car | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [discount, setDiscount] = useState("");
   const [discountValue, setDiscountValue] = useState(0);
   const router = useRouter();
@@ -170,6 +171,7 @@ export default function BookingComponent({ User }: Props) {
       totalPrice: formData.totalPrice,
     };
     try {
+      setLoading(true);
       const result = await createBooking(bookingData);
       confetti({
         particleCount: 1000,
@@ -187,8 +189,10 @@ export default function BookingComponent({ User }: Props) {
         result.pickupLocation.toUpperCase(),
         result.totalPrice
       );
+      setLoading(false);
       secureLocalStorage.removeItem("react_booking_form_data");
     } catch (error) {
+      setLoading(false);
       console.error("Failed to create booking:", error);
       toast.error("Failed to create booking. Please try again.");
     }
@@ -233,28 +237,6 @@ export default function BookingComponent({ User }: Props) {
           </h1>
         </div>
       </div>
-      {/* Info Alert */}
-      {/* <div className="w-full px-2 mb-8 bg-green-100 text-green-600 py-2">
-        <div className="inline-flex gap-1 text-base md:text-xl w-full">
-          <InfoIcon className="text-green-500 font-bold" aria-hidden="true" />
-          <div>
-            <span className="font-bold">
-              Upon completing this booking form, you will receive:
-            </span>
-            <div className="text-sm md:text-base font-normal">
-              Your car rental voucher to be produced on arrival at the rental
-              desk and a toll-free customer support number.
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* add form */}
-      {/* <div className="flex items-center justify-center">
-        <h1 className="text-xl md:text-2xl lg:text-3xl mb-4 font-bold text-center px-3 py-2 bg-gray-200 text-green-500 w-fit rounded-md">
-          Checkout
-        </h1>
-      </div> */}
-
       <div className="container xsm:p-2 md:p-4">
         <form
           className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white rounded-md border my-4"
@@ -493,6 +475,7 @@ export default function BookingComponent({ User }: Props) {
                     <input
                       type="text"
                       name="discount"
+                      title="enter a coupon discount code"
                       onChange={(e) => setDiscount(e.target.value)}
                       placeholder="Discount code"
                       className="w-full pl-10 rounded-md border border-gray-300 px-3 py-2"
@@ -555,7 +538,7 @@ export default function BookingComponent({ User }: Props) {
                     id="terms"
                     name="terms"
                     required
-                    className="rounded border-gray-300 focus:ring-2 focus:ring-green-500"
+                    className="rounded border-gray-300 focus:outline-none"
                   />
                   <span className="text-xs text-gray-600">
                     I have read and agree to the{" "}
@@ -570,8 +553,16 @@ export default function BookingComponent({ User }: Props) {
 
               <button
                 type="submit"
-                className="w-full bg-green-500 text-white py-3 rounded-md mt-6 hover:bg-green-600 font-medium focus:outline-none h-10 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center">
-                Confirm Booking
+                className="w-full bg-green-500 text-white py-3 rounded-md mt-6 hover:bg-green-600 font-medium focus:outline-none h-10 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center disabled:bg-muted border disabled:text-muted-foreground disabled:cursor-not-allowed"
+                disabled={loading}>
+                {loading ? (
+                  <Loader
+                    className="animate-spin text-green-500"
+                    fill="#22C55E"
+                  />
+                ) : (
+                  "Confirm Booking"
+                )}
               </button>
             </div>
           </div>
