@@ -19,32 +19,61 @@ interface Stats {
 }
 
 async function getBookings() {
-  const bookings = await prisma.booking.findMany({
-    include: {
-      car: {
-        select: {
-          id: true,
-          modelName: true,
-          location: true,
-          year: true,
-          image: true,
+  try {
+    const bookings = await prisma.booking.findMany({
+      include: {
+        car: {
+          select: {
+            id: true,
+            modelName: true,
+            location: true,
+            year: true,
+            image: true,
+          },
+        },
+        user: {
+          select: {
+            username: true,
+            email: true,
+            phone: true,
+            image: true,
+          },
         },
       },
-      user: {
-        select: {
-          username: true,
-          email: true,
-          phone: true,
-          image: true,
-        },
-      },
-    },
-  });
-  return bookings as BookingWithCar[];
+    });
+    return bookings as BookingWithCar[];
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not fetch bookings");
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 async function getUsers() {
-  const users = await prisma.user.findMany();
-  return users; // Returns an array of users
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        image: true,
+        phone: true,
+        createdAt: true,
+        role: true,
+        _count: {
+          select: {
+            bookings: true,
+          },
+        },
+      },
+    });
+    return users;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not fetch users");
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 function calculateRevenue(bookings: BookingWithCar[]) {
@@ -93,6 +122,8 @@ async function getLatestBookings() {
   } catch (error) {
     console.error("Error fetching latest bookings:", error);
     return null;
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
@@ -131,12 +162,15 @@ async function getPopularCars() {
   } catch (error) {
     console.error("Error fetching popular cars:", error);
     throw new Error("Could not fetch popular cars");
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
 export default async function Page({}: Props) {
   const stats = await getStats();
   const cars = (await fetchCars()) as Car[];
+  const users = await getUsers();
   const bookings = (await getBookings()) as BookingWithCar[];
   const recentBookings = await getLatestBookings();
   const popularCars = await getPopularCars();
@@ -148,6 +182,7 @@ export default async function Page({}: Props) {
         bookings={bookings}
         recentOrders={recentBookings}
         popularCars={popularCars}
+        users={users}
       />
     </section>
   );

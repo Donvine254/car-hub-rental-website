@@ -5,6 +5,7 @@ import { Car } from "@/lib/actions/car-actions/fetchCars";
 import Overview from "@/components/dashboard/overview";
 import { CarsList } from "@/components/dashboard/cars-table";
 import { BookingsDataTable } from "@/components/dashboard/bookings-table";
+import { UsersList } from "@/components/dashboard/users-table";
 type Props = {
   cars: Car[];
   stats: {
@@ -16,6 +17,7 @@ type Props = {
   bookings: any;
   recentOrders: any | [];
   popularCars: any | [];
+  users: any | [];
 };
 
 export default function AdminDashboard({
@@ -24,6 +26,7 @@ export default function AdminDashboard({
   bookings,
   recentOrders,
   popularCars,
+  users,
 }: Props) {
   return (
     <section>
@@ -66,7 +69,11 @@ export default function AdminDashboard({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="Overview" className="mt-4 w-full">
-            <Overview recentBookings={recentOrders} stats={stats}  popularCars={ popularCars}/>
+            <Overview
+              recentBookings={recentOrders}
+              stats={stats}
+              popularCars={popularCars}
+            />
           </TabsContent>
           <TabsContent value="Vehicles" className="mt-4 w-full">
             <CarsList vehicles={cars} />
@@ -78,7 +85,7 @@ export default function AdminDashboard({
             {/* show coupons data-table */}
           </TabsContent>
           <TabsContent value="Users" className="mt-4 w-full">
-            {/* show users data-table */}
+            <UsersList />
           </TabsContent>
         </Tabs>
       </section>
