@@ -78,7 +78,7 @@ export default function Overview({
             </p>
           </div>
         </div>
-        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 hover:bg-blue-300 text-card-foreground shadow-sm ">
+        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 group hover:bg-blue-300 text-card-foreground shadow-sm ">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Bookings</h3>
             <CalendarCheck className="text-green-500" size={32} />
@@ -154,11 +154,12 @@ export default function Overview({
                   <TableHead>Body</TableHead>
                   <TableHead>Year</TableHead>
                   <TableHead>Price</TableHead>
+                  <TableHead>Revenue</TableHead>
                   <TableHead>Location</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {popularCars.map((car: Car, index: number) => (
+                {popularCars.map((car: any, index: number) => (
                   <TableRow key={car.id} className="bg-white">
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>
@@ -186,6 +187,14 @@ export default function Overview({
                           currency: "USD",
                         }).format(car.pricePerDay)}
                       </Badge>
+                    </TableCell>
+                    <TableCell
+                      className="capitalize text-green-500 font-semibold"
+                      title="Revenue from completed orders">
+                      {new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(car.totalRevenue)}
                     </TableCell>
                     <TableCell className="capitalize ">
                       {car.location}
