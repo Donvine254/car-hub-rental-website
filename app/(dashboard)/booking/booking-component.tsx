@@ -19,7 +19,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { PhoneInput } from "@/components/ui/phoneinput";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { toast } from "sonner";
-import { isCarAvailable } from "@/lib/helpers";
+import { isCarAvailable, toE164 } from "@/lib/helpers";
 import Link from "next/link";
 type Props = {
   User: any | null;
@@ -113,8 +113,8 @@ export default function BookingComponent({ User }: Props) {
                 <div>
                   <label
                     htmlFor="pickupLocation"
-                    className="block text-sm font-medium text-gray-700">
-                    Pickup Location
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Pickup Location <span className="text-red-500">*</span>
                   </label>
                   <select
                     id="pickupLocation"
@@ -134,8 +134,8 @@ export default function BookingComponent({ User }: Props) {
                 <div>
                   <label
                     htmlFor="dropLocation"
-                    className="block text-sm font-medium text-gray-700">
-                    Drop-off Location
+                    className="inline-flex gap1 font-bold text-gray-700">
+                    Drop-off Location <span className="text-red-500">*</span>
                   </label>
                   <select
                     id="dropLocation"
@@ -149,7 +149,6 @@ export default function BookingComponent({ User }: Props) {
                     <option value="kisumu">Kisumu</option>
                     <option value="mombasa">Mombasa</option>
                     <option value="thika">Thika</option>
-                    <option value="nakuru">Nakuru</option>
                     <option value="eldoret">Eldoret</option>
                   </select>
                 </div>
@@ -157,26 +156,27 @@ export default function BookingComponent({ User }: Props) {
                 <div>
                   <label
                     htmlFor="pickupDate"
-                    className="block text-sm font-medium text-gray-700">
-                    Pickup Date & Time
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Pickup Date & Time <span className="text-red-500">*</span>
                   </label>
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-0">
                     <input
                       type="date"
                       id="pickupDate"
-                      name="pickupDate"
+                      name="startDate"
                       min={new Date().toISOString().split("T")[0]}
                       required
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      disabled={!selectedCar}
+                      className="flex rounded-l-md  bg-white text-base w-1/2 border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                     <input
                       type="time"
-                      id="pickupTime"
                       name="pickupTime"
+                      disabled={!selectedCar}
                       min="08:00"
                       max="18:00"
                       required
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className=" w-1/2 bg-white text-base border-gray-300 rounded-r-md outline-none border px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                   </div>
                 </div>
@@ -184,23 +184,27 @@ export default function BookingComponent({ User }: Props) {
                 <div>
                   <label
                     htmlFor="dropDate"
-                    className="block text-sm font-medium text-gray-700">
-                    Drop-off Date & Time
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Drop-off Date & Time <span className="text-red-500">*</span>
                   </label>
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-0">
                     <input
                       type="date"
                       id="dropDate"
-                      name="dropDate"
+                      name="startDate"
+                      min={new Date().toISOString().split("T")[0]}
                       required
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      disabled={!selectedCar}
+                      className="flex rounded-l-md  bg-white text-base w-1/2 border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                     <input
                       type="time"
-                      id="dropTime"
                       name="dropTime"
+                      disabled={!selectedCar}
+                      min="08:00"
+                      max="18:00"
                       required
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className=" w-1/2 bg-white text-base border-gray-300 rounded-r-md outline-none border px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     />
                   </div>
                 </div>
@@ -210,49 +214,51 @@ export default function BookingComponent({ User }: Props) {
             {/* Contact Information */}
             <div className="bg-white p-6 rounded-lg  space-y-4">
               <h2 className="text-xl font-semibold">Contact Information</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                 <div>
                   <label
                     htmlFor="fullName"
-                    className="block text-sm font-medium text-gray-700">
-                    Full Name
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     id="fullName"
                     name="fullName"
+                    placeholder="fullname"
+                    value={User.username}
+                    readOnly
                     required
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   />
                 </div>
-
                 <div>
                   <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700">
-                    Email
+                    htmlFor="phone"
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Phone Number <span className="text-red-500">*</span>
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  <PhoneInput
+                    value={toE164(User?.phone)}
+                    defaultCountry="KE"
+                    placeholder="Enter phone number"
                   />
                 </div>
 
                 <div className="md:col-span-2">
                   <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700">
-                    Phone Number
+                    htmlFor="email"
+                    className="inline-flex gap-1 font-bold text-gray-700">
+                    Email Address <span className="text-red-500">*</span>
                   </label>
                   <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="email address"
+                    value={User.email}
+                    readOnly
                     required
-                    pattern="[0-9]{10,}"
                     className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500"
                   />
                 </div>
@@ -369,7 +375,7 @@ export default function BookingComponent({ User }: Props) {
 
               <button
                 type="submit"
-                className="w-full bg-green-600 text-white py-3 rounded-md mt-6 hover:bg-green-700 font-medium focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                className="w-full bg-green-600 text-white py-3 rounded-md mt-6 hover:bg-green-700 font-medium focus:outline-none h-10 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center">
                 Confirm Booking
               </button>
             </div>
