@@ -96,11 +96,33 @@ async function getLatestBookings() {
   }
 }
 
+async function getPopularCars() {
+  try {
+    const popularCars = await prisma.car.findMany({
+      include: {
+        bookings: true,
+      },
+      orderBy: {
+        bookings: {
+          _count: "desc",
+        },
+      },
+      take: 5,
+    });
+
+    return popularCars;
+  } catch (error) {
+    console.error("Error fetching popular cars:", error);
+    throw new Error("Could not fetch popular cars");
+  }
+}
+
 export default async function Page({}: Props) {
   const stats = await getStats();
   const cars = (await fetchCars()) as Car[];
   const bookings = (await getBookings()) as BookingWithCar[];
   const recentBookings = await getLatestBookings();
+  const popularCars = await getPopularCars();
   return (
     <section>
       <AdminDashboard
@@ -108,6 +130,7 @@ export default async function Page({}: Props) {
         stats={stats}
         bookings={bookings}
         recentOrders={recentBookings}
+        popularCars={popularCars}
       />
     </section>
   );

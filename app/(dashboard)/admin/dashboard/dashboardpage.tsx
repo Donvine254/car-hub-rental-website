@@ -15,6 +15,7 @@ type Props = {
   };
   bookings: any;
   recentOrders: any | [];
+  popularCars: any | [];
 };
 
 export default function AdminDashboard({
@@ -22,6 +23,7 @@ export default function AdminDashboard({
   stats,
   bookings,
   recentOrders,
+  popularCars,
 }: Props) {
   return (
     <section>
@@ -33,7 +35,9 @@ export default function AdminDashboard({
         </div>
       </div>
       <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70">
-        <Tabs defaultValue="Overview" className="w-full max-w-5xl mx-auto  p-2">
+        <Tabs
+          defaultValue="Overview"
+          className="w-full max-w-5xl mx-auto  p-2 md:my-2">
           <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
             <TabsTrigger
               value="Overview"
@@ -62,7 +66,7 @@ export default function AdminDashboard({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="Overview" className="mt-4 w-full">
-            <Overview recentBookings={recentOrders} stats={stats} />
+            <Overview recentBookings={recentOrders} stats={stats}  popularCars={ popularCars}/>
           </TabsContent>
           <TabsContent value="Vehicles" className="mt-4 w-full">
             <CarsList vehicles={cars} />
