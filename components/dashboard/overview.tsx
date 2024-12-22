@@ -64,7 +64,7 @@ export default function Overview({
           </div>
         </div>
         {/* second card */}
-        <div className="rounded-lg border bg-green-400 hover:bg-green-100 hover:text-gray-600 text-white shadow-sm ">
+        <div className="rounded-lg border bg-gradient-to-bl from-teal-300  to-green-300 hover:bg-green-100 hover:text-gray-600 text-muted-foreground shadow-sm ">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Active Cars</h3>
             <CarFront className="" size={32} />
@@ -78,7 +78,7 @@ export default function Overview({
             </p>
           </div>
         </div>
-        <div className="rounded-lg border bg-gradient-to-bl from-pink-300 to-green-300 group hover:bg-blue-300 text-card-foreground shadow-sm ">
+        <div className="rounded-lg border bg-gradient-to-br from-green-200 to-pink-100 hover:bg-blue-100  shadow-sm ">
           <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
             <h3 className="text-sm font-medium">Total Bookings</h3>
             <CalendarCheck className="text-green-500" size={32} />
@@ -247,9 +247,9 @@ const data = {
         const value = context.raw as number;
         const label = context.chart.data.labels?.[context.dataIndex] as string;
         if (label === currentMonth) {
-          return "#1f2937";
+          return "#16a34a";
         }
-        return value < lowerValueThreshold ? "#d1d5db" : "#6b7280";
+        return value < lowerValueThreshold ? "#bbf7d0 " : "#4ade80";
       },
       borderRadius: 5,
     },
