@@ -31,7 +31,8 @@ const nextDayDate = (currentDate: string): string => {
 export default function BookingComponent({ User }: Props) {
   const [selectedCar, setSelectedCar] = useState<any | Car | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState("");
+  const [discountValue, setDiscountValue] = useState(0);
   const router = useRouter();
   const searchParams = useSearchParams();
   const carId = searchParams.get("id");
@@ -254,7 +255,7 @@ export default function BookingComponent({ User }: Props) {
         </h1>
       </div> */}
 
-      <div className="container xsm:p-2">
+      <div className="container xsm:p-2 my-2">
         <form
           className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white rounded-md border px-2"
           onSubmit={handleBooking}>
@@ -491,13 +492,16 @@ export default function BookingComponent({ User }: Props) {
                     </span>
                     <input
                       type="text"
+                      name="discount"
+                      onChange={(e) => setDiscount(e.target.value)}
                       placeholder="Discount code"
                       className="w-full pl-10 rounded-md border border-gray-300 px-3 py-2"
                     />
                   </div>
                   <button
-                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed"
                     type="button"
+                    disabled={!discount}
                     title="discount">
                     Apply
                   </button>
@@ -519,7 +523,7 @@ export default function BookingComponent({ User }: Props) {
                       {new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "USD",
-                      }).format(discount)}
+                      }).format(discountValue)}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -538,7 +542,7 @@ export default function BookingComponent({ User }: Props) {
                       {new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "USD",
-                      }).format(formData.totalPrice - discount)}
+                      }).format(formData.totalPrice - discountValue)}
                     </span>
                   </div>
                 </div>
