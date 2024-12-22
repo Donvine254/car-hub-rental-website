@@ -16,6 +16,7 @@ import {
   Cog,
   Eye,
   MoreHorizontal,
+  Navigation,
   PenLine,
   SearchIcon,
   Trash2,
@@ -41,6 +42,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Car } from "@/lib/actions/car-actions/fetchCars";
+import { toast } from "sonner";
 type Props = {
   vehicles: Car[];
 };
@@ -156,7 +158,10 @@ export const columns: ColumnDef<Car>[] = [
           </PopoverTrigger>
           <PopoverContent align="end" className="w-[200px]">
             <div>
-              <Button variant="ghost" className="w-full justify-start">
+              <Button
+                variant="ghost"
+                className="w-full justify-start"
+                onClick={() => toast.info("Upcoming feature!")}>
                 <Eye className="mr-2 h-4 w-4" />
                 View details
               </Button>
@@ -170,14 +175,21 @@ export const columns: ColumnDef<Car>[] = [
               <Button
                 variant="ghost"
                 className=" w-full justify-start"
-                onClick={() => console.log("Change status", car.id)}>
+                onClick={() => toast.info("Upcoming feature!")}>
                 <Cog className="mr-2 h-4 w-4" />
                 Change status
               </Button>
               <Button
                 variant="ghost"
+                className=" w-full justify-start"
+                onClick={() => toast.info("Upcoming feature!")}>
+                <Navigation className="mr-2 h-4 w-4" />
+                Track Vehicle
+              </Button>
+              <Button
+                variant="ghost"
                 className="w-full justify-start text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                onClick={() => console.log("Delete", car.id)}>
+                onClick={() => toast.info("Upcoming feature!")}>
                 <Trash2 className="mr-2 h-4 w-4" />
                 Decommission
               </Button>
@@ -245,28 +257,30 @@ export function CarsDataTable({ data }: { data: Car[] }) {
         <div className="flex items-center justify-between gap-4 xsm:w-full">
           <select
             className="md:ml-4 h-10 w-1/2 md:w-[180px] rounded-md border border-input bg-background px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            onChange={(event) =>
-              table
-                .getColumn("isRented")
-                ?.setFilterValue(
-                  event.target.value === "all" ? "" : event.target.value
-                )
-            }>
-            <option value="all">All Statuses</option>
+            onChange={(event) => {
+              const value = event.target.value;
+              if (value === "") {
+                table.getColumn("isRented")?.setFilterValue("");
+              } else {
+                table
+                  .getColumn("isRented")
+                  ?.setFilterValue(
+                    value === "true" ? true : value === "false" ? false : ""
+                  );
+              }
+            }}>
+            <option value="">Select Status</option>
             <option value="false">Available</option>
             <option value="true">Rented</option>
-            <option value="maintenance">Maintenance</option>
           </select>
           <select
             className="md:ml-4 h-10 w-1/2 md:w-[180px] rounded-md border border-input bg-background px-3 py-1 focus:outline-none focus:ring-1 focus:ring-blue-500"
             onChange={(event) =>
               table
                 .getColumn("location")
-                ?.setFilterValue(
-                  event.target.value === "all" ? "" : event.target.value
-                )
+                ?.setFilterValue(event.target.value || "")
             }>
-            <option value="all">All Locations</option>
+            <option value="">Select Location</option>
             <option value="nairobi">Nairobi</option>
             <option value="thika">Thika</option>
             <option value="eldoret">Eldoret</option>
