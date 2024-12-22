@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { InfoIcon, MapPin } from "lucide-react";
+import { EyeIcon, InfoIcon, MapPin } from "lucide-react";
 import { fetchCar, Car } from "@/lib/actions/car-actions/fetchCars";
 import { useSearchParams, useRouter } from "next/navigation";
 import { PhoneInput } from "@/components/ui/phoneinput";
@@ -255,15 +255,15 @@ export default function BookingComponent({ User }: Props) {
         </h1>
       </div> */}
 
-      <div className="container xsm:p-2 my-2">
+      <div className="container xsm:p-2 md:p-4">
         <form
-          className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white rounded-md border px-2"
+          className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 bg-white rounded-md border my-4"
           onSubmit={handleBooking}>
           {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-2">
             {/* Booking Details */}
-            <div className="bg-white p-6 rounded-lg  space-y-4">
-              <h2 className="text-lg md:text-xl font-semibold">
+            <div className="p-2 md:p-6  space-y-2 md:space-y-4">
+              <h2 className="text-xl md:text-2xl font-semibold">
                 Booking Details
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -378,8 +378,10 @@ export default function BookingComponent({ User }: Props) {
             </div>
             <hr />
             {/* Contact Information */}
-            <div className="bg-white p-6 rounded-lg  space-y-4">
-              <h2 className="text-xl font-semibold">Contact Information</h2>
+            <div className="p-2 md:p-6  space-y-2">
+              <h2 className="text-xl md:text-2xl font-semibold">
+                Contact Information
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                 <div>
                   <label
@@ -433,13 +435,13 @@ export default function BookingComponent({ User }: Props) {
           </div>
           {/* Right Column - Price Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white p-6 rounded-lg shadow-sm sticky top-4 space-y-6">
+            <div className="bg-white md:bg-gradient-to-r md:from-green-50 md:via-slate-50 md:to-green-50 p-2 md:p-6 sticky top-4 space-y-3">
               {/* Order Summary */}
               <div>
                 <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
-                <div className="flex gap-4 border shadow p-2 rounded-lg">
+                <div className="border shadow p-2 rounded-lg">
                   {selectedCar ? (
-                    <>
+                    <div className="flex gap-4 items-center">
                       <Image
                         src={selectedCar?.image}
                         alt={selectedCar?.modelName}
@@ -463,7 +465,7 @@ export default function BookingComponent({ User }: Props) {
                           </span>
                         </div>
                       </div>
-                    </>
+                    </div>
                   ) : (
                     <Link
                       className=" bg-green-500 rounded-md border px-5 py-1 text-white my-6 mx-auto"
@@ -473,9 +475,7 @@ export default function BookingComponent({ User }: Props) {
                   )}
                 </div>
               </div>
-
               <hr className="border-gray-200" />
-
               {/* Price Details */}
               <div>
                 <div className="flex gap-2 mb-6">
@@ -507,7 +507,7 @@ export default function BookingComponent({ User }: Props) {
                   </button>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
                     <span>
@@ -557,8 +557,8 @@ export default function BookingComponent({ User }: Props) {
                     required
                     className="rounded border-gray-300 focus:ring-2 focus:ring-green-500"
                   />
-                  <span className="text-sm text-gray-600">
-                    I agree to the{" "}
+                  <span className="text-xs text-gray-600">
+                    I have read and agree to the{" "}
                     <a
                       href="/terms"
                       className="text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
@@ -570,7 +570,7 @@ export default function BookingComponent({ User }: Props) {
 
               <button
                 type="submit"
-                className="w-full bg-green-600 text-white py-3 rounded-md mt-6 hover:bg-green-700 font-medium focus:outline-none h-10 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center">
+                className="w-full bg-green-500 text-white py-3 rounded-md mt-6 hover:bg-green-600 font-medium focus:outline-none h-10 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center">
                 Confirm Booking
               </button>
             </div>
