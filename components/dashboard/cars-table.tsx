@@ -229,7 +229,9 @@ export function CarsDataTable({ data }: { data: Car[] }) {
   return (
     <div className="w-full xsm:mx-1 !z-0">
       <div className="flex items-center justify-between gap-4">
-        <h1 className="md:text-xl font-semibold my-2 ">Manage Vehicle Fleet</h1>
+        <h1 className="text-xl md:text-2xl font-bold my-2 ">
+          Manage Vehicle Fleet
+        </h1>
         <Link
           href="/admin/dashboard/cars"
           target="_blank"

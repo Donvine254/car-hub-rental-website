@@ -85,7 +85,7 @@ export default function AdminDashboard({
             {/* show coupons data-table */}
           </TabsContent>
           <TabsContent value="Users" className="mt-4 w-full">
-            <UsersList />
+            <UsersList users={users}/>
           </TabsContent>
         </Tabs>
       </section>

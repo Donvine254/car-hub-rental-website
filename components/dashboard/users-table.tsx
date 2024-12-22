@@ -37,31 +37,11 @@ interface User {
   };
 }
 
-export function UsersList() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export function UsersList({users}: {users: User[]}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("https://carhubke.vercel.app/api/users");
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
-        const data = await response.json();
-        setUsers(data);
-        setIsLoading(false);
-      } catch (err) {
-        setError("An error occurred while fetching users");
-        setIsLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  
 
   const columns: ColumnDef<User>[] = useMemo(
     () => [
@@ -84,7 +64,7 @@ export function UsersList() {
           );
         },
         cell: ({ row }) => (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 xsm:mx-2 xsm:min-w-[200px]">
             <Image
               src={
                 row.original.image ??
@@ -151,23 +131,21 @@ export function UsersList() {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
     <div className="space-y-4">
+      <h1 className="text-2xl md:text-3xl font-bold my-1">Manage Users</h1>
       <div className="flex justify-between items-center">
-        <div className="relative w-full max-w-sm">
+        <div className="relative w-full">
           <Input
-            placeholder="Search users..."
+            placeholder="Search by username..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 w-full"
+            className="pl-10 w-full focus:ring-1 focus:ring-green-500"
           />
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
         </div>
       </div>
-      <Table className="table-auto overflow-x-auto bg-white rounded-md">
+      <Table className="table-auto overflow-x-auto bg-white rounded-md z-0">
         <TableHeader className="bg-green-500">
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -207,22 +185,26 @@ export function UsersList() {
         </TableBody>
       </Table>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}>
-          <ChevronLeft className="h-4 w-4" />
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}>
-          Next
-          <ChevronRight className="h-4 w-4" />
-        </Button>
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}>
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}>
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
