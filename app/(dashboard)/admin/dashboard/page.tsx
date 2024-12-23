@@ -157,7 +157,6 @@ async function getPopularCars() {
         totalRevenue,
       };
     });
-    console.log(carsWithRevenue);
     return carsWithRevenue;
   } catch (error) {
     console.error("Error fetching popular cars:", error);

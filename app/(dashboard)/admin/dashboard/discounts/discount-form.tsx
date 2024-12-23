@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
   const [open, setOpen] = useState(false);
@@ -22,6 +23,12 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (applyToCar && !selectedCar) {
+      toast.error("Kindly select a car to apply the discount to", {
+        position: "top-right",
+      });
+      return false;
+    }
     const formData = new FormData(event.currentTarget);
 
     const discount = {
@@ -266,6 +273,7 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
               id="userEmail"
               name="userEmail"
               type="email"
+              required={limitToCustomer}
               className="max-w-xs focus:outline-none focus:ring-1 focus:ring-green-500"
               placeholder="customer@example.com"
             />
@@ -297,6 +305,7 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
               id="min_amount"
               name="min_amount"
               type="number"
+              required={hasMinAmount}
               className="max-w-xs focus:outline-none focus:ring-1 focus:ring-green-500"
               min="0"
               placeholder="0"
@@ -331,6 +340,7 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
               type="number"
               min="0"
               placeholder="0"
+              required={hasMaxAmount}
               className="max-w-xs focus:outline-none focus:ring-1 focus:ring-green-500"
             />
             <small className="text-gray-600">

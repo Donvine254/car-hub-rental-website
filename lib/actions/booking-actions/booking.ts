@@ -12,7 +12,6 @@ export type Booking = {
   status: string;
 };
 export async function createBooking(formData: Booking | any) {
-  console.log(formData);
   let error = false;
   try {
     // Create a new booking
