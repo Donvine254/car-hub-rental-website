@@ -229,7 +229,9 @@ export function CarsDataTable({ data }: { data: Car[] }) {
   return (
     <div className="w-full xsm:mx-1 !z-0">
       <div className="flex items-center justify-between gap-4">
-        <h1 className="md:text-xl font-semibold my-2 ">Manage Vehicle Fleet</h1>
+        <h1 className="text-xl md:text-2xl font-bold my-2 ">
+          Manage Vehicle Fleet
+        </h1>
         <Link
           href="/admin/dashboard/cars"
           target="_blank"
@@ -291,12 +293,12 @@ export function CarsDataTable({ data }: { data: Car[] }) {
       </div>
       <div className="rounded-md overflow-x-auto border bg-white  shadow ">
         <Table>
-          <TableHeader className="bg-green-100 text-base font-semibold">
+          <TableHeader className="bg-green-500 text-base font-semibold">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="text-white">
                       {header.isPlaceholder
                         ? null
                         : flexRender(

@@ -94,7 +94,10 @@ export function Orders({ orders, currentUser }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Scheduled Orders</h2>
               {scheduledOrders.length > 0 ? (
-                <OrderComponent orders={scheduledOrders} currentUser={currentUser}/>
+                <OrderComponent
+                  orders={scheduledOrders}
+                  currentUser={currentUser}
+                />
               ) : (
                 <NotFound
                   title="You have no scheduled orders"
@@ -107,7 +110,10 @@ export function Orders({ orders, currentUser }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Ongoing Orders</h2>
               {ongoingOrders.length > 0 ? (
-                <OrderComponent orders={ongoingOrders} currentUser={currentUser}/>
+                <OrderComponent
+                  orders={ongoingOrders}
+                  currentUser={currentUser}
+                />
               ) : (
                 <NotFound
                   title="You have no ongoing orders"
@@ -120,7 +126,10 @@ export function Orders({ orders, currentUser }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Completed Orders</h2>
               {completedOrders.length > 0 ? (
-                <OrderComponent orders={completedOrders} currentUser={currentUser}/>
+                <OrderComponent
+                  orders={completedOrders}
+                  currentUser={currentUser}
+                />
               ) : (
                 <NotFound
                   title="You have no completed orders"
@@ -133,7 +142,10 @@ export function Orders({ orders, currentUser }: Props) {
             <div className="rounded-md border bg-white p-4">
               <h2 className="text-lg font-semibold mb-2">Cancelled Orders</h2>
               {cancelledOrders.length > 0 ? (
-                <OrderComponent orders={cancelledOrders} currentUser={currentUser}/>
+                <OrderComponent
+                  orders={cancelledOrders}
+                  currentUser={currentUser}
+                />
               ) : (
                 <NotFound
                   title="You have no cancelled orders"
@@ -184,6 +196,9 @@ function OrderComponent({
             <TableCell>{formatISODate(order.endDate.toISOString())}</TableCell>
             <TableCell>
               <Badge
+                className={`${
+                  order.status === "ongoing" ? "bg-blue-500 text-white" : ""
+                }`}
                 variant={
                   order.status === "completed"
                     ? "success"

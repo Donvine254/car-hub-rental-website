@@ -13,7 +13,13 @@ import {
   PointElement,
   ChartOptions,
 } from "chart.js";
-import { Receipt, TrendingUp, CarFront, CalendarCheck } from "lucide-react";
+import {
+  Receipt,
+  TrendingUp,
+  CarFront,
+  CalendarCheck,
+  Trophy,
+} from "lucide-react";
 import RecentBookings from "./recent-bookings";
 import {
   Table,
@@ -92,32 +98,6 @@ export default function Overview({
             </p>
           </div>
         </div>
-        {/* <div className="rounded-lg border bg-gradient-to-br from-green-300 to-[#AAC9FF] text-card-foreground shadow-sm">
-          <div className="flex flex-row items-center justify-between space-y-0 p-6 pb-2">
-            <h3 className="text-sm font-medium">Active Customers</h3>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-8 w-8 text-green-500">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          </div>
-          <div className="p-6 pt-0">
-            <div className="text-2xl md:text-4xl font-bold">
-              {stats.totalUsers}
-            </div>
-            <p className="text-xs text-muted-foreground flex items-center gap-1">
-              <TrendingUp className="text-green-500" /> +2 from last month
-            </p>
-          </div>
-        </div> */}
       </div>
       <div className="flex flex-col gap-4">
         <div className="mt-2 h-fit">
@@ -142,20 +122,20 @@ export default function Overview({
           <RecentBookings recentBookings={recentBookings} />
         </div>
         <div className="w-full">
-          <h3 className="text-2xl my-4 font-semibold leading-none tracking-tight">
-            Popular Cars ✨✨
+          <h3 className="text-2xl my-4 font-semibold leading-none tracking-tight flex items-center gap-1">
+            Popular Cars <Trophy className="text-green-500" />
           </h3>
           <div className="rounded-md overflow-x-auto">
             <Table className="w-full table-auto ">
-              <TableHeader className=" bg-green-100 ">
+              <TableHeader className=" bg-green-500 text-white ">
                 <TableRow>
-                  <TableHead className="w-16">#</TableHead>
-                  <TableHead>Car</TableHead>
-                  <TableHead>Body</TableHead>
-                  <TableHead>Year</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Revenue</TableHead>
-                  <TableHead>Location</TableHead>
+                  <TableHead className="w-16 text-white">#</TableHead>
+                  <TableHead className="text-white">Car</TableHead>
+                  <TableHead className="text-white">Body</TableHead>
+                  <TableHead className="text-white">Year</TableHead>
+                  <TableHead className="text-white">Price</TableHead>
+                  <TableHead className="text-white">Revenue</TableHead>
+                  <TableHead className="text-white">Location</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
