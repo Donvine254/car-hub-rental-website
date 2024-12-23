@@ -23,6 +23,7 @@ import {
   SortingState,
   getPaginationRowModel,
 } from "@tanstack/react-table";
+import { NotFound } from "../ui/notfound";
 
 interface User {
   id: string;
@@ -37,11 +38,9 @@ interface User {
   };
 }
 
-export function UsersList({users}: {users: User[]}) {
+export function UsersList({ users }: { users: User[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sorting, setSorting] = useState<SortingState>([]);
-
-  
 
   const columns: ColumnDef<User>[] = useMemo(
     () => [
@@ -178,7 +177,10 @@ export function UsersList({users}: {users: User[]}) {
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                <NotFound
+                  title="No results!"
+                  description="No cars match your search term"
+                />
               </TableCell>
             </TableRow>
           )}

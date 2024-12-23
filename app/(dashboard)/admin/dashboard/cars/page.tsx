@@ -78,10 +78,20 @@ export default function AdminDashboard({}: Props) {
     });
   }
   return (
-    <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70 p-2">
-      <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
-        <h2 className="text-2xl font-bold mb-6">Add New Car</h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+    <section className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70">
+      <div className="bg-[url('/subheader.jpg')] bg-cover bg-center bg-no-repeat">
+        <div className="bg-black flex items-center justify-center  bg-opacity-60 px-6 py-10 md:py-20">
+          <h1 className="text-3xl md:text-4xl text-center font-semibold my-2 capitalize  text-white md:py-4 ">
+            Create a new Car
+          </h1>
+        </div>
+      </div>
+      <div className="w-full max-w-4xl mx-auto bg-white border shadow-md rounded-lg my-4">
+        <div className="mb-6 bg-gray-100 w-full p-6 rounded-t-lg">
+          <h2 className="text-2xl font-bold ">Add New Car</h2>
+          <p>Expand booking vehicle fleet by adding a new vehicle.</p>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-6 p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="modelName">Model Name</Label>

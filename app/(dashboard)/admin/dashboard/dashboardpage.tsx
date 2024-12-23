@@ -6,6 +6,7 @@ import Overview from "@/components/dashboard/overview";
 import { CarsList } from "@/components/dashboard/cars-table";
 import { BookingsDataTable } from "@/components/dashboard/bookings-table";
 import { UsersList } from "@/components/dashboard/users-table";
+import { CouponsList } from "@/components/dashboard/coupons-table";
 type Props = {
   cars: Car[];
   stats: {
@@ -82,10 +83,10 @@ export default function AdminDashboard({
             <BookingsDataTable data={bookings} />
           </TabsContent>
           <TabsContent value="Coupons" className="mt-4 w-full">
-            {/* show coupons data-table */}
+            <CouponsList />
           </TabsContent>
           <TabsContent value="Users" className="mt-4 w-full">
-            <UsersList users={users}/>
+            <UsersList users={users} />
           </TabsContent>
         </Tabs>
       </section>
