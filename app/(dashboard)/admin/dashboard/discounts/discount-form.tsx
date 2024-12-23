@@ -61,27 +61,52 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
           customer accounts.
         </p>
       </div>
-      <form onSubmit={onSubmit} className="space-y-6 p-6">
+      <form onSubmit={onSubmit} className="space-y-4 px-6 pt-2 pb-4">
         <div className="space-y-2">
           <Label htmlFor="code">Discount Code</Label>
-          <Input id="code" name="code" required />
+          <Input
+            id="code"
+            name="code"
+            placeholder="FIRST10"
+            maxLength={20}
+            minLength={5}
+            className="focus:outline-none focus:ring-1 focus:ring-green-500"
+            required
+          />
+          <small className="text-gray-400">
+            This is the code customers will input to claim the discount. This
+            code is case insensitive and must be unique.
+          </small>
         </div>
-
         <div className="space-y-2">
           <Label htmlFor="percent">Discount Percentage</Label>
           <Input
             id="percent"
             name="percent"
             type="number"
+            placeholder="Percentage off"
             min="0"
             max="100"
+            className="focus:outline-none focus:ring-1 focus:ring-green-500"
             required
           />
+          <small className="text-gray-400">
+            This will be used to calculate total discount amount.
+          </small>
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="description">Description</Label>
-          <Input id="description" name="description" required />
+          <Input
+            id="description"
+            name="description"
+            placeholder="First purchase discount"
+            className="focus:outline-none focus:ring-1 focus:ring-green-500"
+            required
+          />
+          <small className="text-gray-400">
+            This will appear on customer&apos;s vouchers and receipts.
+          </small>
         </div>
 
         <div className="space-y-2">
@@ -89,9 +114,15 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
           <Input
             id="expiresAt"
             name="expiresAt"
-            type="datetime-local"
+            type="date"
+            min={new Date().toISOString().split("T")[0]}
+            defaultValue={new Date().toISOString().split("T")[0]}
+            className="focus:outline-none focus:ring-1 focus:ring-green-500"
             required
           />
+          <small className="text-gray-400">
+            This will identify when the coupon will expire.
+          </small>
         </div>
 
         <div className="flex items-center space-x-2">
@@ -102,7 +133,6 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
           />
           <Label htmlFor="apply-to-car">Apply to specific car</Label>
         </div>
-
         {applyToCar && (
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -157,18 +187,27 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
             checked={limitToCustomer}
             onChange={(e) => setLimitToCustomer(e.target.checked)}
           />
-          <Label htmlFor="limit-customer">Limit to specific customer</Label>
+          <label
+            htmlFor="limit-customer"
+            className={`${limitToCustomer ? "font-bold" : "font-semibold"}`}>
+            Limit to specific customer
+          </label>
         </div>
 
         {limitToCustomer && (
           <div className="space-y-2">
-            <Label htmlFor="userEmail">Customer Email</Label>
+            <label htmlFor="userEmail">Customer Email</label>
             <Input
               id="userEmail"
               name="userEmail"
               type="email"
+              className="focus:outline-none focus:ring-1 focus:ring-green-500"
               placeholder="customer@example.com"
             />
+            <small className="text-gray-400">
+              Enter the email of the customer you wish to give the discount to.
+              Can only apply to one customer.
+            </small>
           </div>
         )}
 
@@ -179,35 +218,48 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
             checked={hasMinAmount}
             onChange={(e) => setHasMinAmount(e.target.checked)}
           />
-          <Label htmlFor="min-amount">Limit minimum order value</Label>
+          <label
+            htmlFor="min-amount"
+            className={`${hasMinAmount ? "font-bold" : "font-semibold"}`}>
+            Limit minimum order value
+          </label>
         </div>
 
         {hasMinAmount && (
           <div className="space-y-2">
-            <Label htmlFor="min_amount">Minimum Amount</Label>
+            <label htmlFor="min_amount">Minimum Amount</label>
             <Input
               id="min_amount"
               name="min_amount"
               type="number"
+              className="focus:outline-none focus:ring-1 focus:ring-green-500"
               min="0"
               placeholder="0"
             />
+            <small className="text-gray-400">
+              This is the minimum amount of purchase that the discount is
+              applicable to.
+            </small>
           </div>
         )}
 
         <div className="flex items-center space-x-2">
           <input
             type="checkbox"
-            id="max-amoun"
+            id="max-amount"
             checked={hasMaxAmount}
             onChange={(e) => setHasMaxAmount(e.target.checked)}
           />
-          <Label htmlFor="max-amount">Limit maximum discount amount</Label>
+          <label
+            htmlFor="max-amount"
+            className={`${hasMaxAmount ? "font-bold" : "font-semibold"}`}>
+            Limit maximum discount amount
+          </label>
         </div>
 
         {hasMaxAmount && (
-          <div className="space-y-2">
-            <Label htmlFor="max_amount">Maximum Amount</Label>
+          <div className="space-y-2 pl-6">
+            <label htmlFor="max_amount">Maximum Amount</label>
             <Input
               id="max_amount"
               name="max_amount"
@@ -215,6 +267,9 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
               min="0"
               placeholder="0"
             />
+            <small className="text-gray-400">
+              This is the maximum amount of discount that a customer can claim
+            </small>
           </div>
         )}
 
