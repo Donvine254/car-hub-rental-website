@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Search } from "lucide-react";
 import { Car } from "@/lib/actions/car-actions/fetchCars";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -9,27 +9,16 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import Image from "next/image";
 
 export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
-  console.log(cars);
   const [open, setOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState<string>("");
   const [applyToCar, setApplyToCar] = useState(false);
   const [limitToCustomer, setLimitToCustomer] = useState(false);
   const [hasMinAmount, setHasMinAmount] = useState(false);
   const [hasMaxAmount, setHasMaxAmount] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,8 +39,17 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
       userEmail: limitToCustomer ? formData.get("userEmail") : null,
     };
 
-    console.log(discount);
+    const validDiscount = Object.fromEntries(
+      Object.entries(discount).filter(
+        ([key, value]) => value !== null && !Number.isNaN(value)
+      )
+    );
+
+    console.log(validDiscount);
   }
+  const filteredCars = cars.filter((car) =>
+    car.modelName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white border shadow-md rounded-lg my-4">
@@ -71,6 +69,10 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
             placeholder="FIRST10"
             maxLength={20}
             minLength={5}
+            onInput={(e) => {
+              const target = e.target as HTMLInputElement;
+              target.value = target.value.toUpperCase();
+            }}
             className="focus:outline-none max-w-xs focus:ring-1 focus:ring-green-500"
             required
           />
@@ -129,62 +131,120 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
         <div className="flex items-center space-x-2">
           <Switch
             checked={applyToCar}
-            onCheckedChange={setApplyToCar}
+            onCheckedChange={() => {
+              setApplyToCar(!applyToCar);
+              if (!applyToCar) {
+                setSelectedCar("");
+              }
+            }}
             id="apply-to-car"
           />
           <Label htmlFor="apply-to-car">Apply to specific car</Label>
         </div>
         {applyToCar && (
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-full justify-between">
-                {selectedCar
-                  ? cars.find((car) => car.id.toString() === selectedCar)
-                      ?.modelName
-                  : "Select car..."}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-full p-0">
-              <Command>
-                <CommandInput placeholder="Search cars..." />
-                <CommandEmpty>No car found.</CommandEmpty>
-                <CommandGroup className="max-h-60 overflow-auto">
-                  {Array.isArray(cars) && cars.length > 0 ? (
-                    cars.map((car) => (
-                      <CommandItem
+          <div className="relative">
+            <Button
+              type="button"
+              onClick={() => setOpen(!open)}
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-full justify-between">
+              {selectedCar ? (
+                <div className="flex items-center gap-1 justify-start">
+                  <Image
+                    src={
+                      cars.find((car) => car.id.toString() === selectedCar)
+                        ?.image || ""
+                    }
+                    width={50}
+                    height={50}
+                    className="object-contain rounded-md"
+                    alt={
+                      cars.find((car) => car.id.toString() === selectedCar)
+                        ?.modelName || "Car image"
+                    }
+                  />
+                  <p>
+                    {
+                      cars.find((car) => car.id.toString() === selectedCar)
+                        ?.modelName
+                    }{" "}
+                    - $
+                    {
+                      cars.find((car) => car.id.toString() === selectedCar)
+                        ?.pricePerDay
+                    }{" "}
+                    {""} per day.
+                  </p>
+                </div>
+              ) : (
+                "Select car..."
+              )}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+
+            {open && (
+              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg">
+                <div className="p-2">
+                  <div className="flex items-center px-3 py-2 border-b">
+                    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+                    <input
+                      type="text"
+                      placeholder="Search cars..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <ul className="max-h-60 overflow-auto py-1">
+                  {filteredCars.length > 0 ? (
+                    filteredCars.map((car) => (
+                      <li
                         key={car.id}
-                        value={car.id.toString()}
-                        onSelect={(currentValue) => {
-                          setSelectedCar(
-                            currentValue === selectedCar ? "" : currentValue
-                          );
+                        onClick={() => {
+                          setSelectedCar(car.id.toString());
                           setOpen(false);
-                        }}>
+                          setSearchTerm("");
+                        }}
+                        className={cn(
+                          "flex items-center px-3 py-2 cursor-pointer hover:bg-gray-100",
+                          selectedCar === car.id.toString()
+                            ? "bg-green-100"
+                            : ""
+                        )}>
                         <Check
                           className={cn(
-                            "mr-2 h-4 w-4",
+                            "mr-2 h-4 w-4 text-green-500",
                             selectedCar === car.id.toString()
                               ? "opacity-100"
                               : "opacity-0"
                           )}
                         />
-                        {car.modelName} - ${car.pricePerDay}
-                      </CommandItem>
+                        <div className="flex items-center gap-1 justify-start">
+                          {" "}
+                          <Image
+                            src={car.image}
+                            width={50}
+                            height={50}
+                            className="object-contain rounded-md"
+                            alt={car.modelName}
+                          />{" "}
+                          <p>
+                            {car.modelName} - ${car.pricePerDay} per day.
+                          </p>
+                        </div>
+                      </li>
                     ))
                   ) : (
-                    <CommandEmpty>No cars available.</CommandEmpty>
+                    <li className="px-3 py-2 text-gray-500">No cars found</li>
                   )}
-                </CommandGroup>
-              </Command>
-            </PopoverContent>
-          </Popover>
+                </ul>
+              </div>
+            )}
+          </div>
         )}
-
         <div className="flex items-center space-x-2">
           <input
             type="checkbox"
