@@ -43,6 +43,7 @@ import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { Car } from "@/lib/actions/car-actions/fetchCars";
 import { toast } from "sonner";
+import { NotFound } from "../ui/notfound";
 type Props = {
   vehicles: Car[];
 };
@@ -332,7 +333,10 @@ export function CarsDataTable({ data }: { data: Car[] }) {
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 text-center">
-                  No results.
+                  <NotFound
+                    title="No results!"
+                    description="No cars match your search term"
+                  />
                 </TableCell>
               </TableRow>
             )}

@@ -49,7 +49,7 @@ export function Orders({ orders, currentUser }: Props) {
   return (
     <div className="space-y-4 w-full">
       <div className="p-4 bg-white shadow rounded-md border">
-        <Tabs defaultValue="scheduled" className="w-full">
+        <Tabs defaultValue="All" className="w-full">
           <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
             <TabsTrigger
               value="All"
