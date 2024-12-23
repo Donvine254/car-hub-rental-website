@@ -19,6 +19,7 @@ type Props = {
   recentOrders: any | [];
   popularCars: any | [];
   users: any | [];
+  discounts: any | [];
 };
 
 export default function AdminDashboard({
@@ -28,6 +29,7 @@ export default function AdminDashboard({
   recentOrders,
   popularCars,
   users,
+  discounts
 }: Props) {
   return (
     <section>
@@ -83,7 +85,7 @@ export default function AdminDashboard({
             <BookingsDataTable data={bookings} />
           </TabsContent>
           <TabsContent value="Coupons" className="mt-4 w-full">
-            <CouponsList />
+            <CouponsList discounts={discounts}/>
           </TabsContent>
           <TabsContent value="Users" className="mt-4 w-full">
             <UsersList users={users} />

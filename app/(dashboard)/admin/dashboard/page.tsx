@@ -166,6 +166,36 @@ async function getPopularCars() {
   }
 }
 
+async function getDiscounts() {
+  try {
+    const discounts = await prisma.discount.findMany({
+      include: {
+        user: {
+          select: {
+            username: true,
+            email: true,
+            phone: true,
+          },
+        },
+        Car: {
+          select: {
+            modelName: true,
+            location: true,
+            pricePerDay: true,
+            image: true,
+          },
+        },
+      },
+    });
+    return discounts;
+  } catch (error) {
+    console.error("Error fetching discounts:", error);
+    return [];
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
 export default async function Page({}: Props) {
   const stats = await getStats();
   const cars = (await fetchCars()) as Car[];
@@ -173,6 +203,7 @@ export default async function Page({}: Props) {
   const bookings = (await getBookings()) as BookingWithCar[];
   const recentBookings = await getLatestBookings();
   const popularCars = await getPopularCars();
+  const discounts = (await getDiscounts()) || [];
   return (
     <section>
       <AdminDashboard
@@ -182,6 +213,7 @@ export default async function Page({}: Props) {
         recentOrders={recentBookings}
         popularCars={popularCars}
         users={users}
+        discounts={discounts}
       />
     </section>
   );

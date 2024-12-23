@@ -41,22 +41,18 @@ import { NotFound } from "../ui/notfound";
 
 interface Discount {
   id: number;
-  userId: number;
+  userId?: number | null;
   code: string;
   percent: number;
-  min_amount: number | null;
-  max_amount: number | null;
+  min_amount?: number | null;
+  max_amount?: number | null;
   description: string;
   expiresAt: string;
   status: "valid" | "expired" | "used";
   createdAt: string;
-  carId: number | null;
-  user: {
-    email: string;
-  };
-  Car: {
-    modelName: string;
-  } | null;
+  carId?: number | null;
+  user?: {} | any;
+  Car?: {} | any;
 }
 
 const statusColors = {
@@ -65,87 +61,7 @@ const statusColors = {
   used: "secondary",
 };
 
-// Mock data
-const mockDiscounts: Discount[] = [
-  {
-    id: 1,
-    userId: 1,
-    code: "SUMMER2023",
-    percent: 20,
-    min_amount: 100,
-    max_amount: 500,
-    description: "Summer sale discount",
-    expiresAt: "2023-08-31T23:59:59Z",
-    status: "valid",
-    createdAt: "2023-06-01T10:00:00Z",
-    carId: null,
-    user: { email: "user1@example.com" },
-    Car: null,
-  },
-  {
-    id: 2,
-    userId: 2,
-    code: "NEWUSER50",
-    percent: 50,
-    min_amount: null,
-    max_amount: 200,
-    description: "New user discount",
-    expiresAt: "2023-12-31T23:59:59Z",
-    status: "valid",
-    createdAt: "2023-01-01T00:00:00Z",
-    carId: null,
-    user: { email: "user2@example.com" },
-    Car: null,
-  },
-  {
-    id: 3,
-    userId: 3,
-    code: "PREMIUM10",
-    percent: 10,
-    min_amount: 500,
-    max_amount: null,
-    description: "Premium car discount",
-    expiresAt: "2023-09-30T23:59:59Z",
-    status: "valid",
-    createdAt: "2023-05-15T14:30:00Z",
-    carId: 1,
-    user: { email: "user3@example.com" },
-    Car: { modelName: "Tesla Model S" },
-  },
-  {
-    id: 4,
-    userId: 4,
-    code: "EXPIRED25",
-    percent: 25,
-    min_amount: 50,
-    max_amount: 300,
-    description: "Expired discount",
-    expiresAt: "2023-05-31T23:59:59Z",
-    status: "expired",
-    createdAt: "2023-05-01T09:00:00Z",
-    carId: null,
-    user: { email: "user4@example.com" },
-    Car: null,
-  },
-  {
-    id: 5,
-    userId: 5,
-    code: "USED15",
-    percent: 15,
-    min_amount: null,
-    max_amount: null,
-    description: "One-time use discount",
-    expiresAt: "2023-12-31T23:59:59Z",
-    status: "used",
-    createdAt: "2023-06-10T16:45:00Z",
-    carId: null,
-    user: { email: "user5@example.com" },
-    Car: null,
-  },
-];
-
-export function CouponsList() {
-  const [discounts, setDiscounts] = useState<Discount[]>(mockDiscounts);
+export function CouponsList({ discounts }: { discounts: Discount[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -233,34 +149,48 @@ export function CouponsList() {
                         </div>
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 items-center gap-4">
-                            <span className="text-sm font-medium">User:</span>
-                            <span className="col-span-2 text-sm">
-                              {discount.user.email}
-                            </span>
+                            {discount.user && (
+                              <>
+                                <span className="text-sm font-medium">
+                                  User:
+                                </span>
+                                <span className="col-span-2 text-sm">
+                                  {discount.user?.email}
+                                </span>
+                              </>
+                            )}
                           </div>
                           {discount.Car && (
                             <div className="grid grid-cols-3 items-center gap-4">
                               <span className="text-sm font-medium">Car:</span>
                               <span className="col-span-2 text-sm">
-                                {discount.Car.modelName}
+                                {discount.Car?.modelName}
                               </span>
                             </div>
                           )}
                           <div className="grid grid-cols-3 items-center gap-4">
-                            <span className="text-sm font-medium">
-                              Min Amount:
-                            </span>
-                            <span className="col-span-2 text-sm">
-                              {discount.min_amount || "N/A"}
-                            </span>
+                            {discount.min_amount && (
+                              <>
+                                <span className="text-sm font-medium">
+                                  Min Purchase Amount:
+                                </span>
+                                <span className="col-span-2 text-sm">
+                                  $ {discount.min_amount || "--"}
+                                </span>
+                              </>
+                            )}
                           </div>
                           <div className="grid grid-cols-3 items-center gap-4">
-                            <span className="text-sm font-medium">
-                              Max Amount:
-                            </span>
-                            <span className="col-span-2 text-sm">
-                              {discount.max_amount || "N/A"}
-                            </span>
+                            {discount.max_amount && (
+                              <>
+                                <span className="text-sm font-medium">
+                                  Max Amount:
+                                </span>
+                                <span className="col-span-2 text-sm">
+                                  $ {discount.max_amount || "--"}
+                                </span>
+                              </>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -344,8 +274,8 @@ export function CouponsList() {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+          {table?.getRowModel().rows?.length ? (
+            table?.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}>

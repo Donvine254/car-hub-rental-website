@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { Check, ChevronsUpDown, Search } from "lucide-react";
+import { Check, ChevronsUpDown, Loader, Search } from "lucide-react";
 import { Car } from "@/lib/actions/car-actions/fetchCars";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
+import { createNewCoupon } from "@/lib/actions/discount-actions";
 
 export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
   const [open, setOpen] = useState(false);
@@ -20,6 +21,7 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
   const [hasMinAmount, setHasMinAmount] = useState(false);
   const [hasMaxAmount, setHasMaxAmount] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,10 +31,11 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
       });
       return false;
     }
+    setLoading(true);
     const formData = new FormData(event.currentTarget);
 
     const discount = {
-      code: formData.get("code"),
+      code: formData.get("code")!,
       percent: parseInt(formData.get("percent") as string),
       description: formData.get("description"),
       expiresAt: formData.get("expiresAt"),
@@ -51,9 +54,26 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
         ([key, value]) => value !== null && !Number.isNaN(value)
       )
     );
-
-    console.log(validDiscount);
+    try {
+      const result = await createNewCoupon(validDiscount);
+      if (result.success) {
+        toast.success(result.message);
+        setLoading(false);
+        if (typeof window !== "undefined") {
+          window.location.reload();
+        }
+      } else {
+        toast.error(result.error);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+      setLoading(false);
+      return false;
+    }
   }
+  //filter cars on search
   const filteredCars = cars.filter((car) =>
     car.modelName.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -358,8 +378,15 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
               Cancel
             </Button>
           </Link>
-          <Button type="submit" className="bg-green-500 hover:bg-green-600">
-            Create Coupon
+          <Button
+            type="submit"
+            className="bg-green-500 hover:bg-green-600 disabled:bg-muted border disabled:cursor-not-allowed"
+            disabled={loading}>
+            {!loading ? (
+              "Create Coupon"
+            ) : (
+              <Loader className="animate-spin text-green-500" fill="#22C55E" />
+            )}
           </Button>
         </div>
       </form>
