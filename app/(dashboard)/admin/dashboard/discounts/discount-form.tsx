@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+import Link from "next/link";
 import {
   Command,
   CommandEmpty,
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/popover";
 
 export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
+  console.log(cars);
   const [open, setOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState<string>("");
   const [applyToCar, setApplyToCar] = useState(false);
@@ -70,10 +71,10 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
             placeholder="FIRST10"
             maxLength={20}
             minLength={5}
-            className="focus:outline-none focus:ring-1 focus:ring-green-500"
+            className="focus:outline-none max-w-xs focus:ring-1 focus:ring-green-500"
             required
           />
-          <small className="text-gray-400">
+          <small className="text-gray-600">
             This is the code customers will input to claim the discount. This
             code is case insensitive and must be unique.
           </small>
@@ -87,10 +88,10 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
             placeholder="Percentage off"
             min="0"
             max="100"
-            className="focus:outline-none focus:ring-1 focus:ring-green-500"
+            className="focus:outline-none max-w-xs focus:ring-1 focus:ring-green-500"
             required
           />
-          <small className="text-gray-400">
+          <small className="text-gray-600">
             This will be used to calculate total discount amount.
           </small>
         </div>
@@ -101,10 +102,10 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
             id="description"
             name="description"
             placeholder="First purchase discount"
-            className="focus:outline-none focus:ring-1 focus:ring-green-500"
+            className="focus:outline-none max-w-sm focus:ring-1 focus:ring-green-500"
             required
           />
-          <small className="text-gray-400">
+          <small className="text-gray-600">
             This will appear on customer&apos;s vouchers and receipts.
           </small>
         </div>
@@ -117,10 +118,10 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
             type="date"
             min={new Date().toISOString().split("T")[0]}
             defaultValue={new Date().toISOString().split("T")[0]}
-            className="focus:outline-none focus:ring-1 focus:ring-green-500"
+            className="max-w-xs focus:outline-none focus:ring-1 focus:ring-green-500"
             required
           />
-          <small className="text-gray-400">
+          <small className="text-gray-600">
             This will identify when the coupon will expire.
           </small>
         </div>
@@ -153,27 +154,31 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
                 <CommandInput placeholder="Search cars..." />
                 <CommandEmpty>No car found.</CommandEmpty>
                 <CommandGroup className="max-h-60 overflow-auto">
-                  {cars.map((car) => (
-                    <CommandItem
-                      key={car.id}
-                      value={car.id.toString()}
-                      onSelect={(currentValue) => {
-                        setSelectedCar(
-                          currentValue === selectedCar ? "" : currentValue
-                        );
-                        setOpen(false);
-                      }}>
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          selectedCar === car.id.toString()
-                            ? "opacity-100"
-                            : "opacity-0"
-                        )}
-                      />
-                      {car.modelName} - ${car.pricePerDay}
-                    </CommandItem>
-                  ))}
+                  {Array.isArray(cars) && cars.length > 0 ? (
+                    cars.map((car) => (
+                      <CommandItem
+                        key={car.id}
+                        value={car.id.toString()}
+                        onSelect={(currentValue) => {
+                          setSelectedCar(
+                            currentValue === selectedCar ? "" : currentValue
+                          );
+                          setOpen(false);
+                        }}>
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedCar === car.id.toString()
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                        {car.modelName} - ${car.pricePerDay}
+                      </CommandItem>
+                    ))
+                  ) : (
+                    <CommandEmpty>No cars available.</CommandEmpty>
+                  )}
                 </CommandGroup>
               </Command>
             </PopoverContent>
@@ -195,16 +200,16 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
         </div>
 
         {limitToCustomer && (
-          <div className="space-y-2">
+          <div className="space-y-2 pl-6">
             <label htmlFor="userEmail">Customer Email</label>
             <Input
               id="userEmail"
               name="userEmail"
               type="email"
-              className="focus:outline-none focus:ring-1 focus:ring-green-500"
+              className="max-w-xs focus:outline-none focus:ring-1 focus:ring-green-500"
               placeholder="customer@example.com"
             />
-            <small className="text-gray-400">
+            <small className="text-gray-600">
               Enter the email of the customer you wish to give the discount to.
               Can only apply to one customer.
             </small>
@@ -226,17 +231,17 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
         </div>
 
         {hasMinAmount && (
-          <div className="space-y-2">
+          <div className="space-y-2 pl-6">
             <label htmlFor="min_amount">Minimum Amount</label>
             <Input
               id="min_amount"
               name="min_amount"
               type="number"
-              className="focus:outline-none focus:ring-1 focus:ring-green-500"
+              className="max-w-xs focus:outline-none focus:ring-1 focus:ring-green-500"
               min="0"
               placeholder="0"
             />
-            <small className="text-gray-400">
+            <small className="text-gray-600">
               This is the minimum amount of purchase that the discount is
               applicable to.
             </small>
@@ -266,16 +271,27 @@ export default function CreateDiscountForm({ cars }: { cars: Car[] }) {
               type="number"
               min="0"
               placeholder="0"
+              className="max-w-xs focus:outline-none focus:ring-1 focus:ring-green-500"
             />
-            <small className="text-gray-400">
+            <small className="text-gray-600">
               This is the maximum amount of discount that a customer can claim
             </small>
           </div>
         )}
 
-        <Button type="submit" className="w-full">
-          Create Discount
-        </Button>
+        <div className="flex items-center justify-end gap-2">
+          <Link href="/admin/dashboard" passHref>
+            <Button
+              type="reset"
+              variant="ghost"
+              className="border shadow hover:bg-destructive hover:text-destructive-foreground">
+              Cancel
+            </Button>
+          </Link>
+          <Button type="submit" className="bg-green-500 hover:bg-green-600">
+            Create Coupon
+          </Button>
+        </div>
       </form>
     </div>
   );
