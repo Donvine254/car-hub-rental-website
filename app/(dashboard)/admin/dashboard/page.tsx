@@ -40,6 +40,9 @@ async function getBookings() {
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     return bookings as BookingWithCar[];
   } catch (error) {
