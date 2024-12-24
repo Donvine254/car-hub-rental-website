@@ -38,11 +38,11 @@ export default function Carpage({ car }: CarPageProps) {
           </h1>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="rounded-xl shadow-sm overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 p-2 md:p-4">
             {/* Image Section */}
-            <div className="flex items-center justify-center bg-gray-100 rounded-lg p-4 relative shadow">
+            <div className="flex items-center justify-center bg-white rounded-lg relative shadow">
               <Image
                 src={car.image}
                 alt={car.modelName}
@@ -62,9 +62,11 @@ export default function Carpage({ car }: CarPageProps) {
             </div>
 
             {/* Details Section */}
-            <div className="space-y-6">
+            <div className="space-y-2 ">
               <div>
-                <h1 className="text-3xl font-bold mb-2">{car.modelName}</h1>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
+                  {car.modelName}
+                </h1>
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
@@ -106,83 +108,52 @@ export default function Carpage({ car }: CarPageProps) {
                   sustainability.
                 </p>
               </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center space-x-2">
-                  <CarFrontIcon
-                    className="text-green-500"
-                    height="1.5em"
-                    width="1.5em"
-                  />
-                  <span className="capitalize">
-                    Body: {""}
-                    {car.bodyType === "suv"
-                      ? car.bodyType.toUpperCase()
-                      : car.bodyType}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Calendar
-                    className="text-green-500"
-                    height="1.5em"
-                    width="1.5em"
-                  />
-                  <span>
-                    Year: {""}
-                    {car.year}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <MapPin
-                    className="text-green-500"
-                    height="1.5em"
-                    width="1.5em"
-                  />
-                  <span className="capitalize">
-                    Location: {""}
-                    {car.location}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CarSeat />
-                  <span>
-                    Seat: {""}
-                    {car.seats} Seats
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  {car.fuelType !== "electric" ? (
-                    <FuelPumpIcon />
-                  ) : (
-                    <BatteryCharging
-                      height="1.5em"
-                      width="1.5em"
-                      className="text-green-500"
-                    />
-                  )}
-                  <span className="capitalize">
-                    Fuel Type: {""}
-                    {car.fuelType}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <GearboxIcon />
-                  <span className="capitalize">
-                    Transmission: {""}
-                    {car.transmissionType}
-                  </span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <GaugeCircle
-                    height="1.5em"
-                    width="1.5em"
-                    className="text-green-500"
-                  />
-                  <span>
-                    Fuel Economy: {""}
-                    {car.fuelConsumption}
-                    {car.fuelType !== "electric" ? "Km/L" : "LDR"}
-                  </span>
+              <div>
+                <h3 className="font-bold text-xl md:text-2xl">
+                  Specifications
+                </h3>
+                <div className="grid grid-cols-1 divide-y divide-gray-300">
+                  <div className="grid grid-cols-2 py-1">
+                    <span className="text-muted-foreground">Body Type</span>
+                    <span className="capitalize font-semibold">
+                      {car.bodyType === "suv"
+                        ? car.bodyType.toUpperCase()
+                        : car.bodyType}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 py-1">
+                    <span className="text-muted-foreground">Seats</span>
+                    <span className="font-semibold">{car.seats} seats</span>
+                  </div>
+                  <div className="grid grid-cols-2 py-1">
+                    <span className="text-muted-foreground">Year</span>
+                    <span className="font-semibold">{car.year}</span>
+                  </div>
+                  <div className="grid grid-cols-2 py-1">
+                    <span className="text-muted-foreground">Location</span>
+                    <span className="capitalize font-semibold">
+                      {car.location}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 py-1">
+                    <span className="text-muted-foreground">Transmission</span>
+                    <span className="capitalize font-semibold">
+                      {car.transmissionType}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 py-1">
+                    <span className="text-muted-foreground">Fuel Type</span>
+                    <span className="capitalize font-semibold">
+                      {car.fuelType}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 py-1">
+                    <span className="text-muted-foreground">Fuel Economy</span>
+                    <span className="font-semibold">
+                      {car.fuelConsumption}{" "}
+                      {car.fuelType !== "electric" ? "Km/L" : "LDR"}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -219,9 +190,7 @@ export default function Carpage({ car }: CarPageProps) {
           </div>
           <hr />
           {/* Reviews Section */}
-          <div className="px-8 pb-8">
-            <Reviews />
-          </div>
+          <Reviews />
         </div>
       </div>
     </div>
