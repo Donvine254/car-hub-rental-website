@@ -74,16 +74,13 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
   };
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    toast.success("Thank you for your feedback", {
-      position: "top-center",
-    });
-    setOpen(false);
     try {
       const response = await addCarReview(review);
       if (response.success) {
         toast.success("Thank you for your feedback", {
           position: "top-center",
         });
+        setOpen(false);
       } else {
         toast.error(response.error, {
           position: "top-center",

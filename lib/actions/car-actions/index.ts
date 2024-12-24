@@ -57,11 +57,11 @@ export async function addCarReview(formData: ReviewFormData) {
     });
     return { success: true, message: "review added successfully" };
   } catch (error: any) {
-    if (error.status === "P2002") {
-      return { success: false, error: "You have already reviewed this card." };
-    } else {
-      return { success: false, error: "Something went wrong" };
+    console.error(error);
+    if (error.code === "P2002") {
+      return { success: false, error: "You have already reviewed this car." };
     }
+    return { success: false, error: error.message || "Something went wrong" };
   } finally {
     await prisma.$disconnect();
   }
