@@ -9,15 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
 
 import { CalendarClock, MapPinIcon, PenLine, StarIcon } from "lucide-react";
 import { toast } from "sonner";
@@ -48,7 +39,7 @@ export function ReviewDrawerDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] xsm:px-2">
         <DialogHeader>
           <DialogTitle>Leave a Review</DialogTitle>
         </DialogHeader>
@@ -62,28 +53,6 @@ export function ReviewDrawerDialog({
       </DialogContent>
     </Dialog>
   );
-
-  // return (
-  //   <Drawer open={open} onOpenChange={setOpen}>
-  //     <DrawerContent>
-  //       <DrawerHeader>
-  //         <DrawerTitle>Leave a Review</DrawerTitle>
-  //       </DrawerHeader>
-  //       <DrawerDescription className="sr-only">Review Modal</DrawerDescription>
-  //       <ReviewForm
-  //         booking={booking}
-  //         userId={userId}
-  //         setOpen={setOpen}
-  //         open={open}
-  //       />
-  //       <DrawerFooter className="pt-2">
-  //         <DrawerClose asChild>
-  //           <Button variant="outline">Cancel</Button>
-  //         </DrawerClose>
-  //       </DrawerFooter>
-  //     </DrawerContent>
-  //   </Drawer>
-  // );
 }
 
 const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
@@ -122,10 +91,10 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
     console.log(review);
   }
   return (
-    <form className="grid gap-2 px-4 md:px-0 " onSubmit={handleSubmit}>
+    <form className="grid gap-2" onSubmit={handleSubmit}>
       <div className="flex items-center gap-2 border shadow p-2 rounded-md bg-white">
         <div
-          className="rounded-md w-1/2 h-full bg-cover bg-center"
+          className="rounded-md flex-1 h-full bg-cover bg-center"
           style={{
             backgroundImage: `url(${
               booking.car.image || "/vehicle-placeholder.png"
@@ -214,7 +183,6 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
         <textarea
           className="w-full rounded-md bg-white px-3 py-2 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px]"
           id="review-body"
-          rows={3}
           name="review-body"
           maxLength={250}
           value={review.body}
