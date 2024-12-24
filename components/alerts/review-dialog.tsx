@@ -218,7 +218,7 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
           Your review
         </label>
         <textarea
-          className="bg-white xsm:bg-green-100 rounded-md py-2 px-3 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px] w-full disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus:z-50 focus-visible:ring-green-500 focus-visible:ring-2 xsm:focus:absolute xsm:focus:top-0"
+          className="bg-white xsm:bg-green-100 rounded-md py-2 px-3 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px] w-full disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus:z-50 focus-visible:ring-green-500 focus-visible:ring-2 xsm:focus:absolute xsm:focus:top-[50px] xsm:focus:left-0 xsm:focus:right-0 xsm:focus:max-w-[90%] xsm:focus:mx-4"
           id="review-body"
           name="review-body"
           rows={3}
