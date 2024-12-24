@@ -19,16 +19,29 @@ import {
 
 import { CalendarClock, MapPinIcon, PenLine, StarIcon } from "lucide-react";
 import { toast } from "sonner";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 type DrawerProps = {
   booking: any | {};
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  userId: number;
 };
-export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
+export function ReviewDrawerDialog({
+  booking,
+  open,
+  setOpen,
+  userId,
+}: DrawerProps) {
   const [isDesktop, setIsDesktop] = useState(false);
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState({
+    title: "",
+    body: "",
+    rating: 0,
+    carId: booking.car.id,
+    userId: userId,
+  });
 
   useEffect(() => {
     const checkDesktop = () => {
@@ -40,7 +53,7 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
   }, []);
 
   const handleRatingClick = (value: number) => {
-    setRating(value);
+    setReview({ ...review, rating: value });
   };
 
   const renderStars = () => {
@@ -48,8 +61,10 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
       <StarIcon
         key={index}
         className={cn(
-          "w-6 h-6 cursor-pointer",
-          index < rating ? "fill-yellow-400 stroke-yellow-400" : "text-gray-400"
+          "w-8 h-8 cursor-pointer border p-1",
+          index < review.rating
+            ? "fill-yellow-400 stroke-yellow-500"
+            : "text-gray-400"
         )}
         onClick={() => handleRatingClick(index + 1)}
       />
@@ -63,7 +78,7 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
     setOpen(false);
   }
   const ReviewForm = ({ className }: ComponentProps<"form">) => (
-    <form className={cn("grid gap-4", className)} onSubmit={handleSubmit}>
+    <form className={cn("grid gap-2", className)} onSubmit={handleSubmit}>
       <div className="flex items-center gap-2 border shadow p-2 rounded-md bg-white">
         <div
           className="rounded-md w-1/2 h-full bg-cover bg-center"
@@ -75,7 +90,7 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
         />
         <div className="flex flex-col space-y-1 divide-y divide-gray-200">
           <p className="text-sm font-medium leading-none whitespace-nowrap">
-            Mini Cooper
+            {booking.car.modelName}
           </p>
           <p className="flex items-center gap-1">
             <CalendarClock className=" text-green-500 h-4 w-4" />
@@ -98,25 +113,65 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
         </div>
       </div>
       <div>
-        <h2 className=" text-center text-lg font-bold">
-          Tell us about your experience
-        </h2>
-        <p className="text-muted-foreground text-sm">
-          Please take a moment to rate and review...
-        </p>
-        <div className="flex gap-1 mt-2">{renderStars()}</div>
+        <div className="space-y-1">
+          <label htmlFor="review" className="block font-semibold">
+            Review Title
+          </label>
+          <Input
+            type="text"
+            value={review.title}
+            onChange={(e) => setReview({ ...review, title: e.target.value })}
+            placeholder="Example: Fuel Efficiency"
+            minLength={5}
+            required
+            className="focus:ring-1 focus:ring-green-500"
+          />
+        </div>
+        <div className="space-y-1">
+          <label htmlFor="rating" className="block font-semibold">
+            Overall Rating
+          </label>
+          <div className="flex gap-1">{renderStars()}</div>
+          <small className="text-muted-foreground">Click to rate</small>
+        </div>
+        <div>
+          <label htmlFor="recommend" className="block font-semibold">
+            Would you recommend this car to a friend?
+          </label>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Input
+                type="radio"
+                id="yes"
+                name="recommend"
+                value="yes"
+                checked
+                required
+              />
+              <label htmlFor="yes">Yes</label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Input
+                type="radio"
+                id="no"
+                name="recommend"
+                value="no"
+                required
+              />
+              <label htmlFor="no">No</label>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="space-y-1">
-        <label htmlFor="review" className="block">
+        <label htmlFor="review" className="block  font-semibold">
           Your review
         </label>
-        <textarea
-          className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none  focus:outline-none focus:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-          rows={4}
+        <Textarea
+          className="focus:ring-1 focus:ring-green-500"
           id="review"
-          autoFocus
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
+          value={review.body}
+          onChange={(e) => setReview({ ...review, body: e.target.value })}
           placeholder="Type your review..."
         />
       </div>
@@ -160,7 +215,13 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
   );
 }
 
-export const ReviewButton = ({ booking }: { booking: any }) => {
+export const ReviewButton = ({
+  booking,
+  userId,
+}: {
+  booking: any;
+  userId: number;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   console.log(booking);
   return (
@@ -171,7 +232,12 @@ export const ReviewButton = ({ booking }: { booking: any }) => {
         onClick={() => setIsOpen(!isOpen)}>
         <PenLine className="mr-2 h-4 w-4" /> <span>Add Review</span>
       </Button>
-      <ReviewDrawerDialog booking={booking} open={isOpen} setOpen={setIsOpen} />
+      <ReviewDrawerDialog
+        booking={booking}
+        open={isOpen}
+        setOpen={setIsOpen}
+        userId={userId}
+      />
     </div>
   );
 };

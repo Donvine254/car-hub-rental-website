@@ -275,7 +275,7 @@ function OrderComponent({
                   )}
                   {order.status === "completed" && (
                     <>
-                      <ReviewButton booking={order} />
+                      <ReviewButton booking={order} userId={currentUser.id} />
                       <FavoriteButton
                         carId={order?.car?.id}
                         userId={currentUser.id}
