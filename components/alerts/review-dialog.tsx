@@ -126,9 +126,7 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
     console.log(review);
   }
   return (
-    <form
-      className="grid gap-2 px-4 md:px-0 xsm:relative"
-      onSubmit={handleSubmit}>
+    <form className="grid gap-2 px-4 md:px-0" onSubmit={handleSubmit}>
       <div className="flex items-center gap-2 border shadow p-2 rounded-md bg-white">
         <div
           className="rounded-md w-1/2 h-full bg-cover bg-center"
@@ -217,11 +215,12 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
         <label htmlFor="review" className="block  font-semibold">
           Your review
         </label>
-        <textarea
-          className="bg-white xsm:bg-green-100 rounded-md py-2 px-3 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px] w-full disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus:z-50 focus-visible:ring-green-500 focus-visible:ring-2 xsm:focus:absolute xsm:focus:top-[50px] xsm:focus:left-0 xsm:focus:right-0 xsm:focus:max-w-[90%] xsm:focus:mx-4"
+        <Input
+          type="text"
+          className=" border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px]"
           id="review-body"
           name="review-body"
-          rows={3}
+          maxLength={250}
           value={review.body}
           onChange={(e) => setReview({ ...review, body: e.target.value })}
           placeholder="Type your review..."
