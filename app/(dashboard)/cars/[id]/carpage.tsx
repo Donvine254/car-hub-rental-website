@@ -2,7 +2,7 @@ import React from "react";
 import { Check, Star } from "lucide-react";
 
 import Image from "next/image";
-import { Reviews } from "./reviews";
+import { ReviewsComponent } from "./reviews";
 import { Car, Review, User } from "@prisma/client";
 import { isCarAvailable } from "@/lib/helpers";
 import { Badge } from "@/components/ui/badge";
@@ -240,7 +240,7 @@ export default function Carpage({ car }: CarPageProps) {
           </div>
           <hr />
           {/* Reviews Section */}
-          <Reviews />
+          <ReviewsComponent reviews={car.reviews} />
         </div>
       </div>
     </div>
