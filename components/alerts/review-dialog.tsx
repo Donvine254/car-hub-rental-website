@@ -80,7 +80,7 @@ export function ReviewDrawerDialog({
           setOpen={setOpen}
           open={open}
         />
-        <DrawerFooter className="pt-2">
+        <DrawerFooter className="pt-2 absolute bottom-0">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
@@ -216,7 +216,7 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
           Your review
         </label>
         <textarea
-          className="bg-white rounded-md py-2 px-3 border border-gray-600 focus:ring-1 focus:ring-green-500 min-h-[80px] w-full disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+          className="bg-white rounded-md py-2 px-3 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px] w-full disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           id="review-body"
           name="review-body"
           rows={3}
