@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, ComponentProps } from "react";
+import { useState, useEffect, ComponentProps, FormEvent } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,10 +7,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/drawer";
 
 import { CalendarClock, MapPinIcon, PenLine, StarIcon } from "lucide-react";
+import { toast } from "sonner";
 
 type DrawerProps = {
   booking: any | {};
@@ -54,14 +55,22 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
       />
     ));
   };
-
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    toast.success("Thank you for your feedback", {
+      position: "top-center",
+    });
+    setOpen(false);
+  }
   const ReviewForm = ({ className }: ComponentProps<"form">) => (
-    <form className={cn("grid gap-4", className)}>
+    <form className={cn("grid gap-4", className)} onSubmit={handleSubmit}>
       <div className="flex items-center gap-2 border shadow p-2 rounded-md bg-white">
         <div
           className="rounded-md w-1/2 h-full bg-cover bg-center"
           style={{
-            backgroundImage: `${booking.car.image}`,
+            backgroundImage: `url(${
+              booking.car.image || "/vehicle-placeholder.png"
+            })`,
           }}
         />
         <div className="flex flex-col space-y-1 divide-y divide-gray-200">
@@ -97,18 +106,27 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
         </p>
         <div className="flex gap-1 mt-2">{renderStars()}</div>
       </div>
-      <div className="grid gap-2">
-        <label htmlFor="review">Your review</label>
+      <div className="space-y-1">
+        <label htmlFor="review" className="block">
+          Your review
+        </label>
         <textarea
-          className="focus:outline-none focus:ring-1 focus:ring-green-500 rounded-lg p-2 border"
+          className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none  focus:outline-none focus:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           rows={4}
           id="review"
-          value={review}
           autoFocus
+          value={review}
           onChange={(e) => setReview(e.target.value)}
           placeholder="Type your review..."
         />
       </div>
+      <Button
+        variant="secondary"
+        disabled={!review}
+        type="submit"
+        className="bg-green-500 hover:bg-green-600 text-white disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed border">
+        Submit
+      </Button>
     </form>
   );
 
@@ -120,12 +138,6 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
             <DialogTitle>Leave a Review</DialogTitle>
           </DialogHeader>
           <ReviewForm />
-          <div className="flex justify-between pt-4">
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-            <Button>Submit</Button>
-          </div>
         </DialogContent>
       </Dialog>
     );
@@ -138,16 +150,10 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
           <DrawerTitle>Leave a Review</DrawerTitle>
         </DrawerHeader>
         <ReviewForm className="px-4" />
-        <DrawerFooter className="flex justify-between pt-4">
-          <Button
-            variant="outline"
-            className="shadow border"
-            onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
-          <Button className="bg-green-500 hover:bg-green-600 text-white ">
-            Submit
-          </Button>
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
@@ -156,9 +162,13 @@ export function ReviewDrawerDialog({ booking, open, setOpen }: DrawerProps) {
 
 export const ReviewButton = ({ booking }: { booking: any }) => {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(booking);
   return (
     <div>
-      <Button variant="ghost" className=" w-full justify-start">
+      <Button
+        variant="ghost"
+        className="w-full justify-start"
+        onClick={() => setIsOpen(!isOpen)}>
         <PenLine className="mr-2 h-4 w-4" /> <span>Add Review</span>
       </Button>
       <ReviewDrawerDialog booking={booking} open={isOpen} setOpen={setIsOpen} />
