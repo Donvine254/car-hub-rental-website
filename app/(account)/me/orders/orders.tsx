@@ -15,12 +15,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
-import { MoreHorizontal } from "lucide-react";
+import { Eye, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CancelButton, DetailsButton, FavoriteButton } from "./order-actions";
-import { PenLine } from "lucide-react";
-import Link from "next/link";
+import { CancelButton, FavoriteButton } from "./order-actions";
+
 import { BookingWithCar } from "@/lib/utils";
+import { ReviewButton } from "@/components/alerts/review-dialog";
 interface User {
   id: number;
   username: string;
@@ -48,7 +48,7 @@ export function Orders({ orders, currentUser }: Props) {
 
   return (
     <div className="space-y-4 w-full">
-      <div className="p-4 bg-white shadow rounded-md border">
+      <div className="md:p-2 bg-white md:shadow md:rounded-md md:border">
         <Tabs defaultValue="All" className="w-full">
           <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
             <TabsTrigger
@@ -78,7 +78,7 @@ export function Orders({ orders, currentUser }: Props) {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="All" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">All Orders</h2>
               {orders.length > 0 ? (
                 <OrderComponent orders={orders} currentUser={currentUser} />
@@ -91,7 +91,7 @@ export function Orders({ orders, currentUser }: Props) {
             </div>
           </TabsContent>
           <TabsContent value="scheduled" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">Scheduled Orders</h2>
               {scheduledOrders.length > 0 ? (
                 <OrderComponent
@@ -107,7 +107,7 @@ export function Orders({ orders, currentUser }: Props) {
             </div>
           </TabsContent>
           <TabsContent value="ongoing" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">Ongoing Orders</h2>
               {ongoingOrders.length > 0 ? (
                 <OrderComponent
@@ -123,7 +123,7 @@ export function Orders({ orders, currentUser }: Props) {
             </div>
           </TabsContent>
           <TabsContent value="completed" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">Completed Orders</h2>
               {completedOrders.length > 0 ? (
                 <OrderComponent
@@ -139,7 +139,7 @@ export function Orders({ orders, currentUser }: Props) {
             </div>
           </TabsContent>
           <TabsContent value="cancelled" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">Cancelled Orders</h2>
               {cancelledOrders.length > 0 ? (
                 <OrderComponent
@@ -210,40 +210,80 @@ function OrderComponent({
               </Badge>
             </TableCell>
             <TableCell>
-              {(order.status === "scheduled" ||
-                order.status === "completed") && (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <span className="sr-only">Open menu</span>
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-fit p-2 border bg-white shadow rounded-md">
-                    {order.status === "scheduled" && (
-                      <CancelButton
-                        id={order.id}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only">Open menu</span>
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-fit p-2 border bg-white shadow rounded-md">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="ghost" className="w-full justify-start">
+                        <Eye className="mr-2 h-4 w-4" />
+                        View details
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-80 p-6 rounded-md bg-white shadow">
+                      <div className="grid gap-4">
+                        <div className="space-y-2">
+                          <h4 className="font-medium leading-none">
+                            Booking Details
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            View the details of booking CR#
+                            {order.id.toString().padStart(5, "0")}
+                          </p>
+                        </div>
+                        <div className="grid gap-2 divide-y divide-gray-300">
+                          <div className="grid grid-cols-3 items-center gap-4">
+                            <span className="text-sm font-medium capitalize">
+                              Pickup:
+                            </span>
+                            <span className="col-span-2 text-sm capitalize">
+                              {order.pickupLocation}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-3 items-center gap-4">
+                            <span className="text-sm font-medium">
+                              Drop-off:
+                            </span>
+                            <span className="col-span-2 text-sm capitalize">
+                              {order.dropLocation}
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-3 items-center gap-4">
+                            <span className="text-sm font-medium">
+                              Total price
+                            </span>
+                            <span className="col-span-2 text-sm">
+                              ${order.totalPrice}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+
+                  {order.status === "scheduled" && (
+                    <CancelButton
+                      id={order.id}
+                      carId={order?.car?.id}
+                      endDate={order.endDate.toString()}
+                    />
+                  )}
+                  {order.status === "completed" && (
+                    <>
+                      <ReviewButton booking={order} userId={currentUser.id} />
+                      <FavoriteButton
                         carId={order?.car?.id}
-                        endDate={order.endDate.toString()}
+                        userId={currentUser.id}
                       />
-                    )}
-                    <DetailsButton order={order} />
-                    {order.status === "completed" && (
-                      <>
-                        <Link
-                          className="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground w-full justify-start h-10 px-4 py-2"
-                          href={`/reviews/new?car_id=${order?.car?.id}`}>
-                          <PenLine /> <span>Add Review</span>
-                        </Link>
-                        <FavoriteButton
-                          carId={order?.car?.id}
-                          userId={currentUser.id}
-                        />
-                      </>
-                    )}
-                  </PopoverContent>
-                </Popover>
-              )}
+                    </>
+                  )}
+                </PopoverContent>
+              </Popover>
             </TableCell>
           </TableRow>
         ))}

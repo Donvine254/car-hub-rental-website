@@ -53,14 +53,16 @@ model Car {
 
 model Review {
   id        Int      @id @default(autoincrement())
-  car       Car      @relation(fields: [carId], references: [id])
+  car       Car      @relation(fields: [carId], references: [id],onDelete: Cascade)
   carId     Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId    Int
   createdAt DateTime @default(now())
   body      String
   title     String
   rating    Int
+
+  @@unique([userId, carId])
 }
 
 model Booking {
@@ -91,7 +93,7 @@ model Favorite {
 
 model Discount {
   id          Int            @id @default(autoincrement())
-  user        User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int?
   code        String         @unique
   percent     Int

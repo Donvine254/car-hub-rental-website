@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
 import { InfoIcon, MoveRightIcon, Star, BatteryCharging } from "lucide-react";
 import { showModal } from "@/lib/utils";
+import Link from "next/link";
 type Props = {
   car: Car;
   uniqueKey?: number;
@@ -78,15 +79,16 @@ export default function Carcard({ car, handleBooking, uniqueKey }: Props) {
             {car.fuelType !== "electric" ? "Km/L" : "LDR"}
           </span>
         </div>
-        <button
-          className="hidden group-hover:flex items-center justify-between  w-full h-full bg-green-500 text-white group  rounded-md p-2 "
-          onClick={() => showModal(car.id)}>
+        <Link
+          href={`/cars/${car.id}`}
+          prefetch
+          className="hidden group-hover:flex items-center justify-between  w-full h-full bg-green-500 text-white group  rounded-md p-2">
           <InfoIcon />
           <span className="font-medium flex item-center gap-0.5">
             View More
           </span>
           <MoveRightIcon className="bg-green-300 self-end p-1 rounded-md  " />
-        </button>
+        </Link>
       </div>
       <hr className="border border-gay-200" />
       {/* div for actions */}

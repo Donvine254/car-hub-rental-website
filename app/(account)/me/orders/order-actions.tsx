@@ -4,7 +4,7 @@ import WarningDialog from "@/components/alerts/warning-dialog";
 import { Button } from "@/components/ui/button";
 import { UpdateOrderStatus } from "@/lib/actions/booking-actions";
 import { Booking } from "@prisma/client";
-import { HeartIcon, View, X } from "lucide-react";
+import { HeartIcon, X } from "lucide-react";
 import { toast } from "sonner";
 import { addFavorite } from "@/lib/actions/car-actions/favorite";
 
@@ -19,9 +19,7 @@ type BookingWithCar = Booking & {
     modelName: string;
   };
 };
-type DetailsButtonProps = {
-  order: BookingWithCar; // Correctly define the prop type
-};
+
 const cancellationReasons = [
   "Found a better deal",
   "Change in travel plans",
@@ -80,10 +78,10 @@ export function CancelButton({ id, carId, endDate }: CancelButtonProps) {
   return (
     <>
       <Button
-        className="flex items-center gap-2 w-full justify-start"
+        className="w-full justify-start text-destructive hover:bg-destructive hover:text-destructive-foreground"
         variant="ghost"
         onClick={() => setIsOpen(!isOpen)}>
-        <X className="text-red-500" /> <span>Cancel Order</span>
+        <X className="mr-2 h-4 w-4" /> <span>Cancel Order</span>
       </Button>
       <WarningDialog
         title="Are you sure you want to cancel this order?"
@@ -111,22 +109,7 @@ export function CancelButton({ id, carId, endDate }: CancelButtonProps) {
     </>
   );
 }
-export function DetailsButton({ order }: DetailsButtonProps) {
-  function handleViewDetails() {
-    //opens a details modal
-    toast.info("Upcoming feature!");
-    console.log(order);
-  }
 
-  return (
-    <Button
-      className="w-full flex items-center gap-2 justify-start"
-      variant="ghost"
-      onClick={handleViewDetails}>
-      <View /> <span>View Details</span>
-    </Button>
-  );
-}
 export function FavoriteButton({
   carId,
   userId,
@@ -153,10 +136,10 @@ export function FavoriteButton({
 
   return (
     <Button
-      className="w-full flex items-center gap-2 justify-start group"
+      className="w-full justify-start group"
       variant="ghost"
       onClick={handleFavorite}>
-      <HeartIcon className="group-hover:text-red-600" />
+      <HeartIcon className="group-hover:fill-red-600 group-hover:stroke-red-600 mr-2 h-4 w-4" />
       <span>Add to Favorites</span>
     </Button>
   );
