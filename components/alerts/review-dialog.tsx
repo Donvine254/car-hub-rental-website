@@ -46,48 +46,44 @@ export function ReviewDrawerDialog({
     return () => window.removeEventListener("resize", checkDesktop);
   }, []);
 
-  if (isDesktop) {
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Leave a Review</DialogTitle>
-          </DialogHeader>
-          <DialogDescription className="sr-only">
-            Review modal
-          </DialogDescription>
-          <ReviewForm
-            booking={booking}
-            userId={userId}
-            setOpen={setOpen}
-            open={open}
-          />
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Leave a Review</DrawerTitle>
-        </DrawerHeader>
-        <DrawerDescription className="sr-only">Review Modal</DrawerDescription>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Leave a Review</DialogTitle>
+        </DialogHeader>
+        <DialogDescription className="sr-only">Review modal</DialogDescription>
         <ReviewForm
           booking={booking}
           userId={userId}
           setOpen={setOpen}
           open={open}
         />
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+      </DialogContent>
+    </Dialog>
   );
+
+  // return (
+  //   <Drawer open={open} onOpenChange={setOpen}>
+  //     <DrawerContent>
+  //       <DrawerHeader>
+  //         <DrawerTitle>Leave a Review</DrawerTitle>
+  //       </DrawerHeader>
+  //       <DrawerDescription className="sr-only">Review Modal</DrawerDescription>
+  //       <ReviewForm
+  //         booking={booking}
+  //         userId={userId}
+  //         setOpen={setOpen}
+  //         open={open}
+  //       />
+  //       <DrawerFooter className="pt-2">
+  //         <DrawerClose asChild>
+  //           <Button variant="outline">Cancel</Button>
+  //         </DrawerClose>
+  //       </DrawerFooter>
+  //     </DrawerContent>
+  //   </Drawer>
+  // );
 }
 
 const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
@@ -216,7 +212,7 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
           Your review
         </label>
         <textarea
-          className="w-full bg-white px-3 py-2 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px]"
+          className="w-full rounded-md bg-white px-3 py-2 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px]"
           id="review-body"
           rows={3}
           name="review-body"
