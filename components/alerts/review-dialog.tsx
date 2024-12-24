@@ -22,7 +22,6 @@ import {
 import { CalendarClock, MapPinIcon, PenLine, StarIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
 
 type DrawerProps = {
   booking: any | {};
