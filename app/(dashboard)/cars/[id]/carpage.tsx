@@ -1,15 +1,6 @@
 import React from "react";
-import {
-  Battery,
-  BatteryCharging,
-  Calendar,
-  Fuel,
-  GaugeCircle,
-  MapPin,
-  Star,
-  Users,
-} from "lucide-react";
-import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
+import { Check, Star } from "lucide-react";
+
 import Image from "next/image";
 import { Reviews } from "./reviews";
 import { Car, Review, User } from "@prisma/client";
@@ -38,11 +29,11 @@ export default function Carpage({ car }: CarPageProps) {
           </h1>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto">
-        <div className="rounded-xl shadow-sm overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 p-2 md:p-4">
+      <div className="max-w-7xl mx-auto min-h-screen">
+        <div className="rounded-xl shadow-sm">
+          <div className="grid md:relative grid-cols-1 lg:grid-cols-2 gap-x-4 p-2 md:p-4">
             {/* Image Section */}
-            <div className="flex items-center justify-center bg-white rounded-lg relative shadow">
+            <div className="md:sticky md:top-12 h-fit">
               <Image
                 src={car.image}
                 alt={car.modelName}
@@ -60,9 +51,8 @@ export default function Carpage({ car }: CarPageProps) {
                 </Badge>
               )}
             </div>
-
             {/* Details Section */}
-            <div className="space-y-2 ">
+            <div className="space-y-2 md:bg-white md:shadow md:rounded-lg p-2 md:p-4 ">
               <div>
                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">
                   {car.modelName}
@@ -156,7 +146,67 @@ export default function Carpage({ car }: CarPageProps) {
                   </div>
                 </div>
               </div>
-
+              <hr />
+              <div className="mb-6">
+                <h2 className="text-2xl font-semibold my-2">Features</h2>
+                <ul className="flex gap-y-2 gap-x-4 flex-wrap items-center">
+                  <li>
+                    <Badge
+                      variant="outline"
+                      className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-500" />
+                      <span>Bluetooth</span>
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge variant="outline">
+                      <Check className="w-5 h-5 text-green-500" />
+                      <span>Central Lock</span>
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge
+                      variant="outline"
+                      className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-500" />
+                      <span>Air Conditioning</span>
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge
+                      variant="outline"
+                      className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-500" />
+                      <span>Power Windows</span>
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge
+                      variant="outline"
+                      className="flex items-center gap-2">
+                      {" "}
+                      <Check className="w-5 h-5 text-green-500" />
+                      <span>GPS Navigation</span>
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge
+                      variant="outline"
+                      className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-500" />
+                      <span>Infotainment system</span>
+                    </Badge>
+                  </li>
+                  <li>
+                    <Badge
+                      variant="outline"
+                      className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-500" />
+                      <span>Spare Tyre</span>
+                    </Badge>
+                  </li>
+                </ul>
+              </div>
               <div className="bg-green-100 border shadow p-6 rounded-lg">
                 <div className="flex flex-col items-center gap-2">
                   <p className="text-base font-medium">Daily Rate</p>
