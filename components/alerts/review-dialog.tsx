@@ -216,10 +216,11 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
         <label htmlFor="review" className="block  font-semibold">
           Your review
         </label>
-        <Textarea
-          className="focus:ring-1 focus:ring-green-500"
+        <textarea
+          className="bg-white rounded-md py-2 px-3 border border-gray-600 focus:ring-1 focus:ring-green-500 min-h-[80px] w-full disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
           id="review-body"
           name="review-body"
+          rows={3}
           value={review.body}
           onChange={(e) => setReview({ ...review, body: e.target.value })}
           placeholder="Type your review..."
