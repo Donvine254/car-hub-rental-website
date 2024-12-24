@@ -38,7 +38,7 @@ export function ReviewDrawerDialog({
   const [review, setReview] = useState({
     title: "",
     body: "",
-    rating: 0,
+    rating: 5,
     carId: booking.car.id,
     userId: userId,
   });
@@ -76,6 +76,7 @@ export function ReviewDrawerDialog({
       position: "top-center",
     });
     setOpen(false);
+    console.log(review);
   }
   const ReviewForm = ({ className }: ComponentProps<"form">) => (
     <form className={cn("grid gap-2", className)} onSubmit={handleSubmit}>
@@ -145,7 +146,7 @@ export function ReviewDrawerDialog({
                 id="yes"
                 name="recommend"
                 value="yes"
-                checked
+                defaultChecked
                 required
               />
               <label htmlFor="yes">Yes</label>
@@ -169,7 +170,8 @@ export function ReviewDrawerDialog({
         </label>
         <Textarea
           className="focus:ring-1 focus:ring-green-500"
-          id="review"
+          id="review-body"
+          name="review-body"
           value={review.body}
           onChange={(e) => setReview({ ...review, body: e.target.value })}
           placeholder="Type your review..."
