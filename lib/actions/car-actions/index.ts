@@ -42,3 +42,27 @@ export async function updateCarDetails(id: number, data: any) {
     await prisma.$disconnect();
   }
 }
+
+type ReviewFormData = {
+  carId: number;
+  userId: number;
+  rating: number;
+  title: string;
+  body: string;
+};
+export async function addCarReview(formData: ReviewFormData) {
+  try {
+    const review = await prisma.review.create({
+      data: formData,
+    });
+    return { success: true, message: "review added successfully" };
+  } catch (error: any) {
+    if (error.status === "P2002") {
+      return { success: false, error: "You have already reviewed this card." };
+    } else {
+      return { success: false, error: "Something went wrong" };
+    }
+  } finally {
+    await prisma.$disconnect();
+  }
+}

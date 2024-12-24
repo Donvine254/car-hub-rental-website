@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,7 @@ import {
 import { CalendarClock, MapPinIcon, PenLine, StarIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "../ui/input";
+import { addCarReview } from "@/lib/actions/car-actions";
 
 type DrawerProps = {
   booking: any | {};
@@ -26,17 +27,6 @@ export function ReviewDrawerDialog({
   setOpen,
   userId,
 }: DrawerProps) {
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const checkDesktop = () => {
-      setIsDesktop(window.innerWidth > 768);
-    };
-    checkDesktop();
-    window.addEventListener("resize", checkDesktop);
-    return () => window.removeEventListener("resize", checkDesktop);
-  }, []);
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px] xsm:px-2">
@@ -82,13 +72,28 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
       />
     ));
   };
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     toast.success("Thank you for your feedback", {
       position: "top-center",
     });
     setOpen(false);
-    console.log(review);
+    try {
+      const response = await addCarReview(review);
+      if (response.success) {
+        toast.success("Thank you for your feedback", {
+          position: "top-center",
+        });
+      } else {
+        toast.error(response.error, {
+          position: "top-center",
+        });
+      }
+    } catch (error) {
+      toast.error("Something went wrong", {
+        position: "top-center",
+      });
+    }
   }
   return (
     <form className="grid gap-2" onSubmit={handleSubmit}>
