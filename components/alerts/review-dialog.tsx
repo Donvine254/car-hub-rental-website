@@ -126,7 +126,9 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
     console.log(review);
   }
   return (
-    <form className="grid gap-2 px-4 md:px-0 relative" onSubmit={handleSubmit}>
+    <form
+      className="grid gap-2 px-4 md:px-0 xsm:relative"
+      onSubmit={handleSubmit}>
       <div className="flex items-center gap-2 border shadow p-2 rounded-md bg-white">
         <div
           className="rounded-md w-1/2 h-full bg-cover bg-center"
@@ -216,7 +218,7 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
           Your review
         </label>
         <textarea
-          className="bg-white rounded-md py-2 px-3 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px] w-full disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus:z-50 focus-visible:ring-green-500 focus-visible:ring-2 focus:absolute focus:top-1/2"
+          className="bg-white xsm:bg-green-100 rounded-md py-2 px-3 border border-gray-600 focus:ring-1 focus:outline-none focus:ring-green-500 min-h-[80px] w-full disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus:z-50 focus-visible:ring-green-500 focus-visible:ring-2 xsm:focus:absolute xsm:focus:top-0"
           id="review-body"
           name="review-body"
           rows={3}
