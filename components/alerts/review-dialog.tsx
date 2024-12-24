@@ -1,10 +1,11 @@
 "use client";
-import { useState, useEffect, ComponentProps, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -12,6 +13,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -35,13 +37,6 @@ export function ReviewDrawerDialog({
   userId,
 }: DrawerProps) {
   const [isDesktop, setIsDesktop] = useState(false);
-  const [review, setReview] = useState({
-    title: "",
-    body: "",
-    rating: 5,
-    carId: booking.car.id,
-    userId: userId,
-  });
 
   useEffect(() => {
     const checkDesktop = () => {
@@ -51,6 +46,59 @@ export function ReviewDrawerDialog({
     window.addEventListener("resize", checkDesktop);
     return () => window.removeEventListener("resize", checkDesktop);
   }, []);
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Leave a Review</DialogTitle>
+          </DialogHeader>
+          <DialogDescription className="sr-only">
+            Review modal
+          </DialogDescription>
+          <ReviewForm
+            booking={booking}
+            userId={userId}
+            setOpen={setOpen}
+            open={open}
+          />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Leave a Review</DrawerTitle>
+        </DrawerHeader>
+        <DrawerDescription className="sr-only">Review Modal</DrawerDescription>
+        <ReviewForm
+          booking={booking}
+          userId={userId}
+          setOpen={setOpen}
+          open={open}
+        />
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
+const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
+  const [review, setReview] = useState({
+    title: "",
+    body: "",
+    rating: 5,
+    carId: booking.car.id,
+    userId: userId,
+  });
 
   const handleRatingClick = (value: number) => {
     setReview({ ...review, rating: value });
@@ -78,8 +126,8 @@ export function ReviewDrawerDialog({
     setOpen(false);
     console.log(review);
   }
-  const ReviewForm = ({ className }: ComponentProps<"form">) => (
-    <form className={cn("grid gap-2", className)} onSubmit={handleSubmit}>
+  return (
+    <form className="grid gap-2 px-4 md:px-0" onSubmit={handleSubmit}>
       <div className="flex items-center gap-2 border shadow p-2 rounded-md bg-white">
         <div
           className="rounded-md w-1/2 h-full bg-cover bg-center"
@@ -186,36 +234,7 @@ export function ReviewDrawerDialog({
       </Button>
     </form>
   );
-
-  if (isDesktop) {
-    return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Leave a Review</DialogTitle>
-          </DialogHeader>
-          <ReviewForm />
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
-  return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Leave a Review</DrawerTitle>
-        </DrawerHeader>
-        <ReviewForm className="px-4" />
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
-  );
-}
+};
 
 export const ReviewButton = ({
   booking,
@@ -225,7 +244,7 @@ export const ReviewButton = ({
   userId: number;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(booking);
+
   return (
     <div>
       <Button
