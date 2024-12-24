@@ -32,13 +32,15 @@ export default async function OrdersPage({}: Props) {
         select: {
           modelName: true,
           id: true,
+          image: true,
+          location: true,
         },
       },
     },
   });
   return (
     <section className="md:w-full">
-      <Orders orders={orders} currentUser={User}/>
+      <Orders orders={orders} currentUser={User} />
     </section>
   );
 }
