@@ -48,7 +48,7 @@ export function Orders({ orders, currentUser }: Props) {
 
   return (
     <div className="space-y-4 w-full">
-      <div className="p-4 bg-white shadow rounded-md border">
+      <div className="md:p-2 bg-white md:shadow md:rounded-md md:border">
         <Tabs defaultValue="All" className="w-full">
           <TabsList className="flex justify-start gap-2 md:gap-4 overflow-x-auto w-full border-b rounded-none h-auto p-0 bg-transparent">
             <TabsTrigger
@@ -78,7 +78,7 @@ export function Orders({ orders, currentUser }: Props) {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="All" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">All Orders</h2>
               {orders.length > 0 ? (
                 <OrderComponent orders={orders} currentUser={currentUser} />
@@ -91,7 +91,7 @@ export function Orders({ orders, currentUser }: Props) {
             </div>
           </TabsContent>
           <TabsContent value="scheduled" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">Scheduled Orders</h2>
               {scheduledOrders.length > 0 ? (
                 <OrderComponent
@@ -107,7 +107,7 @@ export function Orders({ orders, currentUser }: Props) {
             </div>
           </TabsContent>
           <TabsContent value="ongoing" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">Ongoing Orders</h2>
               {ongoingOrders.length > 0 ? (
                 <OrderComponent
@@ -123,7 +123,7 @@ export function Orders({ orders, currentUser }: Props) {
             </div>
           </TabsContent>
           <TabsContent value="completed" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">Completed Orders</h2>
               {completedOrders.length > 0 ? (
                 <OrderComponent
@@ -139,7 +139,7 @@ export function Orders({ orders, currentUser }: Props) {
             </div>
           </TabsContent>
           <TabsContent value="cancelled" className="mt-4 w-full">
-            <div className="rounded-md border bg-white p-4">
+            <div className="md:rounded-md md:border bg-white p-2 md:p-4">
               <h2 className="text-lg font-semibold mb-2">Cancelled Orders</h2>
               {cancelledOrders.length > 0 ? (
                 <OrderComponent
