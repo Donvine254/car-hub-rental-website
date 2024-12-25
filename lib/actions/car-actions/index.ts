@@ -49,6 +49,7 @@ type ReviewFormData = {
   rating: number;
   title: string;
   body: string;
+  recommend: boolean;
 };
 export async function addCarReview(formData: ReviewFormData) {
   try {
