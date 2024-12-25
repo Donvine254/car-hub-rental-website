@@ -11,6 +11,7 @@ import {
   Tag,
   ChevronLeft,
   ChevronRight,
+  Star,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -57,6 +58,12 @@ export default function SideNav({ user }: Props) {
       icon: CarFront,
       label: "Favorite Cars",
       title: "View Favorite Cars",
+    },
+    {
+      href: "/me/reviews",
+      icon: Star,
+      label: "Reviews",
+      title: "View Reviews",
     },
     {
       href: "/me/settings",

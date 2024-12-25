@@ -12,6 +12,7 @@ export default function ProfileHeroComponent() {
     "/me/favorites": "My Favorite Cars",
     "/me/settings": "Settings",
     "/me/coupons": "Coupons Center",
+    "/me/reviews": "Review Center",
   };
 
   // Default to an empty string if the path is not in the map

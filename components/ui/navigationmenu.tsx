@@ -202,6 +202,13 @@ export default function NavigationMenu({ variant }: Props) {
                     </li>
                     <li>
                       <a
+                        href="/me/reviews"
+                        className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
+                        Review Center
+                      </a>
+                    </li>
+                    <li>
+                      <a
                         href="/me/settings"
                         className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2">
                         Settings

@@ -67,3 +67,38 @@ export async function addCarReview(formData: ReviewFormData) {
     await prisma.$disconnect();
   }
 }
+
+export async function isReviewed(carId: number, userId: number) {
+  console.log(carId, userId);
+  try {
+    const review = await prisma.review.findUnique({
+      where: {
+        userId_carId: { userId, carId },
+      },
+    });
+    return !!review;
+  } catch (error) {
+    console.error("Error checking review:", error);
+    return false;
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+export async function isFavorite(carId: number, userId: number) {
+  try {
+    const favorite = await prisma.favorite.findUnique({
+      where: {
+        userId_carId: {
+          userId,
+          carId,
+        },
+      },
+    });
+    return !!favorite;
+  } catch (error) {
+    console.error("Error checking review:", error);
+    return false;
+  } finally {
+    await prisma.$disconnect();
+  }
+}

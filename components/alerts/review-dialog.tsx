@@ -1,5 +1,5 @@
 "use client";
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,7 @@ import {
 import { CalendarClock, MapPinIcon, PenLine, StarIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "../ui/input";
-import { addCarReview } from "@/lib/actions/car-actions";
+import { addCarReview, isReviewed } from "@/lib/actions/car-actions";
 
 type DrawerProps = {
   booking: any | {};
@@ -219,21 +219,36 @@ export const ReviewButton = ({
   userId: number;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasReviewed, setHasReviewed] = useState<boolean>(false);
+  useEffect(() => {
+    const checkReviewStatus = async () => {
+      try {
+        const res = await isReviewed(booking.car.id, userId);
+        setHasReviewed(res);
+      } catch (error) {
+        console.error("Error checking review status:", error);
+      }
+    };
 
+    checkReviewStatus();
+  }, [userId, booking]);
   return (
     <div>
       <Button
         variant="ghost"
+        disabled={hasReviewed}
         className="w-full justify-start"
         onClick={() => setIsOpen(!isOpen)}>
         <PenLine className="mr-2 h-4 w-4" /> <span>Add Review</span>
       </Button>
-      <ReviewDrawerDialog
-        booking={booking}
-        open={isOpen}
-        setOpen={setIsOpen}
-        userId={userId}
-      />
+      {!hasReviewed && (
+        <ReviewDrawerDialog
+          booking={booking}
+          open={isOpen}
+          setOpen={setIsOpen}
+          userId={userId}
+        />
+      )}
     </div>
   );
 };

@@ -159,19 +159,21 @@ export const columns: ColumnDef<Car>[] = [
           </PopoverTrigger>
           <PopoverContent align="end" className="w-[200px]">
             <div>
-              <Button
-                variant="ghost"
-                className="w-full justify-start"
-                onClick={() => toast.info("Upcoming feature!")}>
-                <Eye className="mr-2 h-4 w-4" />
-                View details
-              </Button>
+              <Link passHref target="_blank" href={`/cars/${car.id}`}>
+                <Button variant="ghost" className="w-full justify-start">
+                  <Eye className="mr-2 h-4 w-4" />
+                  View details
+                </Button>
+              </Link>
+
               <Link
-                className="w-full inline-flex items-center justify-start  whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground  h-10 px-4 py-2"
+                passHref
                 href={`/admin/dashboard/cars/${car.id}`}
                 target="_blank">
-                <PenLine className="mr-2 h-4 w-4" />
-                Update details
+                <Button variant="ghost" className=" w-full justify-start">
+                  <PenLine className="mr-2 h-4 w-4" />
+                  Update details
+                </Button>
               </Link>
               <Button
                 variant="ghost"
