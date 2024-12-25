@@ -12,7 +12,7 @@ import SuccessDialog from "@/components/alerts/success-dialog";
 
 type Props = {};
 
-export default function AdminDashboard({}: Props) {
+export default function CarDashboard({}: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
