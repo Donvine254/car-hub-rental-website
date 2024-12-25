@@ -70,7 +70,23 @@ export async function addCarReview(formData: ReviewFormData) {
 
 export async function isReviewed(carId: number, userId: number) {
   try {
-    const review = await prisma.review.findUnique({
+    const review = await prisma.review.findFirst({
+      where: {
+        userId: userId,
+        carId: carId,
+      },
+    });
+    return review ? true : false;
+  } catch (error) {
+    console.error("Error checking review:", error);
+    return false;
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+export async function isFavorite(carId: number, userId: number) {
+  try {
+    const favorite = await prisma.favorite.findUnique({
       where: {
         userId_carId: {
           userId,
@@ -78,7 +94,7 @@ export async function isReviewed(carId: number, userId: number) {
         },
       },
     });
-    if (review) {
+    if (favorite) {
       return true;
     } else return false;
   } catch (error) {

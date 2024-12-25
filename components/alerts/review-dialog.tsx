@@ -219,20 +219,42 @@ export const ReviewButton = ({
   userId: number;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasReviewed, setHasReviewed] = useState<boolean>(false);
+  useEffect(() => {
+    const checkReviewStatus = async () => {
+      try {
+        const res = await isReviewed(userId, booking.car.id);
+        setHasReviewed(res);
+        if (res) {
+          toast.error("Car already reviewed", {
+            position: "top-center",
+          });
+        }
+      } catch (error) {
+        console.error("Error checking review status:", error);
+      }
+    };
+
+    checkReviewStatus();
+  }, [userId, booking]);
+
   return (
     <div>
       <Button
         variant="ghost"
         className="w-full justify-start"
+        disabled={!hasReviewed}
         onClick={() => setIsOpen(!isOpen)}>
         <PenLine className="mr-2 h-4 w-4" /> <span>Add Review</span>
       </Button>
-      <ReviewDrawerDialog
-        booking={booking}
-        open={isOpen}
-        setOpen={setIsOpen}
-        userId={userId}
-      />
+      {!hasReviewed && (
+        <ReviewDrawerDialog
+          booking={booking}
+          open={isOpen}
+          setOpen={setIsOpen}
+          userId={userId}
+        />
+      )}
     </div>
   );
 };
