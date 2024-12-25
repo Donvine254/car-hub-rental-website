@@ -1,5 +1,5 @@
 "use client";
-import { useState, FormEvent, ChangeEvent } from "react";
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +13,7 @@ import {
 import { CalendarClock, MapPinIcon, PenLine, StarIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "../ui/input";
-import { addCarReview } from "@/lib/actions/car-actions";
+import { addCarReview, isReviewed } from "@/lib/actions/car-actions";
 
 type DrawerProps = {
   booking: any | {};
@@ -219,7 +219,6 @@ export const ReviewButton = ({
   userId: number;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div>
       <Button

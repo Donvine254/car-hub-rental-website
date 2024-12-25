@@ -18,7 +18,7 @@ import {
 import { Eye, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CancelButton, FavoriteButton } from "./order-actions";
-
+import { isReviewed } from "@/lib/actions/car-actions";
 import { BookingWithCar } from "@/lib/utils";
 import { ReviewButton } from "@/components/alerts/review-dialog";
 interface User {
@@ -275,7 +275,9 @@ function OrderComponent({
                   )}
                   {order.status === "completed" && (
                     <>
-                      <ReviewButton booking={order} userId={currentUser.id} />
+                      {!isReviewed(order.car?.id, currentUser.id) && (
+                        <ReviewButton booking={order} userId={currentUser.id} />
+                      )}
                       <FavoriteButton
                         carId={order?.car?.id}
                         userId={currentUser.id}
