@@ -31,9 +31,9 @@ export default function Carpage({ car }: CarPageProps) {
       </div>
       <div className="max-w-7xl mx-auto min-h-screen">
         <div className="rounded-xl shadow-sm">
-          <div className="grid md:relative grid-cols-1 lg:grid-cols-2 gap-x-4 p-2 md:p-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 p-2 md:p-4">
             {/* Image Section */}
-            <div className="md:sticky md:top-12 h-fit">
+            <div className="md:sticky md:top-12 h-fit relative">
               <Image
                 src={car.image}
                 alt={car.modelName}
