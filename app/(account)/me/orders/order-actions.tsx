@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WarningDialog from "@/components/alerts/warning-dialog";
 import { Button } from "@/components/ui/button";
 import { UpdateOrderStatus } from "@/lib/actions/booking-actions";
@@ -7,6 +7,7 @@ import { Booking } from "@prisma/client";
 import { HeartIcon, X } from "lucide-react";
 import { toast } from "sonner";
 import { addFavorite } from "@/lib/actions/car-actions/favorite";
+import { isFavorite } from "@/lib/actions/car-actions";
 
 type CancelButtonProps = {
   id: number;
@@ -117,7 +118,20 @@ export function FavoriteButton({
   carId: number;
   userId: number;
 }) {
-  //handle cases where the car is already favorited
+  const [isfavorited, setIsFavorited] = useState<boolean>(false);
+  useEffect(() => {
+    const checkReviewStatus = async () => {
+      try {
+        const res = await isFavorite(carId, userId);
+        setIsFavorited(res);
+      } catch (error) {
+        console.error("Error checking review status:", error);
+      }
+    };
+
+    checkReviewStatus();
+  }, [carId, userId]);
+
   async function handleFavorite() {
     try {
       const res = await addFavorite(userId, carId);
@@ -138,8 +152,13 @@ export function FavoriteButton({
     <Button
       className="w-full justify-start group"
       variant="ghost"
+      disabled={isfavorited}
       onClick={handleFavorite}>
-      <HeartIcon className="group-hover:fill-red-600 group-hover:stroke-red-600 mr-2 h-4 w-4" />
+      <HeartIcon
+        className={`group-hover:fill-red-600 group-hover:stroke-red-600 mr-2 h-4 w-4 ${
+          isfavorited ? "fill-red-600 stroke-red-600" : ""
+        }`}
+      />
       <span>Add to Favorites</span>
     </Button>
   );

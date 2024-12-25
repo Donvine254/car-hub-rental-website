@@ -76,7 +76,6 @@ export async function isReviewed(carId: number, userId: number) {
         userId_carId: { userId, carId },
       },
     });
-    console.log(!!review)
     return !!review;
   } catch (error) {
     console.error("Error checking review:", error);
@@ -95,9 +94,7 @@ export async function isFavorite(carId: number, userId: number) {
         },
       },
     });
-    if (favorite) {
-      return true;
-    } else return false;
+    return !!favorite;
   } catch (error) {
     console.error("Error checking review:", error);
     return false;
