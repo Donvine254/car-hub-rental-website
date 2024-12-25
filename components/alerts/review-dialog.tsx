@@ -223,13 +223,8 @@ export const ReviewButton = ({
   useEffect(() => {
     const checkReviewStatus = async () => {
       try {
-        const res = await isReviewed(userId, booking.car.id);
+        const res = await isReviewed(booking.car.id, userId);
         setHasReviewed(res);
-        if (res) {
-          toast.error("Car already reviewed", {
-            position: "top-center",
-          });
-        }
       } catch (error) {
         console.error("Error checking review status:", error);
       }
@@ -237,13 +232,12 @@ export const ReviewButton = ({
 
     checkReviewStatus();
   }, [userId, booking]);
-
   return (
     <div>
       <Button
         variant="ghost"
+        disabled={hasReviewed}
         className="w-full justify-start"
-        disabled={!hasReviewed}
         onClick={() => setIsOpen(!isOpen)}>
         <PenLine className="mr-2 h-4 w-4" /> <span>Add Review</span>
       </Button>

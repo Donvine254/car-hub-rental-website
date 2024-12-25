@@ -69,14 +69,15 @@ export async function addCarReview(formData: ReviewFormData) {
 }
 
 export async function isReviewed(carId: number, userId: number) {
+  console.log(carId, userId);
   try {
-    const review = await prisma.review.findFirst({
+    const review = await prisma.review.findUnique({
       where: {
-        userId: userId,
-        carId: carId,
+        userId_carId: { userId, carId },
       },
     });
-    return review ? true : false;
+    console.log(!!review)
+    return !!review;
   } catch (error) {
     console.error("Error checking review:", error);
     return false;
