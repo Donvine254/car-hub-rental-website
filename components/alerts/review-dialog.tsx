@@ -1,5 +1,5 @@
 "use client";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,6 +52,7 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
     rating: 5,
     carId: booking.car.id,
     userId: userId,
+    recommend: true,
   });
 
   const handleRatingClick = (value: number) => {
@@ -71,6 +72,10 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
         onClick={() => handleRatingClick(index + 1)}
       />
     ));
+  };
+  const handleRecommendChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value === "yes";
+    setReview((prev) => ({ ...prev, recommend: value }));
   };
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -160,7 +165,8 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
                 id="yes"
                 name="recommend"
                 value="yes"
-                defaultChecked
+                defaultChecked={review.recommend}
+                onChange={handleRecommendChange}
                 required
               />
               <label htmlFor="yes">Yes</label>
@@ -171,6 +177,8 @@ const ReviewForm = ({ userId, setOpen, booking }: DrawerProps) => {
                 id="no"
                 name="recommend"
                 value="no"
+                defaultChecked={!review.recommend}
+                onChange={handleRecommendChange}
                 required
               />
               <label htmlFor="no">No</label>
