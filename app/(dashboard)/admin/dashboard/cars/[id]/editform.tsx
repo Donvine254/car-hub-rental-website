@@ -238,6 +238,7 @@ export default function EditForm({ car }: Props) {
           <SuccessDialog
             isOpen={isOpen}
             setIsOpen={setIsOpen}
+            onClose={() => router.push(`/cars/${car.id}`)}
             title="Car details updated successfully!"
             description="Car details have been successfully updated in the database."
           />

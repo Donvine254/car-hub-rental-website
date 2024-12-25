@@ -94,7 +94,7 @@ export const ReviewsComponent = ({ reviews }: Props) => {
             </div>
           ))
         ) : (
-          <div className="cols-span-2">
+          <div className="col-span-2">
             <NotFound
               title="No reviews yet"
               description="This car does not have any reviews yet. Check back later."
