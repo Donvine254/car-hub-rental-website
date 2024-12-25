@@ -5,6 +5,7 @@ import React from "react";
 import { NotFound } from "@/components/ui/notfound";
 import { Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 type Props = {};
 
 export default async function page({}: Props) {
@@ -19,6 +20,7 @@ export default async function page({}: Props) {
     include: {
       car: {
         select: {
+          id: true,
           modelName: true,
           image: true,
           year: true,
@@ -57,13 +59,16 @@ export default async function page({}: Props) {
               <h3 className="font-semibold text-lg mb-2">{review.title}</h3>
               <p className="text-gray-600 mb-4">{review.body}</p>
               <div className="flex items-center bg-gray-100 rounded-md p-2">
-                <Image
-                  src={review.car.image || "/car-placeholder.png"}
-                  alt={review.car.modelName}
-                  width={120}
-                  height={67.5}
-                  className="rounded-md bg-white object-contain"
-                />
+                <Link href={`/cars/${review.car.id}`} className="" passHref>
+                  {" "}
+                  <Image
+                    src={review.car.image || "/car-placeholder.png"}
+                    alt={review.car.modelName}
+                    width={120}
+                    height={67.5}
+                    className="rounded-md bg-white object-contain"
+                  />
+                </Link>
                 <p className="ml-3 md:inline-flex md:gap-2 text-gray-700 font-medium truncate w-full">
                   <span className="hidden md:block">{review.car.year} </span>
                   {review.car.modelName}
