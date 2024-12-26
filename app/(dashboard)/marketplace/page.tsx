@@ -22,7 +22,7 @@ export default async function Marketplace({}: Props) {
     <section className="min-h-screen bg-[#F8F9FA]">
       <div className="relative min-h-[600px] bg-gradient-to-r from-green-100 via-gray-100 to-green-200 md:bg-white">
         <div
-          className="absolute inset-0 bg-[url('https://res.cloudinary.com/dipkbpinx/image/upload/t_hiring-banner/v1735231060/cars/l42d8a4tnco2pilgxh9j.jpg')] bg-no-repeat bg-right bg-contain md:block hidden"
+          className="absolute inset-0 bg-[url('https://res.cloudinary.com/dipkbpinx/image/upload/t_hiring-banner/v1735231060/cars/l42d8a4tnco2pilgxh9j.webp')] bg-no-repeat bg-right bg-contain md:block hidden"
           aria-hidden="true"
         />
         <div className="relative max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">

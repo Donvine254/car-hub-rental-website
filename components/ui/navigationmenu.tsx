@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { getSession } from "@/lib/actions/session";
 import { usePathname, useRouter } from "next/navigation";
 import Topnav from "./topnav";
-import { toast } from "sonner";
 
 type Props = {
   variant?: string;
@@ -38,9 +37,14 @@ export default function NavigationMenu({ variant }: Props) {
       <Topnav />
       <section
         className={`${
-          pathname === "/" || pathname === "/cars" || variant === "transparent"
+          pathname === "/" ||
+          pathname === "/cars" ||
+          pathname === "/marketplace" ||
+          variant === "transparent"
             ? "bg-white text-gray-600 md:bg-transparent md:text-white md:absolute "
-            : "bg-white text-gray-600  "
+            : "bg-white text-gray-600"
+        } ${
+          pathname === "/marketplace" ? "!text-gray-600" : ""
         } w-full py-4 min-h-10 mt-10 z-20`}>
         <div className="container bg-transparent mx-auto flex flex-wrap items-center justify-between ">
           <Link href="/" className="flex items-center gap-0">
