@@ -27,10 +27,10 @@ export default async function Marketplace({}: Props) {
         />
         <div className="relative max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
           <div className="max-w-lg ">
-            <h1 className="text-6xl font-bold tracking-tight md:text-gray-900  md:text-7xl">
+            <h1 className="text-6xl font-bold tracking-tight md:text-gray-900  md:text-7xl lg:mt-4">
               Find & sell your best car easily
             </h1>
-            <p className="mt-4 text-xl  text-muted-foreground">
+            <p className="mt-4 text-xl  text-muted-foreground z-20">
               Whether you&apos;re looking to buy your dream car or sell your
               current ride, we make it simple, secure, and hassle-free.
             </p>
