@@ -100,8 +100,8 @@ export default async function Marketplace({}: Props) {
                   Fast and Safe Transaction
                 </h3>
                 <p className="text-muted">
-                  Transaction process is completed within 24 hours (verified by
-                  Bank International)
+                  Transaction process is completed within 24 hours (SSL
+                  encrypted)
                 </p>
               </div>
             </div>
@@ -118,12 +118,17 @@ export default async function Marketplace({}: Props) {
             <div
               key={car.id}
               className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="aspect-w-16 aspect-h-9">
-                {/* eslint-disable-next-line */}
-                <img
-                  src={car.image}
+              <div className="">
+                <Image
                   alt={car.modelName}
-                  className="w-full h-48 object-cover"
+                  src={car.image}
+                  width={300}
+                  height={300}
+                  placeholder="blur"
+                  blurDataURL="/vehicle-placeholder.png"
+                  className="cursor-pointer"
+                  style={{ width: "100%", height: "auto" }}
+                  priority
                 />
               </div>
               <div className="px-6 pt-2 pb-4 space-y-2">

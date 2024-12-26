@@ -32,7 +32,7 @@ const selectClasses =
 export default function SearchForm() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <div className="w-full max-w-7xl mx-auto px-2 py-8 sm:px-6 lg:px-8">
       <div className="bg-white shadow border rounded-lg p-6">
         <h2 className="text-2xl font-semibold my-1 text-center">
           Let&apos; Find Your Dream Car
