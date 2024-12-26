@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import type { Metadata } from "next";
 import {
   DollarSign,
   Calendar,
@@ -16,7 +17,11 @@ import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
 import Testimonials from "./testimonials";
 import Link from "next/link";
 type Props = {};
-
+export const metadata: Metadata = {
+  title: "Car Hub Marketplace- Buy or sell a car",
+  description:
+    "Car Hub Marketplace allows you to browse through a list of available cars or effortlessly sell your car to other interested buyers.",
+};
 export default async function Marketplace({}: Props) {
   const cars = (await fetchCars()) as Car[];
   return (
