@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import {
+  DollarSign,
   Calendar,
-  CarIcon,
   MapPin,
   ShoppingCart,
   Star,
@@ -114,13 +114,17 @@ export default async function Marketplace({}: Props) {
       </section>
       {/* show car lists */}
       <div
-        className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 bg-gradient-to-tr from-green-100 via-gray-100 to-green-100"
+        className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 bg-gradient-to-tr from-green-100 via-gray-100 to-green-100 "
         id="showcase">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+        <h2 className="text-3xl font-bold bg-[#E5E7EB] text-green-500 px-3 py-2 w-fit  text-center flex mx-auto">
           Browse Our Collection
         </h2>
+        <p className="text-muted-foreground text-center mb-4">
+          You can book a test drive or visit our showroom in the vehicle
+          location to view the car, or make an offer to reserve it now.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.slice(0, 21).map((car) => (
+          {cars.slice(5, 29).map((car) => (
             <div
               key={car.id}
               className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -141,7 +145,7 @@ export default async function Marketplace({}: Props) {
                 <h3 className="text-xl font-semibold text-gray-900">
                   {car.modelName}
                 </h3>
-                <div className="mt-4 grid grid-cols-2 gap-4">
+                <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <div className="flex items-center text-gray-600">
                     <MapPin className="h-5 w-5 mr-2" />
                     <span className="capitalize">{car.location}</span>
@@ -178,8 +182,8 @@ export default async function Marketplace({}: Props) {
                     </svg>{" "}
                     Book Test Drive
                   </Button>
-                  <Button className="border-2 bg-transparent border-green-500 text-green-500  hover:bg-green-500 hover:text-white ">
-                    Make an Offer
+                  <Button className="justify-center sm:justify-start gap-1 border-2 bg-transparent border-green-500 text-green-500  hover:bg-green-500 hover:text-white ">
+                    <DollarSign /> Make an Offer
                   </Button>
                 </div>
               </div>
