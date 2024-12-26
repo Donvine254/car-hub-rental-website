@@ -64,6 +64,17 @@ export default function Footer() {
                 </a>
               </p>
               <p className="mb-4">
+                <Link
+                  href="/marketplace"
+                  title="buy or sell a car"
+                  className="text-neutral-600 hover:text-green-500">
+                  Car Marketplace
+                </Link>
+                <span className="px-0.5 ml-0.5 bg-green-500 text-white rounded-sm text-xs">
+                  New
+                </span>
+              </p>
+              <p className="mb-4">
                 <a
                   role="link"
                   aria-disabled="true"
@@ -80,18 +91,6 @@ export default function Footer() {
                   className="text-neutral-600 hover:text-green-500">
                   Tour Guide
                 </a>{" "}
-                <span className="px-0.5  bg-green-500 text-white rounded-sm">
-                  New
-                </span>
-              </p>
-              <p className="mb-4">
-                <a
-                  role="link"
-                  aria-disabled="true"
-                  title="buy or sell a car"
-                  className="text-neutral-600 hover:text-green-500">
-                  Car Marketplace
-                </a>
               </p>
             </div>
             <div className="">

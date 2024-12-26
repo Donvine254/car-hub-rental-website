@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import Register from "./register";
 import Image from "next/image";
+import RandomImage from "../login/random-image";
 export const metadata: Metadata = {
   title: "Car Hub- Get started with a new account",
   description:
@@ -26,14 +27,7 @@ export default function Page({}: Props) {
             />
 
             <div className="flex items-center justify-center h-full pl-10 bg-[url('/why-us-bg.png')] bg-contain bg-center bg-no-repeat">
-              <Image
-                src="https://res.cloudinary.com/dipkbpinx/image/upload/v1734537690/cars/b2irjm7jub55tqtxaqya.png"
-                alt="Car rental illustration"
-                width={800}
-                height={450}
-                className="my-auto "
-                priority
-              />
+              <RandomImage />
             </div>
             {/* show horizontal lines */}
           </div>
