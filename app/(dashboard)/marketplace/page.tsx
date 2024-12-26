@@ -19,10 +19,10 @@ export default async function Marketplace({}: Props) {
         />
         <div className="relative max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
           <div className="max-w-lg ">
-            <h1 className="text-4xl font-bold tracking-tight text-white md:text-gray-900 sm:text-6xl md:text-7xl">
+            <h1 className="text-6xl font-bold tracking-tight md:text-gray-900  md:text-7xl">
               Find & sell your best car easily
             </h1>
-            <p className="mt-4 text-xl text-gray-200 md:text-gray-500">
+            <p className="mt-4 text-xl  text-muted-foreground">
               Whether you&apos;re looking to buy your dream car or sell your
               current ride, we make it simple, secure, and hassle-free.
             </p>
@@ -59,7 +59,7 @@ export default async function Marketplace({}: Props) {
           Browse Our Collection
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.map((car) => (
+          {cars.slice(0, 20).map((car) => (
             <div
               key={car.id}
               className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -71,7 +71,7 @@ export default async function Marketplace({}: Props) {
                   className="w-full h-48 object-cover"
                 />
               </div>
-              <div className="p-6">
+              <div className="px-6 pt-2 pb-4 space-y-2">
                 <h3 className="text-xl font-semibold text-gray-900">
                   {car.modelName}
                 </h3>
@@ -101,18 +101,18 @@ export default async function Marketplace({}: Props) {
                     <span className="capitalize">{car.fuelType}</span>
                   </div>
                 </div>
-                <div className="mt-6 grid grid-cols-2 gap-4">
-                  <Button className="justify-start gap-1 bg-green-500 text-white  hover:bg-green-600">
+                <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Button className="justify-center sm:justify-start gap-1 bg-green-500 text-white  hover:bg-green-600">
                     <svg
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      height="24"
-                      width="24">
+                      height="1.5em"
+                      width="1.5em">
                       <path d="M13 19.92c1.8-.22 3.35-.97 4.65-2.27 1.3-1.3 2.05-2.85 2.27-4.65h-3c-.22 1-.68 1.84-1.38 2.54-.7.7-1.54 1.16-2.54 1.38v3M10 8h4l3 3h2.92c-.25-1.95-1.13-3.62-2.65-5C15.76 4.66 14 4 12 4c-2 0-3.76.66-5.27 2-1.52 1.38-2.4 3.05-2.65 5H7l3-3m1 11.92v-3c-1-.22-1.84-.68-2.54-1.38-.7-.7-1.16-1.54-1.38-2.54h-3c.22 1.77.97 3.3 2.27 4.6 1.3 1.3 2.85 2.07 4.65 2.32M12 2c2.75 0 5.1 1 7.05 2.95C21 6.9 22 9.25 22 12s-1 5.1-2.95 7.05C17.1 21 14.75 22 12 22s-5.1-1-7.05-2.95C3 17.1 2 14.75 2 12s1-5.1 2.95-7.05C6.9 3 9.25 2 12 2z" />
                     </svg>{" "}
                     Book Test Drive
                   </Button>
-                  <Button className="border-2 bg-transparent border-green-500 text-green-500  hover:bg-green-50 ">
+                  <Button className="border-2 bg-transparent border-green-500 text-green-500  hover:bg-green-500 hover:text-white ">
                     Make an Offer
                   </Button>
                 </div>

@@ -46,7 +46,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="bg-white rounded-lg shadow-md p-6">
+              className="bg-white border rounded-lg shadow-md p-6">
               <div className="flex items-center mb-4">
                 <Image
                   height={48}
