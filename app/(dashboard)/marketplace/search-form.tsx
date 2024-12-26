@@ -40,7 +40,7 @@ export default function SearchForm() {
         <p className="text-center text-muted-foreground mb-6">
           We recommend the best and finest cars for a friendly price.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-x-4 gap-y-2">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Make
@@ -67,6 +67,30 @@ export default function SearchForm() {
             </label>
             <input type="number" className={inputClasses} placeholder="2024" />
           </div>
+          <div className="hidden md:block lg:hidden">
+            <label className="block text-sm font-medium text-gray-700">
+              Mileage (km)
+            </label>
+            <div className="flex gap-2">
+              <input type="number" className={inputClasses} placeholder="Min" />
+              <input type="number" className={inputClasses} placeholder="Max" />
+            </div>
+          </div>
+        </div>
+        {/* advanced search */}
+        <div
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-x-4 gap-y-2 transition-all duration-300 ease-in-out overflow-hidden mt-2 ${
+            showAdvanced ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0"
+          }`}>
+          <div className="md:hidden lg:block">
+            <label className="block text-sm font-medium text-gray-700">
+              Mileage (km)
+            </label>
+            <div className="flex gap-2">
+              <input type="number" className={inputClasses} placeholder="Min" />
+              <input type="number" className={inputClasses} placeholder="Max" />
+            </div>
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Fuel Type
@@ -79,21 +103,6 @@ export default function SearchForm() {
                 </option>
               ))}
             </select>
-          </div>
-        </div>
-        {/* advanced search */}
-        <div
-          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 transition-all duration-300 ease-in-out overflow-hidden mt-2 ${
-            showAdvanced ? "opacity-100 max-h-[500px]" : "opacity-0 max-h-0"
-          }`}>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Mileage (km)
-            </label>
-            <div className="flex gap-2">
-              <input type="number" className={inputClasses} placeholder="Min" />
-              <input type="number" className={inputClasses} placeholder="Max" />
-            </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
