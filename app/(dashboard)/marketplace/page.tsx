@@ -1,6 +1,14 @@
 import React from "react";
 import Image from "next/image";
-import { Calendar, CarIcon, MapPin, ShoppingCart, Star } from "lucide-react";
+import {
+  Calendar,
+  CarIcon,
+  MapPin,
+  ShoppingCart,
+  Star,
+  Trophy,
+  Zap,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SearchForm from "./search-form";
 import fetchCars, { Car } from "@/lib/actions/car-actions/fetchCars";
@@ -53,13 +61,60 @@ export default async function Marketplace({}: Props) {
         </div>
       </div>
       <SearchForm />
+      {/* show features */}
+      <section className="py-16 bg-green-400 text-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex items-start space-x-4">
+              <div className="bg-green-100 p-3 rounded-full">
+                <Trophy className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Quality Choice</h3>
+                <p className="text-muted">
+                  We provide several quality car option for you so you
+                  don&apos;t have to worry about the quality.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <div className="bg-green-100 p-3 rounded-full">
+                <Star className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">
+                  Exclusive Service For You
+                </h3>
+                <p className="text-muted">
+                  We are ready to help find your dream car for your daily needs
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start space-x-4">
+              <div className="bg-green-100 p-3 rounded-full">
+                <Zap className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">
+                  Fast and Safe Transaction
+                </h3>
+                <p className="text-muted">
+                  Transaction process is completed within 24 hours (verified by
+                  Bank International)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* show car lists */}
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 bg-gradient-to-tr from-green-100 via-gray-100 to-green-100">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
           Browse Our Collection
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.slice(0, 20).map((car) => (
+          {cars.slice(0, 21).map((car) => (
             <div
               key={car.id}
               className="bg-white rounded-lg shadow-md overflow-hidden">
