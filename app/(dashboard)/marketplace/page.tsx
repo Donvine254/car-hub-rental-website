@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import {
+  DollarSign,
   Calendar,
-  CarIcon,
   MapPin,
   ShoppingCart,
   Star,
@@ -14,33 +14,37 @@ import SearchForm from "./search-form";
 import fetchCars, { Car } from "@/lib/actions/car-actions/fetchCars";
 import { CarFrontIcon, CarSeat, FuelPumpIcon, GearboxIcon } from "@/assets";
 import Testimonials from "./testimonials";
+import Link from "next/link";
 type Props = {};
 
 export default async function Marketplace({}: Props) {
   const cars = (await fetchCars()) as Car[];
   return (
     <section className="min-h-screen bg-[#F8F9FA]">
-      <div className="relative min-h-[600px] bg-gradient-to-r from-green-100 via-gray-100 to-green-200 md:bg-white">
+      <div className="relative min-h-[600px] bg-gradient-to-r from-green-100 via-gray-100 to-green-200 md:bg-white scroll-smooth">
         <div
-          className="absolute inset-0 bg-[url('https://res.cloudinary.com/dipkbpinx/image/upload/t_hiring-banner/v1735231060/cars/l42d8a4tnco2pilgxh9j.jpg')] bg-no-repeat bg-right bg-contain md:block hidden"
+          className="absolute inset-0 bg-[url('https://res.cloudinary.com/dipkbpinx/image/upload/t_hiring-banner/v1735231060/cars/l42d8a4tnco2pilgxh9j.webp')] bg-no-repeat bg-right bg-contain md:block hidden"
           aria-hidden="true"
         />
         <div className="relative max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
           <div className="max-w-lg ">
-            <h1 className="text-6xl font-bold tracking-tight md:text-gray-900  md:text-7xl">
+            <h1 className="text-6xl font-bold tracking-tight md:text-gray-900  md:text-7xl lg:mt-4">
               Find & sell your best car easily
             </h1>
-            <p className="mt-4 text-xl  text-muted-foreground">
+            <p className="mt-4 text-xl  text-muted-foreground z-20">
               Whether you&apos;re looking to buy your dream car or sell your
               current ride, we make it simple, secure, and hassle-free.
             </p>
             <div className="my-10 flex gap-4">
-              <Button
-                className="justify-start shadow-sm text-white bg-green-500 hover:bg-green-600"
-                variant="secondary">
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Buy a Car
-              </Button>
+              <Link href="#showcase" passHref scroll>
+                <Button
+                  className="justify-start shadow-sm text-white bg-green-500 hover:bg-green-600"
+                  variant="secondary">
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Buy a Car
+                </Button>
+              </Link>
+              {/* show dialog for users to enter details */}
               <Button variant="default" className="justify-start">
                 <CarFrontIcon className="mr-2 h-5 w-5" />
                 Sell Your Car
@@ -109,12 +113,18 @@ export default async function Marketplace({}: Props) {
         </div>
       </section>
       {/* show car lists */}
-      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 bg-gradient-to-tr from-green-100 via-gray-100 to-green-100">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+      <div
+        className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 bg-gradient-to-tr from-green-100 via-gray-100 to-green-100 "
+        id="showcase">
+        <h2 className="text-3xl font-bold bg-[#E5E7EB] text-green-500 px-3 py-2 w-fit  text-center flex mx-auto">
           Browse Our Collection
         </h2>
+        <p className="text-muted-foreground text-center mb-4">
+          You can book a test drive or visit our showroom in the vehicle
+          location to view the car, or make an offer to reserve it now.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.slice(0, 21).map((car) => (
+          {cars.slice(5, 29).map((car) => (
             <div
               key={car.id}
               className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -135,7 +145,7 @@ export default async function Marketplace({}: Props) {
                 <h3 className="text-xl font-semibold text-gray-900">
                   {car.modelName}
                 </h3>
-                <div className="mt-4 grid grid-cols-2 gap-4">
+                <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
                   <div className="flex items-center text-gray-600">
                     <MapPin className="h-5 w-5 mr-2" />
                     <span className="capitalize">{car.location}</span>
@@ -172,8 +182,8 @@ export default async function Marketplace({}: Props) {
                     </svg>{" "}
                     Book Test Drive
                   </Button>
-                  <Button className="border-2 bg-transparent border-green-500 text-green-500  hover:bg-green-500 hover:text-white ">
-                    Make an Offer
+                  <Button className="justify-center sm:justify-start gap-1 border-2 bg-transparent border-green-500 text-green-500  hover:bg-green-500 hover:text-white ">
+                    <DollarSign /> Make an Offer
                   </Button>
                 </div>
               </div>
