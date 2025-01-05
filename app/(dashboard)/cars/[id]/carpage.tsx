@@ -20,6 +20,22 @@ export interface CarPageProps {
 
 export default function Carpage({ car }: CarPageProps) {
   const isAvailable = isCarAvailable(car.isRented, car.rentedUntill);
+  const { reviews } = car;
+  const averageRating = reviews.length
+    ? (
+        reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
+      ).toFixed(1)
+    : "0.0";
+
+  const ratingCounts = Array.from({ length: 5 }, (_, i) => {
+    const count = reviews.filter((review) => review.rating === i + 1).length;
+    return {
+      stars: i + 1,
+      count,
+      percentage: reviews.length ? (count / reviews.length) * 100 : 0,
+    };
+  }).reverse();
+
   return (
     <div className="bg-gradient-to-r from-green-50 via-slate-50 to-green-50 bg-opacity-70">
       <div className="bg-[url('/subheader.jpg')] bg-cover bg-center bg-no-repeat">
@@ -207,8 +223,52 @@ export default function Carpage({ car }: CarPageProps) {
                   </li>
                 </ul>
               </div>
-              <div className="bg-green-100 border shadow p-6 rounded-lg">
-                <div className="flex flex-col items-center gap-2">
+              {/* reviews card */}
+              <section className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 ">
+                <div className="w-full rounded-lg border bg-white p-6 shadow">
+                  <div className="text-center space-y-1.5 mb-6">
+                    <div>
+                      <span className="text-4xl font-bold">
+                        {averageRating}
+                      </span>
+                      <div className="flex justify-center gap-1 my-2">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-6 h-6 ${
+                              i < Math.round(Number(averageRating))
+                                ? "fill-yellow-400 text-yellow-400"
+                                : "fill-gray-200 text-gray-200"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <p className="text-sm text-gray-500">
+                        Based on {car.reviews.length} review
+                        {car.reviews.length !== 1 ? "s" : ""}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mb-6">
+                    {ratingCounts.map(({ stars, count, percentage }) => (
+                      <div
+                        key={stars}
+                        className="grid grid-cols-[2rem_1fr_3rem]  items-center">
+                        <div className="text-sm font-medium">{stars}</div>
+                        <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+                          <div
+                            className="h-full bg-yellow-400 transition-all duration-500"
+                            style={{ width: `${percentage}%` }}
+                          />
+                        </div>
+                        <div className="text-sm text-gray-500 text-right">
+                          ({count})
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="bg-green-100 border shadow p-6 rounded-lg flex flex-col justify-between gap-4 items-center">
                   <p className="text-base font-medium">Daily Rate</p>
                   <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-green-600">
                     {new Intl.NumberFormat("en-US", {
@@ -216,26 +276,28 @@ export default function Carpage({ car }: CarPageProps) {
                       currency: "USD",
                     }).format(car.pricePerDay)}
                   </h3>
-                </div>
-                <Link
-                  href={`/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`}
-                  passHref>
-                  <button
-                    className={`px-4 py-2 rounded-md border font-semibold transition-all duration-300 ease-in-out w-full mt-4 ${
-                      !isAvailable
-                        ? `bg-gradient-to-r from-green-400 to-blue-500 hover:fancy-hover text-white hover:shadow-lg`
-                        : ` bg-gray-200/70 text-gray-500
+
+                  <Link
+                    href={`/booking?id=${car.id}&car_model=${car.modelName}&price=${car.pricePerDay}`}
+                    className="w-full"
+                    passHref>
+                    <button
+                      className={`px-4 py-2 rounded-md border font-semibold transition-all duration-300 ease-in-out w-full mt-4 ${
+                        !isAvailable
+                          ? `bg-gradient-to-r from-green-400 to-blue-500 hover:fancy-hover text-white hover:shadow-lg`
+                          : ` bg-gray-200/70 text-gray-500
             cursor-not-allowed
           `
-                    }
+                      }
             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500
             relative overflow-hidden
           `}
-                    disabled={isAvailable}>
-                    {isAvailable ? "Unavailable" : "Book Now"}
-                  </button>
-                </Link>
-              </div>
+                      disabled={isAvailable}>
+                      {isAvailable ? "Unavailable" : "Book Now"}
+                    </button>
+                  </Link>
+                </div>
+              </section>
             </div>
           </div>
           <hr />

@@ -10,6 +10,20 @@ type Props = {
   reviews: ReviewWithUser[];
 };
 export const ReviewsComponent = ({ reviews }: Props) => {
+  const averageRating = reviews.length
+    ? (
+        reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
+      ).toFixed(1)
+    : "0.0";
+
+  const ratingCounts = Array.from({ length: 5 }, (_, i) => {
+    const count = reviews.filter((review) => review.rating === i + 1).length;
+    return {
+      stars: i + 1,
+      count,
+      percentage: reviews.length ? (count / reviews.length) * 100 : 0,
+    };
+  }).reverse();
   return (
     <div className="my-2 px-2 md:px-4 pb-4 ">
       <h2 className="text-2xl font-bold mb-4">

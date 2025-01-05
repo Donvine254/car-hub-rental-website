@@ -160,11 +160,11 @@ export default function SearchForm() {
             onClick={() => setShowAdvanced(!showAdvanced)}
             className="text-green-500 hover:text-green-600 hover:bg-green-50 focus:outline-none">
             {showAdvanced ? (
-              <span className="flex items-center gap-2">
-                Less Filters <ChevronUp className="h-4 w-4" />
+              <span className="flex items-center gap-2 animate-accordion-up">
+                Less Filters <ChevronUp className="h-4 w-4 " />
               </span>
             ) : (
-              <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2 animate-accordion-down">
                 Advanced Search <ChevronDown className="h-4 w-4" />
               </span>
             )}
