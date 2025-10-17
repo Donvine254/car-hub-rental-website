@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     }
 
     // Initialize the model
-    const model = google("models/gemini-1.5-flash-001");
+    const model = google("models/gemini-2.0-flash-lite");
 
     // Stream the text response
     const result = await streamText({
